@@ -1,0 +1,39 @@
+# Core dependencies
+langgraph>=0.1.0
+pydantic>=2.0.0
+sqlalchemy>=2.0.0
+
+# AI/ML
+google-generativeai>=0.3.0
+
+# Utilities
+python-decouple>=3.8
+structlog>=23.1.0
+python-json-logger>=2.0.7
+
+# API Framework (for Phase 2)
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic-settings>=2.1.0
+
+# Testing (for Phase 2)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+httpx>=0.25.0
+
+# Development
+black>=23.0.0
+isort>=5.12.0
+flake8>=6.0.0
+mypy>=1.7.0
+
+# Optional: Database drivers
+# For PostgreSQL in production
+# psycopg2-binary>=2.9.0
+# For MySQL in production
+# pymysql>=1.1.0
+
+# Optional: Monitoring (for Phase 4)
+# prometheus-client>=0.19.0
+# sentry-sdk>=1.38.0
