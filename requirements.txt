@@ -39,7 +39,7 @@ mypy>=1.7.0
 
 # Optional: Database drivers
 # For PostgreSQL in production
-# psycopg2-binary>=2.9.0
+psycopg2-binary>=2.9.0
 # For MySQL in production
 # pymysql>=1.1.0
 

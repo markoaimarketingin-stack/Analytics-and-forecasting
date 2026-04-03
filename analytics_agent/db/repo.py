@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Optional
 import os
+from urllib.parse import quote_plus, unquote
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
@@ -17,9 +18,11 @@ def get_engine(url: Optional[str] = None):
     try:
         if url:
             database_url = url
-        elif os.getenv("USE_SUPABASE") == "true":
+        elif os.getenv("USE_SUPABASE", "false").lower() == "true":
             db_user = os.getenv("DB_USER")
-            db_password = os.getenv("DB_PASSWORD")
+            raw_password = os.getenv("DB_PASSWORD", "")
+            # Support both plain and already URL-encoded passwords safely.
+            db_password = quote_plus(unquote(raw_password))
             db_host = os.getenv("DB_HOST")
             db_port = os.getenv("DB_PORT")
             db_name = os.getenv("DB_NAME")
