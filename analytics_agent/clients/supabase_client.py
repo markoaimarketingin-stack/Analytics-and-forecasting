@@ -1,13 +1,20 @@
 import os
 from functools import lru_cache
 from dotenv import load_dotenv
-from supabase import create_client, Client
+from typing import Any
 
 load_dotenv()
 
 
 @lru_cache
-def get_supabase_client() -> Client:
+def get_supabase_client() -> Any:
+    try:
+        from supabase import create_client
+    except ImportError as exc:
+        raise RuntimeError(
+            "Supabase SDK is not installed. Add 'supabase' to requirements.txt."
+        ) from exc
+
     supabase_url = os.getenv("SUPABASE_URL")
     service_key = (
         os.getenv("SUPABASE_SERVICE_ROLE_KEY")
