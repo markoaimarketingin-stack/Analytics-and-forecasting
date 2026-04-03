@@ -51,10 +51,6 @@ class AnalyticsSupervisor:
             normalized=normalized,
         )
 
-        # Allow users to exit pending clarification with a fresh conversational turn.
-        if self.clarification_state.get("awaiting_clarification") and self._is_clarification_exit(message):
-            self.clarification_state = {}
-
         # If we are waiting for clarification, this turn must continue the same intent.
         is_clarification_reply = bool(self.clarification_state.get("awaiting_clarification"))
 
@@ -333,20 +329,6 @@ class AnalyticsSupervisor:
             "ui": ui_layout,
             "timestamp": datetime.utcnow().isoformat(),
         }
-
-    def _is_clarification_exit(self, message: str) -> bool:
-        msg = self._normalize(message)
-        exit_keywords = [
-            "hello",
-            "hi",
-            "hey",
-            "bye",
-            "cancel",
-            "stop",
-            "new request",
-            "start over",
-        ]
-        return any(k in msg for k in exit_keywords)
 
     # ============================================================
     # Message Normalization
@@ -699,69 +681,52 @@ User message:
                 params["channel"] = channel.title()
                 break
         
-        # Campaign type detection (support "lead generation")
-        campaign_types = [
-            ("lead generation", "Lead Generation"),
-            ("conversion", "Conversion"),
-            ("awareness", "Awareness"),
-            ("engagement", "Engagement"),
-            ("retention", "Retention"),
-            ("traffic", "Traffic"),
-            ("lead", "Lead Generation"),
-        ]
-        for needle, label in campaign_types:
-            if needle in msg_lower:
-                params["campaign_type"] = label
+        # Campaign type detection
+        campaign_types = ["conversion", "awareness", "engagement", "retention", "traffic", "lead"]
+        for ctype in campaign_types:
+            if ctype in msg_lower:
+                params["campaign_type"] = ctype.title()
                 break
         
         # Spend detection (look for currency patterns)
         import re
-        spend_patterns = [
-            r'(?:budget|spend|planned budget|planned spend)\s*[:=]?\s*[\$₹]?\s*([\d,]+(?:\.\d+)?)\s*([kK]?)',
-            r'[\$₹]\s*([\d,]+(?:\.\d+)?)\s*([kK]?)',
-        ]
-        for pattern in spend_patterns:
-            m = re.search(pattern, msg_lower)
-            if m:
-                base = float(m.group(1).replace(',', ''))
-                params["spend"] = base * (1000 if (len(m.groups()) > 1 and m.group(2)) else 1)
-                break
+        spend_pattern = r'\$?\s*(\d+[,.]?\d*)[kK]?'
+        spend_matches = re.findall(spend_pattern, msg_lower)
+        if spend_matches:
+            spend_str = spend_matches[-1].replace(',', '')
+            try:
+                params["spend"] = float(spend_str) * (1000 if 'k' in msg_lower else 1)
+            except:
+                pass
         
         # Impressions detection
-        impression_patterns = [
-            r'(?:impressions?)\s*[:=]?\s*([\d,]+(?:\.\d+)?)\s*([kK]?)',
-            r'([\d,]+(?:\.\d+)?)\s*([kK]?)\s*impressions?',
-        ]
-        for pattern in impression_patterns:
-            m = re.search(pattern, msg_lower)
-            if m:
-                base = float(m.group(1).replace(',', ''))
-                params["impressions"] = int(base * (1000 if (len(m.groups()) > 1 and m.group(2)) else 1))
-                break
+        if "impression" in msg_lower:
+            impression_matches = re.findall(r'(\d+[,.]?\d*)[kK]?\s*impression', msg_lower)
+            if impression_matches:
+                try:
+                    params["impressions"] = int(float(impression_matches[0].replace(',', '')) * (1000 if 'k' in msg_lower else 1))
+                except:
+                    pass
         
         # CTR detection
-        ctr_patterns = [
-            r'(?:ctr|click\s*through\s*rate)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*%?',
-            r'(\d+(?:\.\d+)?)\s*%\s*(?:ctr|click)',
-        ]
-        for pattern in ctr_patterns:
-            m = re.search(pattern, msg_lower)
-            if m:
-                ctr_val = float(m.group(1))
-                params["ctr"] = ctr_val / 100 if ctr_val > 1 else ctr_val
-                break
+        if "ctr" in msg_lower or "click" in msg_lower:
+            ctr_matches = re.findall(r'(\d+\.?\d*)%?\s*(?:ctr|click)', msg_lower)
+            if ctr_matches:
+                try:
+                    ctr_val = float(ctr_matches[0])
+                    params["ctr"] = ctr_val / 100 if ctr_val > 1 else ctr_val
+                except:
+                    pass
         
         # Conversion rate detection
-        conv_patterns = [
-            r'(?:conversion\s*rate|conversion)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*%?',
-            r'(\d+(?:\.\d+)?)\s*%\s*conversion',
-        ]
-        for pattern in conv_patterns:
-            m = re.search(pattern, msg_lower)
-            if m:
-                conv_val = float(m.group(1))
-                params["conversion_rate"] = conv_val / 100 if conv_val > 1 else conv_val
-                break
+        if "conversion" in msg_lower:
+            conv_matches = re.findall(r'(\d+\.?\d*)%?\s*conversion', msg_lower)
+            if conv_matches:
+                try:
+                    conv_val = float(conv_matches[0])
+                    params["conversion_rate"] = conv_val / 100 if conv_val > 1 else conv_val
+                except:
+                    pass
         
         return params
     
@@ -841,20 +806,12 @@ User message:
         if not user_answers or not user_answers.strip():
             return extracted_params
         
-        # First, use deterministic parser so clarification works even if Gemini is disabled.
-        merged = dict(extracted_params)
-        merged.update(self._extract_forecast_parameters(user_answers))
-
-        # If all forecast params are present after deterministic parse, skip Gemini.
-        if not self._missing_params_for_intent("forecast", merged):
-            return merged
-
-        # Use Gemini as an optional enhancer
+        # Use Gemini to parse answers
         prompt = f"""
 Extract parameters from the user's answers. Return ONLY a JSON object with extracted values.
 
 Previously extracted parameters:
-{json.dumps(merged, default=str)}
+{json.dumps(extracted_params, default=str)}
 
 User's answers to clarification questions:
 {user_answers}
@@ -873,17 +830,15 @@ Return ONLY valid JSON, no other text.
         
         try:
             raw = self.gemini_client.generate(prompt)
-            if not raw or not raw.strip():
-                return merged
             cleaned = raw.strip().replace("```json", "").replace("```", "").strip()
             parsed = json.loads(cleaned)
             
             # Merge with extracted params (user answers override)
-            merged.update(parsed)
-            return merged
+            extracted_params.update(parsed)
+            return extracted_params
         except Exception as e:
             logger.warning("Could not parse clarification answers", error=str(e))
-            return merged
+            return extracted_params
 
     # ============================================================
     # Execute Analytics
