@@ -105,7 +105,9 @@ export default function App() {
           {
             id: `${Date.now()}-assistant`,
             role: 'assistant',
-            content: response.data.message,
+            content:
+              response.data.message ||
+              'I am online and ready to help with analytics questions.',
             timestamp: new Date(),
           },
         ]);

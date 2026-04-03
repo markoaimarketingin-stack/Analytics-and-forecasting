@@ -206,6 +206,11 @@ User message:
 """
 
         response = analytics_runner.gemini.generate(prompt)
+        if not response or not response.strip():
+            response = (
+                "I am online and ready. I can help with forecasting, scenario planning, "
+                "funnel analysis, attribution, cohorts, and budget optimization."
+            )
 
         return {
             "success": True,
