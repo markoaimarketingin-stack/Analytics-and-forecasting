@@ -6,6 +6,12 @@ sqlalchemy>=2.0.0
 # AI/ML
 google-generativeai>=0.3.0
 
+# Machine Learning & Data Processing
+catboost==1.2.7
+joblib==1.4.2
+pandas>=1.5.0
+numpy>=1.23.0
+
 # Utilities
 python-decouple>=3.8
 structlog>=23.1.0
@@ -15,6 +21,7 @@ python-json-logger>=2.0.7
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 pydantic-settings>=2.1.0
+python-multipart>=0.0.6
 
 # Testing (for Phase 2)
 pytest>=7.4.0

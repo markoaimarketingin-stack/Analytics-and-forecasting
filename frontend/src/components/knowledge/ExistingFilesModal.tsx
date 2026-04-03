@@ -1,13 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
+import { Trash2 } from 'lucide-react';
 
 export default function ExistingFilesModal() {
-  const { isKnowledgeModalOpen, closeKnowledgeModal, files, isLoading, error } =
-    useKnowledgeBase();
+  const {
+    isKnowledgeModalOpen,
+    closeKnowledgeModal,
+    files,
+    isLoading,
+    error,
+    selectedFile,
+    selectFile,
+    deleteFile,
+  } = useKnowledgeBase();
+
+  const [deletingFileId, setDeletingFileId] = useState<number | null>(null);
 
   if (!isKnowledgeModalOpen) {
     return null;
   }
+
+  const handleDeleteFile = async (fileId: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this file?')) {
+      setDeletingFileId(fileId);
+      try {
+        await deleteFile(fileId);
+      } catch (err) {
+        console.error('Failed to delete file:', err);
+      } finally {
+        setDeletingFileId(null);
+      }
+    }
+  };
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const formatDate = (dateString: string): string => {
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch {
+      return dateString;
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
@@ -50,15 +91,21 @@ export default function ExistingFilesModal() {
         <div className="mt-6 max-h-80 min-h-[12rem] overflow-y-auto rounded-lg border border-gray-200 bg-gray-50 p-4">
           {isLoading ? (
             <div className="flex h-full items-center justify-center">
-              <p className="text-gray-500">Loading files...</p>
+              <div className="text-center">
+                <div className="mb-3 inline-block animate-spin rounded-full border-4 border-gray-300 border-t-blue-600 h-8 w-8"></div>
+                <p className="text-gray-500">Loading files...</p>
+              </div>
             </div>
           ) : error ? (
             <div className="flex h-full items-center justify-center text-red-500">
-              <p>{error}</p>
+              <div className="text-center">
+                <p className="font-semibold">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
             </div>
           ) : files.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-500">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 text-gray-500">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -68,15 +115,42 @@ export default function ExistingFilesModal() {
               <p className="text-sm text-gray-500">Upload a file to get started.</p>
             </div>
           ) : (
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {files.map((file) => (
                 <li
                   key={file.id}
-                  className="cursor-pointer rounded-lg border border-gray-200 bg-white p-4 text-gray-800 transition hover:border-blue-500 hover:bg-blue-50 hover:shadow-sm"
+                  onClick={() => selectFile(file)}
+                  className={`cursor-pointer rounded-lg border-2 p-4 transition ${
+                    selectedFile?.id === file.id
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50'
+                  }`}
                 >
-                  <div className="font-medium">{file.file_name}</div>
-                  <div className="text-xs text-gray-500">
-                    {(file.file_size / 1024).toFixed(2)} KB
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={selectedFile?.id === file.id}
+                          onChange={() => selectFile(file)}
+                          className="h-4 w-4 rounded cursor-pointer"
+                        />
+                        <div>
+                          <div className="font-semibold text-gray-800">{file.file_name}</div>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {formatFileSize(file.file_size)} • {formatDate(file.created_at)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={(e) => handleDeleteFile(file.id, e)}
+                      disabled={deletingFileId === file.id}
+                      className="ml-2 rounded-lg p-2 text-gray-400 transition hover:bg-red-100 hover:text-red-600 disabled:opacity-50"
+                      title="Delete file"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 </li>
               ))}
@@ -92,11 +166,10 @@ export default function ExistingFilesModal() {
             Cancel
           </button>
           <button
-            // Add selection logic here
-            // disabled={!selectedFile}
-            className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-300"
+            disabled={!selectedFile || isLoading}
+            className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
           >
-            Use Selected File
+            {selectedFile ? `Use: ${selectedFile.file_name}` : 'Select a File'}
           </button>
         </div>
       </div>

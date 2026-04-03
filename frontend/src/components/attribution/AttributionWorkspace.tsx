@@ -15,8 +15,11 @@ import {
   BarChart3,
   PieChart,
 } from 'lucide-react';
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
 
 export default function AttributionWorkspace() {
+  const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
+  const ATTRIBUTION_AGENT_ID = 5;
   const channels = [
     {
       name: 'Paid Search',
@@ -108,7 +111,7 @@ export default function AttributionWorkspace() {
 
             {/* Dataset Selection */}
             <div className="mt-12 grid gap-5 lg:grid-cols-2">
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-rose-600 bg-rose-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-rose-100 hover:shadow-lg">
+              <button onClick={() => openKnowledgeModal(ATTRIBUTION_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-rose-600 bg-rose-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-rose-100 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-600 text-white shadow-sm">
                     <Database className="h-7 w-7" />
@@ -129,7 +132,7 @@ export default function AttributionWorkspace() {
                 </div>
               </button>
 
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-rose-300 hover:bg-gray-50 hover:shadow-lg">
+              <button onClick={() => openUploadModal(ATTRIBUTION_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-rose-300 hover:bg-gray-50 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 text-gray-700 transition group-hover:bg-rose-100 group-hover:text-rose-600">
                     <Upload className="h-7 w-7" />

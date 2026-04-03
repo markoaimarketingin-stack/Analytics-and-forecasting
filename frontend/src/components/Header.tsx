@@ -1,5 +1,6 @@
 
 import { Menu, Plus, BookOpen, Brain } from 'lucide-react';
+import { useKnowledgeBase } from '../context/KnowledgeBaseContext';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -10,6 +11,8 @@ export default function Header({
   onMenuClick,
   onNewChat,
 }: HeaderProps) {
+  const { openKnowledgeModal } = useKnowledgeBase();
+
   return (
     <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 lg:px-9">
       <div className="flex items-center gap-3">
@@ -35,7 +38,10 @@ export default function Header({
           </span>
         </button>
 
-        <button className="group flex h-[54px] min-w-[205px] items-center gap-3 rounded-full border border-violet-300 bg-violet-50 px-4 transition-all duration-200 hover:bg-violet-100 hover:shadow-sm">
+        <button
+          onClick={() => openKnowledgeModal()}
+          className="group flex h-[54px] min-w-[205px] items-center gap-3 rounded-full border border-violet-300 bg-violet-50 px-4 transition-all duration-200 hover:bg-violet-100 hover:shadow-sm"
+        >
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white transition-transform duration-200 group-hover:scale-105">
             <BookOpen className="h-5 w-5" />
           </div>
