@@ -13,7 +13,7 @@ from analytics_agent.analytics_runner import AnalyticsRunner
 from analytics_agent.config import settings
 from analytics_agent.logging_config import get_logger
 from analytics_agent.api.orchestrator import AnalyticsSupervisor
-from analytics_agent.db.repo import get_session
+from analytics_agent.db.repo import get_session, init_db
 from analytics_agent.db.models import File, Agent
 from analytics_agent.api.file_handler import FileHandler
 from analytics_agent.api.models import (
@@ -109,6 +109,9 @@ async def lifespan(app: FastAPI):
 
     try:
         logger.info("Starting Analytics Agent API")
+
+        # Ensure local metadata tables (agents/files/etc.) exist before serving requests.
+        init_db()
 
         analytics_runner = AnalyticsRunner()
 
