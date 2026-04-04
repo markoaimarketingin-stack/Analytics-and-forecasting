@@ -14,6 +14,11 @@ try:
 except Exception:
     genai = None
 
+try:
+    import google.generativeai as legacy_genai
+except Exception:
+    legacy_genai = None
+
 load_dotenv()
 
 logger = get_logger(__name__)
@@ -24,6 +29,7 @@ MODEL_NAME = "gemini-3.1-flash-lite-preview"
 class GeminiClient:
     def __init__(self, api_key: Optional[str] = None):
         api_key = api_key or os.getenv("GEMINI_API_KEY")
+        self._mode = None
 
         if not api_key:
             logger.warning("GEMINI_API_KEY not found. Gemini client disabled.")
@@ -31,18 +37,27 @@ class GeminiClient:
             self._client = None
             return
 
-        if genai is None:
+        try:
+            if genai is not None:
+                self._client = genai.Client(api_key=api_key)
+                self._mode = "google-genai"
+                self.enabled = True
+                logger.info("Gemini client initialized", model=MODEL_NAME, sdk=self._mode)
+                return
+
+            if legacy_genai is not None:
+                legacy_genai.configure(api_key=api_key)
+                self._client = legacy_genai.GenerativeModel(MODEL_NAME)
+                self._mode = "google-generativeai"
+                self.enabled = True
+                logger.info("Gemini client initialized", model=MODEL_NAME, sdk=self._mode)
+                return
+
             logger.warning(
-                "google-genai package is not installed. Gemini client disabled."
+                "No compatible Gemini SDK installed (google-genai/google-generativeai). Gemini client disabled."
             )
             self.enabled = False
             self._client = None
-            return
-
-        try:
-            self._client = genai.Client(api_key=api_key)
-            self.enabled = True
-            logger.info("Gemini client initialized", model=MODEL_NAME)
         except Exception as e:
             logger.error("Failed to initialize Gemini client", error=str(e))
             self.enabled = False
@@ -53,13 +68,20 @@ class GeminiClient:
             return ""
 
         try:
-            response = self._client.models.generate_content(
-                model=MODEL_NAME,
-                contents=prompt,
-            )
+            if self._mode == "google-genai":
+                response = self._client.models.generate_content(
+                    model=MODEL_NAME,
+                    contents=prompt,
+                )
 
-            if hasattr(response, "text") and response.text:
-                return response.text.strip()
+                if hasattr(response, "text") and response.text:
+                    return response.text.strip()
+
+            elif self._mode == "google-generativeai":
+                response = self._client.generate_content(prompt)
+                text = getattr(response, "text", None)
+                if text:
+                    return text.strip()
 
             logger.warning("Gemini returned empty response")
             return ""
