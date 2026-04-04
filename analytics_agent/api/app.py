@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from datetime import datetime
+from io import StringIO
 from typing import Optional
 import uuid
 from pathlib import Path
@@ -7,6 +8,7 @@ from pathlib import Path
 from fastapi import BackgroundTasks, FastAPI, HTTPException, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_serializer
+import pandas as pd
 from sqlalchemy.orm import Session
 
 from analytics_agent.analytics_runner import AnalyticsRunner
@@ -605,6 +607,38 @@ class SelectedDatasetsRequest(BaseModel):
     selected_datasets: list[str] = Field(default_factory=list, description="List of dataset names to use for analysis")
 
 
+class DatasetRowsResponse(BaseModel):
+    success: bool = True
+    dataset: str
+    columns: list[str]
+    rows: list[dict]
+    row_count: int
+    source: str
+    timestamp: str
+
+
+class DatasetUpdateResponse(BaseModel):
+    success: bool = True
+    dataset: str
+    updated_rows: int
+    message: str
+    timestamp: str
+
+
+class DatasetRowsUpdateRequest(BaseModel):
+    rows: list[dict] = Field(default_factory=list)
+
+
+ALLOWED_DATASETS = {"campaigns", "customers", "events", "retention", "transactions"}
+
+
+def _validate_dataset_name(dataset_name: str) -> str:
+    normalized = dataset_name.strip().lower()
+    if normalized not in ALLOWED_DATASETS:
+        raise HTTPException(status_code=400, detail=f"Unsupported dataset '{dataset_name}'")
+    return normalized
+
+
 @app.get("/api/available-datasets", response_model=AvailableDatasetsResponse)
 async def get_available_datasets():
     """
@@ -704,6 +738,83 @@ async def get_available_datasets():
             status_code=500,
             detail=f"Failed to fetch available datasets: {str(e)}",
         )
+
+
+@app.get("/api/datasets/{dataset_name}", response_model=DatasetRowsResponse)
+async def get_dataset_rows(dataset_name: str, limit: int = 50):
+    dataset = _validate_dataset_name(dataset_name)
+    try:
+        from analytics_agent.db.queries import get_dataset_dataframe
+
+        safe_limit = max(1, min(limit, 500))
+        dataframe = get_dataset_dataframe(dataset, limit=safe_limit, prefer_remote=True)
+        source = "supabase" if not dataframe.empty else "local_fallback"
+
+        return {
+            "success": True,
+            "dataset": dataset,
+            "columns": dataframe.columns.tolist() if not dataframe.empty else [],
+            "rows": dataframe.where(pd.notnull(dataframe), None).to_dict(orient="records") if not dataframe.empty else [],
+            "row_count": int(len(dataframe.index)),
+            "source": source,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Failed to fetch dataset rows", dataset=dataset, error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to fetch dataset rows: {str(e)}")
+
+
+@app.post("/api/datasets/{dataset_name}/rows", response_model=DatasetUpdateResponse)
+async def upsert_dataset_rows(dataset_name: str, payload: DatasetRowsUpdateRequest):
+    dataset = _validate_dataset_name(dataset_name)
+    try:
+        from analytics_agent.db.queries import upsert_dataset_rows as _upsert_dataset_rows
+
+        updated_rows = _upsert_dataset_rows(dataset, payload.rows)
+        return {
+            "success": True,
+            "dataset": dataset,
+            "updated_rows": updated_rows,
+            "message": f"Upserted {updated_rows} rows into {dataset}",
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Failed to upsert dataset rows", dataset=dataset, error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to upsert dataset rows: {str(e)}")
+
+
+@app.post("/api/datasets/{dataset_name}/upload-csv", response_model=DatasetUpdateResponse)
+async def upload_dataset_csv(dataset_name: str, file: UploadFile = FastAPIFile(...)):
+    dataset = _validate_dataset_name(dataset_name)
+
+    if not file.filename.lower().endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV uploads are supported for dataset update")
+
+    try:
+        from analytics_agent.db.queries import upsert_dataset_rows as _upsert_dataset_rows
+
+        payload = await file.read()
+        text = payload.decode("utf-8")
+        dataframe = pd.read_csv(StringIO(text))
+        rows = dataframe.where(pd.notnull(dataframe), None).to_dict(orient="records")
+        updated_rows = _upsert_dataset_rows(dataset, rows)
+
+        return {
+            "success": True,
+            "dataset": dataset,
+            "updated_rows": updated_rows,
+            "message": f"Uploaded and upserted {updated_rows} rows into {dataset}",
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Failed to upload dataset csv", dataset=dataset, filename=file.filename, error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to upload dataset csv: {str(e)}")
 
 
 @app.get("/api/agents-data-mapping")

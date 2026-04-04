@@ -1,6 +1,8 @@
 // src/services/api.ts
 
 import type {
+  AgentOrchestrationApiResponse,
+  AgentOrchestrationRequest,
   ForecastPredictApiResponse,
   ForecastRequestPayload,
   ForecastTrainApiResponse,
@@ -49,6 +51,29 @@ export const getAgentsDataMapping = async () => {
     console.error("Failed to fetch agents data mapping:", error);
     return { success: false, mapping: {}, error };
   }
+};
+
+export const getDatasetRows = async (dataset: string, limit: number = 50) => {
+  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}?limit=${limit}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch dataset rows: ${response.statusText}`);
+  }
+  return await response.json();
+};
+
+export const uploadDatasetCsv = async (dataset: string, file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}/upload-csv`, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `Failed to upload dataset CSV: ${response.statusText}`);
+  }
+  return await response.json();
 };
 
 /**
@@ -182,6 +207,43 @@ export const predictForecast = async (
     `${API_ROOT_URL}/agents/forecast/predict`,
     `${API_BASE_URL}/agents/forecast/predict`,
   ], payload);
+};
+
+export const orchestrateAgents = async (
+  payload: AgentOrchestrationRequest,
+): Promise<AgentOrchestrationApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return postJsonWithFallback<AgentOrchestrationApiResponse>([
+    `${API_ROOT_URL}/agents/orchestrate`,
+    `${baseWithoutApiSuffix}/agents/orchestrate`,
+  ], payload);
+};
+
+export const getAgentResults = async (agentId?: string) => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = agentId ? `?agent_id=${encodeURIComponent(agentId)}` : '';
+
+  const paths = [
+    `${API_ROOT_URL}/agents/results${query}`,
+    `${baseWithoutApiSuffix}/agents/results${query}`,
+    `${API_BASE_URL}/agents/results${query}`,
+  ];
+
+  let lastError: Error | null = null;
+  for (const path of paths) {
+    try {
+      const response = await fetch(path);
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`${response.status} ${response.statusText} ${text}`.trim());
+      }
+      return await response.json();
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error('Failed to fetch agent results');
+    }
+  }
+
+  throw lastError ?? new Error('All agent results endpoint calls failed');
 };
 
 

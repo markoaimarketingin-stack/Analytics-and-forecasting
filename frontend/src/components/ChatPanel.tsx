@@ -42,11 +42,11 @@ export default function ChatPanel({
   ]);
 
   return (
-    <aside className="hidden w-full flex-col border-l border-gray-200 bg-white lg:flex lg:w-[420px]">
+    <aside className="chat-panel-glass hidden w-full flex-col lg:flex lg:w-[420px]">
       {/* Header */}
-      <div className="border-b border-gray-200 px-6 py-3">
+      <div className="workspace-header-glass border-b px-6 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-md">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_12px_30px_rgba(79,70,229,0.35)]">
             <Bot className="h-7 w-7" />
           </div>
 
@@ -67,7 +67,7 @@ export default function ChatPanel({
 
       {/* Chat Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <div className="flex-1 overflow-y-auto px-5 py-6 lg:px-6">
+        <div className="flex-1 overflow-y-auto bg-gradient-to-b from-[#f7f8fb] to-[#f4f5f8] px-5 py-6 lg:px-6">
           <div className="mx-auto flex w-full max-w-5xl flex-col gap-5">
             <MessageList messages={messages} isLoading={isLoading} />
             <div ref={messagesEndRef} />
@@ -75,7 +75,7 @@ export default function ChatPanel({
         </div>
 
         {/* Input */}
-        <div className="border-t border-gray-200 bg-white px-5 py-5 lg:px-6">
+        <div className="workspace-header-glass border-t px-5 py-5 lg:px-6">
           <div className="mx-auto max-w-5xl">
             <ChatInput
               onSend={handleSendMessage}

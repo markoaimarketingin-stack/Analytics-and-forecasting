@@ -1,22 +1,13 @@
-
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Any, List
 from pathlib import Path
+from typing import Any
 
 import joblib
-import numpy as np
 import pandas as pd
 
-from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.impute import SimpleImputer
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder
-
-from analytics_agent.db.queries import get_campaign_data, get_retention_data
+from analytics_agent.state import AnalyticsState, ForecastAnalysis
 
 
 FEATURE_COLUMNS = [
@@ -35,277 +26,229 @@ FEATURE_COLUMNS = [
     "is_weekend",
 ]
 
-CATEGORICAL_COLUMNS = ["channel", "campaign_type"]
-NUMERIC_COLUMNS = [
-    "spend",
-    "impressions",
-    "clicks",
-    "ctr",
-    "landing_page_views",
-    "add_to_cart",
-    "conversion_rate",
-    "purchases",
-    "month",
-    "quarter",
-    "is_weekend",
-]
-
 
 @dataclass
 class ForecastRequest:
-    channel: str
-    campaign_type: str
-    spend: float
-    impressions: int
-    ctr: float
-    conversion_rate: float
     horizon_days: int = 30
 
 
 class ForecastAgent:
+    """Predicts future revenue, ROI, and profit from cross-agent signals."""
+
     def __init__(self, model_path: str = "analytics_agent/models/forecast_model.pkl"):
         self.model_path = Path(model_path)
-        self.pipeline: Pipeline | None = None
+        self.pipeline: Any | None = None
         self.feature_names: list[str] = []
+        self._load_model()
 
-        if self.model_path.exists():
-            saved = joblib.load(self.model_path)
-            self.pipeline = saved["pipeline"]
-            self.feature_names = saved.get("feature_names", [])
-
-    # --------------------------------------------------
-    # TRAIN MODEL
-    # --------------------------------------------------
-    def train(self) -> Dict[str, Any]:
-        df = pd.DataFrame(get_campaign_data())
-
-        if df.empty:
-            raise ValueError("No campaign data found")
-
-        df = self._prepare_dataframe(df)
-
-        X = df[FEATURE_COLUMNS]
-        y = df["roi"]
-
-        split_idx = int(len(df) * 0.8)
-
-        X_train = X.iloc[:split_idx]
-        X_test = X.iloc[split_idx:]
-        y_train = y.iloc[:split_idx]
-        y_test = y.iloc[split_idx:]
-
-        categorical_transformer = Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="most_frequent")),
-                ("onehot", OneHotEncoder(handle_unknown="ignore")),
-            ]
-        )
-
-        numeric_transformer = Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="median")),
-            ]
-        )
-
-        preprocessor = ColumnTransformer(
-            transformers=[
-                ("cat", categorical_transformer, CATEGORICAL_COLUMNS),
-                ("num", numeric_transformer, NUMERIC_COLUMNS),
-            ]
-        )
-
-        model = RandomForestRegressor(
-            n_estimators=150,
-            max_depth=8,
-            min_samples_split=8,
-            min_samples_leaf=3,
-            random_state=42,
-            n_jobs=-1,
-        )
-
-        pipeline = Pipeline(
-            steps=[
-                ("preprocessor", preprocessor),
-                ("model", model),
-            ]
-        )
-
-        pipeline.fit(X_train, y_train)
-
-        preds = pipeline.predict(X_test)
-
-        rmse = float(np.sqrt(mean_squared_error(y_test, preds)))
-        mae = float(mean_absolute_error(y_test, preds))
-
-        ohe = pipeline.named_steps["preprocessor"].named_transformers_["cat"].named_steps["onehot"]
-        cat_names = list(ohe.get_feature_names_out(CATEGORICAL_COLUMNS))
-        self.feature_names = cat_names + NUMERIC_COLUMNS
-
-        self.pipeline = pipeline
-
-        self.model_path.parent.mkdir(parents=True, exist_ok=True)
-        joblib.dump(
-            {
-                "pipeline": pipeline,
-                "feature_names": self.feature_names,
-            },
-            self.model_path,
-        )
-
-        return {
-            "status": "trained",
-            "rows": len(df),
-            "rmse": round(rmse, 4),
-            "mae": round(mae, 4),
-            "model": "RandomForestRegressor",
-        }
-
-    # --------------------------------------------------
-    # PREDICT A NEW CAMPAIGN
-    # --------------------------------------------------
-    def predict_campaign(self, request: ForecastRequest) -> Dict[str, Any]:
-        if self.pipeline is None:
-            raise ValueError("Forecast model not trained")
-
-        clicks = int(request.impressions * request.ctr)
-        landing_page_views = int(clicks * 0.65)
-        add_to_cart = int(landing_page_views * 0.18)
-        purchases = int(add_to_cart * request.conversion_rate)
-
-        now = pd.Timestamp.now()
-
-        row = pd.DataFrame(
-            [
-                {
-                    "channel": request.channel,
-                    "campaign_type": request.campaign_type,
-                    "spend": request.spend,
-                    "impressions": request.impressions,
-                    "clicks": clicks,
-                    "ctr": request.ctr,
-                    "landing_page_views": landing_page_views,
-                    "add_to_cart": add_to_cart,
-                    "conversion_rate": request.conversion_rate,
-                    "purchases": purchases,
-                    "month": now.month,
-                    "quarter": now.quarter,
-                    "is_weekend": int(now.dayofweek >= 5),
-                }
-            ]
-        )
-
-        predicted_roi = float(self.pipeline.predict(row)[0])
-
-        predicted_revenue = request.spend * (1 + predicted_roi)
-        predicted_profit = predicted_revenue - request.spend
-
-        return {
-            "predicted_roi": round(predicted_roi, 3),
-            "predicted_revenue": round(predicted_revenue, 2),
-            "predicted_profit": round(predicted_profit, 2),
-            "predicted_clicks": clicks,
-            "predicted_purchases": purchases,
-            "retention_adjustment": self._get_retention_adjustment(),
-            "daily_forecast": self._forecast_over_time(
-                request.spend,
-                predicted_roi,
-                request.horizon_days,
-            ),
-            "top_drivers": self._top_drivers(),
-        }
-
-    # --------------------------------------------------
-    # DAILY FORECAST CURVE
-    # --------------------------------------------------
-    def _forecast_over_time(
+    def analyze(
         self,
-        base_spend: float,
-        base_roi: float,
-        horizon_days: int,
-    ) -> List[Dict[str, Any]]:
-        forecasts = []
+        state: AnalyticsState,
+        request: ForecastRequest | None = None,
+    ) -> AnalyticsState:
+        request = request or ForecastRequest()
 
-        for day in range(1, horizon_days + 1):
-            growth_factor = 1 + (day * 0.002)
-            weekend_boost = 1.08 if day % 7 in [5, 6] else 1.0
-
-            spend = base_spend * growth_factor
-            roi = base_roi * weekend_boost
-            revenue = spend * (1 + roi)
-            profit = revenue - spend
-
-            forecasts.append(
-                {
-                    "day": day,
-                    "forecast_spend": round(spend, 2),
-                    "forecast_roi": round(roi, 3),
-                    "forecast_revenue": round(revenue, 2),
-                    "forecast_profit": round(profit, 2),
-                }
+        campaign_df = pd.DataFrame(state.campaign_data or [])
+        if campaign_df.empty:
+            state.forecast_analysis = ForecastAnalysis(
+                assumptions=["No campaign data available; forecast is zeroed."],
             )
+            return state
 
-        return forecasts
+        feature_row = self._build_feature_row(campaign_df, state, request.horizon_days)
+        model_roi = self._predict_model_roi(feature_row)
 
-    # --------------------------------------------------
-    # RETENTION IMPACT
-    # --------------------------------------------------
-    def _get_retention_adjustment(self) -> Dict[str, Any]:
-        retention_df = pd.DataFrame(get_retention_data())
+        attribution_lift = self._attribution_lift(state)
+        funnel_lift = self._funnel_lift(state)
+        retention_lift = self._retention_lift(state)
 
-        if retention_df.empty:
-            return {
-                "available": False,
-                "message": "No retention data available",
-            }
+        adjusted_roi = model_roi * attribution_lift * retention_lift
+        adjusted_revenue = feature_row["spend"].iloc[0] * (1 + adjusted_roi) * funnel_lift
+        adjusted_profit = adjusted_revenue - feature_row["spend"].iloc[0]
 
-        avg_churn = float(retention_df["churn_probability"].mean())
-        avg_retention = 1 - avg_churn
-        multiplier = 1 + (avg_retention * 0.25)
+        confidence = self._confidence_score(
+            campaign_rows=len(campaign_df),
+            has_model=self.pipeline is not None,
+            has_attribution=state.attribution_analysis is not None,
+            has_funnel=state.funnel_analysis is not None,
+            has_cohort=state.cohort_analysis is not None,
+        )
 
-        return {
-            "available": True,
-            "average_churn_probability": round(avg_churn, 3),
-            "average_retention": round(avg_retention, 3),
-            "future_revenue_multiplier": round(multiplier, 3),
-        }
+        state.forecast_analysis = ForecastAnalysis(
+            next_30_day_revenue=round(float(adjusted_revenue), 2),
+            predicted_roi=round(float(adjusted_roi), 3),
+            predicted_profit=round(float(adjusted_profit), 2),
+            confidence=confidence,
+            key_drivers=self._top_drivers(state),
+            assumptions=self._assumptions(
+                horizon_days=request.horizon_days,
+                model_roi=model_roi,
+                attribution_lift=attribution_lift,
+                funnel_lift=funnel_lift,
+                retention_lift=retention_lift,
+            ),
+        )
+        return state
 
-    # --------------------------------------------------
-    # TOP FEATURE DRIVERS
-    # --------------------------------------------------
-    def _top_drivers(self) -> List[Dict[str, Any]]:
-        if self.pipeline is None:
-            return []
-
-        model = self.pipeline.named_steps["model"]
-        importances = model.feature_importances_
-
-        pairs = sorted(
-            zip(self.feature_names, importances),
-            key=lambda x: x[1],
-            reverse=True,
-        )[:5]
-
-        return [
-            {
-                "feature": feature,
-                "importance": round(float(score), 4),
-            }
-            for feature, score in pairs
+    def _load_model(self) -> None:
+        candidates = [
+            self.model_path,
+            Path("analytics_agent/api/analytics_agent/models/forecast_model.pkl"),
         ]
 
-    # --------------------------------------------------
-    # DATA PREP
-    # --------------------------------------------------
-    def _prepare_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
-        df = df.copy()
+        for candidate in candidates:
+            if not candidate.exists():
+                continue
 
-        df["date"] = pd.to_datetime(df["date"])
-        df["month"] = df["date"].dt.month
-        df["quarter"] = df["date"].dt.quarter
-        df["is_weekend"] = (df["date"].dt.dayofweek >= 5).astype(int)
+            saved = joblib.load(candidate)
+            if isinstance(saved, dict):
+                self.pipeline = saved.get("pipeline")
+                self.feature_names = saved.get("feature_names", [])
+            else:
+                self.pipeline = saved
+                self.feature_names = []
+            return
 
-        for column in FEATURE_COLUMNS:
-            if column not in df.columns:
-                df[column] = 0
+    def _build_feature_row(
+        self,
+        campaign_df: pd.DataFrame,
+        state: AnalyticsState,
+        horizon_days: int,
+    ) -> pd.DataFrame:
+        df = campaign_df.copy()
+        if "date" in df.columns:
+            df["date"] = pd.to_datetime(df["date"], errors="coerce")
+            now = df["date"].dropna().max() if not df["date"].dropna().empty else pd.Timestamp.now()
+        else:
+            now = pd.Timestamp.now()
 
-        return df.fillna(0)
+        channel = (
+            state.attribution_analysis.best_channel
+            if state.attribution_analysis and state.attribution_analysis.best_channel
+            else self._mode_or_default(df, "channel", "Unknown")
+        )
+        campaign_type = self._mode_or_default(df, "campaign_type", "Unknown")
+
+        horizon = int(state.user_request.get("horizon_days", horizon_days))
+        avg_daily_spend = float(df["spend"].mean()) if "spend" in df.columns else 0.0
+        spend_horizon = avg_daily_spend * horizon
+
+        ctr = float(df["ctr"].mean()) if "ctr" in df.columns else 0.0
+        conversion_rate = float(df["conversion_rate"].mean()) if "conversion_rate" in df.columns else 0.0
+        impressions = int(float(df["impressions"].mean())) if "impressions" in df.columns else 0
+
+        clicks = int(impressions * ctr)
+        landing_page_views = int(clicks * 0.65)
+        add_to_cart = int(landing_page_views * 0.18)
+        purchases = int(add_to_cart * conversion_rate)
+
+        data = {
+            "channel": channel,
+            "campaign_type": campaign_type,
+            "spend": spend_horizon,
+            "impressions": impressions,
+            "clicks": clicks,
+            "ctr": ctr,
+            "landing_page_views": landing_page_views,
+            "add_to_cart": add_to_cart,
+            "conversion_rate": conversion_rate,
+            "purchases": purchases,
+            "month": int(now.month),
+            "quarter": int(now.quarter),
+            "is_weekend": int(now.dayofweek >= 5),
+        }
+
+        row = pd.DataFrame([data])
+        for feature in FEATURE_COLUMNS:
+            if feature not in row.columns:
+                row[feature] = 0
+        return row[FEATURE_COLUMNS]
+
+    def _predict_model_roi(self, feature_row: pd.DataFrame) -> float:
+        if self.pipeline is None:
+            return 0.25
+
+        try:
+            prediction = self.pipeline.predict(feature_row)
+            return float(prediction[0])
+        except Exception:
+            return 0.25
+
+    def _attribution_lift(self, state: AnalyticsState) -> float:
+        analysis = state.attribution_analysis
+        if analysis is None or not analysis.channel_weights:
+            return 1.0
+
+        best_weight = max(analysis.channel_weights.values())
+        return 1.0 + (best_weight * 0.15)
+
+    def _funnel_lift(self, state: AnalyticsState) -> float:
+        analysis = state.funnel_analysis
+        if analysis is None:
+            return 1.0
+        return 1.0 + max(0.0, float(analysis.predicted_conversion_uplift_if_fixed))
+
+    def _retention_lift(self, state: AnalyticsState) -> float:
+        analysis = state.cohort_analysis
+        if analysis is None:
+            return 1.0
+
+        retention = float(analysis.three_month_retention)
+        return 1.0 + ((retention - 0.5) * 0.5)
+
+    def _confidence_score(
+        self,
+        campaign_rows: int,
+        has_model: bool,
+        has_attribution: bool,
+        has_funnel: bool,
+        has_cohort: bool,
+    ) -> int:
+        score = 50
+        score += min(20, int(campaign_rows / 20))
+        score += 10 if has_model else 0
+        score += 6 if has_attribution else 0
+        score += 6 if has_funnel else 0
+        score += 8 if has_cohort else 0
+        return max(35, min(95, score))
+
+    def _top_drivers(self, state: AnalyticsState) -> list[str]:
+        drivers: list[str] = []
+
+        if state.attribution_analysis and state.attribution_analysis.best_channel:
+            drivers.append(f"Attribution mix strength in {state.attribution_analysis.best_channel}")
+
+        if state.funnel_analysis:
+            drivers.append(f"Funnel leakage at {state.funnel_analysis.largest_dropoff}")
+
+        if state.cohort_analysis:
+            drivers.append(f"Three-month retention at {state.cohort_analysis.three_month_retention:.1%}")
+
+        if self.feature_names:
+            top_features = ", ".join(self.feature_names[:3])
+            drivers.append(f"Model feature salience: {top_features}")
+
+        if not drivers:
+            drivers.append("Historical spend and conversion averages")
+        return drivers
+
+    def _assumptions(
+        self,
+        horizon_days: int,
+        model_roi: float,
+        attribution_lift: float,
+        funnel_lift: float,
+        retention_lift: float,
+    ) -> list[str]:
+        return [
+            f"Forecast horizon is {horizon_days} days.",
+            f"Base model ROI prediction is {model_roi:.3f}.",
+            f"Attribution-adjusted lift multiplier is {attribution_lift:.3f}.",
+            f"Funnel uplift multiplier is {funnel_lift:.3f}.",
+            f"Retention-adjusted lift multiplier is {retention_lift:.3f}.",
+        ]
+
+    def _mode_or_default(self, df: pd.DataFrame, column: str, default: str) -> str:
+        if column not in df.columns or df[column].dropna().empty:
+            return default
+        return str(df[column].mode().iloc[0])

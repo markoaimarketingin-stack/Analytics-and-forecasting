@@ -1,264 +1,246 @@
-import React, { useEffect, useState } from 'react';
-import { X, Database, Check } from 'lucide-react';
-import axios from 'axios';
-import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
+import { useEffect, useMemo, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { Check, Database, RefreshCw, Upload, X } from 'lucide-react';
 
-interface Dataset {
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
+import { getAvailableDatasets, getDatasetRows, uploadDatasetCsv } from '../../services/api';
+
+interface DatasetMeta {
   name: string;
   description: string;
-  agent_types: string[];
   row_count: number;
   columns: string[];
 }
 
-const API_BASE = 'http://localhost:8001/api';
+interface DatasetRowsResponse {
+  success: boolean;
+  dataset: string;
+  columns: string[];
+  rows: Record<string, unknown>[];
+  row_count: number;
+  source: string;
+}
+
+const DATASET_ORDER = ['campaigns', 'customers', 'events', 'retention', 'transactions'] as const;
 
 export default function DatasetSelectionModal() {
-  const { isDatasetSelectionModalOpen, closeDatasetSelectionModal, selectedDatasets, setSelectedDatasets } = useKnowledgeBase();
-  const [datasets, setDatasets] = useState<Dataset[]>([]);
-  const [localSelected, setLocalSelected] = useState<string[]>(selectedDatasets);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [expandedDataset, setExpandedDataset] = useState<string | null>(null);
+  const {
+    isDatasetSelectionModalOpen,
+    closeDatasetSelectionModal,
+    selectedDatasets,
+    setSelectedDatasets,
+  } = useKnowledgeBase();
 
-  // Load datasets when modal opens
+  const [datasetMeta, setDatasetMeta] = useState<Record<string, DatasetMeta>>({});
+  const [activeDataset, setActiveDataset] = useState<string>('campaigns');
+  const [datasetRows, setDatasetRows] = useState<Record<string, unknown>[]>([]);
+  const [columns, setColumns] = useState<string[]>([]);
+  const [source, setSource] = useState<string>('');
+  const [isLoadingMeta, setIsLoadingMeta] = useState(false);
+  const [isLoadingRows, setIsLoadingRows] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const activeMeta = datasetMeta[activeDataset];
+
   useEffect(() => {
-    if (isDatasetSelectionModalOpen) {
-      fetchDatasets();
-      setLocalSelected(selectedDatasets);
+    if (!isDatasetSelectionModalOpen) {
+      return;
     }
+
+    if (selectedDatasets.length > 0) {
+      setActiveDataset(selectedDatasets[0]);
+    }
+
+    void loadDatasetMeta();
   }, [isDatasetSelectionModalOpen, selectedDatasets]);
 
-  const fetchDatasets = async () => {
+  useEffect(() => {
+    if (!isDatasetSelectionModalOpen) {
+      return;
+    }
+    void loadDatasetRows(activeDataset);
+  }, [activeDataset, isDatasetSelectionModalOpen]);
+
+  const datasetCards = useMemo(() => {
+    return DATASET_ORDER.map((datasetName) => ({
+      name: datasetName,
+      label: datasetName.charAt(0).toUpperCase() + datasetName.slice(1),
+      description: datasetMeta[datasetName]?.description || `Manage ${datasetName} data`,
+      rowCount: datasetMeta[datasetName]?.row_count || 0,
+    }));
+  }, [datasetMeta]);
+
+  const loadDatasetMeta = async () => {
+    setIsLoadingMeta(true);
+    setError(null);
     try {
-      setLoading(true);
-      const response = await axios.get(`${API_BASE}/available-datasets`);
-      if (response.data.success) {
-        setDatasets(response.data.datasets);
-        setError(null);
-      }
-    } catch (err) {
-      console.error('Failed to fetch datasets:', err);
-      setError('Failed to load available datasets');
+      const response = await getAvailableDatasets();
+      const mapped: Record<string, DatasetMeta> = {};
+      (response.datasets || []).forEach((dataset: DatasetMeta) => {
+        mapped[dataset.name] = dataset;
+      });
+      setDatasetMeta(mapped);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError.message : 'Failed to load datasets.');
     } finally {
-      setLoading(false);
+      setIsLoadingMeta(false);
     }
   };
 
-  const handleToggleDataset = (datasetName: string) => {
-    setLocalSelected((prev) => {
-      if (prev.includes(datasetName)) {
-        return prev.filter((d) => d !== datasetName);
-      } else {
-        return [...prev, datasetName];
-      }
-    });
+  const loadDatasetRows = async (datasetName: string) => {
+    setIsLoadingRows(true);
+    setError(null);
+    setSuccessMessage(null);
+    try {
+      const response = (await getDatasetRows(datasetName, 50)) as DatasetRowsResponse;
+      setColumns(response.columns || []);
+      setDatasetRows(response.rows || []);
+      setSource(response.source || '');
+      setSelectedDatasets([datasetName]);
+    } catch (loadError) {
+      setDatasetRows([]);
+      setColumns([]);
+      setSource('');
+      setError(loadError instanceof Error ? loadError.message : 'Failed to load dataset rows.');
+    } finally {
+      setIsLoadingRows(false);
+    }
   };
 
-  const handleClearAll = () => {
-    setLocalSelected([]);
-  };
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
 
-  const handleSelectAll = () => {
-    const allDatasets = datasets.map((d) => d.name);
-    setLocalSelected(allDatasets);
-  };
-
-  const handleSave = () => {
-    setSelectedDatasets(localSelected);
-    closeDatasetSelectionModal();
+    setIsUploading(true);
+    setError(null);
+    setSuccessMessage(null);
+    try {
+      const response = await uploadDatasetCsv(activeDataset, file);
+      setSuccessMessage(response.message || `Updated ${activeDataset} successfully.`);
+      await loadDatasetMeta();
+      await loadDatasetRows(activeDataset);
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : 'Failed to update dataset.');
+    } finally {
+      setIsUploading(false);
+      event.target.value = '';
+    }
   };
 
   return (
     <>
-      {/* Modal */}
       {isDatasetSelectionModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="h-[90vh] w-[90vw] max-w-2xl overflow-hidden rounded-lg bg-white shadow-xl">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-gray-200 p-6">
+          <div className="h-[90vh] w-[94vw] max-w-6xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
               <div className="flex items-center gap-3">
-                <Database className="h-5 w-5 text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Select Existing Data
-                </h2>
+                <Database className="h-5 w-5 text-violet-600" />
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">Knowledge Base Datasets</h2>
+                  <p className="text-xs text-gray-500">Connected to Supabase with CSV update support.</p>
+                </div>
               </div>
+
               <button
                 onClick={closeDatasetSelectionModal}
-                className="text-gray-400 hover:text-gray-600"
+                className="rounded-lg p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               </button>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+            <div className="grid h-[calc(90vh-72px)] grid-cols-12 overflow-hidden">
+              <div className="col-span-4 border-r border-gray-200 p-4 lg:col-span-3">
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Datasets</div>
+                  <button
+                    onClick={() => {
+                      void loadDatasetMeta();
+                      void loadDatasetRows(activeDataset);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-lg border border-gray-200 px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50"
+                  >
+                    <RefreshCw className="h-3.5 w-3.5" /> Refresh
+                  </button>
                 </div>
-              ) : error ? (
-                <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-                  <p className="text-sm text-red-800">{error}</p>
+
+                <div className="space-y-2">
+                  {datasetCards.map((dataset) => (
+                    <button
+                      key={dataset.name}
+                      onClick={() => setActiveDataset(dataset.name)}
+                      className={`w-full rounded-xl border p-3 text-left transition ${
+                        activeDataset === dataset.name
+                          ? 'border-violet-300 bg-violet-50'
+                          : 'border-gray-200 bg-white hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-semibold text-gray-900">{dataset.label}</div>
+                        {activeDataset === dataset.name && <Check className="h-4 w-4 text-violet-600" />}
+                      </div>
+                      <div className="mt-1 text-xs text-gray-500">{dataset.rowCount.toLocaleString()} rows</div>
+                    </button>
+                  ))}
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Selection Controls */}
-                  {datasets.length > 0 && (
-                    <div className="flex gap-2 pb-4">
-                      <button
-                        onClick={handleSelectAll}
-                        className="text-xs font-medium text-blue-600 hover:text-blue-700"
-                      >
-                        Select All
-                      </button>
-                      {localSelected.length > 0 && (
-                        <>
-                          <span className="text-xs text-gray-400">|</span>
-                          <button
-                            onClick={handleClearAll}
-                            className="text-xs font-medium text-gray-600 hover:text-gray-700"
-                          >
-                            Clear All
-                          </button>
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Datasets List */}
-                  <div className="space-y-3">
-                    {datasets.map((dataset) => {
-                      const isSelected = localSelected.includes(dataset.name);
-                      const isExpanded = expandedDataset === dataset.name;
-
-                      return (
-                        <div
-                          key={dataset.name}
-                          className="border border-gray-200 rounded-lg overflow-hidden"
-                        >
-                          <div
-                            className="flex items-start gap-3 p-4 bg-gray-50 cursor-pointer hover:bg-blue-50"
-                            onClick={() => handleToggleDataset(dataset.name)}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={isSelected}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggleDataset(dataset.name);
-                              }}
-                              className="h-4 w-4 rounded border-gray-300 text-blue-600 mt-0.5"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <h4 className="font-medium text-gray-900 capitalize">
-                                  {dataset.name}
-                                </h4>
-                                {dataset.row_count > 0 && (
-                                  <span className="text-xs text-gray-500">
-                                    {dataset.row_count.toLocaleString()} rows
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-sm text-gray-600 mt-1">
-                                {dataset.description}
-                              </p>
-
-                              {dataset.agent_types.length > 0 && (
-                                <div className="flex flex-wrap gap-1 mt-2">
-                                  {dataset.agent_types.map((agent) => (
-                                    <span
-                                      key={agent}
-                                      className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800"
-                                    >
-                                      {agent}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setExpandedDataset(
-                                  isExpanded ? null : dataset.name
-                                );
-                              }}
-                              className="text-gray-400 hover:text-gray-600 flex-shrink-0"
-                            >
-                              <svg
-                                className={`h-4 w-4 transition-transform ${
-                                  isExpanded ? 'transform rotate-180' : ''
-                                }`}
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                                />
-                              </svg>
-                            </button>
-                          </div>
-
-                          {isExpanded && dataset.columns.length > 0 && (
-                            <div className="border-t border-gray-200 bg-white p-4">
-                              <h5 className="text-xs font-semibold text-gray-700 mb-3">
-                                Available Columns:
-                              </h5>
-                              <div className="grid grid-cols-2 gap-2">
-                                {dataset.columns.map((column) => (
-                                  <div
-                                    key={column}
-                                    className="flex items-center gap-1 text-xs text-gray-600"
-                                  >
-                                    <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
-                                    {column}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {isSelected && (
-                            <div className="flex items-center justify-between bg-green-50 border-t border-green-200 p-2 px-4">
-                              <span className="text-xs font-medium text-green-700">
-                                Selected
-                              </span>
-                              <Check className="h-4 w-4 text-green-600" />
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="border-t border-gray-200 bg-gray-50 px-6 py-4 flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                {localSelected.length} of {datasets.length} datasets selected
               </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={closeDatasetSelectionModal}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSave}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-                >
-                  Save Selection
-                </button>
+
+              <div className="col-span-8 flex flex-col overflow-hidden p-4 lg:col-span-9">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 capitalize">{activeDataset}</h3>
+                    <p className="text-sm text-gray-600">{activeMeta?.description || 'Dataset preview and update controls.'}</p>
+                    {source && <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">Source: {source}</p>}
+                  </div>
+
+                  <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700">
+                    <Upload className="h-4 w-4" />
+                    {isUploading ? 'Updating...' : 'Update via CSV'}
+                    <input
+                      type="file"
+                      accept=".csv"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                      disabled={isUploading}
+                    />
+                  </label>
+                </div>
+
+                {error && <div className="mb-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div>}
+                {successMessage && <div className="mb-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{successMessage}</div>}
+
+                <div className="min-h-0 flex-1 overflow-auto rounded-xl border border-gray-200">
+                  {isLoadingMeta || isLoadingRows ? (
+                    <div className="flex h-full items-center justify-center text-sm text-gray-500">Loading dataset preview...</div>
+                  ) : datasetRows.length === 0 ? (
+                    <div className="flex h-full items-center justify-center text-sm text-gray-500">No rows found for this dataset.</div>
+                  ) : (
+                    <table className="min-w-full text-left text-xs">
+                      <thead className="sticky top-0 bg-gray-50 text-gray-600">
+                        <tr>
+                          {columns.map((column) => (
+                            <th key={column} className="border-b border-gray-200 px-3 py-2 font-semibold uppercase tracking-wide">{column}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {datasetRows.map((row, index) => (
+                          <tr key={`${activeDataset}-row-${index}`} className="border-b border-gray-100 last:border-b-0">
+                            {columns.map((column) => (
+                              <td key={`${index}-${column}`} className="px-3 py-2 text-gray-700">
+                                {String(row[column] ?? '')}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -267,7 +249,4 @@ export default function DatasetSelectionModal() {
     </>
   );
 }
-
-
-
 

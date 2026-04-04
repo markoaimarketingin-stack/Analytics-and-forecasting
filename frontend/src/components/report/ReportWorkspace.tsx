@@ -15,9 +15,9 @@ export default function ReportWorkspace() {
   const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
   const REPORT_AGENT_ID = 6;
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
+    <div className="workspace-surface">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-white px-8 py-3">
+      <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
           <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-white shadow-[0_12px_32px_rgba(15,23,42,0.28)]">
             <FileText className="h-7 w-7" />
@@ -33,7 +33,7 @@ export default function ReportWorkspace() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-6 py-6 lg:px-8">
+      <div className="workspace-content">
         <div className="mx-auto w-full max-w-5xl space-y-6">
           {/* Configuration Card */}
           <div className="rounded-[32px] border border-gray-200 bg-white p-8 shadow-sm lg:p-10">

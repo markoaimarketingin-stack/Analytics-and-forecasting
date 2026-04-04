@@ -16,8 +16,9 @@ import FunnelWorkspace from './components/funnel/FunnelWorkspace';
 import CohortWorkspace from './components/cohort/CohortWorkspace';
 import AttributionWorkspace from './components/attribution/AttributionWorkspace';
 import ReportWorkspace from './components/report/ReportWorkspace';
+import SettingsWorkspace from './components/settings/SettingsWorkspace';
 
-import type { AnalysisRun, Message } from './types';
+import type { AnalysisRun, AgentOrchestrationResult, Message, UISuggestionItem } from './types';
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
@@ -30,7 +31,7 @@ interface ActivatedAgent {
 }
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState('supervisor');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,6 +41,7 @@ export default function App() {
 
   const [activatedAgents, setActivatedAgents] = useState<ActivatedAgent[]>([]);
   const [executionTimeline, setExecutionTimeline] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<UISuggestionItem[]>([]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +57,29 @@ export default function App() {
     setCurrentAnalysis(null);
     setActivatedAgents([]);
     setExecutionTimeline([]);
+  };
+
+  const addSuggestionsFromResult = (
+    source: string,
+    result?: Partial<AgentOrchestrationResult> | null,
+  ) => {
+    if (!result) return;
+    const recs = result.recommendations || [];
+    if (!Array.isArray(recs) || recs.length === 0) return;
+
+    const mapped: UISuggestionItem[] = recs.map((text, index) => ({
+      id: `${source}-${Date.now()}-${index}`,
+      title: `Recommendation ${index + 1}`,
+      description: text,
+      prompt: text,
+      source,
+    }));
+
+    setSuggestions((prev) => {
+      const existingPrompts = new Set(prev.map((item) => item.prompt.toLowerCase()));
+      const deduped = mapped.filter((item) => !existingPrompts.has(item.prompt.toLowerCase()));
+      return [...deduped, ...prev].slice(0, 20);
+    });
   };
 
   const handleSendMessage = async (message: string) => {
@@ -159,6 +184,7 @@ export default function App() {
       setExecutionTimeline(data.timeline || []);
 
       if (data.result) {
+        addSuggestionsFromResult('Supervisor', data.result);
         const run: AnalysisRun = {
           id: `${Date.now()}-analysis`,
           timestamp: new Date(),
@@ -193,27 +219,17 @@ export default function App() {
     }
   };
 
+  const handleExecuteSuggestion = (suggestion: UISuggestionItem) => {
+    handleSendMessage(suggestion.prompt);
+  };
+
+  const handleWorkspaceRunResult = (source: string, result: AgentOrchestrationResult) => {
+    addSuggestionsFromResult(source, result);
+  };
+
   const renderWorkspace = () => {
     switch (activeSection) {
-      case 'forecast':
-        return <ForecastWorkspace />;
-
-      case 'scenario':
-        return <ScenarioWorkspace />;
-
-      case 'funnel':
-        return <FunnelWorkspace />;
-
-      case 'cohort':
-        return <CohortWorkspace />;
-
-      case 'attribution':
-        return <AttributionWorkspace />;
-
-      case 'report':
-        return <ReportWorkspace />;
-
-      default:
+      case 'supervisor':
         return (
           <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
             <Header
@@ -222,63 +238,75 @@ export default function App() {
             />
 
             <div className="flex-1 overflow-y-auto px-6 py-8 lg:px-8">
-              <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-                {messages.length === 0 && !currentAnalysis && (
-                  <div className="flex min-h-[65vh] items-center justify-center rounded-[32px] border border-gray-200 bg-white px-8 py-16 shadow-sm">
-                    <div className="max-w-3xl text-center">
-                      <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-black text-white shadow-sm">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M3 12H6L8.2 5L11.8 19L14 10H21"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </div>
-
-                      <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-black">
-                        Analytics Supervisor
-                      </h1>
-
-                      <p className="mx-auto max-w-2xl text-base leading-8 text-gray-500 md:text-lg">
-                        Ask about forecasts, scenarios, attribution, funnel
-                        optimization, customer retention, budget allocation, or
-                        executive summaries.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {currentAnalysis?.result && (
-                  <div className="rounded-[32px] border border-gray-200 bg-white p-6 shadow-sm">
-                    <Dashboard
-                      result={currentAnalysis.result}
-                      isLoading={false}
-                    />
-                  </div>
-                )}
+              <div className="mx-auto flex min-h-[70vh] w-full max-w-5xl items-center justify-center rounded-[32px] border border-gray-200 bg-white px-8 py-16 shadow-sm">
+                <div className="max-w-3xl text-center">
+                  <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-black">Analytics Supervisor</h1>
+                  <p className="text-base leading-8 text-gray-500 md:text-lg">
+                    This is your orchestration center. The supervisor coordinates specialist agents for forecasting,
+                    scenarios, funnel analysis, attribution, and cohorts, then combines them into business-ready insights.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
+        );
+
+      case 'dashboard':
+        return (
+          <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
+            <Header
+              onMenuClick={() => setIsSidebarOpen(true)}
+              onNewChat={handleNewChat}
+            />
+
+            <div className="flex-1 overflow-y-auto px-6 py-8 lg:px-8">
+              <div className="mx-auto w-full max-w-6xl rounded-[32px] border border-gray-200 bg-white p-6 shadow-sm">
+                <Dashboard
+                  result={currentAnalysis?.result ?? null}
+                  isLoading={false}
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'forecast':
+        return <ForecastWorkspace onRunResult={(result) => handleWorkspaceRunResult('Forecast Agent', result)} />;
+
+      case 'scenario':
+        return <ScenarioWorkspace onRunResult={(result) => handleWorkspaceRunResult('Scenario Agent', result)} />;
+
+      case 'funnel':
+        return <FunnelWorkspace onRunResult={(result) => handleWorkspaceRunResult('Funnel Agent', result)} />;
+
+      case 'cohort':
+        return <CohortWorkspace onRunResult={(result) => handleWorkspaceRunResult('Cohort Agent', result)} />;
+
+      case 'attribution':
+        return <AttributionWorkspace onRunResult={(result) => handleWorkspaceRunResult('Attribution Agent', result)} />;
+
+      case 'report':
+        return <ReportWorkspace />;
+
+      case 'settings':
+        return <SettingsWorkspace />;
+
+      default:
+        return (
+          <div className="flex h-full items-center justify-center bg-[#f6f7f9] text-gray-500">Select a section from the sidebar.</div>
         );
     }
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
+    <div className="app-shell flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
         isMobileOpen={isSidebarOpen}
         onMobileClose={() => setIsSidebarOpen(false)}
+        suggestions={suggestions}
+        onExecuteSuggestion={handleExecuteSuggestion}
       />
 
       <div className="ml-0 flex min-w-0 flex-1 overflow-hidden lg:ml-64">

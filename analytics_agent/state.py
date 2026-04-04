@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Dict, List, Optional, Any, TypedDict
+
+from typing import Any, Dict, List, Optional, TypedDict
+
 from pydantic import BaseModel, Field
 
 
@@ -54,6 +56,24 @@ class AnalyticsState(BaseModel):
     cost_structure: Dict[str, Any] = Field(default_factory=dict)
     primary_kpi: str = ""
 
+    # New agent-layer inputs
+    user_request: Dict[str, Any] = Field(default_factory=dict)
+    campaign_data: Optional[List[Dict[str, Any]]] = None
+    customer_data: Optional[List[Dict[str, Any]]] = None
+    customers_data: Optional[List[Dict[str, Any]]] = None
+    events_data: Optional[List[Dict[str, Any]]] = None
+    transactions_data: Optional[List[Dict[str, Any]]] = None
+    retention_data: Optional[List[Dict[str, Any]]] = None
+
+    # New agent-layer outputs
+    attribution_analysis: Optional[AttributionAnalysis] = None
+    funnel_analysis: Optional[FunnelAnalysis] = None
+    cohort_analysis: Optional[CohortAnalysis] = None
+    forecast_analysis: Optional[ForecastAnalysis] = None
+    scenario_analysis: Optional[ScenarioAnalysis] = None
+    recommendations: List[str] = Field(default_factory=list)
+    executive_summary: Optional[str] = None
+
     # Outputs
     forecast_results: ForecastResults = Field(default_factory=ForecastResults)
     scenarios: List[ScenarioRow] = Field(default_factory=list)
@@ -88,3 +108,72 @@ class LTVProjection(BaseModel):
     monthly_revenue: List[float] = Field(default_factory=list)
     total_ltv: float = 0.0
     assumptions: List[str] = Field(default_factory=list)
+
+
+class AttributionAnalysis(BaseModel):
+    best_channel: str = ""
+    worst_channel: str = ""
+    channel_weights: Dict[str, float] = Field(default_factory=dict)
+    recommended_shift: Dict[str, Any] = Field(default_factory=dict)
+    channel_summary: List[Dict[str, Any]] = Field(default_factory=list)
+
+
+class FunnelAnalysis(BaseModel):
+    funnel: Dict[str, int] = Field(default_factory=dict)
+    largest_dropoff: str = ""
+    dropoff_percent: float = 0.0
+    predicted_conversion_uplift_if_fixed: float = 0.0
+
+
+class CohortAnalysis(BaseModel):
+    average_ltv: float = 0.0
+    three_month_retention: float = 0.0
+    churn_risk: float = 0.0
+    high_value_segment: str = ""
+    high_churn_segment: str = ""
+    repeat_purchase_rate: float = 0.0
+
+
+class ForecastAnalysis(BaseModel):
+    next_30_day_revenue: float = 0.0
+    predicted_roi: float = 0.0
+    predicted_profit: float = 0.0
+    confidence: int = 0
+    key_drivers: List[str] = Field(default_factory=list)
+    assumptions: List[str] = Field(default_factory=list)
+
+
+class ScenarioAnalysis(BaseModel):
+    best_case: Dict[str, float] = Field(default_factory=dict)
+    base_case: Dict[str, float] = Field(default_factory=dict)
+    worst_case: Dict[str, float] = Field(default_factory=dict)
+
+
+class UserAnalyticsRequest(BaseModel):
+    horizon_days: int = 30
+    objective: str = "growth"
+    focus_channels: List[str] = Field(default_factory=list)
+    notes: str = ""
+
+
+DEFAULT_STATE_TEMPLATE: Dict[str, Any] = {
+    "user_request": {},
+    "campaign_data": None,
+    "customer_data": None,
+    "events_data": None,
+    "transactions_data": None,
+    "retention_data": None,
+    "attribution_analysis": None,
+    "funnel_analysis": None,
+    "cohort_analysis": None,
+    "forecast_analysis": None,
+    "scenario_analysis": None,
+    "recommendations": [],
+    "executive_summary": None,
+}
+
+
+def build_default_state() -> "AnalyticsState":
+    return AnalyticsState(**DEFAULT_STATE_TEMPLATE)
+
+

@@ -57,6 +57,12 @@
     border: 0;
     background: none;
     cursor: pointer;
+    transition:
+      transform 180ms ease,
+      box-shadow 220ms ease,
+      filter 220ms ease,
+      background-color 220ms ease,
+      color 220ms ease;
   }
 
   a {
@@ -66,12 +72,100 @@
 }
 
 @layer components {
+  .app-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .app-shell::before,
+  .app-shell::after {
+    content: '';
+    position: absolute;
+    inset: auto;
+    width: 38rem;
+    height: 38rem;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.3;
+    z-index: -1;
+    pointer-events: none;
+    animation: float-blob 15s ease-in-out infinite;
+  }
+
+  .app-shell::before {
+    top: -14rem;
+    right: -10rem;
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.55) 0%, rgba(79, 70, 229, 0) 70%);
+  }
+
+  .app-shell::after {
+    bottom: -16rem;
+    left: -10rem;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.45) 0%, rgba(14, 165, 233, 0) 72%);
+    animation-delay: -6s;
+  }
+
+  .workspace-surface {
+    @apply flex h-full flex-col overflow-hidden;
+    background: linear-gradient(180deg, #fafcff 0%, #f5f7fb 45%, #f2f5f9 100%);
+    background-size: 120% 120%;
+    animation: gradient-drift 14s ease-in-out infinite;
+  }
+
+  .workspace-header-glass {
+    @apply border-b border-gray-200/80 bg-white/85 backdrop-blur;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+    animation: fade-slide-up 260ms ease-out;
+  }
+
+  .workspace-content {
+    @apply flex-1 overflow-y-auto px-6 py-6 lg:px-8;
+    animation: fade-slide-up 260ms ease-out;
+  }
+
+  .card-hover-lift {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md;
+  }
+
+  .chat-panel-glass {
+    @apply border-l border-gray-200/80 bg-white/90 backdrop-blur;
+    box-shadow: -6px 0 20px rgba(15, 23, 42, 0.05);
+  }
+
+  .message-in {
+    animation: fade-slide-up 220ms ease-out;
+  }
+
   .surface-card {
     @apply rounded-3xl border border-gray-200 bg-white shadow-sm;
+    transition:
+      transform 220ms ease,
+      box-shadow 240ms ease,
+      border-color 220ms ease;
+  }
+
+  .surface-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(165, 180, 252, 0.7);
+    box-shadow:
+      0 16px 32px rgba(15, 23, 42, 0.08),
+      0 2px 10px rgba(59, 130, 246, 0.08);
   }
 
   .panel-card {
     @apply rounded-3xl border border-gray-200 bg-white shadow-sm;
+    transition:
+      transform 220ms ease,
+      box-shadow 240ms ease,
+      border-color 220ms ease;
+  }
+
+  .panel-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(125, 211, 252, 0.75);
+    box-shadow:
+      0 14px 30px rgba(15, 23, 42, 0.08),
+      0 2px 10px rgba(14, 165, 233, 0.1);
   }
 
   .sidebar-item {
@@ -100,10 +194,13 @@
 
   .message-user {
     @apply ml-auto max-w-[85%] rounded-3xl rounded-br-xl bg-blue-600 px-5 py-4 text-sm leading-7 text-white;
+    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.28);
+    animation: fade-slide-up 220ms ease-out;
   }
 
   .message-assistant {
     @apply max-w-[90%] rounded-3xl rounded-bl-xl border border-gray-200 bg-white px-5 py-4 text-sm leading-7 text-gray-700 shadow-sm;
+    animation: fade-slide-up 220ms ease-out;
   }
 
   .top-button {
@@ -116,6 +213,14 @@
 
   .soft-panel {
     @apply rounded-3xl border border-gray-200 bg-[#fafafa] shadow-sm;
+    transition:
+      transform 200ms ease,
+      box-shadow 240ms ease;
+  }
+
+  .soft-panel:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
   }
 }
 
@@ -141,3 +246,46 @@
   background: rgba(37, 99, 235, 0.15);
   color: #111827;
 }
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes float-blob {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) translateX(12px) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 1ms !important;
+  }
+}
+

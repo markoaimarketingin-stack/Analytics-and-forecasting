@@ -131,6 +131,19 @@ class AnalyticsSupervisor:
             f"Intent identified: {intent}",
         ]
 
+        # If the user asks to read/view existing agent outputs, return stored results directly.
+        results_lookup = self._build_results_lookup_response(
+            message=message,
+            normalized_message=normalized,
+            agents=agents,
+            payload=payload,
+            timeline=timeline,
+        )
+        if results_lookup is not None:
+            # Any explicit results lookup should clear pending clarification state.
+            self.clarification_state = {}
+            return results_lookup
+
         # ========================================================
         # CLARIFICATION STAGE (NEW)
         # ========================================================
@@ -348,7 +361,86 @@ class AnalyticsSupervisor:
             "tell me about your agents",
             "capabilities",
         ]
-        return any(token in normalized_message for token in exit_tokens)
+        return any(token in normalized_message for token in exit_tokens) or self._is_results_lookup_request(normalized_message)
+
+    def _build_results_lookup_response(
+        self,
+        message: str,
+        normalized_message: str,
+        agents: List[Dict[str, str]],
+        payload: Dict[str, Any],
+        timeline: List[str],
+    ) -> Dict[str, Any] | None:
+        if not self._is_results_lookup_request(normalized_message):
+            return None
+
+        target_agent = self._resolve_results_target_agent(normalized_message)
+        results = self.agent_manager.get_agent_results(target_agent)
+
+        if target_agent and not results:
+            reasoning = (
+                f"I could not find stored results for the {target_agent.title()} agent yet. "
+                "Run that agent once, then I can read and summarize its results."
+            )
+        elif not results:
+            reasoning = "I could not find stored results yet. Run an agent workspace first, then ask me to read its results."
+        else:
+            scope = f"{target_agent} " if target_agent else ""
+            reasoning = f"Here are the latest {scope}agent results."
+
+        timeline.append("Detected results lookup request")
+        timeline.append("Fetched stored agent results")
+
+        return {
+            "success": True,
+            "reasoning": reasoning,
+            "intent": {
+                "id": "agent_results_lookup",
+                "label": "Agent Results Lookup",
+            },
+            "activated_agents": agents,
+            "timeline": timeline,
+            "payload": payload,
+            "result": {
+                "agent_id": target_agent,
+                "agent_results": results,
+            },
+            "ui": {
+                "workspace": {"cards": []},
+                "insights_panel": {
+                    "confidence_score": None,
+                    "warnings": [],
+                    "suggestions": [],
+                },
+            },
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+
+    def _is_results_lookup_request(self, normalized_message: str) -> bool:
+        tokens = [
+            "agent results",
+            "latest results",
+            "results from",
+            "result from",
+            "results of",
+            "result of",
+            "read the results",
+            "show the results",
+        ]
+        if any(token in normalized_message for token in tokens):
+            return True
+
+        patterns = [
+            r"\b(read|show|fetch|get)\b.*\bresults?\b",
+            r"\bresults?\b.*\b(agent|forecast|scenario|funnel|attribution|cohort)\b",
+        ]
+        return any(re.search(pattern, normalized_message) is not None for pattern in patterns)
+
+    def _resolve_results_target_agent(self, normalized_message: str) -> str | None:
+        for candidate in ["attribution", "funnel", "cohort", "forecast", "scenario"]:
+            if candidate in normalized_message:
+                return candidate
+        return None
 
     # ============================================================
     # Message Normalization

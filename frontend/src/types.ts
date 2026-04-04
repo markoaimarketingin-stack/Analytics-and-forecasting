@@ -175,3 +175,107 @@ export interface ForecastTrainApiResponse {
   detail?: string;
 }
 
+export interface AttributionAnalysis {
+  best_channel: string;
+  worst_channel: string;
+  channel_weights: Record<string, number>;
+  recommended_shift: {
+    from?: string;
+    to?: string;
+    percent?: number;
+  };
+  channel_summary: Array<{
+    channel: string;
+    first_touch_revenue: number;
+    last_touch_revenue: number;
+    linear_revenue: number;
+    blended_revenue: number;
+    spend: number;
+    blended_roas: number;
+  }>;
+}
+
+export interface FunnelAnalysis {
+  funnel: {
+    impressions: number;
+    clicks: number;
+    landing_page_views: number;
+    add_to_cart: number;
+    purchases: number;
+  };
+  largest_dropoff: string;
+  dropoff_percent: number;
+  predicted_conversion_uplift_if_fixed: number;
+}
+
+export interface CohortAnalysis {
+  average_ltv: number;
+  three_month_retention: number;
+  churn_risk: number;
+  high_value_segment: string;
+  high_churn_segment: string;
+  repeat_purchase_rate: number;
+}
+
+export interface ForecastAnalysis {
+  next_30_day_revenue: number;
+  predicted_roi: number;
+  predicted_profit: number;
+  confidence: number;
+  key_drivers: string[];
+  assumptions: string[];
+}
+
+export interface ScenarioAnalysis {
+  best_case: {
+    revenue: number;
+    roi: number;
+  };
+  base_case: {
+    revenue: number;
+    roi: number;
+  };
+  worst_case: {
+    revenue: number;
+    roi: number;
+  };
+}
+
+export interface AgentOrchestrationRequest {
+  intent: string;
+  agents: string[];
+  payload: Record<string, unknown>;
+}
+
+export interface AgentOrchestrationResult {
+  success: boolean;
+  intent: string;
+  agents_executed: string[];
+  attribution_analysis?: AttributionAnalysis | null;
+  funnel_analysis?: FunnelAnalysis | null;
+  cohort_analysis?: CohortAnalysis | null;
+  forecast_analysis?: ForecastAnalysis | null;
+  scenario_analysis?: ScenarioAnalysis | null;
+  recommendations?: string[];
+  executive_summary?: string;
+  confidence_score?: number;
+  warnings?: string[];
+  errors?: Record<string, string>;
+  timestamp: string;
+}
+
+export interface AgentOrchestrationApiResponse {
+  success: boolean;
+  data?: AgentOrchestrationResult;
+  timestamp?: string;
+  detail?: string;
+}
+
+export interface UISuggestionItem {
+  id: string;
+  title: string;
+  description: string;
+  prompt: string;
+  source: string;
+}
+
