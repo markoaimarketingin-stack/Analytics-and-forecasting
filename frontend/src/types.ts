@@ -104,3 +104,74 @@ export interface AnalysisRun {
   error?: string;
 }
 
+export interface ForecastRequestPayload {
+  channel: string;
+  campaign_type: string;
+  spend: number;
+  impressions: number;
+  ctr: number;
+  conversion_rate: number;
+  horizon_days: number;
+}
+
+export interface ForecastDailyPoint {
+  day: number;
+  forecast_spend: number;
+  forecast_roi: number;
+  forecast_revenue: number;
+  forecast_profit: number;
+}
+
+export interface ForecastDriver {
+  feature: string;
+  importance: number;
+}
+
+export interface RetentionAdjustment {
+  available: boolean;
+  message?: string;
+  average_churn_probability?: number;
+  average_retention?: number;
+  future_revenue_multiplier?: number;
+}
+
+export interface ForecastAgentData {
+  predicted_roi: number;
+  predicted_revenue: number;
+  predicted_profit: number;
+  predicted_clicks: number;
+  predicted_purchases: number;
+  retention_adjustment: RetentionAdjustment;
+  daily_forecast: ForecastDailyPoint[];
+  top_drivers: ForecastDriver[];
+}
+
+export interface ForecastPredictApiResponse {
+  success: boolean;
+  data?: {
+    success: boolean;
+    intent: string;
+    agent_results?: {
+      forecast?: {
+        status: string;
+        data?: ForecastAgentData;
+        error?: string;
+      };
+    };
+    errors?: Record<string, string> | null;
+  };
+  detail?: string;
+}
+
+export interface ForecastTrainApiResponse {
+  success: boolean;
+  data?: {
+    status: string;
+    rows: number;
+    rmse: number;
+    mae: number;
+  };
+  message?: string;
+  detail?: string;
+}
+

@@ -6,6 +6,9 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import ChatPanel from './components/ChatPanel';
+import ExistingFilesModal from './components/knowledge/ExistingFilesModal';
+import UploadFileModal from './components/knowledge/UploadFileModal';
+import DatasetSelectionModal from './components/knowledge/DatasetSelectionModal';
 
 import ForecastWorkspace from './components/forecast/ForecastWorkspace';
 import ScenarioWorkspace from './components/scenario/ScenarioWorkspace';
@@ -16,7 +19,10 @@ import ReportWorkspace from './components/report/ReportWorkspace';
 
 import type { AnalysisRun, Message } from './types';
 
-const API_BASE = 'http://localhost:8001/api';
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:8001/api';
 
 interface ActivatedAgent {
   id: string;
@@ -271,6 +277,11 @@ export default function App() {
           handleSendMessage={handleSendMessage}
         />
       </div>
+
+      {/* Knowledge Base Modals */}
+      <ExistingFilesModal />
+      <UploadFileModal />
+      <DatasetSelectionModal />
     </div>
   );
 }

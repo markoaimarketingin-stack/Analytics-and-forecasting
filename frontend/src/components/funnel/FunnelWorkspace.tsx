@@ -13,8 +13,11 @@ import {
   BarChart3,
   Target,
 } from 'lucide-react';
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
 
 export default function FunnelWorkspace() {
+  const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
+  const FUNNEL_AGENT_ID = 3;
   return (
     <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
       {/* Header */}
@@ -56,7 +59,7 @@ export default function FunnelWorkspace() {
 
             {/* Dataset Cards */}
             <div className="mt-12 grid gap-5 lg:grid-cols-2">
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-emerald-600 bg-emerald-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-emerald-100 hover:shadow-lg">
+              <button onClick={() => openKnowledgeModal(FUNNEL_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-emerald-600 bg-emerald-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-emerald-100 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-sm">
                     <Database className="h-7 w-7" />
@@ -77,7 +80,7 @@ export default function FunnelWorkspace() {
                 </div>
               </button>
 
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-emerald-300 hover:bg-gray-50 hover:shadow-lg">
+              <button onClick={() => openUploadModal(FUNNEL_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-emerald-300 hover:bg-gray-50 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 text-gray-700 transition group-hover:bg-emerald-100 group-hover:text-emerald-600">
                     <Upload className="h-7 w-7" />

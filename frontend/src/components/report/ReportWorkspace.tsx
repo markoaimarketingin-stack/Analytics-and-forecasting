@@ -9,8 +9,11 @@ import {
   FileSpreadsheet,
   ChevronDown,
 } from 'lucide-react';
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
 
 export default function ReportWorkspace() {
+  const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
+  const REPORT_AGENT_ID = 6;
   return (
     <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
       {/* Header */}

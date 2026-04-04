@@ -8,6 +8,7 @@ from typing import Any, Dict, List
 from analytics_agent.analytics_runner import AnalyticsRunner
 from analytics_agent.clients.gemini_client import GeminiClient
 from analytics_agent.logging_config import get_logger
+from analytics_agent.api.agent_manager import AgentManager
 
 logger = get_logger(__name__)
 
@@ -30,6 +31,10 @@ class AnalyticsSupervisor:
     ):
         self.analytics_runner = analytics_runner
         self.gemini_client = gemini_client
+        self.agent_manager = AgentManager()
+        
+        # Store clarification state across requests
+        self.clarification_state: Dict[str, Any] = {}
 
     # ============================================================
     # Public Entry Point
@@ -46,8 +51,21 @@ class AnalyticsSupervisor:
             normalized=normalized,
         )
 
-        plan = self._plan_with_llm(normalized)
-        mode = plan.get("mode", "analysis")
+        # If we are waiting for clarification, this turn must continue the same intent.
+        is_clarification_reply = bool(self.clarification_state.get("awaiting_clarification"))
+
+        if is_clarification_reply:
+            intent = self.clarification_state.get("intent", "forecast")
+            plan = {
+                "mode": "analysis",
+                "intent": intent,
+                "agents": self.clarification_state.get("agents", ["forecast"]),
+                "payload_updates": self.clarification_state.get("payload_updates", {}),
+            }
+            mode = "analysis"
+        else:
+            plan = self._plan_with_llm(normalized)
+            mode = plan.get("mode", "analysis")
 
         # ========================================================
         # Conversation Mode
@@ -98,22 +116,134 @@ class AnalyticsSupervisor:
         # Analysis Mode
         # ========================================================
         intent = plan.get("intent", "forecast")
-
-        agents = self._map_agents(
-            plan.get("agents", ["forecast"])
-        )
+        agent_ids = plan.get("agents", ["forecast"])
+        agents = self._map_agents(agent_ids)
 
         payload = self._build_base_payload()
-        payload = self._apply_payload_updates(
-            payload,
-            plan.get("payload_updates", {}),
-        )
+        payload = self._apply_payload_updates(payload, plan.get("payload_updates", {}))
 
         timeline: List[str] = [
             "User request received",
             f"Intent identified: {intent}",
         ]
 
+        # ========================================================
+        # CLARIFICATION STAGE (NEW)
+        # ========================================================
+        if is_clarification_reply:
+            # Merge reply with previously extracted parameters for the same intent.
+            prior = self.clarification_state.get("extracted_params", {})
+            merged_params = self._merge_clarified_answers(prior, normalized)
+            missing_params = self._missing_params_for_intent(intent, merged_params)
+
+            if missing_params:
+                questions = self._generate_clarification_questions(intent, missing_params)
+                timeline.append("Clarification partially answered - additional details requested")
+
+                self.clarification_state = {
+                    "awaiting_clarification": True,
+                    "intent": intent,
+                    "agents": agent_ids,
+                    "payload_updates": plan.get("payload_updates", {}),
+                    "extracted_params": merged_params,
+                    "missing_params": missing_params,
+                }
+
+                return {
+                    "success": True,
+                    "requires_clarification": True,
+                    "reasoning": f"Thanks, I still need a few details:\n\n{questions}",
+                    "intent": {
+                        "id": intent,
+                        "label": self._humanize_intent(intent),
+                    },
+                    "activated_agents": agents,
+                    "timeline": timeline,
+                    "payload": payload,
+                    "result": {
+                        "clarification_needed": True,
+                        "questions": questions,
+                        "extracted_so_far": merged_params,
+                    },
+                    "ui": {
+                        "workspace": {"cards": []},
+                        "insights_panel": {
+                            "confidence_score": None,
+                            "warnings": [],
+                            "suggestions": [],
+                        },
+                    },
+                    "timestamp": datetime.utcnow().isoformat(),
+                }
+
+            # Fully clarified - apply params and continue with execution.
+            payload = self._apply_clarified_params_to_payload(payload, merged_params)
+            timeline.append("Clarification answers received and merged")
+            logger.info("Clarification merged", params=merged_params)
+            self.clarification_state = {}
+
+        else:
+            clarification_needed = self._detect_clarification_needed(intent, normalized)
+
+            if clarification_needed.get("needed"):
+            # Ask clarification questions
+                missing_params = clarification_needed.get("missing_params", [])
+                questions = self._generate_clarification_questions(intent, missing_params)
+            
+                timeline.append("Clarification needed - questions generated")
+            
+                logger.info(
+                    "Clarification needed",
+                    intent=intent,
+                    missing_params=missing_params,
+                )
+            
+                # Store state for next request and lock intent routing.
+                self.clarification_state = {
+                    "awaiting_clarification": True,
+                    "intent": intent,
+                    "agents": agent_ids,
+                    "payload_updates": plan.get("payload_updates", {}),
+                    "extracted_params": clarification_needed.get("extracted_params", {}),
+                    "missing_params": missing_params,
+                }
+            
+                return {
+                    "success": True,
+                    "requires_clarification": True,
+                    "reasoning": f"I need a few details to make an accurate forecast:\n\n{questions}",
+                    "intent": {
+                        "id": intent,
+                        "label": self._humanize_intent(intent),
+                    },
+                    "activated_agents": agents,
+                    "timeline": timeline,
+                    "payload": payload,
+                    "result": {
+                        "clarification_needed": True,
+                        "questions": questions,
+                        "extracted_so_far": clarification_needed.get("extracted_params", {}),
+                    },
+                    "ui": {
+                        "workspace": {"cards": []},
+                        "insights_panel": {
+                            "confidence_score": None,
+                            "warnings": [],
+                            "suggestions": [],
+                        },
+                    },
+                    "timestamp": datetime.utcnow().isoformat(),
+                }
+
+            # No clarification needed; still apply directly extracted params.
+            payload = self._apply_clarified_params_to_payload(
+                payload,
+                clarification_needed.get("extracted_params", {}),
+            )
+
+        # ========================================================
+        # EXECUTE AGENTS (After Clarification)
+        # ========================================================
         for agent in agents:
             timeline.append(f"{agent['label']} activated")
 
@@ -456,19 +586,305 @@ User message:
         ]
 
     # ============================================================
+    # Clarification System (Multi-turn Support)
+    # ============================================================
+    def _detect_clarification_needed(self, intent: str, message: str) -> Dict[str, Any]:
+        """
+        Detect if clarification is needed before executing forecast/analysis.
+        
+        Returns: {
+            "needed": bool,
+            "missing_params": List[str],
+            "extracted_params": Dict[str, Any]
+        }
+        """
+        if intent == "forecast":
+            return self._detect_forecast_clarification(message)
+        elif intent == "scenario_forecast":
+            return self._detect_scenario_clarification(message)
+        else:
+            return {"needed": False, "missing_params": [], "extracted_params": {}}
+
+    def _required_params_for_intent(self, intent: str) -> List[str]:
+        if intent == "forecast":
+            return ["channel", "campaign_type", "spend", "impressions", "ctr", "conversion_rate"]
+        if intent == "scenario_forecast":
+            return ["base_spend", "adjustments"]
+        return []
+
+    def _missing_params_for_intent(self, intent: str, params: Dict[str, Any]) -> List[str]:
+        required = self._required_params_for_intent(intent)
+        return [p for p in required if p not in params or params[p] is None]
+
+    def _apply_clarified_params_to_payload(
+        self,
+        payload: Dict[str, Any],
+        params: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        if not params:
+            return payload
+
+        mapping = [
+            "channel",
+            "campaign_type",
+            "spend",
+            "impressions",
+            "ctr",
+            "conversion_rate",
+            "horizon_days",
+            "base_spend",
+            "adjustments",
+            "scenario_name",
+        ]
+
+        for key in mapping:
+            if key in params and params.get(key) is not None:
+                payload[key] = params[key]
+
+        return payload
+    
+    def _detect_forecast_clarification(self, message: str) -> Dict[str, Any]:
+        """Detect missing parameters for forecast agent"""
+        required_params = ["channel", "campaign_type", "spend", "impressions", "ctr", "conversion_rate"]
+        extracted = self._extract_forecast_parameters(message)
+        
+        missing = [p for p in required_params if p not in extracted or extracted[p] is None]
+        
+        return {
+            "needed": len(missing) > 0,
+            "missing_params": missing,
+            "extracted_params": extracted,
+        }
+    
+    def _detect_scenario_clarification(self, message: str) -> Dict[str, Any]:
+        """Detect missing parameters for scenario analysis"""
+        required_params = ["base_spend", "adjustments"]
+        extracted = self._extract_scenario_parameters(message)
+        
+        missing = [p for p in required_params if p not in extracted or extracted[p] is None]
+        
+        return {
+            "needed": len(missing) > 0,
+            "missing_params": missing,
+            "extracted_params": extracted,
+        }
+    
+    def _extract_forecast_parameters(self, message: str) -> Dict[str, Any]:
+        """Extract forecast parameters from user message"""
+        msg_lower = message.lower()
+        params = {}
+        
+        # Channel detection
+        channels = ["google ads", "facebook", "linkedin", "email", "tiktok", "twitter", "instagram"]
+        for channel in channels:
+            if channel in msg_lower:
+                params["channel"] = channel.title()
+                break
+        
+        # Campaign type detection
+        campaign_types = ["conversion", "awareness", "engagement", "retention", "traffic", "lead"]
+        for ctype in campaign_types:
+            if ctype in msg_lower:
+                params["campaign_type"] = ctype.title()
+                break
+        
+        # Spend detection (look for currency patterns)
+        import re
+        spend_pattern = r'\$?\s*(\d+[,.]?\d*)[kK]?'
+        spend_matches = re.findall(spend_pattern, msg_lower)
+        if spend_matches:
+            spend_str = spend_matches[-1].replace(',', '')
+            try:
+                params["spend"] = float(spend_str) * (1000 if 'k' in msg_lower else 1)
+            except:
+                pass
+        
+        # Impressions detection
+        if "impression" in msg_lower:
+            impression_matches = re.findall(r'(\d+[,.]?\d*)[kK]?\s*impression', msg_lower)
+            if impression_matches:
+                try:
+                    params["impressions"] = int(float(impression_matches[0].replace(',', '')) * (1000 if 'k' in msg_lower else 1))
+                except:
+                    pass
+        
+        # CTR detection
+        if "ctr" in msg_lower or "click" in msg_lower:
+            ctr_matches = re.findall(r'(\d+\.?\d*)%?\s*(?:ctr|click)', msg_lower)
+            if ctr_matches:
+                try:
+                    ctr_val = float(ctr_matches[0])
+                    params["ctr"] = ctr_val / 100 if ctr_val > 1 else ctr_val
+                except:
+                    pass
+        
+        # Conversion rate detection
+        if "conversion" in msg_lower:
+            conv_matches = re.findall(r'(\d+\.?\d*)%?\s*conversion', msg_lower)
+            if conv_matches:
+                try:
+                    conv_val = float(conv_matches[0])
+                    params["conversion_rate"] = conv_val / 100 if conv_val > 1 else conv_val
+                except:
+                    pass
+        
+        return params
+    
+    def _extract_scenario_parameters(self, message: str) -> Dict[str, Any]:
+        """Extract scenario parameters from user message"""
+        msg_lower = message.lower()
+        params = {}
+        
+        # Base spend
+        import re
+        spend_pattern = r'\$?\s*(\d+[,.]?\d*)[kK]?'
+        spend_matches = re.findall(spend_pattern, msg_lower)
+        if spend_matches:
+            try:
+                params["base_spend"] = float(spend_matches[0].replace(',', ''))
+            except:
+                pass
+        
+        # Adjustments (look for percentage changes)
+        if "increase" in msg_lower or "decrease" in msg_lower or "change" in msg_lower:
+            adj_pattern = r'(?:increase|decrease|change|boost|cut)\s*(?:by)?\s*(\d+\.?\d*)%?'
+            adj_matches = re.findall(adj_pattern, msg_lower)
+            if adj_matches:
+                params["adjustments"] = {"spend_change": float(adj_matches[0]) / 100}
+        
+        return params
+    
+    def _generate_clarification_questions(self, intent: str, missing_params: List[str]) -> str:
+        """Generate targeted clarification questions"""
+        if intent == "forecast":
+            return self._generate_forecast_questions(missing_params)
+        elif intent == "scenario_forecast":
+            return self._generate_scenario_questions(missing_params)
+        else:
+            return "Could you provide more details about your request?"
+    
+    def _generate_forecast_questions(self, missing_params: List[str]) -> str:
+        """Generate clarifying questions for forecast"""
+        questions = []
+        
+        for param in missing_params:
+            if param == "channel":
+                questions.append("Which marketing channel? (Google Ads, Facebook, LinkedIn, Email, TikTok, etc.)")
+            elif param == "campaign_type":
+                questions.append("What type of campaign? (Conversion, Awareness, Engagement, Retention, Traffic, Lead Generation)")
+            elif param == "spend":
+                questions.append("What's your planned budget/spend for this campaign? (e.g., $10,000 or 10k)")
+            elif param == "impressions":
+                questions.append("How many impressions do you expect? (e.g., 50,000 or 50k)")
+            elif param == "ctr":
+                questions.append("What's your expected click-through rate? (e.g., 0.12 or 12%)")
+            elif param == "conversion_rate":
+                questions.append("What's your expected conversion rate? (e.g., 0.08 or 8%)")
+        
+        if not questions:
+            return "Could you provide more details about your campaign?"
+        
+        return "\n".join([f"• {q}" for q in questions])
+    
+    def _generate_scenario_questions(self, missing_params: List[str]) -> str:
+        """Generate clarifying questions for scenario"""
+        questions = []
+        
+        for param in missing_params:
+            if param == "base_spend":
+                questions.append("What's your base budget for this scenario? (e.g., $10,000 or 10k)")
+            elif param == "adjustments":
+                questions.append("What adjustments would you like to explore? (e.g., increase by 20% or decrease by 15%)")
+        
+        return "\n".join([f"• {q}" for q in questions])
+    
+    def _merge_clarified_answers(self, extracted_params: Dict[str, Any], user_answers: str) -> Dict[str, Any]:
+        """
+        Parse user's answers to clarification questions and merge with extracted params.
+        Uses Gemini to understand natural language answers.
+        """
+        if not user_answers or not user_answers.strip():
+            return extracted_params
+        
+        # Use Gemini to parse answers
+        prompt = f"""
+Extract parameters from the user's answers. Return ONLY a JSON object with extracted values.
+
+Previously extracted parameters:
+{json.dumps(extracted_params, default=str)}
+
+User's answers to clarification questions:
+{user_answers}
+
+Extract and return JSON with these fields (if mentioned):
+- channel: str
+- campaign_type: str
+- spend: float
+- impressions: int
+- ctr: float (0-1)
+- conversion_rate: float (0-1)
+- horizon_days: int
+
+Return ONLY valid JSON, no other text.
+"""
+        
+        try:
+            raw = self.gemini_client.generate(prompt)
+            cleaned = raw.strip().replace("```json", "").replace("```", "").strip()
+            parsed = json.loads(cleaned)
+            
+            # Merge with extracted params (user answers override)
+            extracted_params.update(parsed)
+            return extracted_params
+        except Exception as e:
+            logger.warning("Could not parse clarification answers", error=str(e))
+            return extracted_params
+
+    # ============================================================
     # Execute Analytics
     # ============================================================
     def _execute(self, intent: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        # Map intent to agents to execute
+        agent_mapping = {
+            "forecast": ["forecast"],
+            "scenario_forecast": ["scenario", "forecast"],
+            "funnel_analysis": ["funnel"],
+            "attribution_analysis": ["attribution"],
+            "cohort_analysis": ["cohort"],
+            "dashboard": ["forecast", "funnel", "attribution", "cohort"],
+            "report_generation": ["forecast", "funnel", "attribution", "cohort"],
+            "budget_optimization": ["scenario"],
+            "break_even": ["scenario"],
+            "ltv_projection": ["cohort"],
+            "executive_summary": ["forecast", "scenario", "cohort"],
+        }
+        
+        agents_to_run = agent_mapping.get(intent, ["forecast"])
+        
+        # Use AgentManager to orchestrate agents
+        agent_results = self.agent_manager.orchestrate(
+            intent=intent,
+            agents_to_run=agents_to_run,
+            payload=payload,
+        )
+        
+        # For backward compatibility, also run legacy analytics runner for certain intents
         if intent in {
-            "forecast",
-            "scenario_forecast",
-            "funnel_analysis",
-            "attribution_analysis",
-            "dashboard",
-            "report_generation",
+            "budget_optimization",
+            "break_even",
+            "ltv_projection",
+            "executive_summary",
         }:
-            return self.analytics_runner.run(payload)
-
+            legacy_results = self._execute_legacy(intent, payload)
+            agent_results["legacy_results"] = legacy_results
+        
+        return agent_results
+    
+    # ============================================================
+    # Execute Legacy Analytics (backward compatibility)
+    # ============================================================
+    def _execute_legacy(self, intent: str, payload: Dict[str, Any]) -> Dict[str, Any]:
+        """Legacy execution path for backward compatibility"""
         if intent == "budget_optimization":
             return {
                 "budget_sensitivity": self.analytics_runner.budget_sensitivity(

@@ -1,32 +1,44 @@
 import os
+from functools import lru_cache
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
 load_dotenv()
 
 
-def get_supabase_client() -> Client | None:
-    """
-    Initializes and returns the Supabase client.
-    Returns None if the required environment variables are not set.
-    """
+@lru_cache
+def get_supabase_client() -> Client:
     supabase_url = os.getenv("SUPABASE_URL")
-    supabase_key = os.getenv("SUPABASE_KEY")
+    service_key = (
+        os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        or os.getenv("SUPABASE_KEY")
+        or os.getenv("SUPABASE_ANON_KEY")
+    )
 
-    if not supabase_url or not supabase_key:
-        print("Warning: SUPABASE_URL and SUPABASE_KEY are not set. Supabase client not created.")
-        return None
+    if not supabase_url:
+        raise ValueError("SUPABASE_URL is missing")
 
-    return create_client(supabase_url, supabase_key)
+    if not service_key:
+        raise ValueError(
+            "Supabase API key is missing. Set SUPABASE_SERVICE_ROLE_KEY (preferred) or SUPABASE_KEY/SUPABASE_ANON_KEY."
+        )
+
+    return create_client(supabase_url, service_key)
 
 
 def upload_file_to_storage(bucket_name: str, file_path: str, file_body: bytes):
-    """
-    Uploads a file to the specified Supabase storage bucket.
-    """
     supabase = get_supabase_client()
-    if not supabase:
-        raise ConnectionError("Supabase client is not initialized.")
 
-    response = supabase.storage.from_(bucket_name).upload(file_path, file_body)
-    return response
+    try:
+        result = (
+            supabase.storage
+            .from_(bucket_name)
+            .upload(
+                path=file_path,
+                file=file_body,
+                file_options={"upsert": "true"}
+            )
+        )
+        return result
+    except Exception as e:
+        raise RuntimeError(f"Failed to upload file to Supabase Storage: {e}")

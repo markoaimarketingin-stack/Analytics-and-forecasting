@@ -13,8 +13,11 @@ import {
   UserPlus,
   AlertTriangle,
 } from 'lucide-react';
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
 
 export default function CohortWorkspace() {
+  const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
+  const COHORT_AGENT_ID = 4;
   const cohortRows = [
     {
       month: 'Jan 2026',
@@ -82,7 +85,7 @@ export default function CohortWorkspace() {
 
             {/* Dataset Selection */}
             <div className="mt-12 grid gap-5 lg:grid-cols-2">
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-indigo-600 bg-indigo-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-indigo-100 hover:shadow-lg">
+              <button onClick={() => openKnowledgeModal(COHORT_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border-2 border-indigo-600 bg-indigo-50 p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:bg-indigo-100 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-sm">
                     <Database className="h-7 w-7" />
@@ -103,7 +106,7 @@ export default function CohortWorkspace() {
                 </div>
               </button>
 
-              <button className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:bg-gray-50 hover:shadow-lg">
+              <button onClick={() => openUploadModal(COHORT_AGENT_ID)} className="group flex min-h-[180px] flex-col rounded-[28px] border border-gray-200 bg-white p-7 text-left transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:bg-gray-50 hover:shadow-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-100 text-gray-700 transition group-hover:bg-indigo-100 group-hover:text-indigo-600">
                     <Upload className="h-7 w-7" />
