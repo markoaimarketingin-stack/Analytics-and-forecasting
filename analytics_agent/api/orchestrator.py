@@ -45,6 +45,10 @@ class AnalyticsSupervisor:
 
         normalized = self._normalize(message)
 
+        # Allow users to break out of a pending clarification turn.
+        if self.clarification_state.get("awaiting_clarification") and self._is_clarification_exit(normalized):
+            self.clarification_state = {}
+
         logger.info(
             "Analytics Supervisor received request",
             message=message,
@@ -330,6 +334,22 @@ class AnalyticsSupervisor:
             "timestamp": datetime.utcnow().isoformat(),
         }
 
+    def _is_clarification_exit(self, normalized_message: str) -> bool:
+        exit_tokens = [
+            "hello",
+            "hi",
+            "hey",
+            "bye",
+            "cancel",
+            "stop",
+            "start over",
+            "new request",
+            "what do your agents do",
+            "tell me about your agents",
+            "capabilities",
+        ]
+        return any(token in normalized_message for token in exit_tokens)
+
     # ============================================================
     # Message Normalization
     # ============================================================
@@ -417,7 +437,21 @@ User message:
     def _fallback_plan(self, message: str) -> Dict[str, Any]:
         msg = message.lower()
 
-        if any(word in msg for word in ["hi", "hello", "hey", "thanks", "who are you"]):
+        if any(
+            word in msg
+            for word in [
+                "hi",
+                "hello",
+                "hey",
+                "thanks",
+                "who are you",
+                "what can you do",
+                "what does your agent do",
+                "what do your agents do",
+                "tell me about your agents",
+                "capabilities",
+            ]
+        ):
             return {
                 "mode": "conversation",
                 "response": "Hello. I am Analytics Supervisor. I can help with forecasting, funnels, attribution, cohort analysis, budgets, and executive summaries.",
