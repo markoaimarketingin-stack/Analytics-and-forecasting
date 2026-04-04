@@ -95,9 +95,21 @@ export default function App() {
           /what do you know/,
         ];
 
+      const metaAgentQuery =
+        lower.includes('agent') &&
+        (
+          lower.includes('tell me') ||
+          lower.includes('what') ||
+          lower.includes('about') ||
+          lower.includes('capabilities')
+        ) &&
+        !lower.includes('forecast') &&
+        !lower.includes('roi') &&
+        !lower.includes('predict');
+
       const isSimpleChat = simpleChatPatterns.some((pattern) =>
         pattern.test(lower),
-      );
+      ) || metaAgentQuery;
 
       if (isSimpleChat) {
         const response = await axios.post(`${API_BASE}/chat`, {
