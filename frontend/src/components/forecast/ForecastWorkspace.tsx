@@ -74,10 +74,10 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
   };
 
   return (
-    <div className="workspace-surface">
-      <div className="workspace-header-glass px-8 py-3">
+    <div className="workspace-surface workspace-modern">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-blue-600 text-white">
+          <div className="workspace-agent-icon bg-gradient-to-br from-blue-600 to-indigo-600">
             <TrendingUp className="h-7 w-7" />
           </div>
           <div>
@@ -88,14 +88,14 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="workspace-panel">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               <label className="text-sm text-gray-600">
                 Horizon
                 <select
                   value={form.horizon_days}
                   onChange={(event) => updateField('horizon_days', Number(event.target.value))}
-                  className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3"
+                  className="workspace-control"
                 >
                   <option value={30}>30 days</option>
                   <option value={90}>90 days</option>
@@ -106,36 +106,36 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
 
               <label className="text-sm text-gray-600">
                 Channel
-                <input value={form.channel} onChange={(event) => updateField('channel', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input value={form.channel} onChange={(event) => updateField('channel', event.target.value)} className="workspace-control" />
               </label>
 
               <label className="text-sm text-gray-600">
                 Campaign Type
-                <input value={form.campaign_type} onChange={(event) => updateField('campaign_type', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input value={form.campaign_type} onChange={(event) => updateField('campaign_type', event.target.value)} className="workspace-control" />
               </label>
 
               <label className="text-sm text-gray-600">
                 Spend
-                <input type="number" value={form.spend} onChange={(event) => updateField('spend', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" value={form.spend} onChange={(event) => updateField('spend', Number(event.target.value))} className="workspace-control" />
               </label>
 
               <label className="text-sm text-gray-600">
                 Impressions
-                <input type="number" value={form.impressions} onChange={(event) => updateField('impressions', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" value={form.impressions} onChange={(event) => updateField('impressions', Number(event.target.value))} className="workspace-control" />
               </label>
 
               <label className="text-sm text-gray-600">
                 CTR
-                <input type="number" step="0.001" value={form.ctr} onChange={(event) => updateField('ctr', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" step="0.001" value={form.ctr} onChange={(event) => updateField('ctr', Number(event.target.value))} className="workspace-control" />
               </label>
 
               <label className="text-sm text-gray-600">
                 Conversion Rate
-                <input type="number" step="0.001" value={form.conversion_rate} onChange={(event) => updateField('conversion_rate', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" step="0.001" value={form.conversion_rate} onChange={(event) => updateField('conversion_rate', Number(event.target.value))} className="workspace-control" />
               </label>
 
               <div className="flex items-end">
-                <button onClick={runForecast} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={runForecast} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Run Forecast'}
                 </button>
               </div>
@@ -153,7 +153,7 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Top Drivers</h3>
               <ul className="mt-4 space-y-2 text-sm text-gray-700">
                 {(result?.key_drivers ?? []).length > 0 ? (
@@ -166,7 +166,7 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
               </ul>
             </div>
 
-            <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Assumptions</h3>
               <ul className="mt-4 space-y-2 text-sm text-gray-700">
                 {(result?.assumptions ?? []).length > 0 ? (
@@ -187,7 +187,7 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
 
 function MetricCard({ title, value, icon }: { title: string; value: string; icon: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="workspace-metric-card">
       <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">{icon}{title}</div>
       <div className="text-xl font-bold text-gray-900">{value}</div>
     </div>

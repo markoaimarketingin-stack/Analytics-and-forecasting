@@ -15,11 +15,11 @@ export default function ReportWorkspace() {
   const { openKnowledgeModal, openUploadModal } = useKnowledgeBase();
   const REPORT_AGENT_ID = 6;
   return (
-    <div className="workspace-surface">
+    <div className="workspace-surface workspace-modern">
       {/* Header */}
-      <div className="workspace-header-glass px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-white shadow-[0_12px_32px_rgba(15,23,42,0.28)]">
+          <div className="workspace-agent-icon bg-gradient-to-br from-slate-900 to-slate-700">
             <FileText className="h-7 w-7" />
           </div>
 
@@ -36,7 +36,7 @@ export default function ReportWorkspace() {
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-5xl space-y-6">
           {/* Configuration Card */}
-          <div className="rounded-[32px] border border-gray-200 bg-white p-8 shadow-sm lg:p-10">
+          <div className="workspace-panel rounded-[32px] p-8 lg:p-10">
             <div className="mx-auto max-w-2xl text-center">
               <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-gray-400">
                 Executive Reporting
@@ -59,7 +59,7 @@ export default function ReportWorkspace() {
                 </label>
 
                 <div className="relative">
-                  <select className="h-14 w-full appearance-none rounded-2xl border border-gray-200 bg-white px-5 pr-12 text-sm font-semibold text-gray-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100">
+                  <select className="workspace-control h-14 appearance-none px-5 pr-12 text-sm font-semibold text-gray-800 focus:border-slate-500 focus:ring-slate-100">
                     <option>Executive Summary</option>
                     <option>Detailed Analysis</option>
                     <option>Board Presentation</option>
@@ -77,7 +77,7 @@ export default function ReportWorkspace() {
                 </label>
 
                 <div className="relative">
-                  <select className="h-14 w-full appearance-none rounded-2xl border border-gray-200 bg-white px-5 pr-12 text-sm font-semibold text-gray-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100">
+                  <select className="workspace-control h-14 appearance-none px-5 pr-12 text-sm font-semibold text-gray-800 focus:border-slate-500 focus:ring-slate-100">
                     <option>All Sections</option>
                     <option>Forecast + Scenario</option>
                     <option>Funnel + Attribution</option>
@@ -95,7 +95,7 @@ export default function ReportWorkspace() {
                 </label>
 
                 <div className="relative">
-                  <select className="h-14 w-full appearance-none rounded-2xl border border-gray-200 bg-white px-5 pr-12 text-sm font-semibold text-gray-800 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100">
+                  <select className="workspace-control h-14 appearance-none px-5 pr-12 text-sm font-semibold text-gray-800 focus:border-slate-500 focus:ring-slate-100">
                     <option>PDF Document</option>
                     <option>PowerPoint Presentation</option>
                     <option>Excel Workbook</option>
@@ -109,7 +109,7 @@ export default function ReportWorkspace() {
           </div>
 
           {/* Generate Section */}
-          <div className="rounded-[32px] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 p-8 text-white shadow-lg lg:p-10">
+          <div className="workspace-panel rounded-[32px] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 p-8 text-white shadow-lg lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-300">
@@ -127,12 +127,12 @@ export default function ReportWorkspace() {
               </div>
 
               <div className="flex flex-col gap-4 lg:w-[260px]">
-                <button className="flex h-14 items-center justify-center gap-3 rounded-2xl bg-white px-6 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
+                <button className="workspace-action-btn h-14 bg-white px-6 text-slate-900 shadow-[0_10px_20px_rgba(255,255,255,0.22)] hover:bg-slate-100">
                   <Sparkles className="h-5 w-5" />
                   Generate Report
                 </button>
 
-                <button className="flex h-14 items-center justify-center gap-3 rounded-2xl border border-slate-500 bg-white/5 px-6 text-sm font-semibold text-white transition hover:border-slate-300 hover:bg-white/10">
+                <button className="workspace-action-btn h-14 border border-slate-500 bg-white/5 px-6 text-white shadow-none hover:border-slate-300 hover:bg-white/10">
                   <Download className="h-5 w-5" />
                   Download Latest
                 </button>
@@ -141,7 +141,7 @@ export default function ReportWorkspace() {
           </div>
 
           {/* Recent Reports */}
-          <div className="rounded-[32px] border border-gray-200 bg-white p-8 shadow-sm lg:p-10">
+          <div className="workspace-panel rounded-[32px] p-8 lg:p-10">
             <div className="mb-8">
               <div className="text-[11px] font-semibold uppercase tracking-[0.35em] text-gray-400">
                 Recent Reports

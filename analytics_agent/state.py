@@ -116,6 +116,11 @@ class AttributionAnalysis(BaseModel):
     channel_weights: Dict[str, float] = Field(default_factory=dict)
     recommended_shift: Dict[str, Any] = Field(default_factory=dict)
     channel_summary: List[Dict[str, Any]] = Field(default_factory=list)
+    model_credit_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    touchpoint_position_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    budget_scenario_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
 
 
 class FunnelAnalysis(BaseModel):
@@ -123,6 +128,18 @@ class FunnelAnalysis(BaseModel):
     largest_dropoff: str = ""
     dropoff_percent: float = 0.0
     predicted_conversion_uplift_if_fixed: float = 0.0
+    stage_dropoffs: Dict[str, float] = Field(default_factory=dict)
+    stage_details: List[Dict[str, Any]] = Field(default_factory=list)
+    filters_applied: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    primary_funnel_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    stage_waterfall_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    channel_comparison_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    segment_comparison_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    stage_time_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    revenue_opportunity_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    uplift_scenarios_chart: List[Dict[str, Any]] = Field(default_factory=list)
 
 
 class CohortAnalysis(BaseModel):
@@ -132,6 +149,11 @@ class CohortAnalysis(BaseModel):
     high_value_segment: str = ""
     high_churn_segment: str = ""
     repeat_purchase_rate: float = 0.0
+    segment_breakdown: List[Dict[str, Any]] = Field(default_factory=list)
+    retention_curve: List[Dict[str, Any]] = Field(default_factory=list)
+    signup_channel_value: List[Dict[str, Any]] = Field(default_factory=list)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
 
 
 class ForecastAnalysis(BaseModel):

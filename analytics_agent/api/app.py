@@ -629,6 +629,12 @@ class DatasetRowsUpdateRequest(BaseModel):
     rows: list[dict] = Field(default_factory=list)
 
 
+class FunnelOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
 ALLOWED_DATASETS = {"campaigns", "customers", "events", "retention", "transactions"}
 
 
@@ -884,6 +890,28 @@ class AgentOrchestrationRequest(BaseModel):
 class TrainForecastRequest(BaseModel):
     """Request to train forecast model"""
     pass
+
+
+@app.get("/agents/funnel/options", response_model=FunnelOptionsResponse)
+@app.get("/api/agents/funnel/options", response_model=FunnelOptionsResponse)
+@app.get("/funnel/options", response_model=FunnelOptionsResponse)
+@app.get("/api/funnel/options", response_model=FunnelOptionsResponse)
+async def get_funnel_options():
+    """Return only funnel filter options that actually exist in current datasets."""
+    try:
+        from analytics_agent.db.queries import get_funnel_filter_options
+
+        return {
+            "success": True,
+            "data": get_funnel_filter_options(prefer_remote=True),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch funnel options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch funnel options: {str(e)}",
+        )
 
 
 @app.post("/agents/orchestrate")

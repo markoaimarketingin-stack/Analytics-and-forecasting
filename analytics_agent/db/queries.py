@@ -83,6 +83,155 @@ def get_dataset_dataframe(
     return _get_table_dataframe(dataset_name, limit)
 
 
+def get_dataset_dataframe_with_source(
+    dataset_name: str,
+    limit: int | None = None,
+    prefer_remote: bool = False,
+) -> tuple[pd.DataFrame, str]:
+    if dataset_name not in SUPPORTED_DATASETS:
+        return pd.DataFrame(), "unsupported"
+
+    if prefer_remote:
+        remote = _read_remote_table(dataset_name, limit)
+        if not remote.empty:
+            return remote.head(limit) if limit is not None else remote, "supabase"
+
+        local = _read_local_csv(dataset_name)
+        if not local.empty:
+            return local.head(limit) if limit is not None else local, "local"
+
+        return pd.DataFrame(), "empty"
+
+    local = _read_local_csv(dataset_name)
+    if not local.empty:
+        return local.head(limit) if limit is not None else local, "local"
+
+    remote = _read_remote_table(dataset_name, limit)
+    if not remote.empty:
+        return remote.head(limit) if limit is not None else remote, "supabase"
+
+    return pd.DataFrame(), "empty"
+
+
+def _unique_non_empty_values(df: pd.DataFrame, column: str) -> list[str]:
+    if df.empty or column not in df.columns:
+        return []
+
+    values = (
+        df[column]
+        .dropna()
+        .astype(str)
+        .map(str.strip)
+    )
+    unique_values = sorted({value for value in values if value})
+    return unique_values
+
+
+def get_funnel_filter_options(prefer_remote: bool = True) -> dict[str, Any]:
+    campaigns_df, campaigns_source = get_dataset_dataframe_with_source(
+        "campaigns",
+        prefer_remote=prefer_remote,
+    )
+    events_df, events_source = get_dataset_dataframe_with_source(
+        "events",
+        prefer_remote=prefer_remote,
+    )
+    customers_df, customers_source = get_dataset_dataframe_with_source(
+        "customers",
+        prefer_remote=prefer_remote,
+    )
+
+    campaign_channels = _unique_non_empty_values(campaigns_df, "channel")
+    event_channels = _unique_non_empty_values(events_df, "channel")
+    channels = sorted(set(campaign_channels).union(event_channels))
+
+    event_types = _unique_non_empty_values(events_df, "event_type")
+    event_type_labels = {
+        "impression": "Impressions",
+        "click": "Clicks",
+        "landing_page_view": "Landing Page Views",
+        "add_to_cart": "Add To Cart",
+        "purchase": "Purchases",
+    }
+
+    ordered_event_stages: list[dict[str, str]] = []
+    for event_type in ["impression", "click", "landing_page_view", "add_to_cart", "purchase"]:
+        if event_type in event_types:
+            ordered_event_stages.append(
+                {
+                    "event_type": event_type,
+                    "label": event_type_labels[event_type],
+                }
+            )
+
+    campaigns_columns = campaigns_df.columns.tolist() if not campaigns_df.empty else []
+    events_columns = events_df.columns.tolist() if not events_df.empty else []
+    customers_columns = customers_df.columns.tolist() if not customers_df.empty else []
+
+    return {
+        "channels": channels,
+        "campaign_types": _unique_non_empty_values(campaigns_df, "campaign_type"),
+        "segments": _unique_non_empty_values(customers_df, "segment"),
+        "event_types": event_types,
+        "event_stages": ordered_event_stages,
+        "time_periods": ["week", "month", "quarter", "year", "all"],
+        "defaults": {
+            "channel": "all",
+            "campaign_type": "all",
+            "segment": "all",
+            "event_type": "all",
+            "time_period": "month",
+        },
+        "available_filters": {
+            "channel": bool(channels),
+            "campaign_type": bool(_unique_non_empty_values(campaigns_df, "campaign_type")),
+            "segment": bool(_unique_non_empty_values(customers_df, "segment")),
+            "event_type": bool(event_types),
+            "time_period": True,
+        },
+        "sources": {
+            "campaigns": campaigns_source,
+            "events": events_source,
+            "customers": customers_source,
+        },
+        "row_counts": {
+            "campaigns": int(len(campaigns_df.index)),
+            "events": int(len(events_df.index)),
+            "customers": int(len(customers_df.index)),
+        },
+        "schema_details": {
+            "campaigns": {
+                "source": campaigns_source,
+                "columns": campaigns_columns,
+                "funnel_metrics": [
+                    column
+                    for column in [
+                        "impressions",
+                        "clicks",
+                        "landing_page_views",
+                        "add_to_cart",
+                        "purchases",
+                    ]
+                    if column in campaigns_columns
+                ],
+                "filter_columns": [column for column in ["channel", "campaign_type", "date"] if column in campaigns_columns],
+            },
+            "events": {
+                "source": events_source,
+                "columns": events_columns,
+                "event_stage_column": "event_type" if "event_type" in events_columns else "",
+                "filter_columns": [column for column in ["channel", "event_type", "timestamp"] if column in events_columns],
+            },
+            "customers": {
+                "source": customers_source,
+                "columns": customers_columns,
+                "segment_column": "segment" if "segment" in customers_columns else "",
+                "join_key": "customer_id" if "customer_id" in customers_columns else "",
+            },
+        },
+    }
+
+
 def upsert_dataset_rows(dataset_name: str, rows: list[dict[str, Any]]) -> int:
     if dataset_name not in SUPPORTED_DATASETS:
         raise ValueError(f"Unsupported dataset '{dataset_name}'")

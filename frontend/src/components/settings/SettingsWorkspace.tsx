@@ -38,10 +38,10 @@ export default function SettingsWorkspace() {
   };
 
   return (
-    <div className="workspace-surface">
-      <div className="workspace-header-glass px-8 py-3">
+    <div className="workspace-surface workspace-modern">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-white shadow-[0_12px_32px_rgba(15,23,42,0.28)]">
+          <div className="workspace-agent-icon bg-gradient-to-br from-slate-900 to-indigo-700">
             <Settings className="h-7 w-7" />
           </div>
           <div>
@@ -52,7 +52,7 @@ export default function SettingsWorkspace() {
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-4xl space-y-6">
-          <div className="rounded-[30px] border border-gray-200 bg-white p-8 shadow-sm card-hover-lift">
+          <div className="workspace-panel rounded-[30px] p-8 card-hover-lift">
             <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.28em] text-gray-400">
               <SlidersHorizontal className="h-4 w-4" />
               Interface
@@ -100,7 +100,7 @@ type SettingRowProps = {
 
 function SettingRow({ icon, title, description, checked, onChange }: SettingRowProps) {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4">
+    <div className="workspace-metric-card flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-4">
       <div className="flex items-start gap-3">
         <div className="mt-1 text-gray-600">{icon}</div>
         <div>
@@ -111,7 +111,7 @@ function SettingRow({ icon, title, description, checked, onChange }: SettingRowP
 
       <button
         onClick={() => onChange(!checked)}
-        className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-blue-600' : 'bg-gray-300'}`}
+        className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-[0_6px_16px_rgba(37,99,235,0.38)]' : 'bg-gray-300'}`}
       >
         <span
           className={`absolute top-1 h-5 w-5 rounded-full bg-white transition ${checked ? 'left-6' : 'left-1'}`}

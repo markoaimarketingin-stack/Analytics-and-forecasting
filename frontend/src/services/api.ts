@@ -3,6 +3,7 @@
 import type {
   AgentOrchestrationApiResponse,
   AgentOrchestrationRequest,
+  FunnelOptionsApiResponse,
   ForecastPredictApiResponse,
   ForecastRequestPayload,
   ForecastTrainApiResponse,
@@ -193,6 +194,34 @@ const postJsonWithFallback = async <T>(
   throw lastError ?? new Error('All forecast endpoint calls failed');
 };
 
+const getJsonWithFallback = async <T>(paths: string[]): Promise<T> => {
+  let lastError: Error | null = null;
+
+  for (const path of paths) {
+    try {
+      const response = await fetch(path);
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`${response.status} ${response.statusText} ${text}`.trim());
+      }
+      return (await response.json()) as T;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error('Request failed');
+    }
+  }
+
+  throw lastError ?? new Error('All endpoint calls failed');
+};
+
+const uniqueSortedValues = (rows: Array<Record<string, unknown>>, key: string): string[] => {
+  const values = rows
+    .map((row) => row[key])
+    .filter((value): value is string | number => value !== null && value !== undefined)
+    .map((value) => String(value).trim())
+    .filter((value) => value.length > 0);
+  return Array.from(new Set(values)).sort((a, b) => a.localeCompare(b));
+};
+
 export const trainForecastModel = async (): Promise<ForecastTrainApiResponse> => {
   return postJsonWithFallback<ForecastTrainApiResponse>([
     `${API_ROOT_URL}/agents/forecast/train`,
@@ -219,31 +248,117 @@ export const orchestrateAgents = async (
   ], payload);
 };
 
+export const getFunnelOptions = async (): Promise<FunnelOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  try {
+    return await getJsonWithFallback<FunnelOptionsApiResponse>([
+      `${API_BASE_URL}/agents/funnel/options`,
+      `${API_BASE_URL.replace(/\/api\/?$/, '/api')}/funnel/options`,
+      `${API_ROOT_URL}/agents/funnel/options`,
+      `${baseWithoutApiSuffix}/agents/funnel/options`,
+    ]);
+  } catch {
+    // Fallback path for older backends: compute valid options from live datasets.
+    const [campaignsRes, eventsRes, customersRes] = await Promise.all([
+      getDatasetRows('campaigns', 500),
+      getDatasetRows('events', 500),
+      getDatasetRows('customers', 500),
+    ]);
+
+    const campaignRows = (campaignsRes?.rows ?? []) as Array<Record<string, unknown>>;
+    const eventRows = (eventsRes?.rows ?? []) as Array<Record<string, unknown>>;
+    const customerRows = (customersRes?.rows ?? []) as Array<Record<string, unknown>>;
+
+    const channels = Array.from(
+      new Set([
+        ...uniqueSortedValues(campaignRows, 'channel'),
+        ...uniqueSortedValues(eventRows, 'channel'),
+      ]),
+    ).sort((a, b) => a.localeCompare(b));
+
+    const eventTypes = uniqueSortedValues(eventRows, 'event_type');
+    const eventTypeLabels: Record<string, string> = {
+      impression: 'Impressions',
+      click: 'Clicks',
+      landing_page_view: 'Landing Page Views',
+      add_to_cart: 'Add To Cart',
+      purchase: 'Purchases',
+    };
+
+    const orderedEventStages = ['impression', 'click', 'landing_page_view', 'add_to_cart', 'purchase']
+      .filter((key) => eventTypes.includes(key))
+      .map((key) => ({ event_type: key, label: eventTypeLabels[key] || key }));
+
+    return {
+      success: true,
+      data: {
+        channels,
+        campaign_types: uniqueSortedValues(campaignRows, 'campaign_type'),
+        segments: uniqueSortedValues(customerRows, 'segment'),
+        event_types: eventTypes,
+        event_stages: orderedEventStages,
+        time_periods: ['week', 'month', 'quarter', 'year', 'all'],
+        defaults: {
+          channel: 'all',
+          campaign_type: 'all',
+          segment: 'all',
+          event_type: 'all',
+          time_period: 'month',
+        },
+        available_filters: {
+          channel: channels.length > 0,
+          campaign_type: uniqueSortedValues(campaignRows, 'campaign_type').length > 0,
+          segment: uniqueSortedValues(customerRows, 'segment').length > 0,
+          event_type: eventTypes.length > 0,
+          time_period: true,
+        },
+        sources: {
+          campaigns: campaignsRes?.source || 'unknown',
+          events: eventsRes?.source || 'unknown',
+          customers: customersRes?.source || 'unknown',
+        },
+        row_counts: {
+          campaigns: Number(campaignsRes?.row_count || campaignRows.length),
+          events: Number(eventsRes?.row_count || eventRows.length),
+          customers: Number(customersRes?.row_count || customerRows.length),
+        },
+        schema_details: {
+          campaigns: {
+            source: campaignsRes?.source || 'unknown',
+            columns: (campaignsRes?.columns ?? []) as string[],
+            funnel_metrics: ['impressions', 'clicks', 'landing_page_views', 'add_to_cart', 'purchases']
+              .filter((column) => ((campaignsRes?.columns ?? []) as string[]).includes(column)),
+            filter_columns: ['channel', 'campaign_type', 'date']
+              .filter((column) => ((campaignsRes?.columns ?? []) as string[]).includes(column)),
+          },
+          events: {
+            source: eventsRes?.source || 'unknown',
+            columns: (eventsRes?.columns ?? []) as string[],
+            event_stage_column: ((eventsRes?.columns ?? []) as string[]).includes('event_type') ? 'event_type' : '',
+            filter_columns: ['channel', 'event_type', 'timestamp']
+              .filter((column) => ((eventsRes?.columns ?? []) as string[]).includes(column)),
+          },
+          customers: {
+            source: customersRes?.source || 'unknown',
+            columns: (customersRes?.columns ?? []) as string[],
+            segment_column: ((customersRes?.columns ?? []) as string[]).includes('segment') ? 'segment' : '',
+            join_key: ((customersRes?.columns ?? []) as string[]).includes('customer_id') ? 'customer_id' : '',
+          },
+        },
+      },
+    };
+  }
+};
+
 export const getAgentResults = async (agentId?: string) => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
   const query = agentId ? `?agent_id=${encodeURIComponent(agentId)}` : '';
 
-  const paths = [
+  return getJsonWithFallback([
     `${API_ROOT_URL}/agents/results${query}`,
     `${baseWithoutApiSuffix}/agents/results${query}`,
     `${API_BASE_URL}/agents/results${query}`,
-  ];
-
-  let lastError: Error | null = null;
-  for (const path of paths) {
-    try {
-      const response = await fetch(path);
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`${response.status} ${response.statusText} ${text}`.trim());
-      }
-      return await response.json();
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error('Failed to fetch agent results');
-    }
-  }
-
-  throw lastError ?? new Error('All agent results endpoint calls failed');
+  ]);
 };
 
 

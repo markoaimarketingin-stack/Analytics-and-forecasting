@@ -193,6 +193,34 @@ export interface AttributionAnalysis {
     spend: number;
     blended_roas: number;
   }>;
+  model_credit_chart?: Array<{
+    channel: string;
+    first_touch_revenue: number;
+    last_touch_revenue: number;
+    linear_revenue: number;
+    blended_revenue: number;
+    spend: number;
+    blended_roas: number;
+  }>;
+  touchpoint_position_chart?: Array<{
+    channel: string;
+    first_touch_count: number;
+    middle_touch_count: number;
+    last_touch_count: number;
+  }>;
+  budget_scenario_chart?: Array<{
+    channel: string;
+    current_spend: number;
+    projected_spend: number;
+    current_revenue: number;
+    projected_revenue: number;
+  }>;
+  diagnostics?: {
+    source_info?: Record<string, string>;
+    data_points?: Record<string, number>;
+    request?: Record<string, string | number>;
+  };
+  data_source?: string;
 }
 
 export interface FunnelAnalysis {
@@ -206,6 +234,118 @@ export interface FunnelAnalysis {
   largest_dropoff: string;
   dropoff_percent: number;
   predicted_conversion_uplift_if_fixed: number;
+  stage_dropoffs?: Record<string, number>;
+  stage_details?: FunnelStageDetail[];
+  filters_applied?: Record<string, string>;
+  data_source?: string;
+  diagnostics?: {
+    dropoff_series?: Record<string, number>;
+    baseline_conversion_rate?: number;
+    estimated_recovered_purchases?: number;
+    data_points?: Record<string, number>;
+    source_info?: Record<string, string>;
+  };
+  primary_funnel_chart?: Array<{
+    stage: string;
+    stage_label: string;
+    users: number;
+    conversion_from_previous: number;
+    dropoff_from_previous: number;
+    conversion_from_entry: number;
+  }>;
+  stage_waterfall_chart?: Array<{
+    transition: string;
+    transition_label: string;
+    lost_users: number;
+    lost_users_abs: number;
+  }>;
+  channel_comparison_chart?: Array<{
+    channel: string;
+    click_rate: number;
+    final_conversion_rate: number;
+    purchase_rate: number;
+  }>;
+  segment_comparison_chart?: Array<{
+    segment: string;
+    stage: string;
+    stage_label: string;
+    users: number;
+  }>;
+  stage_time_chart?: Array<{
+    transition: string;
+    transition_label: string;
+    median_hours: number;
+  }>;
+  revenue_opportunity_chart?: Array<{
+    transition: string;
+    transition_label: string;
+    estimated_lost_purchases: number;
+    estimated_lost_revenue: number;
+  }>;
+  uplift_scenarios_chart?: Array<{
+    improvement_rate: number;
+    incremental_purchases: number;
+    incremental_revenue: number;
+  }>;
+}
+
+export interface FunnelStageDetail {
+  stage: string;
+  value: number;
+  dropoff_from_previous_pct: number;
+  conversion_from_previous_pct: number;
+  conversion_from_entry_pct: number;
+}
+
+export interface FunnelOptions {
+  channels: string[];
+  campaign_types: string[];
+  segments: string[];
+  event_types: string[];
+  event_stages: Array<{ event_type: string; label: string }>;
+  time_periods: string[];
+  defaults: {
+    channel: string;
+    campaign_type: string;
+    segment: string;
+    event_type: string;
+    time_period: string;
+  };
+  available_filters: {
+    channel: boolean;
+    campaign_type: boolean;
+    segment: boolean;
+    event_type: boolean;
+    time_period: boolean;
+  };
+  sources: Record<string, string>;
+  row_counts: Record<string, number>;
+  schema_details?: {
+    campaigns?: {
+      source: string;
+      columns: string[];
+      funnel_metrics: string[];
+      filter_columns: string[];
+    };
+    events?: {
+      source: string;
+      columns: string[];
+      event_stage_column: string;
+      filter_columns: string[];
+    };
+    customers?: {
+      source: string;
+      columns: string[];
+      segment_column: string;
+      join_key: string;
+    };
+  };
+}
+
+export interface FunnelOptionsApiResponse {
+  success: boolean;
+  data?: FunnelOptions;
+  detail?: string;
 }
 
 export interface CohortAnalysis {
@@ -215,6 +355,32 @@ export interface CohortAnalysis {
   high_value_segment: string;
   high_churn_segment: string;
   repeat_purchase_rate: number;
+  segment_breakdown?: Array<{
+    segment: string;
+    customers: number;
+    average_ltv: number;
+    repeat_purchase_rate: number;
+    churn_risk: number;
+  }>;
+  retention_curve?: Array<{
+    tenure_months: number;
+    retention_rate: number;
+    churn_rate: number;
+    customers: number;
+  }>;
+  signup_channel_value?: Array<{
+    signup_channel: string;
+    customers: number;
+    revenue: number;
+    average_ltv: number;
+  }>;
+  diagnostics?: {
+    data_points?: Record<string, number>;
+    source_info?: Record<string, string>;
+    retention_months?: number;
+    cohort_period?: string;
+  };
+  data_source?: string;
 }
 
 export interface ForecastAnalysis {

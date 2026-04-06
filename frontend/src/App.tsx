@@ -1,9 +1,7 @@
-
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
 import Sidebar from './components/Sidebar';
-import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import ChatPanel from './components/ChatPanel';
 import ExistingFilesModal from './components/knowledge/ExistingFilesModal';
@@ -17,6 +15,7 @@ import CohortWorkspace from './components/cohort/CohortWorkspace';
 import AttributionWorkspace from './components/attribution/AttributionWorkspace';
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
+import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
 
 import type { AnalysisRun, AgentOrchestrationResult, Message, UISuggestionItem } from './types';
 
@@ -82,8 +81,8 @@ export default function App() {
     });
   };
 
-  const handleSendMessage = async (message: string) => {
-    if (!message.trim()) return;
+  const handleSendMessage = async (message: string): Promise<boolean> => {
+    if (!message.trim()) return false;
 
     const userMessage: Message = {
       id: `${Date.now()}-user`,
@@ -158,7 +157,7 @@ export default function App() {
         setActivatedAgents([]);
         setCurrentAnalysis(null);
 
-        return;
+        return true;
       }
 
       const response = await axios.post(`${API_BASE}/orchestrate`, {
@@ -197,6 +196,8 @@ export default function App() {
       } else {
         setCurrentAnalysis(null);
       }
+
+      return true;
     } catch (error: any) {
       setMessages((prev) => [
         ...prev,
@@ -214,9 +215,16 @@ export default function App() {
       setExecutionTimeline([]);
       setActivatedAgents([]);
       setCurrentAnalysis(null);
+      return false;
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRunSupervisorPipeline = () => {
+    const supervisorPrompt =
+      'Run a complete analysis pipeline. Execute funnel, cohort, and attribution in parallel, then run forecast and scenario and combine results into dashboard-ready insights.';
+    return handleSendMessage(supervisorPrompt);
   };
 
   const handleExecuteSuggestion = (suggestion: UISuggestionItem) => {
@@ -232,33 +240,16 @@ export default function App() {
       case 'supervisor':
         return (
           <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
-            <Header
-              onMenuClick={() => setIsSidebarOpen(true)}
-              onNewChat={handleNewChat}
+            <SupervisorWorkspace
+              onRunAnalysis={handleRunSupervisorPipeline}
+              onOpenDashboard={() => setActiveSection('dashboard')}
             />
-
-            <div className="flex-1 overflow-y-auto px-6 py-8 lg:px-8">
-              <div className="mx-auto flex min-h-[70vh] w-full max-w-5xl items-center justify-center rounded-[32px] border border-gray-200 bg-white px-8 py-16 shadow-sm">
-                <div className="max-w-3xl text-center">
-                  <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-black">Analytics Supervisor</h1>
-                  <p className="text-base leading-8 text-gray-500 md:text-lg">
-                    This is your orchestration center. The supervisor coordinates specialist agents for forecasting,
-                    scenarios, funnel analysis, attribution, and cohorts, then combines them into business-ready insights.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         );
 
       case 'dashboard':
         return (
           <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
-            <Header
-              onMenuClick={() => setIsSidebarOpen(true)}
-              onNewChat={handleNewChat}
-            />
-
             <div className="flex-1 overflow-y-auto px-6 py-8 lg:px-8">
               <div className="mx-auto w-full max-w-6xl rounded-[32px] border border-gray-200 bg-white p-6 shadow-sm">
                 <Dashboard
@@ -320,6 +311,7 @@ export default function App() {
           currentAnalysis={currentAnalysis}
           executionTimeline={executionTimeline}
           activatedAgents={activatedAgents}
+          onNewChat={handleNewChat}
           handleSendMessage={handleSendMessage}
         />
       </div>

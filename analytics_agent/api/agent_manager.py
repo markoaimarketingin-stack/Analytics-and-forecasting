@@ -66,6 +66,12 @@ class AgentManager:
                     "metric": payload.get("metric", "revenue"),
                     "time_period": payload.get("time_period", "month"),
                     "cohort_period": payload.get("cohort_period", "month"),
+                    "retention_months": payload.get("retention_months", 3),
+                    "budget_shift_cap_percent": payload.get("budget_shift_cap_percent", 20),
+                    "funnel_type": payload.get("funnel_type"),
+                    "segment": payload.get("segment"),
+                    "event_type": payload.get("event_type"),
+                    "improvement_capture_rate": payload.get("improvement_capture_rate", 0.2),
                 },
                 run_agents=agents_to_run,
             )
