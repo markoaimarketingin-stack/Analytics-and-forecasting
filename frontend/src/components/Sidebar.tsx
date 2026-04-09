@@ -16,7 +16,7 @@ import {
   Lightbulb,
   Play,
 } from 'lucide-react';
-import type { UISuggestionItem } from '../types';
+import type { ChatThreadSummary, UISuggestionItem } from '../types';
 
 interface SidebarProps {
   activeSection: string;
@@ -25,6 +25,10 @@ interface SidebarProps {
   onMobileClose: () => void;
   suggestions: UISuggestionItem[];
   onExecuteSuggestion: (suggestion: UISuggestionItem) => void;
+  chatThreads: ChatThreadSummary[];
+  isHistoryLoading: boolean;
+  activeThreadId: string | null;
+  onOpenHistoryThread: (threadId: string) => void;
 }
 
 export default function Sidebar({
@@ -34,6 +38,10 @@ export default function Sidebar({
   onMobileClose,
   suggestions,
   onExecuteSuggestion,
+  chatThreads,
+  isHistoryLoading,
+  activeThreadId,
+  onOpenHistoryThread,
 }: SidebarProps) {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
@@ -65,6 +73,25 @@ export default function Sidebar({
       icon: Network,
     },
   ];
+
+  const formatRelativeTime = (value?: string) => {
+    if (!value) return 'Just now';
+
+    const when = new Date(value).getTime();
+    if (Number.isNaN(when)) return 'Just now';
+
+    const deltaMs = Date.now() - when;
+    const minutes = Math.max(1, Math.floor(deltaMs / (1000 * 60)));
+    if (minutes < 60) return `${minutes}m ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+
+    return new Date(value).toLocaleDateString();
+  };
 
   return (
     <>
@@ -403,42 +430,42 @@ export default function Sidebar({
           </div>
 
           <div className="flex-1 overflow-y-auto p-6">
-            <div className="space-y-5">
-              <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5">
-                <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-gray-400">
-                  Latest Execution
+            <div className="space-y-3">
+              {isHistoryLoading ? (
+                <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5 text-sm text-gray-600">
+                  Loading chat history...
                 </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-600">
-                      ✓
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">
-                        Forecast Agent executed
+              ) : chatThreads.length > 0 ? (
+                chatThreads.map((thread) => {
+                  const isActiveThread = activeThreadId === thread.id;
+                  return (
+                    <button
+                      key={thread.id}
+                      onClick={() => {
+                        onOpenHistoryThread(thread.id);
+                        setIsHistoryOpen(false);
+                      }}
+                      className={`w-full rounded-3xl border p-4 text-left transition ${
+                        isActiveThread
+                          ? 'border-blue-300 bg-blue-50'
+                          : 'border-gray-200 bg-white hover:border-blue-200 hover:bg-blue-50/40'
+                      }`}
+                    >
+                      <div className="truncate text-sm font-semibold text-gray-900">{thread.title || 'New Chat'}</div>
+                      <div className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">
+                        {thread.last_message_preview || 'Open this thread to continue the conversation.'}
                       </div>
-                      <div className="mt-1 text-xs text-gray-500">
-                        2 minutes ago
+                      <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
+                        {formatRelativeTime(thread.last_message_at || thread.updated_at || thread.created_at)}
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-600">
-                      ✓
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">
-                        Funnel Agent executed
-                      </div>
-                      <div className="mt-1 text-xs text-gray-500">
-                        2 minutes ago
-                      </div>
-                    </div>
-                  </div>
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5 text-sm leading-6 text-gray-600">
+                  No chat history yet. Start a new chat and it will appear here automatically.
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

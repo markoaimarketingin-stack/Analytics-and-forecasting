@@ -95,6 +95,27 @@ export interface Message {
   timestamp: Date;
 }
 
+export interface ChatThreadSummary {
+  id: string;
+  title: string;
+  created_at?: string;
+  updated_at?: string;
+  last_message_at?: string;
+  last_message_preview: string;
+}
+
+export interface ChatThreadMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  created_at: string;
+}
+
+export interface ChatThreadDetail {
+  thread: ChatThreadSummary;
+  messages: ChatThreadMessage[];
+}
+
 export interface AnalysisRun {
   id: string;
   timestamp: Date;
@@ -387,24 +408,182 @@ export interface ForecastAnalysis {
   next_30_day_revenue: number;
   predicted_roi: number;
   predicted_profit: number;
+  predicted_purchases?: number;
+  predicted_clicks?: number;
+  predicted_impressions?: number;
+  predicted_conversion_rate?: number;
+  predicted_ctr?: number;
   confidence: number;
   key_drivers: string[];
   assumptions: string[];
+  kpi_metric?: string;
+  kpi_projection?: number;
+  forecast_points?: Array<{
+    day: number;
+    spend: number;
+    revenue: number;
+    profit: number;
+    roi: number;
+    clicks: number;
+    purchases: number;
+  }>;
+  channel_forecast?: Array<{
+    channel: string;
+    projected_spend: number;
+    projected_revenue: number;
+    projected_purchases: number;
+    projected_roi: number;
+  }>;
+  baseline_metrics?: {
+    spend: number;
+    revenue: number;
+    roi: number;
+    clicks: number;
+    purchases: number;
+  };
+  applied_filters?: Record<string, unknown>;
+  diagnostics?: Record<string, unknown>;
+  data_source?: string;
+}
+
+export interface ForecastOptions {
+  channels: string[];
+  campaign_types: string[];
+  campaign_ids: string[];
+  defaults: {
+    channel: string;
+    campaign_type: string;
+    campaign_id: string;
+    horizon_days: number;
+    kpi_metric: string;
+  };
+  available_filters: {
+    channel: boolean;
+    campaign_type: boolean;
+    campaign_id: boolean;
+  };
+  sources: {
+    campaigns: string;
+  };
+  row_counts: {
+    campaigns: number;
+  };
+  date_range?: {
+    min?: string;
+    max?: string;
+  };
+}
+
+export interface ForecastOptionsApiResponse {
+  success: boolean;
+  data?: ForecastOptions;
+  detail?: string;
+}
+
+export interface ScenarioOptions {
+  channels: string[];
+  campaign_types: string[];
+  campaign_ids: string[];
+  kpi_metrics: string[];
+  defaults: {
+    channel: string;
+    campaign_type: string;
+    campaign_id: string;
+    horizon_days: number;
+    kpi_metric: string;
+    base_spend_change_pct: number;
+    base_ctr_lift_pct: number;
+    base_conversion_lift_pct: number;
+    base_aov_change_pct: number;
+  };
+  available_filters: {
+    channel: boolean;
+    campaign_type: boolean;
+    campaign_id: boolean;
+  };
+  sources: {
+    campaigns: string;
+  };
+  row_counts: {
+    campaigns: number;
+  };
+  date_range?: {
+    min?: string;
+    max?: string;
+  };
+}
+
+export interface ScenarioOptionsApiResponse {
+  success: boolean;
+  data?: ScenarioOptions;
+  detail?: string;
 }
 
 export interface ScenarioAnalysis {
   best_case: {
     revenue: number;
     roi: number;
+    profit?: number;
+    spend?: number;
+    clicks?: number;
+    purchases?: number;
   };
   base_case: {
     revenue: number;
     roi: number;
+    profit?: number;
+    spend?: number;
+    clicks?: number;
+    purchases?: number;
   };
   worst_case: {
     revenue: number;
     roi: number;
+    profit?: number;
+    spend?: number;
+    clicks?: number;
+    purchases?: number;
   };
+  kpi_metric?: string;
+  scenario_table?: Array<{
+    scenario: string;
+    revenue: number;
+    roi: number;
+    profit: number;
+    spend: number;
+    clicks: number;
+    purchases: number;
+  }>;
+  projection_curve?: Array<{
+    day: number;
+    best: number;
+    base: number;
+    worst: number;
+  }>;
+  sensitivity_curve?: Array<{
+    delta: number;
+    revenue: number;
+    profit: number;
+    roi: number;
+  }>;
+  channel_scenario?: Array<{
+    channel: string;
+    best_revenue: number;
+    base_revenue: number;
+    worst_revenue: number;
+  }>;
+  baseline_metrics?: {
+    spend: number;
+    revenue: number;
+    roi: number;
+    profit: number;
+    clicks: number;
+    purchases: number;
+  };
+  assumptions?: string[];
+  applied_filters?: Record<string, unknown>;
+  diagnostics?: Record<string, unknown>;
+  data_source?: string;
 }
 
 export interface AgentOrchestrationRequest {

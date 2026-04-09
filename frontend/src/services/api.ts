@@ -3,6 +3,8 @@
 import type {
   AgentOrchestrationApiResponse,
   AgentOrchestrationRequest,
+  ForecastOptionsApiResponse,
+  ScenarioOptionsApiResponse,
   FunnelOptionsApiResponse,
   ForecastPredictApiResponse,
   ForecastRequestPayload,
@@ -348,6 +350,24 @@ export const getFunnelOptions = async (): Promise<FunnelOptionsApiResponse> => {
       },
     };
   }
+};
+
+export const getForecastOptions = async (): Promise<ForecastOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return getJsonWithFallback<ForecastOptionsApiResponse>([
+    `${API_BASE_URL}/agents/forecast/options`,
+    `${API_ROOT_URL}/agents/forecast/options`,
+    `${baseWithoutApiSuffix}/agents/forecast/options`,
+  ]);
+};
+
+export const getScenarioOptions = async (): Promise<ScenarioOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return getJsonWithFallback<ScenarioOptionsApiResponse>([
+    `${API_BASE_URL}/agents/scenario/options`,
+    `${API_ROOT_URL}/agents/scenario/options`,
+    `${baseWithoutApiSuffix}/agents/scenario/options`,
+  ]);
 };
 
 export const getAgentResults = async (agentId?: string) => {

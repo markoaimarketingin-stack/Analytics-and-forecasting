@@ -32,22 +32,70 @@ class AnalyticsSupervisor:
         self.analytics_runner = analytics_runner
         self.gemini_client = gemini_client
         self.agent_manager = AgentManager()
-        
-        # Store clarification state across requests
-        self.clarification_state: Dict[str, Any] = {}
+
+        # Store clarification state per thread to keep multi-chat sessions isolated.
+        self.clarification_states: Dict[str, Dict[str, Any]] = {}
 
     # ============================================================
     # Public Entry Point
     # ============================================================
-    def orchestrate(self, message: str) -> Dict[str, Any]:
+    def orchestrate(
+        self,
+        message: str,
+        thread_id: str | None = None,
+        conversation_history: List[Dict[str, Any]] | None = None,
+    ) -> Dict[str, Any]:
         if not message or not message.strip():
             raise ValueError("Message cannot be empty")
 
+        thread_key = thread_id or "global"
+        clarification_state = self.clarification_states.get(thread_key, {})
+        conversation_context = self._format_conversation_context(conversation_history)
+
         normalized = self._normalize(message)
 
+        memory_answer = self._answer_memory_query(normalized, conversation_history)
+        if memory_answer is not None:
+            return {
+                "success": True,
+                "reasoning": memory_answer,
+                "intent": {
+                    "id": "conversation",
+                    "label": "General Conversation",
+                },
+                "activated_agents": [
+                    {
+                        "id": "analytics_supervisor",
+                        "label": "Analytics Supervisor",
+                    }
+                ],
+                "timeline": [
+                    "User request received",
+                    "Conversation memory lookup requested",
+                    "Recent thread history searched",
+                    "Response generated",
+                ],
+                "payload": {},
+                "result": {
+                    "message": memory_answer,
+                },
+                "ui": {
+                    "workspace": {
+                        "cards": [],
+                    },
+                    "insights_panel": {
+                        "confidence_score": None,
+                        "warnings": [],
+                        "suggestions": [],
+                    },
+                },
+                "timestamp": datetime.utcnow().isoformat(),
+            }
+
         # Allow users to break out of a pending clarification turn.
-        if self.clarification_state.get("awaiting_clarification") and self._is_clarification_exit(normalized):
-            self.clarification_state = {}
+        if clarification_state.get("awaiting_clarification") and self._is_clarification_exit(normalized):
+            clarification_state = {}
+            self.clarification_states[thread_key] = clarification_state
 
         logger.info(
             "Analytics Supervisor received request",
@@ -56,19 +104,22 @@ class AnalyticsSupervisor:
         )
 
         # If we are waiting for clarification, this turn must continue the same intent.
-        is_clarification_reply = bool(self.clarification_state.get("awaiting_clarification"))
+        is_clarification_reply = bool(clarification_state.get("awaiting_clarification"))
 
         if is_clarification_reply:
-            intent = self.clarification_state.get("intent", "forecast")
+            intent = clarification_state.get("intent", "forecast")
             plan = {
                 "mode": "analysis",
                 "intent": intent,
-                "agents": self.clarification_state.get("agents", ["forecast"]),
-                "payload_updates": self.clarification_state.get("payload_updates", {}),
+                "agents": clarification_state.get("agents", ["forecast"]),
+                "payload_updates": clarification_state.get("payload_updates", {}),
             }
             mode = "analysis"
         else:
-            plan = self._plan_with_llm(normalized)
+            plan = self._plan_with_llm(
+                message=normalized,
+                conversation_context=conversation_context,
+            )
             mode = plan.get("mode", "analysis")
 
         # ========================================================
@@ -141,7 +192,8 @@ class AnalyticsSupervisor:
         )
         if results_lookup is not None:
             # Any explicit results lookup should clear pending clarification state.
-            self.clarification_state = {}
+            clarification_state = {}
+            self.clarification_states[thread_key] = clarification_state
             return results_lookup
 
         # ========================================================
@@ -149,7 +201,7 @@ class AnalyticsSupervisor:
         # ========================================================
         if is_clarification_reply:
             # Merge reply with previously extracted parameters for the same intent.
-            prior = self.clarification_state.get("extracted_params", {})
+            prior = clarification_state.get("extracted_params", {})
             merged_params = self._merge_clarified_answers(prior, normalized)
             missing_params = self._missing_params_for_intent(intent, merged_params)
 
@@ -157,7 +209,7 @@ class AnalyticsSupervisor:
                 questions = self._generate_clarification_questions(intent, missing_params)
                 timeline.append("Clarification partially answered - additional details requested")
 
-                self.clarification_state = {
+                clarification_state = {
                     "awaiting_clarification": True,
                     "intent": intent,
                     "agents": agent_ids,
@@ -165,6 +217,7 @@ class AnalyticsSupervisor:
                     "extracted_params": merged_params,
                     "missing_params": missing_params,
                 }
+                self.clarification_states[thread_key] = clarification_state
 
                 return {
                     "success": True,
@@ -197,7 +250,8 @@ class AnalyticsSupervisor:
             payload = self._apply_clarified_params_to_payload(payload, merged_params)
             timeline.append("Clarification answers received and merged")
             logger.info("Clarification merged", params=merged_params)
-            self.clarification_state = {}
+            clarification_state = {}
+            self.clarification_states[thread_key] = clarification_state
 
         else:
             clarification_needed = self._detect_clarification_needed(intent, normalized)
@@ -216,7 +270,7 @@ class AnalyticsSupervisor:
                 )
             
                 # Store state for next request and lock intent routing.
-                self.clarification_state = {
+                clarification_state = {
                     "awaiting_clarification": True,
                     "intent": intent,
                     "agents": agent_ids,
@@ -224,6 +278,7 @@ class AnalyticsSupervisor:
                     "extracted_params": clarification_needed.get("extracted_params", {}),
                     "missing_params": missing_params,
                 }
+                self.clarification_states[thread_key] = clarification_state
             
                 return {
                     "success": True,
@@ -319,6 +374,7 @@ class AnalyticsSupervisor:
                 original_message=message,
                 plan=plan,
                 result=result,
+                conversation_context=conversation_context,
             )
         except Exception:
             reasoning = (
@@ -449,10 +505,77 @@ class AnalyticsSupervisor:
         message = message.lower().strip()
         return re.sub(r"\s+", " ", message)
 
+    def _format_conversation_context(
+        self,
+        history: List[Dict[str, Any]] | None,
+        max_messages: int = 8,
+    ) -> str:
+        if not history:
+            return "No previous conversation context."
+
+        lines: List[str] = []
+        for item in history[-max_messages:]:
+            role = str(item.get("role", "user")).strip().lower()
+            content = str(item.get("content", "")).strip()
+            if not content:
+                continue
+            speaker = "User" if role == "user" else "Assistant"
+            lines.append(f"{speaker}: {content}")
+
+        return "\n".join(lines) if lines else "No previous conversation context."
+
+    def _answer_memory_query(
+        self,
+        normalized_message: str,
+        history: List[Dict[str, Any]] | None,
+    ) -> str | None:
+        history = history or []
+
+        asks_last_user = any(
+            token in normalized_message
+            for token in [
+                "previous msg",
+                "previous message",
+                "my previous msg",
+                "my previous message",
+                "last message",
+                "what did i just say",
+                "what was my previous",
+            ]
+        )
+        asks_last_assistant = any(
+            token in normalized_message
+            for token in [
+                "what did you say",
+                "your previous message",
+                "your last response",
+                "last response",
+            ]
+        )
+
+        if not asks_last_user and not asks_last_assistant:
+            return None
+
+        if asks_last_user:
+            for item in reversed(history):
+                if str(item.get("role", "")).lower() == "user":
+                    content = str(item.get("content", "")).strip()
+                    if content:
+                        return f"Your previous message was: \"{content}\""
+            return "I do not have a previous user message in this thread yet."
+
+        for item in reversed(history):
+            if str(item.get("role", "")).lower() == "assistant":
+                content = str(item.get("content", "")).strip()
+                if content:
+                    return f"My previous response was: \"{content}\""
+
+        return "I do not have a previous assistant response in this thread yet."
+
     # ============================================================
     # LLM Planning Layer
     # ============================================================
-    def _plan_with_llm(self, message: str) -> Dict[str, Any]:
+    def _plan_with_llm(self, message: str, conversation_context: str = "No previous conversation context.") -> Dict[str, Any]:
         prompt = f"""
 You are Analytics Supervisor, an orchestration engine for a marketing analytics platform.
 
@@ -477,6 +600,8 @@ Available agents:
 
 Return ONLY valid JSON.
 
+Use the recent conversation context to resolve follow-up requests like "same as previous", "continue", "that one", or "use earlier settings".
+
 Schema:
 {{
   "mode": "conversation" | "analysis",
@@ -492,6 +617,9 @@ Schema:
 
 User message:
 {message}
+
+Recent conversation context:
+{conversation_context}
 """
 
         try:
@@ -977,8 +1105,8 @@ Return ONLY valid JSON, no other text.
             "funnel_analysis": ["funnel"],
             "attribution_analysis": ["attribution"],
             "cohort_analysis": ["cohort"],
-            "dashboard": ["forecast", "funnel", "attribution", "cohort"],
-            "report_generation": ["forecast", "funnel", "attribution", "cohort"],
+            "dashboard": ["forecast", "funnel", "attribution", "cohort", "scenario"],
+            "report_generation": ["forecast", "funnel", "attribution", "cohort", "scenario"],
             "budget_optimization": ["scenario"],
             "break_even": ["scenario"],
             "ltv_projection": ["cohort"],
@@ -1038,6 +1166,7 @@ Return ONLY valid JSON, no other text.
         original_message: str,
         plan: Dict[str, Any],
         result: Dict[str, Any],
+        conversation_context: str = "No previous conversation context.",
     ) -> str:
         prompt = f"""
 You are Analytics Supervisor.
@@ -1046,6 +1175,9 @@ Write a concise and professional response.
 
 User request:
 {original_message}
+
+Recent conversation context:
+{conversation_context}
 
 Intent:
 {plan.get('intent')}

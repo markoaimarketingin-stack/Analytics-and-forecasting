@@ -7,7 +7,7 @@ from analytics_agent.agents.attribution_agent import AttributionAgent
 from analytics_agent.agents.cohort_agent import CohortAgent
 from analytics_agent.agents.forecast_agent import ForecastAgent, ForecastRequest
 from analytics_agent.agents.funnel_agent import FunnelAgent
-from analytics_agent.agents.scenario_agent import ScenarioAgent
+from analytics_agent.agents.scenario_agent import ScenarioAgent, ScenarioRequest
 from analytics_agent.db import queries
 from analytics_agent.state import AnalyticsState, build_default_state
 
@@ -35,9 +35,8 @@ class OrchestratorAgent:
         state = state or build_default_state()
 
         state.user_request = dict(request.user_request or {})
-        self._load_data(state)
-
         ordered_agents = self._resolve_agent_order(request.run_agents)
+        self._load_data(state, ordered_agents)
         for agent_name in ordered_agents:
             state = self.run_agent(agent_name, state)
 
@@ -56,15 +55,54 @@ class OrchestratorAgent:
             return self.cohort_agent.analyze(state)
         if name == "forecast":
             horizon = int(state.user_request.get("horizon_days", 30))
-            return self.forecast_agent.analyze(state, ForecastRequest(horizon_days=horizon))
+            return self.forecast_agent.analyze(
+                state,
+                ForecastRequest(
+                    horizon_days=horizon,
+                    kpi_metric=str(state.user_request.get("kpi_metric", "revenue")),
+                    channel=str(state.user_request.get("channel", "all")),
+                    campaign_type=str(state.user_request.get("campaign_type", "all")),
+                    campaign_id=str(state.user_request.get("campaign_id", "all")),
+                    spend_change_pct=float(state.user_request.get("spend_change_pct", 0)),
+                    ctr_lift_pct=float(state.user_request.get("ctr_lift_pct", 0)),
+                    conversion_lift_pct=float(state.user_request.get("conversion_lift_pct", 0)),
+                    cpc_change_pct=float(state.user_request.get("cpc_change_pct", 0)),
+                    aov_change_pct=float(state.user_request.get("aov_change_pct", 0)),
+                    seasonality_factor=float(state.user_request.get("seasonality_factor", 1.0)),
+                ),
+            )
         if name == "scenario":
-            return self.scenario_agent.analyze(state)
+            return self.scenario_agent.analyze(
+                state,
+                ScenarioRequest(
+                    horizon_days=int(state.user_request.get("horizon_days", 90)),
+                    kpi_metric=str(state.user_request.get("kpi_metric", "revenue")),
+                    channel=str(state.user_request.get("channel", "all")),
+                    campaign_type=str(state.user_request.get("campaign_type", "all")),
+                    campaign_id=str(state.user_request.get("campaign_id", "all")),
+                    base_spend_change_pct=float(state.user_request.get("base_spend_change_pct", 0)),
+                    base_ctr_lift_pct=float(state.user_request.get("base_ctr_lift_pct", 0)),
+                    base_conversion_lift_pct=float(state.user_request.get("base_conversion_lift_pct", 0)),
+                    base_aov_change_pct=float(state.user_request.get("base_aov_change_pct", 0)),
+                    seasonality_factor=float(state.user_request.get("seasonality_factor", 1.0)),
+                ),
+            )
 
         return state
 
-    def _load_data(self, state: AnalyticsState) -> None:
+    def _load_data(self, state: AnalyticsState, ordered_agents: list[str]) -> None:
+        forecast_only = ordered_agents == ["forecast"]
+        scenario_only = ordered_agents == ["scenario"]
+
         if state.campaign_data is None:
-            state.campaign_data = queries.get_campaign_data()
+            if forecast_only or scenario_only:
+                state.campaign_data = queries.get_campaign_data_remote_only()
+            else:
+                state.campaign_data = queries.get_campaign_data()
+
+        if forecast_only or scenario_only:
+            return
+
         if state.customer_data is None and state.customers_data is None:
             state.customer_data = queries.get_customers_data()
             state.customers_data = state.customer_data

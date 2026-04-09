@@ -16,8 +16,15 @@ import AttributionWorkspace from './components/attribution/AttributionWorkspace'
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
+import { orchestrateAgents } from './services/api';
 
-import type { AnalysisRun, AgentOrchestrationResult, Message, UISuggestionItem } from './types';
+import type {
+  AnalysisRun,
+  AgentOrchestrationResult,
+  ChatThreadSummary,
+  Message,
+  UISuggestionItem,
+} from './types';
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
@@ -29,7 +36,18 @@ interface ActivatedAgent {
   label: string;
 }
 
+const THEME_STORAGE_KEY = 'analytics_theme_dark_mode';
+
 export default function App() {
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+
+    const saved = localStorage.getItem(THEME_STORAGE_KEY);
+    if (saved === 'true') return true;
+    if (saved === 'false') return false;
+
+    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+  });
   const [activeSection, setActiveSection] = useState('supervisor');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,8 +59,17 @@ export default function App() {
   const [activatedAgents, setActivatedAgents] = useState<ActivatedAgent[]>([]);
   const [executionTimeline, setExecutionTimeline] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<UISuggestionItem[]>([]);
+  const [clientId, setClientId] = useState('');
+  const [currentThreadId, setCurrentThreadId] = useState<string | null>(null);
+  const [chatThreads, setChatThreads] = useState<ChatThreadSummary[]>([]);
+  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark-mode', darkMode);
+    localStorage.setItem(THEME_STORAGE_KEY, String(darkMode));
+  }, [darkMode]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
@@ -51,11 +78,79 @@ export default function App() {
     });
   }, [messages, isLoading, currentAnalysis]);
 
+  useEffect(() => {
+    const storageKey = 'marko_client_id';
+    const existing = localStorage.getItem(storageKey);
+    if (existing) {
+      setClientId(existing);
+      return;
+    }
+
+    const generated =
+      typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    localStorage.setItem(storageKey, generated);
+    setClientId(generated);
+  }, []);
+
+  const loadChatThreads = async (resolvedClientId: string) => {
+    if (!resolvedClientId) return;
+    setIsHistoryLoading(true);
+
+    try {
+      const response = await axios.get(`${API_BASE}/chat-history`, {
+        params: {
+          client_id: resolvedClientId,
+          limit: 100,
+        },
+      });
+
+      setChatThreads(response.data.threads || []);
+    } catch (error) {
+      console.error('Failed to load chat history', error);
+    } finally {
+      setIsHistoryLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!clientId) return;
+    loadChatThreads(clientId);
+  }, [clientId]);
+
   const handleNewChat = () => {
     setMessages([]);
     setCurrentAnalysis(null);
     setActivatedAgents([]);
     setExecutionTimeline([]);
+    setCurrentThreadId(null);
+  };
+
+  const handleOpenHistoryThread = async (threadId: string) => {
+    if (!clientId) return;
+
+    try {
+      const response = await axios.get(`${API_BASE}/chat-history/${threadId}`, {
+        params: { client_id: clientId },
+      });
+
+      const restoredMessages: Message[] = (response.data.messages || []).map((item: any) => ({
+        id: String(item.id),
+        role: item.role,
+        content: item.content,
+        timestamp: new Date(item.created_at),
+      }));
+
+      setMessages(restoredMessages);
+      setCurrentThreadId(threadId);
+      setExecutionTimeline([]);
+      setActivatedAgents([]);
+      setCurrentAnalysis(null);
+    } catch (error) {
+      console.error('Failed to open chat thread', error);
+    }
   };
 
   const addSuggestionsFromResult = (
@@ -138,7 +233,13 @@ export default function App() {
       if (isSimpleChat) {
         const response = await axios.post(`${API_BASE}/chat`, {
           message,
+          thread_id: currentThreadId,
+          client_id: clientId,
         });
+
+        if (response.data.thread_id) {
+          setCurrentThreadId(response.data.thread_id);
+        }
 
         setMessages((prev) => [
           ...prev,
@@ -156,15 +257,24 @@ export default function App() {
         setExecutionTimeline([]);
         setActivatedAgents([]);
         setCurrentAnalysis(null);
+        if (clientId) {
+          loadChatThreads(clientId);
+        }
 
         return true;
       }
 
       const response = await axios.post(`${API_BASE}/orchestrate`, {
         message,
+        thread_id: currentThreadId,
+        client_id: clientId,
       });
 
       const data = response.data;
+
+      if (data.thread_id) {
+        setCurrentThreadId(data.thread_id);
+      }
 
       setMessages((prev) => [
         ...prev,
@@ -197,6 +307,10 @@ export default function App() {
         setCurrentAnalysis(null);
       }
 
+      if (clientId) {
+        loadChatThreads(clientId);
+      }
+
       return true;
     } catch (error: any) {
       setMessages((prev) => [
@@ -221,10 +335,104 @@ export default function App() {
     }
   };
 
-  const handleRunSupervisorPipeline = () => {
+  const handleRunSupervisorPipeline = async (): Promise<boolean> => {
     const supervisorPrompt =
-      'Run a complete analysis pipeline. Execute funnel, cohort, and attribution in parallel, then run forecast and scenario and combine results into dashboard-ready insights.';
-    return handleSendMessage(supervisorPrompt);
+      'Run complete supervisor pipeline: funnel, cohort, attribution, forecast, and scenario. Build dashboard-ready insights.';
+
+    const userMessage: Message = {
+      id: `${Date.now()}-user`,
+      role: 'user',
+      content: supervisorPrompt,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsLoading(true);
+
+    try {
+      setExecutionTimeline([]);
+      setActivatedAgents([]);
+      setCurrentAnalysis(null);
+
+      const response = await orchestrateAgents({
+        intent: 'dashboard',
+        agents: ['funnel', 'cohort', 'attribution', 'forecast', 'scenario'],
+        payload: {
+          horizon_days: 90,
+          kpi_metric: 'revenue',
+          channel: 'all',
+          campaign_type: 'all',
+          campaign_id: 'all',
+        },
+      });
+
+      if (!response.success || !response.data?.success) {
+        throw new Error(response.detail || response.data?.errors?.system || 'Supervisor pipeline failed.');
+      }
+
+      const data = response.data;
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `${Date.now()}-assistant`,
+          role: 'assistant',
+          content:
+            data.executive_summary ||
+            'Supervisor pipeline completed. Open dashboard to review full multi-agent insights.',
+          timestamp: new Date(),
+        },
+      ]);
+
+      setActivatedAgents([
+        { id: 'funnel', label: 'Funnel Agent' },
+        { id: 'cohort', label: 'Cohort Agent' },
+        { id: 'attribution', label: 'Attribution Agent' },
+        { id: 'forecast', label: 'Forecast Agent' },
+        { id: 'scenario', label: 'Scenario Agent' },
+      ]);
+
+      setExecutionTimeline([
+        'Supervisor pipeline started',
+        'Funnel, Cohort, Attribution executed',
+        'Forecast executed',
+        'Scenario executed',
+        'Results combined for dashboard',
+      ]);
+
+      addSuggestionsFromResult('Supervisor', data);
+
+      const run: AnalysisRun = {
+        id: `${Date.now()}-analysis`,
+        timestamp: new Date(),
+        status: 'completed',
+        payload: {} as any,
+        result: data as any,
+      };
+
+      setCurrentAnalysis(run);
+      return true;
+    } catch (error: any) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `${Date.now()}-error`,
+          role: 'assistant',
+          content:
+            error?.response?.data?.detail ||
+            error?.message ||
+            'Supervisor pipeline could not be completed.',
+          timestamp: new Date(),
+        },
+      ]);
+
+      setExecutionTimeline([]);
+      setActivatedAgents([]);
+      setCurrentAnalysis(null);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleExecuteSuggestion = (suggestion: UISuggestionItem) => {
@@ -239,7 +447,7 @@ export default function App() {
     switch (activeSection) {
       case 'supervisor':
         return (
-          <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
+          <div className="workspace-section-shell flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
             <SupervisorWorkspace
               onRunAnalysis={handleRunSupervisorPipeline}
               onOpenDashboard={() => setActiveSection('dashboard')}
@@ -249,7 +457,7 @@ export default function App() {
 
       case 'dashboard':
         return (
-          <div className="flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
+          <div className="workspace-section-shell flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
             <div className="flex-1 overflow-y-auto px-6 py-8 lg:px-8">
               <div className="mx-auto w-full max-w-6xl rounded-[32px] border border-gray-200 bg-white p-6 shadow-sm">
                 <Dashboard
@@ -280,17 +488,22 @@ export default function App() {
         return <ReportWorkspace />;
 
       case 'settings':
-        return <SettingsWorkspace />;
+        return (
+          <SettingsWorkspace
+            darkMode={darkMode}
+            onToggleDarkMode={setDarkMode}
+          />
+        );
 
       default:
         return (
-          <div className="flex h-full items-center justify-center bg-[#f6f7f9] text-gray-500">Select a section from the sidebar.</div>
+          <div className="workspace-section-shell flex h-full items-center justify-center bg-[#f6f7f9] text-gray-500">Select a section from the sidebar.</div>
         );
     }
   };
 
   return (
-    <div className="app-shell flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
+    <div className="app-shell app-theme-root flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}
@@ -298,6 +511,10 @@ export default function App() {
         onMobileClose={() => setIsSidebarOpen(false)}
         suggestions={suggestions}
         onExecuteSuggestion={handleExecuteSuggestion}
+        chatThreads={chatThreads}
+        isHistoryLoading={isHistoryLoading}
+        activeThreadId={currentThreadId}
+        onOpenHistoryThread={handleOpenHistoryThread}
       />
 
       <div className="ml-0 flex min-w-0 flex-1 overflow-hidden lg:ml-64">

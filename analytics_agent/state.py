@@ -160,15 +160,38 @@ class ForecastAnalysis(BaseModel):
     next_30_day_revenue: float = 0.0
     predicted_roi: float = 0.0
     predicted_profit: float = 0.0
+    predicted_purchases: float = 0.0
+    predicted_clicks: float = 0.0
+    predicted_impressions: float = 0.0
+    predicted_conversion_rate: float = 0.0
+    predicted_ctr: float = 0.0
     confidence: int = 0
     key_drivers: List[str] = Field(default_factory=list)
     assumptions: List[str] = Field(default_factory=list)
+    kpi_metric: str = "revenue"
+    kpi_projection: float = 0.0
+    forecast_points: List[Dict[str, Any]] = Field(default_factory=list)
+    channel_forecast: List[Dict[str, Any]] = Field(default_factory=list)
+    baseline_metrics: Dict[str, float] = Field(default_factory=dict)
+    applied_filters: Dict[str, Any] = Field(default_factory=dict)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
 
 
 class ScenarioAnalysis(BaseModel):
     best_case: Dict[str, float] = Field(default_factory=dict)
     base_case: Dict[str, float] = Field(default_factory=dict)
     worst_case: Dict[str, float] = Field(default_factory=dict)
+    kpi_metric: str = "revenue"
+    scenario_table: List[Dict[str, Any]] = Field(default_factory=list)
+    projection_curve: List[Dict[str, Any]] = Field(default_factory=list)
+    sensitivity_curve: List[Dict[str, Any]] = Field(default_factory=list)
+    channel_scenario: List[Dict[str, Any]] = Field(default_factory=list)
+    baseline_metrics: Dict[str, float] = Field(default_factory=dict)
+    assumptions: List[str] = Field(default_factory=list)
+    applied_filters: Dict[str, Any] = Field(default_factory=dict)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
 
 
 class UserAnalyticsRequest(BaseModel):

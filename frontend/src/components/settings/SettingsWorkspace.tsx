@@ -1,41 +1,15 @@
-import { Settings, SlidersHorizontal, Sparkles, MessageSquare } from 'lucide-react';
-import { useEffect, useState, type ReactNode } from 'react';
+import { Moon, Settings } from 'lucide-react';
+import type { ReactNode } from 'react';
 
-type SettingsState = {
-  smoothAnimations: boolean;
-  compactCards: boolean;
-  chatAutoscroll: boolean;
+type SettingsWorkspaceProps = {
+  darkMode: boolean;
+  onToggleDarkMode: (value: boolean) => void;
 };
 
-const STORAGE_KEY = 'analytics_supervisor_settings';
-
-export default function SettingsWorkspace() {
-  const [settings, setSettings] = useState<SettingsState>({
-    smoothAnimations: true,
-    compactCards: false,
-    chatAutoscroll: true,
-  });
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        setSettings((prev) => ({ ...prev, ...JSON.parse(raw) }));
-      }
-    } catch {
-      // keep defaults when storage is unavailable/corrupt
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    document.documentElement.classList.toggle('motion-reduce', !settings.smoothAnimations);
-    document.documentElement.classList.toggle('compact-cards', settings.compactCards);
-  }, [settings]);
-
-  const update = (key: keyof SettingsState, value: boolean) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
-  };
+export default function SettingsWorkspace({
+  darkMode,
+  onToggleDarkMode,
+}: SettingsWorkspaceProps) {
 
   return (
     <div className="workspace-surface workspace-modern">
@@ -54,33 +28,17 @@ export default function SettingsWorkspace() {
         <div className="mx-auto w-full max-w-4xl space-y-6">
           <div className="workspace-panel rounded-[30px] p-8 card-hover-lift">
             <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.28em] text-gray-400">
-              <SlidersHorizontal className="h-4 w-4" />
+              <Moon className="h-4 w-4" />
               Interface
             </div>
 
-            <div className="mt-6 space-y-4">
+            <div className="mt-6">
               <SettingRow
-                icon={<Sparkles className="h-5 w-5" />}
-                title="Smooth Animations"
-                description="Enable subtle transitions for cards and chat messages."
-                checked={settings.smoothAnimations}
-                onChange={(v) => update('smoothAnimations', v)}
-              />
-
-              <SettingRow
-                icon={<SlidersHorizontal className="h-5 w-5" />}
-                title="Compact Workspace Cards"
-                description="Use tighter spacing in workspace cards."
-                checked={settings.compactCards}
-                onChange={(v) => update('compactCards', v)}
-              />
-
-              <SettingRow
-                icon={<MessageSquare className="h-5 w-5" />}
-                title="Chat Auto-scroll"
-                description="Automatically scroll chat to latest reply."
-                checked={settings.chatAutoscroll}
-                onChange={(v) => update('chatAutoscroll', v)}
+                icon={<Moon className="h-5 w-5" />}
+                title="Dark Mode"
+                description="Switch the app between light and dark themes."
+                checked={darkMode}
+                onChange={onToggleDarkMode}
               />
             </div>
           </div>
@@ -100,12 +58,12 @@ type SettingRowProps = {
 
 function SettingRow({ icon, title, description, checked, onChange }: SettingRowProps) {
   return (
-    <div className="workspace-metric-card flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-4">
+    <div className="workspace-metric-card settings-row flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-4">
       <div className="flex items-start gap-3">
-        <div className="mt-1 text-gray-600">{icon}</div>
+        <div className="settings-row-icon mt-1 text-gray-600">{icon}</div>
         <div>
-          <div className="text-sm font-semibold text-gray-900">{title}</div>
-          <div className="mt-1 text-sm text-gray-500">{description}</div>
+          <div className="settings-row-title text-sm font-semibold text-gray-900">{title}</div>
+          <div className="settings-row-description mt-1 text-sm text-gray-500">{description}</div>
         </div>
       </div>
 

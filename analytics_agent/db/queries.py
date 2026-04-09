@@ -273,6 +273,134 @@ def get_campaign_dataframe(limit: int | None = None) -> pd.DataFrame:
     return _get_table_dataframe("campaigns", limit)
 
 
+def get_campaign_dataframe_remote_only(limit: int | None = None) -> pd.DataFrame:
+    remote_df = _read_remote_table("campaigns", limit)
+    return remote_df.head(limit) if limit is not None and not remote_df.empty else remote_df
+
+
+def get_campaign_data_remote_only(limit: int | None = None) -> list[dict[str, Any]]:
+    return _safe_to_records(get_campaign_dataframe_remote_only(limit))
+
+
+def get_forecast_filter_options() -> dict[str, Any]:
+    campaigns_df = get_campaign_dataframe_remote_only()
+    if campaigns_df.empty:
+        raise ValueError("No campaigns data found in Supabase for forecast options")
+
+    channels = _unique_non_empty_values(campaigns_df, "channel")
+    campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
+    campaign_ids = _unique_non_empty_values(campaigns_df, "campaign_id")
+
+    min_date = ""
+    max_date = ""
+    if "date" in campaigns_df.columns:
+        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce").dropna()
+        if not parsed_dates.empty:
+            min_date = parsed_dates.min().date().isoformat()
+            max_date = parsed_dates.max().date().isoformat()
+
+    return {
+        "channels": channels,
+        "campaign_types": campaign_types,
+        "campaign_ids": campaign_ids,
+        "defaults": {
+            "channel": "all",
+            "campaign_type": "all",
+            "campaign_id": "all",
+            "horizon_days": 90,
+            "kpi_metric": "revenue",
+        },
+        "available_filters": {
+            "channel": bool(channels),
+            "campaign_type": bool(campaign_types),
+            "campaign_id": bool(campaign_ids),
+        },
+        "sources": {
+            "campaigns": "supabase",
+        },
+        "row_counts": {
+            "campaigns": int(len(campaigns_df.index)),
+        },
+        "date_range": {
+            "min": min_date,
+            "max": max_date,
+        },
+        "schema_details": {
+            "campaigns": {
+                "source": "supabase",
+                "columns": campaigns_df.columns.tolist(),
+            }
+        },
+    }
+
+
+def get_scenario_filter_options() -> dict[str, Any]:
+    campaigns_df = get_campaign_dataframe_remote_only()
+    if campaigns_df.empty:
+        raise ValueError("No campaigns data found in Supabase for scenario options")
+
+    channels = _unique_non_empty_values(campaigns_df, "channel")
+    campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
+    campaign_ids = _unique_non_empty_values(campaigns_df, "campaign_id")
+
+    min_date = ""
+    max_date = ""
+    if "date" in campaigns_df.columns:
+        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce").dropna()
+        if not parsed_dates.empty:
+            min_date = parsed_dates.min().date().isoformat()
+            max_date = parsed_dates.max().date().isoformat()
+
+    return {
+        "channels": channels,
+        "campaign_types": campaign_types,
+        "campaign_ids": campaign_ids,
+        "kpi_metrics": [
+            "revenue",
+            "profit",
+            "roi",
+            "spend",
+            "clicks",
+            "purchases",
+            "impressions",
+            "ctr",
+            "conversion_rate",
+        ],
+        "defaults": {
+            "channel": "all",
+            "campaign_type": "all",
+            "campaign_id": "all",
+            "horizon_days": 90,
+            "kpi_metric": "revenue",
+            "base_spend_change_pct": 0,
+            "base_ctr_lift_pct": 0,
+            "base_conversion_lift_pct": 0,
+            "base_aov_change_pct": 0,
+        },
+        "available_filters": {
+            "channel": bool(channels),
+            "campaign_type": bool(campaign_types),
+            "campaign_id": bool(campaign_ids),
+        },
+        "sources": {
+            "campaigns": "supabase",
+        },
+        "row_counts": {
+            "campaigns": int(len(campaigns_df.index)),
+        },
+        "date_range": {
+            "min": min_date,
+            "max": max_date,
+        },
+        "schema_details": {
+            "campaigns": {
+                "source": "supabase",
+                "columns": campaigns_df.columns.tolist(),
+            }
+        },
+    }
+
+
 def get_campaigns_by_channel(channel: str) -> list[dict[str, Any]]:
     return _safe_to_records(_filter_eq(get_campaign_dataframe(), "channel", channel))
 

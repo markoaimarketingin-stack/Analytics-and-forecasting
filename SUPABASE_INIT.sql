@@ -3,6 +3,8 @@
 -- Run this in your Supabase SQL Editor to create the internal app tables
 -- ============================================================================
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 1. Create AGENTS table
 CREATE TABLE IF NOT EXISTS agents (
     id SERIAL PRIMARY KEY,
@@ -88,6 +90,33 @@ CREATE TABLE IF NOT EXISTS analytics_logs (
     context JSONB,
     at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- 12. Create CHAT_THREADS table
+CREATE TABLE IF NOT EXISTS chat_threads (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    client_id TEXT NOT NULL,
+    title TEXT NOT NULL DEFAULT 'New Chat',
+    last_message_preview TEXT NOT NULL DEFAULT '',
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+    last_message_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
+);
+
+-- 13. Create CHAT_MESSAGES table
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id BIGSERIAL PRIMARY KEY,
+    thread_id UUID NOT NULL REFERENCES chat_threads(id) ON DELETE CASCADE,
+    role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),
+    content TEXT NOT NULL,
+    metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_threads_client_last_message
+    ON chat_threads(client_id, last_message_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_chat_messages_thread_created_at
+    ON chat_messages(thread_id, created_at ASC);
 
 -- ============================================================================
 -- Insert a default agent for the application

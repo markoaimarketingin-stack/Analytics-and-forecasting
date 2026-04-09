@@ -39,6 +39,7 @@ class Config:
     # Performance Configuration
     MAX_WORKERS: int = config('MAX_WORKERS', default=4, cast=int)
     REQUEST_TIMEOUT: int = config('REQUEST_TIMEOUT', default=30, cast=int)
+    CONTEXT_SIZE: int = config('CONTEXT_SIZE', default=3, cast=int)
 
     # Feature Flags
     ENABLE_AI_SUMMARIES: bool = config('ENABLE_AI_SUMMARIES', default=True, cast=bool)

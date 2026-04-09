@@ -5,7 +5,7 @@ from typing import Optional
 import uuid
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, UploadFile, File as FastAPIFile
+from fastapi import BackgroundTasks, FastAPI, HTTPException, Query, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_serializer
 import pandas as pd
@@ -17,6 +17,14 @@ from analytics_agent.logging_config import get_logger
 from analytics_agent.api.orchestrator import AnalyticsSupervisor
 from analytics_agent.db.repo import get_session, init_db
 from analytics_agent.db.models import File, Agent
+from analytics_agent.db.chat_history_repo import (
+    append_chat_message,
+    ensure_chat_thread,
+    get_chat_thread,
+    list_chat_messages,
+    list_chat_threads,
+    list_recent_messages,
+)
 from analytics_agent.api.file_handler import FileHandler
 from analytics_agent.api.models import (
     AnalyticsPayloadRequest,
@@ -37,12 +45,15 @@ logger = get_logger(__name__)
 # -----------------------------------------------------------------------------
 class ChatRequest(BaseModel):
     message: str
-    selected_datasets: list[str] = []
+    selected_datasets: list[str] = Field(default_factory=list)
+    thread_id: Optional[str] = None
+    client_id: Optional[str] = None
 
 
 class ChatResponse(BaseModel):
     success: bool = True
     message: str
+    thread_id: str
     timestamp: str
 
 
@@ -55,6 +66,36 @@ class OrchestrateResponse(BaseModel):
     payload: dict
     result: dict
     ui: dict
+    thread_id: str
+    timestamp: str
+
+
+class ChatThreadSummary(BaseModel):
+    id: str
+    title: str
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
+    last_message_at: Optional[str] = None
+    last_message_preview: str = ""
+
+
+class ChatMessageRecord(BaseModel):
+    id: str
+    role: str
+    content: str
+    created_at: str
+
+
+class ChatThreadListResponse(BaseModel):
+    success: bool = True
+    threads: list[ChatThreadSummary]
+    timestamp: str
+
+
+class ChatThreadDetailResponse(BaseModel):
+    success: bool = True
+    thread: ChatThreadSummary
+    messages: list[ChatMessageRecord]
     timestamp: str
 
 
@@ -150,6 +191,50 @@ app = FastAPI(
 )
 
 
+def _resolve_client_id(client_id: Optional[str]) -> str:
+    value = (client_id or "").strip()
+    return value or "anonymous-client"
+
+
+def _build_chat_prompt(message: str, history: list[dict]) -> str:
+    context_lines: list[str] = []
+    for item in history[-8:]:
+        role = (item.get("role") or "user").strip().lower()
+        content = (item.get("content") or "").strip()
+        if not content:
+            continue
+        speaker = "User" if role == "user" else "Assistant"
+        context_lines.append(f"{speaker}: {content}")
+
+    conversation_context = "\n".join(context_lines) if context_lines else "No previous conversation context."
+
+    return f"""
+You are Analytics Supervisor, the intelligent supervisor of a growth analytics platform.
+
+You can help with:
+- Revenue forecasting
+- Scenario comparison
+- Funnel analysis
+- Attribution
+- Customer cohorts
+- Budget planning
+- Break-even analysis
+- Executive summaries
+
+Guidelines:
+- Be concise and helpful
+- If the user says hello, introduce yourself
+- Mention what you can do
+- Keep answers conversational
+
+Conversation so far:
+{conversation_context}
+
+Latest user message:
+{message}
+"""
+
+
 # -----------------------------------------------------------------------------
 # CORS
 # -----------------------------------------------------------------------------
@@ -184,28 +269,19 @@ async def chat_with_marko_brain(payload: ChatRequest):
         raise HTTPException(status_code=503, detail="Analytics service not ready")
 
     try:
-        prompt = f"""
-You are Analytics Supervisor, the intelligent supervisor of a growth analytics platform.
+        client_id = _resolve_client_id(payload.client_id)
+        thread = ensure_chat_thread(client_id, payload.thread_id, payload.message)
+        thread_id = str(thread["id"])
 
-You can help with:
-- Revenue forecasting
-- Scenario comparison
-- Funnel analysis
-- Attribution
-- Customer cohorts
-- Budget planning
-- Break-even analysis
-- Executive summaries
+        history = list_recent_messages(client_id, thread_id, limit=8)
+        prompt = _build_chat_prompt(payload.message, history)
 
-Guidelines:
-- Be concise and helpful
-- If the user says hello, introduce yourself
-- Mention what you can do
-- Keep answers conversational
-
-User message:
-{payload.message}
-"""
+        append_chat_message(
+            client_id=client_id,
+            thread_id=thread_id,
+            role="user",
+            content=payload.message,
+        )
 
         response = analytics_runner.gemini.generate(prompt)
         if not response or not response.strip():
@@ -214,9 +290,17 @@ User message:
                 "funnel analysis, attribution, cohorts, and budget optimization."
             )
 
+        append_chat_message(
+            client_id=client_id,
+            thread_id=thread_id,
+            role="assistant",
+            content=response,
+        )
+
         return {
             "success": True,
             "message": response,
+            "thread_id": thread_id,
             "timestamp": datetime.utcnow().isoformat(),
         }
 
@@ -237,6 +321,24 @@ async def orchestrate_request(payload: ChatRequest):
         raise HTTPException(status_code=503, detail="Analytics Agent not ready")
 
     try:
+        client_id = _resolve_client_id(payload.client_id)
+        thread = ensure_chat_thread(client_id, payload.thread_id, payload.message)
+        thread_id = str(thread["id"])
+        context_pairs = max(1, int(getattr(settings, "CONTEXT_SIZE", 3) or 3))
+        history_message_limit = context_pairs * 2
+        prior_history = list_recent_messages(
+            client_id=client_id,
+            thread_id=thread_id,
+            limit=history_message_limit,
+        )
+
+        append_chat_message(
+            client_id=client_id,
+            thread_id=thread_id,
+            role="user",
+            content=payload.message,
+        )
+
         # Log the selected datasets for context
         if payload.selected_datasets:
             logger.info(
@@ -245,7 +347,23 @@ async def orchestrate_request(payload: ChatRequest):
                 message=payload.message,
             )
         
-        result = marko_brain.orchestrate(payload.message)
+        result = marko_brain.orchestrate(
+            payload.message,
+            thread_id=thread_id,
+            conversation_history=prior_history,
+        )
+
+        assistant_message = result.get("reasoning") or result.get("result", {}).get("message") or "Analysis completed successfully."
+        append_chat_message(
+            client_id=client_id,
+            thread_id=thread_id,
+            role="assistant",
+            content=assistant_message,
+            metadata={
+                "intent": result.get("intent", {}),
+                "activated_agents": result.get("activated_agents", []),
+            },
+        )
 
         return {
             "success": True,
@@ -266,6 +384,7 @@ async def orchestrate_request(payload: ChatRequest):
                     },
                 },
             ),
+            "thread_id": thread_id,
             "timestamp": datetime.utcnow().isoformat(),
         }
 
@@ -275,6 +394,57 @@ async def orchestrate_request(payload: ChatRequest):
             status_code=500,
             detail=f"Failed to orchestrate request: {str(e)}",
         )
+
+
+@app.get("/api/chat-history", response_model=ChatThreadListResponse)
+async def get_chat_history(
+    client_id: str = Query(..., description="Client/session identifier"),
+    limit: int = Query(50, ge=1, le=200),
+):
+    try:
+        threads = list_chat_threads(client_id=client_id, limit=limit)
+        return {
+            "success": True,
+            "threads": threads,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.error("Chat history listing failed", error=str(e), client_id=client_id)
+        raise HTTPException(status_code=500, detail=f"Failed to fetch chat history: {str(e)}")
+
+
+@app.get("/api/chat-history/{thread_id}", response_model=ChatThreadDetailResponse)
+async def get_chat_history_thread(
+    thread_id: str,
+    client_id: str = Query(..., description="Client/session identifier"),
+):
+    try:
+        thread = get_chat_thread(client_id=client_id, thread_id=thread_id)
+        if not thread:
+            raise HTTPException(status_code=404, detail="Chat thread not found")
+
+        messages = list_chat_messages(client_id=client_id, thread_id=thread_id)
+        serialized_messages = [
+            {
+                "id": str(item.get("id", "")),
+                "role": item.get("role", "assistant"),
+                "content": item.get("content", ""),
+                "created_at": item.get("created_at", datetime.utcnow().isoformat()),
+            }
+            for item in messages
+        ]
+
+        return {
+            "success": True,
+            "thread": thread,
+            "messages": serialized_messages,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Chat history thread fetch failed", error=str(e), thread_id=thread_id)
+        raise HTTPException(status_code=500, detail=f"Failed to fetch chat thread: {str(e)}")
 
 
 # -----------------------------------------------------------------------------
@@ -635,6 +805,18 @@ class FunnelOptionsResponse(BaseModel):
     timestamp: str
 
 
+class ForecastOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
+class ScenarioOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
 ALLOWED_DATASETS = {"campaigns", "customers", "events", "retention", "transactions"}
 
 
@@ -914,6 +1096,46 @@ async def get_funnel_options():
         )
 
 
+@app.get("/agents/forecast/options", response_model=ForecastOptionsResponse)
+@app.get("/api/agents/forecast/options", response_model=ForecastOptionsResponse)
+async def get_forecast_options():
+    """Return forecast filters from Supabase campaigns data only."""
+    try:
+        from analytics_agent.db.queries import get_forecast_filter_options
+
+        return {
+            "success": True,
+            "data": get_forecast_filter_options(),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch forecast options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch forecast options: {str(e)}",
+        )
+
+
+@app.get("/agents/scenario/options", response_model=ScenarioOptionsResponse)
+@app.get("/api/agents/scenario/options", response_model=ScenarioOptionsResponse)
+async def get_scenario_options():
+    """Return scenario filters from Supabase campaigns data only."""
+    try:
+        from analytics_agent.db.queries import get_scenario_filter_options
+
+        return {
+            "success": True,
+            "data": get_scenario_filter_options(),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch scenario options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch scenario options: {str(e)}",
+        )
+
+
 @app.post("/agents/orchestrate")
 async def orchestrate_agents(request: AgentOrchestrationRequest):
     """
@@ -1131,6 +1353,8 @@ async def api_root():
                 "agent_status": "GET /agents/status",
                 "agent_results": "GET /agents/results",
                 "execution_history": "GET /agents/history",
+                "forecast_options": "GET /agents/forecast/options",
+                "scenario_options": "GET /agents/scenario/options",
                 "forecast_train": "POST /agents/forecast/train",
                 "forecast_predict": "POST /agents/forecast/predict",
             },

@@ -48,7 +48,7 @@ export default function ChatPanel({
   return (
     <aside className="chat-panel-glass hidden w-full flex-col lg:flex lg:w-[430px]">
       {/* Keep this header h-20 to align with main workspace headers. */}
-      <div className="flex h-20 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur">
+      <div className="chat-panel-header flex h-20 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_10px_24px_rgba(79,70,229,0.35)]">
             <Bot className="h-5 w-5" />
@@ -72,14 +72,14 @@ export default function ChatPanel({
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">
-        <div className="flex-1 overflow-y-auto bg-gradient-to-b from-[#f7f8fb] to-[#f3f5fa] px-5 py-5 lg:px-6">
+        <div className="chat-panel-body flex-1 overflow-y-auto bg-gradient-to-b from-[#f7f8fb] to-[#f3f5fa] px-5 py-5 lg:px-6">
           <div className="mx-auto flex w-full max-w-5xl flex-col gap-4">
             <MessageList messages={messages} isLoading={isLoading} />
             <div ref={messagesEndRef} />
           </div>
         </div>
 
-        <div className="border-t border-gray-200/80 bg-white/90 px-5 py-4 backdrop-blur lg:px-6">
+        <div className="chat-panel-footer border-t border-gray-200/80 bg-white/90 px-5 py-4 backdrop-blur lg:px-6">
           <div className="mx-auto max-w-5xl">
             <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
           </div>
