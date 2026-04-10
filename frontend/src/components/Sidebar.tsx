@@ -15,6 +15,7 @@ import {
   FileBarChart2,
   Lightbulb,
   Play,
+  LogOut,
 } from 'lucide-react';
 import type { ChatThreadSummary, UISuggestionItem } from '../types';
 
@@ -29,6 +30,9 @@ interface SidebarProps {
   isHistoryLoading: boolean;
   activeThreadId: string | null;
   onOpenHistoryThread: (threadId: string) => void;
+  accountName: string;
+  accountEmail: string;
+  onLogout: () => void;
 }
 
 export default function Sidebar({
@@ -42,6 +46,9 @@ export default function Sidebar({
   isHistoryLoading,
   activeThreadId,
   onOpenHistoryThread,
+  accountName,
+  accountEmail,
+  onLogout,
 }: SidebarProps) {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
@@ -92,6 +99,12 @@ export default function Sidebar({
 
     return new Date(value).toLocaleDateString();
   };
+
+  const accountInitial = (() => {
+    const source = (accountName || accountEmail || 'User').trim();
+    if (!source) return 'U';
+    return source.charAt(0).toUpperCase();
+  })();
 
   return (
     <>
@@ -321,6 +334,33 @@ export default function Sidebar({
                 <ChevronRight className="h-4 w-4 text-gray-500 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 px-5 py-4">
+          <div className="rounded-2xl border border-white/10 bg-neutral-900/70 p-3">
+            <div className="flex items-center gap-3">
+              <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/35 via-violet-500/35 to-cyan-400/35 p-[2px] shadow-[0_10px_22px_rgba(59,130,246,0.28)]">
+                <div className="flex h-full w-full items-center justify-center rounded-full border border-white/15 bg-neutral-950 text-lg font-bold uppercase leading-none text-white">
+                  {accountInitial}
+                </div>
+                <span className="absolute bottom-0.5 right-0.5 h-2.5 w-2.5 rounded-full border border-black bg-emerald-400" />
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-sm font-semibold text-white">{accountName || 'User'}</div>
+                <div className="truncate text-xs text-gray-400">{accountEmail}</div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={onLogout}
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-gray-200 transition hover:bg-white/10 hover:text-white"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Logout
+            </button>
           </div>
         </div>
       </aside>

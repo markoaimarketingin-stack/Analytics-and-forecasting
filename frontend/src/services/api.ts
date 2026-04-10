@@ -10,7 +10,6 @@ import type {
   ForecastPredictApiResponse,
   ForecastRequestPayload,
   ForecastTrainApiResponse,
-  GoogleAuthApiResponse,
   ReportGenerationApiResponse,
   ReportGenerationRequest,
 } from '../types';
@@ -417,15 +416,6 @@ export const downloadGeneratedReport = (report: GeneratedReportPayload) => {
   anchor.click();
   document.body.removeChild(anchor);
   window.URL.revokeObjectURL(url);
-};
-
-export const authenticateWithGoogle = async (credential: string): Promise<GoogleAuthApiResponse> => {
-  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
-  return postJsonWithFallback<GoogleAuthApiResponse>([
-    `${API_BASE_URL}/auth/google`,
-    `${API_ROOT_URL}/api/auth/google`,
-    `${baseWithoutApiSuffix}/api/auth/google`,
-  ], { credential });
 };
 
 

@@ -4,22 +4,18 @@ from io import StringIO
 from typing import Any, Literal, Optional
 import base64
 import json
+import os
 import re
 import uuid
 from pathlib import Path
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Query, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
+from google.auth.transport import requests as google_requests
+from google.oauth2 import id_token as google_id_token
 from pydantic import BaseModel, Field, field_serializer
 import pandas as pd
 from sqlalchemy.orm import Session
-
-try:
-    from google.oauth2 import id_token as google_id_token
-    from google.auth.transport import requests as google_requests
-except Exception:  # pragma: no cover - optional dependency at runtime
-    google_id_token = None
-    google_requests = None
 
 from analytics_agent.analytics_runner import AnalyticsRunner
 from analytics_agent.config import settings
@@ -70,6 +66,25 @@ class ChatResponse(BaseModel):
     success: bool = True
     message: str
     thread_id: str
+    timestamp: str
+
+
+class GoogleAuthRequest(BaseModel):
+    credential: str
+
+
+class AuthenticatedUser(BaseModel):
+    google_sub: str
+    email: str
+    name: str
+    picture: Optional[str] = None
+    email_verified: bool = False
+
+
+class GoogleAuthResponse(BaseModel):
+    success: bool = True
+    client_id: str
+    user: AuthenticatedUser
     timestamp: str
 
 
@@ -212,6 +227,13 @@ def _resolve_client_id(client_id: Optional[str]) -> str:
     return value or "anonymous-client"
 
 
+def _client_id_from_google_sub(google_sub: str) -> str:
+    cleaned = re.sub(r"[^a-zA-Z0-9_-]", "", (google_sub or "").strip())
+    if not cleaned:
+        raise ValueError("Google subject is missing")
+    return f"google-{cleaned}"
+
+
 _AGENT_ANALYSIS_FIELDS = {
     "attribution": "attribution_analysis",
     "funnel": "funnel_analysis",
@@ -338,6 +360,60 @@ async def health_check():
         "timestamp": datetime.utcnow().isoformat(),
         "version": settings.APP_VERSION,
         "analytics_ready": analytics_runner is not None,
+    }
+
+
+# -----------------------------------------------------------------------------
+# Authentication
+# -----------------------------------------------------------------------------
+@app.post("/api/auth/google", response_model=GoogleAuthResponse)
+async def authenticate_google(payload: GoogleAuthRequest):
+    credential = (payload.credential or "").strip()
+    if not credential:
+        raise HTTPException(status_code=400, detail="Google credential is required")
+
+    google_client_id = (
+        (getattr(settings, "GOOGLE_CLIENT_ID", None) or "").strip()
+        or (os.getenv("VITE_GOOGLE_CLIENT_ID") or "").strip()
+    )
+    if not google_client_id:
+        raise HTTPException(status_code=500, detail="Server Google auth is not configured")
+
+    try:
+        token_info = google_id_token.verify_oauth2_token(
+            credential,
+            google_requests.Request(),
+            google_client_id,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=401, detail="Invalid Google credential") from exc
+
+    issuer = str(token_info.get("iss") or "")
+    if issuer not in {"accounts.google.com", "https://accounts.google.com"}:
+        raise HTTPException(status_code=401, detail="Invalid Google token issuer")
+
+    google_sub = str(token_info.get("sub") or "").strip()
+    email = str(token_info.get("email") or "").strip()
+    name = str(token_info.get("name") or email or "Marko AI User").strip()
+    picture = str(token_info.get("picture") or "").strip() or None
+    email_verified = bool(token_info.get("email_verified"))
+
+    if not google_sub or not email:
+        raise HTTPException(status_code=401, detail="Google token missing required identity fields")
+
+    client_id = _client_id_from_google_sub(google_sub)
+
+    return {
+        "success": True,
+        "client_id": client_id,
+        "user": {
+            "google_sub": google_sub,
+            "email": email,
+            "name": name,
+            "picture": picture,
+            "email_verified": email_verified,
+        },
+        "timestamp": datetime.utcnow().isoformat(),
     }
 
 
@@ -1175,17 +1251,6 @@ class TrainForecastRequest(BaseModel):
     pass
 
 
-class GoogleAuthRequest(BaseModel):
-    credential: str
-
-
-class GoogleAuthResponse(BaseModel):
-    success: bool = True
-    client_id: str
-    user: dict
-    timestamp: str
-
-
 class ReportGenerationRequest(BaseModel):
     """Request for generating an LLM-backed report from selected agents."""
     report_type: Literal["executive", "detailed"] = "executive"
@@ -1510,58 +1575,6 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
         )
 
 
-@app.post("/api/auth/google", response_model=GoogleAuthResponse)
-@app.post("/auth/google", response_model=GoogleAuthResponse)
-async def authenticate_google(payload: GoogleAuthRequest):
-    """Verify Google ID token and return canonical app client identity."""
-    credential = (payload.credential or "").strip()
-    if not credential:
-        raise HTTPException(status_code=400, detail="Google credential is required")
-
-    configured_client_id = (settings.GOOGLE_OAUTH_CLIENT_ID or "").strip()
-    if not configured_client_id:
-        raise HTTPException(status_code=503, detail="GOOGLE_OAUTH_CLIENT_ID is not configured")
-
-    if google_id_token is None or google_requests is None:
-        raise HTTPException(status_code=503, detail="google-auth dependency is not installed")
-
-    try:
-        id_info = google_id_token.verify_oauth2_token(
-            credential,
-            google_requests.Request(),
-            configured_client_id,
-        )
-
-        issuer = str(id_info.get("iss") or "").strip()
-        if issuer not in {"accounts.google.com", "https://accounts.google.com"}:
-            raise HTTPException(status_code=401, detail="Invalid Google token issuer")
-
-        sub = str(id_info.get("sub") or "").strip()
-        if not sub:
-            raise HTTPException(status_code=401, detail="Google token missing subject")
-
-        email = str(id_info.get("email") or "").strip()
-        name = str(id_info.get("name") or "").strip() or email or "Google User"
-        picture = str(id_info.get("picture") or "").strip()
-
-        return {
-            "success": True,
-            "client_id": f"google:{sub}",
-            "user": {
-                "sub": sub,
-                "email": email,
-                "name": name,
-                "picture": picture,
-            },
-            "timestamp": datetime.utcnow().isoformat(),
-        }
-    except HTTPException:
-        raise
-    except Exception as exc:
-        logger.warning("Google auth failed", error=str(exc))
-        raise HTTPException(status_code=401, detail="Invalid or expired Google credential")
-
-
 @app.post("/agents/report/generate")
 @app.post("/api/agents/report/generate")
 async def generate_agent_report(request: ReportGenerationRequest):
@@ -1827,7 +1840,6 @@ async def api_root():
         "endpoints": {
             "health": "GET /api/health",
             "chat": "POST /api/chat",
-            "google_auth": "POST /api/auth/google",
             "orchestrate": "POST /api/orchestrate",
             "analyze": "POST /api/analyze",
             "budget_sensitivity": "POST /api/budget-sensitivity",
