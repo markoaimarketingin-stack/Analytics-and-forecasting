@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getForecastOptions, orchestrateAgents } from '../../services/api';
+import { getAgentResults, getForecastOptions, orchestrateAgents } from '../../services/api';
 import type { AgentOrchestrationResult, ForecastAnalysis, ForecastOptions } from '../../types';
 
 interface ForecastFormState {
@@ -31,10 +31,11 @@ interface ForecastFormState {
 }
 
 interface ForecastWorkspaceProps {
+  clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
-export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProps) {
+export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWorkspaceProps) {
   const [form, setForm] = useState<ForecastFormState>({
     horizon_days: 90,
     kpi_metric: 'revenue',
@@ -56,6 +57,36 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
   const [warnings, setWarnings] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!clientId || result) return;
+    let cancelled = false;
+
+    const hydrateLastResult = async () => {
+      try {
+        const raw = await getAgentResults('forecast', clientId);
+        if (cancelled) return;
+
+        const response = (raw && typeof raw === 'object') ? (raw as Record<string, unknown>) : {};
+        const persisted = response.results;
+        const persistedRecord = (persisted && typeof persisted === 'object' && !Array.isArray(persisted))
+          ? (persisted as Record<string, unknown>)
+          : null;
+
+        const maybeForecast = persistedRecord?.forecast_analysis ?? persistedRecord;
+        if (maybeForecast && typeof maybeForecast === 'object' && Object.keys(maybeForecast as Record<string, unknown>).length > 0) {
+          setResult(maybeForecast as ForecastAnalysis);
+        }
+      } catch {
+        // Non-blocking fallback: workspace still supports fresh runs.
+      }
+    };
+
+    hydrateLastResult();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, result]);
 
   const horizonLabel = useMemo(() => {
     if (form.horizon_days <= 30) return '1 Month';
@@ -145,6 +176,7 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
       const response = await orchestrateAgents({
         intent: 'forecast',
         agents: ['forecast'],
+        client_id: clientId,
         payload: {
           horizon_days: form.horizon_days,
           kpi_metric: form.kpi_metric,

@@ -1,7 +1,10 @@
 from contextlib import asynccontextmanager
 from datetime import datetime
 from io import StringIO
-from typing import Optional
+from typing import Any, Literal, Optional
+import base64
+import json
+import re
 import uuid
 from pathlib import Path
 
@@ -24,6 +27,12 @@ from analytics_agent.db.chat_history_repo import (
     list_chat_messages,
     list_chat_threads,
     list_recent_messages,
+)
+from analytics_agent.db.agent_results_repo import (
+    get_client_agent_results,
+    get_client_latest_snapshot,
+    upsert_client_agent_results,
+    upsert_client_latest_snapshot,
 )
 from analytics_agent.api.file_handler import FileHandler
 from analytics_agent.api.models import (
@@ -196,6 +205,71 @@ def _resolve_client_id(client_id: Optional[str]) -> str:
     return value or "anonymous-client"
 
 
+_AGENT_ANALYSIS_FIELDS = {
+    "attribution": "attribution_analysis",
+    "funnel": "funnel_analysis",
+    "cohort": "cohort_analysis",
+    "forecast": "forecast_analysis",
+    "scenario": "scenario_analysis",
+}
+
+
+def _extract_agent_result_map(result_payload: dict) -> dict[str, object]:
+    if not isinstance(result_payload, dict):
+        return {}
+
+    extracted: dict[str, object] = {}
+
+    nested = result_payload.get("agent_results")
+    if isinstance(nested, dict):
+        for agent_key in _AGENT_ANALYSIS_FIELDS:
+            value = nested.get(agent_key)
+            if value is not None:
+                extracted[agent_key] = value
+
+    for agent_key, field_name in _AGENT_ANALYSIS_FIELDS.items():
+        value = result_payload.get(field_name)
+        if value is not None:
+            extracted[agent_key] = value
+
+    return extracted
+
+
+def _persist_client_results(
+    *,
+    client_id: str,
+    result_payload: dict,
+    thread_id: Optional[str] = None,
+    intent: Optional[str] = None,
+) -> None:
+    if not client_id or not isinstance(result_payload, dict):
+        return
+
+    agent_results = _extract_agent_result_map(result_payload)
+
+    recommendations_raw = result_payload.get("recommendations") or result_payload.get("suggestions") or []
+    recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw, list) else []
+    executive_summary_raw = result_payload.get("executive_summary")
+    executive_summary = str(executive_summary_raw) if isinstance(executive_summary_raw, str) else None
+
+    if not agent_results and not recommendations and not executive_summary:
+        return
+
+    upsert_client_agent_results(
+        client_id=client_id,
+        agent_results=agent_results,
+        thread_id=thread_id,
+        intent=intent,
+    )
+    upsert_client_latest_snapshot(
+        client_id=client_id,
+        recommendations=recommendations,
+        executive_summary=executive_summary,
+        thread_id=thread_id,
+        intent=intent,
+    )
+
+
 def _build_chat_prompt(message: str, history: list[dict]) -> str:
     context_lines: list[str] = []
     for item in history[-8:]:
@@ -352,6 +426,24 @@ async def orchestrate_request(payload: ChatRequest):
             thread_id=thread_id,
             conversation_history=prior_history,
         )
+
+        try:
+            result_payload = result.get("result") if isinstance(result.get("result"), dict) else {}
+            intent_raw = result.get("intent")
+            intent = intent_raw.get("id") if isinstance(intent_raw, dict) else None
+            _persist_client_results(
+                client_id=client_id,
+                thread_id=thread_id,
+                intent=intent,
+                result_payload=result_payload,
+            )
+        except Exception as persist_error:
+            logger.warning(
+                "Could not persist supervisor orchestrate results",
+                client_id=client_id,
+                thread_id=thread_id,
+                error=str(persist_error),
+            )
 
         assistant_message = result.get("reasoning") or result.get("result", {}).get("message") or "Analysis completed successfully."
         append_chat_message(
@@ -1067,11 +1159,223 @@ class AgentOrchestrationRequest(BaseModel):
     intent: str
     agents: list[str]
     payload: dict = {}
+    client_id: Optional[str] = None
+    thread_id: Optional[str] = None
 
 
 class TrainForecastRequest(BaseModel):
     """Request to train forecast model"""
     pass
+
+
+class ReportGenerationRequest(BaseModel):
+    """Request for generating an LLM-backed report from selected agents."""
+    report_type: Literal["executive", "detailed"] = "executive"
+    export_format: Literal["pdf", "doc"] = "pdf"
+    agents: list[str] = Field(default_factory=list)
+    payload: dict = Field(default_factory=dict)
+    client_id: Optional[str] = None
+    thread_id: Optional[str] = None
+
+
+_REPORT_AGENT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario"]
+_REPORT_AGENT_LABELS = {
+    "attribution": "Attribution Agent",
+    "funnel": "Funnel Agent",
+    "cohort": "Cohort Agent",
+    "forecast": "Forecast Agent",
+    "scenario": "Scenario Agent",
+}
+
+
+def _normalize_report_agents(raw_agents: list[str]) -> list[str]:
+    normalized = {
+        str(agent).strip().lower()
+        for agent in raw_agents
+        if str(agent).strip()
+    }
+    return [agent for agent in _REPORT_AGENT_ORDER if agent in normalized]
+
+
+def _clean_line(value: str) -> str:
+    compact = re.sub(r"\s+", " ", value).strip()
+    return compact
+
+
+def _build_report_prompt(
+    *,
+    report_type: str,
+    selected_agents: list[str],
+    orchestration_result: dict[str, Any],
+) -> str:
+    agent_results = orchestration_result.get("agent_results") if isinstance(orchestration_result, dict) else {}
+    if not isinstance(agent_results, dict):
+        agent_results = {}
+
+    selected_payload = {
+        agent: agent_results.get(agent)
+        for agent in selected_agents
+        if agent_results.get(agent) is not None
+    }
+
+    sections = "\n".join([f"- {_REPORT_AGENT_LABELS.get(agent, agent.title())}" for agent in selected_agents])
+    detail_level = "concise and board-ready" if report_type == "executive" else "thorough and analytical"
+
+    return (
+        "You are an analytics reporting assistant.\n"
+        f"Create a {report_type} report that is {detail_level}.\n"
+        "Use only the evidence from selected agent outputs.\n"
+        "Required sections:\n"
+        "1) Executive Summary\n"
+        "2) Agent Highlights (one subsection per selected agent)\n"
+        "3) KPI Snapshot\n"
+        "4) Risks and Data Caveats\n"
+        "5) Prioritized Action Plan\n\n"
+        f"Selected agents:\n{sections}\n\n"
+        "Return plain text only (no markdown table, no code block).\n"
+        "Keep metric values as provided. If a value is absent, explicitly state unavailable.\n\n"
+        "Agent outputs JSON:\n"
+        f"{json.dumps(selected_payload, indent=2, default=str)}"
+    )
+
+
+def _build_fallback_report_text(
+    *,
+    report_type: str,
+    selected_agents: list[str],
+    orchestration_result: dict[str, Any],
+) -> str:
+    intent = orchestration_result.get("intent") if isinstance(orchestration_result, dict) else "report"
+    recommendations = orchestration_result.get("recommendations") if isinstance(orchestration_result, dict) else []
+    recommendations_list = recommendations if isinstance(recommendations, list) else []
+    agent_results = orchestration_result.get("agent_results") if isinstance(orchestration_result, dict) else {}
+    if not isinstance(agent_results, dict):
+        agent_results = {}
+
+    lines = [
+        f"{report_type.title()} Analytics Report",
+        f"Generated at: {datetime.utcnow().isoformat()} UTC",
+        f"Intent: {intent}",
+        "",
+        "Executive Summary",
+        _clean_line(
+            str(
+                orchestration_result.get("executive_summary")
+                or "LLM summary unavailable; using deterministic summary from selected agent outputs."
+            )
+        ),
+        "",
+        "Agent Highlights",
+    ]
+
+    for agent in selected_agents:
+        label = _REPORT_AGENT_LABELS.get(agent, agent.title())
+        payload = agent_results.get(agent)
+        if not payload:
+            lines.extend([f"- {label}: unavailable."])
+            continue
+
+        payload_text = json.dumps(payload, indent=2, default=str)
+        compact = _clean_line(payload_text)
+        lines.extend([f"- {label}: {compact[:900]}{'...' if len(compact) > 900 else ''}"])
+
+    lines.extend(["", "Prioritized Action Plan"])
+
+    if recommendations_list:
+        for idx, item in enumerate(recommendations_list[:8], start=1):
+            lines.append(f"{idx}. {_clean_line(str(item))}")
+    else:
+        lines.append("1. No explicit recommendations were produced by the selected agents.")
+
+    return "\n".join(lines)
+
+
+def _escape_pdf_text(value: str) -> str:
+    ascii_text = value.encode("ascii", errors="replace").decode("ascii")
+    return ascii_text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+
+def _build_minimal_pdf_bytes(text: str) -> bytes:
+    raw_lines = [line.rstrip() for line in text.splitlines()]
+    wrapped: list[str] = []
+    for line in raw_lines:
+        source = line or " "
+        while len(source) > 94:
+            wrapped.append(source[:94])
+            source = source[94:]
+        wrapped.append(source)
+
+    if not wrapped:
+        wrapped = ["Generated report"]
+
+    lines_per_page = 48
+    pages = [wrapped[i:i + lines_per_page] for i in range(0, len(wrapped), lines_per_page)]
+
+    objects: list[str] = []
+    objects.append("<< /Type /Catalog /Pages 2 0 R >>")
+
+    page_obj_numbers = [4 + (index * 2) for index in range(len(pages))]
+    kids = " ".join([f"{obj} 0 R" for obj in page_obj_numbers])
+    objects.append(f"<< /Type /Pages /Count {len(pages)} /Kids [ {kids} ] >>")
+    objects.append("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
+
+    for index, page_lines in enumerate(pages):
+        page_obj = 4 + (index * 2)
+        content_obj = page_obj + 1
+        stream_lines = [
+            "BT",
+            "/F1 11 Tf",
+            "50 790 Td",
+            "14 TL",
+        ]
+        for line in page_lines:
+            stream_lines.append(f"({_escape_pdf_text(line)}) Tj")
+            stream_lines.append("T*")
+        stream_lines.append("ET")
+        stream = "\n".join(stream_lines)
+
+        objects.append(
+            f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents {content_obj} 0 R >>"
+        )
+        objects.append(f"<< /Length {len(stream.encode('latin-1'))} >>\nstream\n{stream}\nendstream")
+
+    pdf_parts: list[bytes] = [b"%PDF-1.4\n"]
+    offsets: list[int] = [0]
+
+    for index, obj_content in enumerate(objects, start=1):
+        offsets.append(sum(len(part) for part in pdf_parts))
+        obj_block = f"{index} 0 obj\n{obj_content}\nendobj\n"
+        pdf_parts.append(obj_block.encode("latin-1", errors="replace"))
+
+    xref_start = sum(len(part) for part in pdf_parts)
+    xref_lines = [f"xref\n0 {len(objects) + 1}\n", "0000000000 65535 f \n"]
+    for offset in offsets[1:]:
+        xref_lines.append(f"{offset:010d} 00000 n \n")
+    trailer = (
+        "".join(xref_lines)
+        + f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\n"
+        + f"startxref\n{xref_start}\n%%EOF"
+    )
+    pdf_parts.append(trailer.encode("latin-1"))
+
+    return b"".join(pdf_parts)
+
+
+def _build_doc_bytes(title: str, text: str) -> bytes:
+    safe_title = title.replace("<", "&lt;").replace(">", "&gt;")
+    escaped_text = (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace("\n", "<br/>")
+    )
+    html = (
+        "<html><head><meta charset='utf-8'/></head><body>"
+        f"<h1>{safe_title}</h1>"
+        f"<p>{escaped_text}</p>"
+        "</body></html>"
+    )
+    return html.encode("utf-8")
 
 
 @app.get("/agents/funnel/options", response_model=FunnelOptionsResponse)
@@ -1154,11 +1458,26 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
         )
     
     try:
+        client_id = _resolve_client_id(request.client_id)
         result = marko_brain.agent_manager.orchestrate(
             intent=request.intent,
             agents_to_run=request.agents,
             payload=request.payload,
         )
+
+        try:
+            _persist_client_results(
+                client_id=client_id,
+                thread_id=request.thread_id,
+                intent=request.intent,
+                result_payload=result,
+            )
+        except Exception as persist_error:
+            logger.warning(
+                "Could not persist orchestrated agent results",
+                client_id=client_id,
+                error=str(persist_error),
+            )
         
         return {
             "success": True,
@@ -1171,6 +1490,81 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
             status_code=500,
             detail=f"Agent orchestration failed: {str(e)}",
         )
+
+
+@app.post("/agents/report/generate")
+@app.post("/api/agents/report/generate")
+async def generate_agent_report(request: ReportGenerationRequest):
+    """Generate a downloadable report for selected agents using Gemini when available."""
+    if not marko_brain:
+        raise HTTPException(status_code=503, detail="Agent services not initialized")
+
+    selected_agents = _normalize_report_agents(request.agents)
+    if not selected_agents:
+        raise HTTPException(status_code=400, detail="Select at least one agent for report generation")
+
+    try:
+        client_id = _resolve_client_id(request.client_id)
+        orchestrated = marko_brain.agent_manager.orchestrate(
+            intent="report",
+            agents_to_run=selected_agents,
+            payload=request.payload,
+        )
+
+        _persist_client_results(
+            client_id=client_id,
+            thread_id=request.thread_id,
+            intent="report",
+            result_payload=orchestrated,
+        )
+
+        report_text = ""
+        if analytics_runner and getattr(analytics_runner, "gemini", None):
+            prompt = _build_report_prompt(
+                report_type=request.report_type,
+                selected_agents=selected_agents,
+                orchestration_result=orchestrated,
+            )
+            report_text = analytics_runner.gemini.generate(prompt)
+
+        if not report_text.strip():
+            report_text = _build_fallback_report_text(
+                report_type=request.report_type,
+                selected_agents=selected_agents,
+                orchestration_result=orchestrated,
+            )
+
+        timestamp_tag = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        file_stem = f"{request.report_type}_analytics_report_{timestamp_tag}"
+
+        if request.export_format == "pdf":
+            file_bytes = _build_minimal_pdf_bytes(report_text)
+            file_name = f"{file_stem}.pdf"
+            mime_type = "application/pdf"
+        else:
+            file_bytes = _build_doc_bytes(f"{request.report_type.title()} Analytics Report", report_text)
+            file_name = f"{file_stem}.doc"
+            mime_type = "application/msword"
+
+        return {
+            "success": True,
+            "data": {
+                "filename": file_name,
+                "mime_type": mime_type,
+                "content_base64": base64.b64encode(file_bytes).decode("ascii"),
+                "report_text": report_text,
+                "report_type": request.report_type,
+                "export_format": request.export_format,
+                "agents_executed": selected_agents,
+                "orchestration_result": orchestrated,
+            },
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception("Failed to generate report", error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to generate report: {str(e)}")
 
 
 @app.get("/agents/status")
@@ -1198,7 +1592,7 @@ async def get_agent_status():
 
 
 @app.get("/agents/results")
-async def get_agent_results(agent_id: Optional[str] = None):
+async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[str] = Query(default=None)):
     """
     Get stored agent results.
     
@@ -1215,11 +1609,35 @@ async def get_agent_results(agent_id: Optional[str] = None):
         )
     
     try:
-        results = marko_brain.agent_manager.get_agent_results(agent_id)
+        resolved_client_id = (client_id or "").strip()
+        recommendations: list[str] = []
+        executive_summary: Optional[str] = None
+
+        if resolved_client_id:
+            try:
+                results = get_client_agent_results(resolved_client_id, agent_id)
+                latest_snapshot = get_client_latest_snapshot(resolved_client_id)
+                recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot, dict) else []
+                recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw, list) else []
+                executive_summary_raw = latest_snapshot.get("executive_summary") if isinstance(latest_snapshot, dict) else None
+                executive_summary = executive_summary_raw if isinstance(executive_summary_raw, str) else None
+            except Exception as fetch_error:
+                logger.warning(
+                    "Failed to fetch client-specific results from Supabase, using in-memory fallback",
+                    client_id=resolved_client_id,
+                    error=str(fetch_error),
+                )
+                results = marko_brain.agent_manager.get_agent_results(agent_id)
+        else:
+            results = marko_brain.agent_manager.get_agent_results(agent_id)
+
         return {
             "success": True,
             "agent_id": agent_id,
+            "client_id": resolved_client_id or None,
             "results": results,
+            "recommendations": recommendations,
+            "executive_summary": executive_summary,
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { Bot } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -37,6 +38,49 @@ interface ActivatedAgent {
 }
 
 const THEME_STORAGE_KEY = 'analytics_theme_dark_mode';
+const CLIENT_ID_QUERY_PARAM = 'client_id';
+const CLIENT_ID_COOKIE_KEY = 'marko_client_id';
+const LEGACY_CLIENT_ID_LOCAL_STORAGE_KEY = 'marko_client_id';
+
+const readCookieValue = (name: string): string | null => {
+  if (typeof document === 'undefined') return null;
+  const prefix = `${name}=`;
+  const match = document.cookie
+    .split(';')
+    .map((item) => item.trim())
+    .find((item) => item.startsWith(prefix));
+  if (!match) return null;
+  return decodeURIComponent(match.slice(prefix.length));
+};
+
+const writeCookieValue = (name: string, value: string) => {
+  if (typeof document === 'undefined') return;
+  const maxAgeSeconds = 60 * 60 * 24 * 365;
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAgeSeconds}; samesite=lax`;
+};
+
+const resolveInitialClientId = (): string => {
+  if (typeof window === 'undefined') return '';
+
+  const params = new URLSearchParams(window.location.search);
+  const fromQuery = (params.get(CLIENT_ID_QUERY_PARAM) || '').trim();
+  if (fromQuery) return fromQuery;
+
+  const fromCookie = (readCookieValue(CLIENT_ID_COOKIE_KEY) || '').trim();
+  if (fromCookie) return fromCookie;
+
+  // Backward-compatibility: recover history tied to the old localStorage client id.
+  try {
+    const fromLegacyLocalStorage = (window.localStorage.getItem(LEGACY_CLIENT_ID_LOCAL_STORAGE_KEY) || '').trim();
+    if (fromLegacyLocalStorage) return fromLegacyLocalStorage;
+  } catch {
+    // Ignore storage access failures (e.g., browser privacy mode).
+  }
+
+  return typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
 
 export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -59,10 +103,11 @@ export default function App() {
   const [activatedAgents, setActivatedAgents] = useState<ActivatedAgent[]>([]);
   const [executionTimeline, setExecutionTimeline] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<UISuggestionItem[]>([]);
-  const [clientId, setClientId] = useState('');
+  const [clientId, setClientId] = useState<string>(() => resolveInitialClientId());
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null);
   const [chatThreads, setChatThreads] = useState<ChatThreadSummary[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
+  const [isChatPanelCollapsed, setIsChatPanelCollapsed] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -79,21 +124,17 @@ export default function App() {
   }, [messages, isLoading, currentAnalysis]);
 
   useEffect(() => {
-    const storageKey = 'marko_client_id';
-    const existing = localStorage.getItem(storageKey);
-    if (existing) {
-      setClientId(existing);
-      return;
+    if (!clientId || typeof window === 'undefined') return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get(CLIENT_ID_QUERY_PARAM) !== clientId) {
+      params.set(CLIENT_ID_QUERY_PARAM, clientId);
+      const nextUrl = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
+      window.history.replaceState({}, '', nextUrl);
     }
 
-    const generated =
-      typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-        ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-
-    localStorage.setItem(storageKey, generated);
-    setClientId(generated);
-  }, []);
+    writeCookieValue(CLIENT_ID_COOKIE_KEY, clientId);
+  }, [clientId]);
 
   const loadChatThreads = async (resolvedClientId: string) => {
     if (!resolvedClientId) return;
@@ -357,6 +398,7 @@ export default function App() {
       const response = await orchestrateAgents({
         intent: 'dashboard',
         agents: ['funnel', 'cohort', 'attribution', 'forecast', 'scenario'],
+        client_id: clientId,
         payload: {
           horizon_days: 90,
           kpi_metric: 'revenue',
@@ -441,6 +483,13 @@ export default function App() {
 
   const handleWorkspaceRunResult = (source: string, result: AgentOrchestrationResult) => {
     addSuggestionsFromResult(source, result);
+    setCurrentAnalysis({
+      id: `${Date.now()}-workspace-analysis`,
+      timestamp: new Date(),
+      status: 'completed',
+      payload: {} as any,
+      result: result as any,
+    });
   };
 
   const renderWorkspace = () => {
@@ -463,6 +512,7 @@ export default function App() {
                 <Dashboard
                   result={currentAnalysis?.result ?? null}
                   isLoading={false}
+                  clientId={clientId}
                 />
               </div>
             </div>
@@ -470,22 +520,22 @@ export default function App() {
         );
 
       case 'forecast':
-        return <ForecastWorkspace onRunResult={(result) => handleWorkspaceRunResult('Forecast Agent', result)} />;
+        return <ForecastWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Forecast Agent', result)} />;
 
       case 'scenario':
-        return <ScenarioWorkspace onRunResult={(result) => handleWorkspaceRunResult('Scenario Agent', result)} />;
+        return <ScenarioWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Scenario Agent', result)} />;
 
       case 'funnel':
-        return <FunnelWorkspace onRunResult={(result) => handleWorkspaceRunResult('Funnel Agent', result)} />;
+        return <FunnelWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Funnel Agent', result)} />;
 
       case 'cohort':
-        return <CohortWorkspace onRunResult={(result) => handleWorkspaceRunResult('Cohort Agent', result)} />;
+        return <CohortWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Cohort Agent', result)} />;
 
       case 'attribution':
-        return <AttributionWorkspace onRunResult={(result) => handleWorkspaceRunResult('Attribution Agent', result)} />;
+        return <AttributionWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Attribution Agent', result)} />;
 
       case 'report':
-        return <ReportWorkspace />;
+        return <ReportWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Report Generator', result)} />;
 
       case 'settings':
         return (
@@ -522,16 +572,31 @@ export default function App() {
           {renderWorkspace()}
         </div>
 
-        <ChatPanel
-          messages={messages}
-          isLoading={isLoading}
-          currentAnalysis={currentAnalysis}
-          executionTimeline={executionTimeline}
-          activatedAgents={activatedAgents}
-          onNewChat={handleNewChat}
-          handleSendMessage={handleSendMessage}
-        />
+        {!isChatPanelCollapsed ? (
+          <ChatPanel
+            messages={messages}
+            isLoading={isLoading}
+            currentAnalysis={currentAnalysis}
+            executionTimeline={executionTimeline}
+            activatedAgents={activatedAgents}
+            onNewChat={handleNewChat}
+            onCollapse={() => setIsChatPanelCollapsed(true)}
+            handleSendMessage={handleSendMessage}
+          />
+        ) : null}
       </div>
+
+      {isChatPanelCollapsed ? (
+        <button
+          type="button"
+          onClick={() => setIsChatPanelCollapsed(false)}
+          aria-label="Open chat panel"
+          title="Open chat panel"
+          className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200 bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_16px_36px_rgba(79,70,229,0.35)] transition hover:scale-105 lg:flex"
+        >
+          <Bot className="h-7 w-7" />
+        </button>
+      ) : null}
 
       {/* Knowledge Base Modals */}
       <ExistingFilesModal />

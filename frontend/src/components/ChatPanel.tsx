@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, BookOpen, Plus } from 'lucide-react';
+import { Bot, BookOpen, Plus, X } from 'lucide-react';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
 import type { Message, AnalysisRun } from '../types';
@@ -17,6 +17,7 @@ interface ChatPanelProps {
   executionTimeline: string[];
   activatedAgents: ActivatedAgent[];
   onNewChat: () => void;
+  onCollapse: () => void;
   handleSendMessage: (message: string) => void;
 }
 
@@ -27,6 +28,7 @@ export default function ChatPanel({
   executionTimeline,
   activatedAgents,
   onNewChat,
+  onCollapse,
   handleSendMessage,
 }: ChatPanelProps) {
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
@@ -48,14 +50,14 @@ export default function ChatPanel({
   return (
     <aside className="chat-panel-glass hidden w-full flex-col lg:flex lg:w-[430px]">
       {/* Keep this header h-20 to align with main workspace headers. */}
-      <div className="chat-panel-header flex h-20 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur">
+      <div className="chat-panel-header relative flex h-20 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_10px_24px_rgba(79,70,229,0.35)]">
             <Bot className="h-5 w-5" />
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="mr-12 flex items-center gap-2">
           <button
             onClick={onNewChat}
             className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
@@ -69,6 +71,15 @@ export default function ChatPanel({
             <BookOpen className="h-3.5 w-3.5" /> Knowledge Base
           </button>
         </div>
+
+        <button
+          onClick={onCollapse}
+          aria-label="Close chat panel"
+          title="Close chat panel"
+          className="absolute right-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+        >
+          <X className="h-4 w-4" />
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col overflow-hidden">

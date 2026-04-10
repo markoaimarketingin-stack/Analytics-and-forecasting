@@ -12,14 +12,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getScenarioOptions, orchestrateAgents } from '../../services/api';
+import { getAgentResults, getScenarioOptions, orchestrateAgents } from '../../services/api';
 import type { AgentOrchestrationResult, ScenarioAnalysis, ScenarioOptions } from '../../types';
 
 interface ScenarioWorkspaceProps {
+  clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
-export default function ScenarioWorkspace({ onRunResult }: ScenarioWorkspaceProps) {
+export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWorkspaceProps) {
   const [options, setOptions] = useState<ScenarioOptions | null>(null);
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
   const [optionsError, setOptionsError] = useState<string | null>(null);
@@ -40,6 +41,36 @@ export default function ScenarioWorkspace({ onRunResult }: ScenarioWorkspaceProp
   const [result, setResult] = useState<ScenarioAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!clientId || result) return;
+    let cancelled = false;
+
+    const hydrateLastResult = async () => {
+      try {
+        const raw = await getAgentResults('scenario', clientId);
+        if (cancelled) return;
+
+        const response = (raw && typeof raw === 'object') ? (raw as Record<string, unknown>) : {};
+        const persisted = response.results;
+        const persistedRecord = (persisted && typeof persisted === 'object' && !Array.isArray(persisted))
+          ? (persisted as Record<string, unknown>)
+          : null;
+
+        const maybeScenario = persistedRecord?.scenario_analysis ?? persistedRecord;
+        if (maybeScenario && typeof maybeScenario === 'object' && Object.keys(maybeScenario as Record<string, unknown>).length > 0) {
+          setResult(maybeScenario as ScenarioAnalysis);
+        }
+      } catch {
+        // Ignore hydrate failures and keep manual run flow available.
+      }
+    };
+
+    hydrateLastResult();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, result]);
 
   useEffect(() => {
     let cancelled = false;
@@ -99,6 +130,7 @@ export default function ScenarioWorkspace({ onRunResult }: ScenarioWorkspaceProp
       const response = await orchestrateAgents({
         intent: 'scenario_forecast',
         agents: ['scenario'],
+        client_id: clientId,
         payload: {
           horizon_days: horizonDays,
           kpi_metric: kpiMetric,

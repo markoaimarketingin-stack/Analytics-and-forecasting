@@ -1,5 +1,5 @@
 import { Sparkles, Users } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -12,19 +12,50 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { orchestrateAgents } from '../../services/api';
+import { getAgentResults, orchestrateAgents } from '../../services/api';
 import type { AgentOrchestrationResult, CohortAnalysis } from '../../types';
 
 interface CohortWorkspaceProps {
+  clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
-export default function CohortWorkspace({ onRunResult }: CohortWorkspaceProps) {
+export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspaceProps) {
   const [cohortPeriod, setCohortPeriod] = useState('month');
   const [retentionMonths, setRetentionMonths] = useState(3);
   const [result, setResult] = useState<CohortAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!clientId || result) return;
+    let cancelled = false;
+
+    const hydrateLastResult = async () => {
+      try {
+        const raw = await getAgentResults('cohort', clientId);
+        if (cancelled) return;
+
+        const response = (raw && typeof raw === 'object') ? (raw as Record<string, unknown>) : {};
+        const persisted = response.results;
+        const persistedRecord = (persisted && typeof persisted === 'object' && !Array.isArray(persisted))
+          ? (persisted as Record<string, unknown>)
+          : null;
+
+        const maybeCohort = persistedRecord?.cohort_analysis ?? persistedRecord;
+        if (maybeCohort && typeof maybeCohort === 'object' && Object.keys(maybeCohort as Record<string, unknown>).length > 0) {
+          setResult(maybeCohort as CohortAnalysis);
+        }
+      } catch {
+        // Hydration is best-effort; users can still run a fresh cohort analysis.
+      }
+    };
+
+    hydrateLastResult();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, result]);
 
   const retentionCurve = result?.retention_curve ?? [];
   const segmentBreakdown = result?.segment_breakdown ?? [];
@@ -43,6 +74,7 @@ export default function CohortWorkspace({ onRunResult }: CohortWorkspaceProps) {
       const response = await orchestrateAgents({
         intent: 'cohort_analysis',
         agents: ['cohort'],
+        client_id: clientId,
         payload: {
           cohort_period: cohortPeriod,
           retention_months: retentionMonths,

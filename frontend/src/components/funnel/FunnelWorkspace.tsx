@@ -11,14 +11,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getFunnelOptions, orchestrateAgents } from '../../services/api';
+import { getAgentResults, getFunnelOptions, orchestrateAgents } from '../../services/api';
 import type { AgentOrchestrationResult, FunnelAnalysis, FunnelOptions } from '../../types';
 
 interface FunnelWorkspaceProps {
+  clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
-export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
+export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspaceProps) {
   const [channel, setChannel] = useState('all');
   const [campaignType, setCampaignType] = useState('all');
   const [segment, setSegment] = useState('all');
@@ -31,6 +32,36 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'channel' | 'segments' | 'timing' | 'revenue' | 'advanced'>('channel');
+
+  useEffect(() => {
+    if (!clientId || result) return;
+    let cancelled = false;
+
+    const hydrateLastResult = async () => {
+      try {
+        const raw = await getAgentResults('funnel', clientId);
+        if (cancelled) return;
+
+        const response = (raw && typeof raw === 'object') ? (raw as Record<string, unknown>) : {};
+        const persisted = response.results;
+        const persistedRecord = (persisted && typeof persisted === 'object' && !Array.isArray(persisted))
+          ? (persisted as Record<string, unknown>)
+          : null;
+
+        const maybeFunnel = persistedRecord?.funnel_analysis ?? persistedRecord;
+        if (maybeFunnel && typeof maybeFunnel === 'object' && Object.keys(maybeFunnel as Record<string, unknown>).length > 0) {
+          setResult(maybeFunnel as FunnelAnalysis);
+        }
+      } catch {
+        // Keep workspace usable even when hydration fails.
+      }
+    };
+
+    hydrateLastResult();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, result]);
 
   useEffect(() => {
     let cancelled = false;
@@ -171,6 +202,7 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
       const response = await orchestrateAgents({
         intent: 'funnel_analysis',
         agents: ['funnel'],
+        client_id: clientId,
         payload: {
           funnel_type: campaignType,
           campaign_type: campaignType,

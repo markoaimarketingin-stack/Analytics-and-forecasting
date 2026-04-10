@@ -3,12 +3,15 @@
 import type {
   AgentOrchestrationApiResponse,
   AgentOrchestrationRequest,
+  GeneratedReportPayload,
   ForecastOptionsApiResponse,
   ScenarioOptionsApiResponse,
   FunnelOptionsApiResponse,
   ForecastPredictApiResponse,
   ForecastRequestPayload,
   ForecastTrainApiResponse,
+  ReportGenerationApiResponse,
+  ReportGenerationRequest,
 } from '../types';
 
 const API_BASE_URL =
@@ -370,15 +373,49 @@ export const getScenarioOptions = async (): Promise<ScenarioOptionsApiResponse> 
   ]);
 };
 
-export const getAgentResults = async (agentId?: string) => {
+export const getAgentResults = async (agentId?: string, clientId?: string) => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
-  const query = agentId ? `?agent_id=${encodeURIComponent(agentId)}` : '';
+  const queryParams = new URLSearchParams();
+  if (agentId) queryParams.set('agent_id', agentId);
+  if (clientId) queryParams.set('client_id', clientId);
+  const query = queryParams.toString() ? `?${queryParams.toString()}` : '';
 
   return getJsonWithFallback([
     `${API_ROOT_URL}/agents/results${query}`,
     `${baseWithoutApiSuffix}/agents/results${query}`,
     `${API_BASE_URL}/agents/results${query}`,
   ]);
+};
+
+export const generateAnalyticsReport = async (
+  payload: ReportGenerationRequest,
+): Promise<ReportGenerationApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return postJsonWithFallback<ReportGenerationApiResponse>([
+    `${API_ROOT_URL}/agents/report/generate`,
+    `${baseWithoutApiSuffix}/agents/report/generate`,
+    `${API_BASE_URL}/agents/report/generate`,
+  ], payload);
+};
+
+export const downloadGeneratedReport = (report: GeneratedReportPayload) => {
+  const base64 = report.content_base64 || '';
+  const binary = window.atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+
+  const blob = new Blob([bytes], { type: report.mime_type || 'application/octet-stream' });
+  const url = window.URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = report.filename || 'analytics_report';
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  window.URL.revokeObjectURL(url);
 };
 
 

@@ -1,5 +1,5 @@
 import { Network, Sparkles } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -10,20 +10,51 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { orchestrateAgents } from '../../services/api';
+import { getAgentResults, orchestrateAgents } from '../../services/api';
 import type { AgentOrchestrationResult, AttributionAnalysis } from '../../types';
 
 interface AttributionWorkspaceProps {
+  clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
-export default function AttributionWorkspace({ onRunResult }: AttributionWorkspaceProps) {
+export default function AttributionWorkspace({ clientId, onRunResult }: AttributionWorkspaceProps) {
   const [attributionModel, setAttributionModel] = useState('linear');
   const [metric, setMetric] = useState('revenue');
   const [result, setResult] = useState<AttributionAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'credit' | 'touchpoints' | 'scenario'>('credit');
+
+  useEffect(() => {
+    if (!clientId || result) return;
+    let cancelled = false;
+
+    const hydrateLastResult = async () => {
+      try {
+        const raw = await getAgentResults('attribution', clientId);
+        if (cancelled) return;
+
+        const response = (raw && typeof raw === 'object') ? (raw as Record<string, unknown>) : {};
+        const persisted = response.results;
+        const persistedRecord = (persisted && typeof persisted === 'object' && !Array.isArray(persisted))
+          ? (persisted as Record<string, unknown>)
+          : null;
+
+        const maybeAttribution = persistedRecord?.attribution_analysis ?? persistedRecord;
+        if (maybeAttribution && typeof maybeAttribution === 'object' && Object.keys(maybeAttribution as Record<string, unknown>).length > 0) {
+          setResult(maybeAttribution as AttributionAnalysis);
+        }
+      } catch {
+        // Hydration is best-effort; don't block normal workspace usage.
+      }
+    };
+
+    hydrateLastResult();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, result]);
 
   const channels = useMemo(() => result?.channel_summary ?? [], [result]);
   const modelCreditChart = result?.model_credit_chart ?? channels;
@@ -38,6 +69,7 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
       const response = await orchestrateAgents({
         intent: 'attribution_analysis',
         agents: ['attribution'],
+        client_id: clientId,
         payload: {
           attribution_model: attributionModel,
           metric,

@@ -32,6 +32,7 @@ import type {
 interface DashboardProps {
   result: unknown;
   isLoading: boolean;
+  clientId?: string;
 }
 
 interface DashboardSnapshot {
@@ -50,7 +51,7 @@ interface AgentResultsResponse {
   executive_summary?: unknown;
 }
 
-export default function Dashboard({ result, isLoading }: DashboardProps) {
+export default function Dashboard({ result, isLoading, clientId }: DashboardProps) {
   const [snapshot, setSnapshot] = useState<DashboardSnapshot | null>(null);
   const [loadingLatest, setLoadingLatest] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -76,7 +77,7 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
       setLoadingLatest(true);
       setLoadError(null);
       try {
-        const rawResponse = await getAgentResults();
+        const rawResponse = await getAgentResults(undefined, clientId);
         if (!mounted) return;
 
         const response = asRecord(rawResponse) as AgentResultsResponse;
@@ -108,7 +109,7 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
     return () => {
       mounted = false;
     };
-  }, [result]);
+  }, [result, clientId]);
 
   const hasData = useMemo(() => {
     return Boolean(

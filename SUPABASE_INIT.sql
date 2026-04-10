@@ -118,6 +118,34 @@ CREATE INDEX IF NOT EXISTS idx_chat_threads_client_last_message
 CREATE INDEX IF NOT EXISTS idx_chat_messages_thread_created_at
     ON chat_messages(thread_id, created_at ASC);
 
+-- 14. Create CLIENT_AGENT_LATEST_RESULTS table
+CREATE TABLE IF NOT EXISTS client_agent_latest_results (
+    client_id TEXT NOT NULL,
+    agent_key TEXT NOT NULL,
+    result_payload JSONB NOT NULL DEFAULT '{}'::jsonb,
+    thread_id UUID NULL,
+    intent TEXT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+    PRIMARY KEY (client_id, agent_key)
+);
+
+CREATE INDEX IF NOT EXISTS idx_client_agent_latest_results_updated
+    ON client_agent_latest_results(client_id, updated_at DESC);
+
+-- 15. Create CLIENT_LATEST_ANALYSIS_SNAPSHOTS table
+CREATE TABLE IF NOT EXISTS client_latest_analysis_snapshots (
+    client_id TEXT PRIMARY KEY,
+    recommendations JSONB NOT NULL DEFAULT '[]'::jsonb,
+    executive_summary TEXT NULL,
+    thread_id UUID NULL,
+    intent TEXT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
+);
+
+CREATE INDEX IF NOT EXISTS idx_client_latest_analysis_snapshots_updated
+    ON client_latest_analysis_snapshots(updated_at DESC);
+
 -- ============================================================================
 -- Insert a default agent for the application
 -- ============================================================================

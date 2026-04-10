@@ -590,6 +590,8 @@ export interface AgentOrchestrationRequest {
   intent: string;
   agents: string[];
   payload: Record<string, unknown>;
+  client_id?: string;
+  thread_id?: string;
 }
 
 export interface AgentOrchestrationResult {
@@ -612,6 +614,36 @@ export interface AgentOrchestrationResult {
 export interface AgentOrchestrationApiResponse {
   success: boolean;
   data?: AgentOrchestrationResult;
+  timestamp?: string;
+  detail?: string;
+}
+
+export type ReportType = 'executive' | 'detailed';
+export type ReportExportFormat = 'pdf' | 'doc';
+
+export interface ReportGenerationRequest {
+  report_type: ReportType;
+  export_format: ReportExportFormat;
+  agents: string[];
+  payload?: Record<string, unknown>;
+  client_id?: string;
+  thread_id?: string;
+}
+
+export interface GeneratedReportPayload {
+  filename: string;
+  mime_type: string;
+  content_base64: string;
+  report_text: string;
+  report_type: ReportType;
+  export_format: ReportExportFormat;
+  agents_executed: string[];
+  orchestration_result?: AgentOrchestrationResult;
+}
+
+export interface ReportGenerationApiResponse {
+  success: boolean;
+  data?: GeneratedReportPayload;
   timestamp?: string;
   detail?: string;
 }
