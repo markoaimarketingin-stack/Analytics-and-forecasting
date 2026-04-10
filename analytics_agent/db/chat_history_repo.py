@@ -5,6 +5,10 @@ from typing import Any
 from uuid import uuid4
 
 from analytics_agent.clients.supabase_client import get_supabase_client
+from analytics_agent.logging_config import get_logger
+
+
+logger = get_logger(__name__)
 
 
 def _utc_now_iso() -> str:
@@ -137,11 +141,32 @@ def append_chat_message(
         "metadata": metadata or {},
         "created_at": now,
     }
-    inserted = (
-        supabase.table("chat_messages")
-        .insert(insert_payload)
-        .execute()
-    )
+    try:
+        inserted = (
+            supabase.table("chat_messages")
+            .insert(insert_payload)
+            .execute()
+        )
+    except Exception as exc:
+        error_text = str(exc).lower()
+
+        # Backward-compatible retry for legacy schemas where id is NOT NULL with no default.
+        if "column \"id\"" in error_text and "not-null" in error_text:
+            retry_payload = {
+                **insert_payload,
+                "id": str(uuid4()),
+            }
+            logger.warning(
+                "Retrying chat_messages insert with explicit id",
+                thread_id=thread_id,
+            )
+            inserted = (
+                supabase.table("chat_messages")
+                .insert(retry_payload)
+                .execute()
+            )
+        else:
+            raise
 
     update_payload: dict[str, Any] = {
         "updated_at": now,
