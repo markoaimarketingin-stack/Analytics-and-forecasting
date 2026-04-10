@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { Bot } from 'lucide-react';
+import { Bot, LogOut } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -17,12 +17,13 @@ import AttributionWorkspace from './components/attribution/AttributionWorkspace'
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
-import { orchestrateAgents } from './services/api';
+import { authenticateWithGoogle, orchestrateAgents } from './services/api';
 
 import type {
   AnalysisRun,
   AgentOrchestrationResult,
   ChatThreadSummary,
+  GoogleAuthUser,
   Message,
   UISuggestionItem,
 } from './types';
@@ -41,6 +42,38 @@ const THEME_STORAGE_KEY = 'analytics_theme_dark_mode';
 const CLIENT_ID_QUERY_PARAM = 'client_id';
 const CLIENT_ID_COOKIE_KEY = 'marko_client_id';
 const LEGACY_CLIENT_ID_LOCAL_STORAGE_KEY = 'marko_client_id';
+const AUTH_SESSION_STORAGE_KEY = 'marko_google_auth_session';
+const GOOGLE_SCRIPT_ID = 'google-identity-services-script';
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
+
+interface GoogleAuthSession {
+  clientId: string;
+  user: GoogleAuthUser;
+}
+
+const buildAnonymousClientId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
+
+const readStoredGoogleSession = (): GoogleAuthSession | null => {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const raw = window.localStorage.getItem(AUTH_SESSION_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<GoogleAuthSession>;
+    if (!parsed?.clientId || !parsed?.user?.sub) return null;
+    return {
+      clientId: parsed.clientId,
+      user: parsed.user,
+    };
+  } catch {
+    return null;
+  }
+};
 
 const readCookieValue = (name: string): string | null => {
   if (typeof document === 'undefined') return null;
@@ -62,6 +95,9 @@ const writeCookieValue = (name: string, value: string) => {
 const resolveInitialClientId = (): string => {
   if (typeof window === 'undefined') return '';
 
+  const storedGoogleSession = readStoredGoogleSession();
+  if (storedGoogleSession?.clientId) return storedGoogleSession.clientId;
+
   const params = new URLSearchParams(window.location.search);
   const fromQuery = (params.get(CLIENT_ID_QUERY_PARAM) || '').trim();
   if (fromQuery) return fromQuery;
@@ -77,9 +113,7 @@ const resolveInitialClientId = (): string => {
     // Ignore storage access failures (e.g., browser privacy mode).
   }
 
-  return typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-    ? crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  return buildAnonymousClientId();
 };
 
 export default function App() {
@@ -104,12 +138,16 @@ export default function App() {
   const [executionTimeline, setExecutionTimeline] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<UISuggestionItem[]>([]);
   const [clientId, setClientId] = useState<string>(() => resolveInitialClientId());
+  const [googleSession, setGoogleSession] = useState<GoogleAuthSession | null>(() => readStoredGoogleSession());
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null);
   const [chatThreads, setChatThreads] = useState<ChatThreadSummary[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [isChatPanelCollapsed, setIsChatPanelCollapsed] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark-mode', darkMode);
@@ -135,6 +173,113 @@ export default function App() {
 
     writeCookieValue(CLIENT_ID_COOKIE_KEY, clientId);
   }, [clientId]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (googleSession) {
+      window.localStorage.setItem(AUTH_SESSION_STORAGE_KEY, JSON.stringify(googleSession));
+      if (googleSession.clientId !== clientId) {
+        setClientId(googleSession.clientId);
+      }
+    } else {
+      window.localStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+    }
+  }, [googleSession, clientId]);
+
+  const handleGoogleCredential = async (credential: string) => {
+    if (!credential) {
+      setAuthError('Google did not return a credential. Please try again.');
+      return;
+    }
+
+    setIsSigningIn(true);
+    setAuthError(null);
+    try {
+      const response = await authenticateWithGoogle(credential);
+      if (!response.success || !response.client_id || !response.user) {
+        throw new Error('Google sign-in failed. Please try again.');
+      }
+
+      const nextSession: GoogleAuthSession = {
+        clientId: response.client_id,
+        user: response.user,
+      };
+
+      setGoogleSession(nextSession);
+      setClientId(nextSession.clientId);
+      setCurrentThreadId(null);
+      setMessages([]);
+      setCurrentAnalysis(null);
+      setActivatedAgents([]);
+      setExecutionTimeline([]);
+      setSuggestions([]);
+      setChatThreads([]);
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Failed to sign in with Google.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!GOOGLE_CLIENT_ID || googleSession || !googleButtonRef.current || typeof window === 'undefined') return;
+
+    const initializeGoogle = () => {
+      if (!window.google?.accounts?.id || !googleButtonRef.current) return;
+
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: (response) => {
+          const credential = response?.credential || '';
+          void handleGoogleCredential(credential);
+        },
+        cancel_on_tap_outside: true,
+      });
+
+      googleButtonRef.current.innerHTML = '';
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: 'outline',
+        size: 'medium',
+        shape: 'pill',
+        text: 'signin_with',
+        width: 230,
+      });
+    };
+
+    if (window.google?.accounts?.id) {
+      initializeGoogle();
+      return;
+    }
+
+    const existingScript = document.getElementById(GOOGLE_SCRIPT_ID) as HTMLScriptElement | null;
+    if (existingScript) {
+      existingScript.addEventListener('load', initializeGoogle, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = GOOGLE_SCRIPT_ID;
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    script.addEventListener('load', initializeGoogle, { once: true });
+    document.head.appendChild(script);
+  }, [googleSession]);
+
+  const handleGoogleSignOut = () => {
+    window.google?.accounts?.id?.disableAutoSelect();
+    setGoogleSession(null);
+    setAuthError(null);
+    setCurrentThreadId(null);
+    setMessages([]);
+    setCurrentAnalysis(null);
+    setActivatedAgents([]);
+    setExecutionTimeline([]);
+    setSuggestions([]);
+    setChatThreads([]);
+    setClientId(buildAnonymousClientId());
+  };
 
   const loadChatThreads = async (resolvedClientId: string) => {
     if (!resolvedClientId) return;
@@ -554,6 +699,47 @@ export default function App() {
 
   return (
     <div className="app-shell app-theme-root flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
+      <div className="fixed right-6 top-4 z-50">
+        {googleSession ? (
+          <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white/95 px-2 py-2 shadow-sm backdrop-blur">
+            {googleSession.user.picture ? (
+              <img
+                src={googleSession.user.picture}
+                alt={googleSession.user.name}
+                className="h-8 w-8 rounded-full border border-gray-200"
+              />
+            ) : (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700">
+                {(googleSession.user.name || googleSession.user.email || 'U').slice(0, 1).toUpperCase()}
+              </div>
+            )}
+            <div className="min-w-0 pr-1">
+              <p className="max-w-[180px] truncate text-xs font-semibold text-gray-900">{googleSession.user.name || googleSession.user.email}</p>
+              <p className="max-w-[180px] truncate text-[11px] text-gray-500">{googleSession.user.email}</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleGoogleSignOut}
+              className="inline-flex h-8 items-center gap-1 rounded-lg border border-gray-200 px-2 text-xs font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-gray-200 bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+            <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">Sign in</div>
+            {GOOGLE_CLIENT_ID ? (
+              <div className="mt-1 min-h-[40px]" ref={googleButtonRef} />
+            ) : (
+              <p className="mt-1 max-w-[260px] text-xs text-amber-700">Set `VITE_GOOGLE_CLIENT_ID` to enable Google sign-in.</p>
+            )}
+            {isSigningIn ? <p className="mt-1 text-xs text-gray-500">Verifying Google account...</p> : null}
+            {authError ? <p className="mt-1 max-w-[260px] text-xs text-red-600">{authError}</p> : null}
+          </div>
+        )}
+      </div>
+
       <Sidebar
         activeSection={activeSection}
         onSectionChange={setActiveSection}

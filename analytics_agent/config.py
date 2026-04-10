@@ -35,6 +35,7 @@ class Config:
     # Security Configuration
     SECRET_KEY: str = config('SECRET_KEY', default='change-me-in-production')
     JWT_SECRET_KEY: str = config('JWT_SECRET_KEY', default='change-me-in-production')
+    GOOGLE_OAUTH_CLIENT_ID: Optional[str] = config('GOOGLE_OAUTH_CLIENT_ID', default=None)
 
     # Performance Configuration
     MAX_WORKERS: int = config('MAX_WORKERS', default=4, cast=int)

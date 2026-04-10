@@ -14,6 +14,13 @@ from pydantic import BaseModel, Field, field_serializer
 import pandas as pd
 from sqlalchemy.orm import Session
 
+try:
+    from google.oauth2 import id_token as google_id_token
+    from google.auth.transport import requests as google_requests
+except Exception:  # pragma: no cover - optional dependency at runtime
+    google_id_token = None
+    google_requests = None
+
 from analytics_agent.analytics_runner import AnalyticsRunner
 from analytics_agent.config import settings
 from analytics_agent.logging_config import get_logger
@@ -1168,6 +1175,17 @@ class TrainForecastRequest(BaseModel):
     pass
 
 
+class GoogleAuthRequest(BaseModel):
+    credential: str
+
+
+class GoogleAuthResponse(BaseModel):
+    success: bool = True
+    client_id: str
+    user: dict
+    timestamp: str
+
+
 class ReportGenerationRequest(BaseModel):
     """Request for generating an LLM-backed report from selected agents."""
     report_type: Literal["executive", "detailed"] = "executive"
@@ -1492,6 +1510,58 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
         )
 
 
+@app.post("/api/auth/google", response_model=GoogleAuthResponse)
+@app.post("/auth/google", response_model=GoogleAuthResponse)
+async def authenticate_google(payload: GoogleAuthRequest):
+    """Verify Google ID token and return canonical app client identity."""
+    credential = (payload.credential or "").strip()
+    if not credential:
+        raise HTTPException(status_code=400, detail="Google credential is required")
+
+    configured_client_id = (settings.GOOGLE_OAUTH_CLIENT_ID or "").strip()
+    if not configured_client_id:
+        raise HTTPException(status_code=503, detail="GOOGLE_OAUTH_CLIENT_ID is not configured")
+
+    if google_id_token is None or google_requests is None:
+        raise HTTPException(status_code=503, detail="google-auth dependency is not installed")
+
+    try:
+        id_info = google_id_token.verify_oauth2_token(
+            credential,
+            google_requests.Request(),
+            configured_client_id,
+        )
+
+        issuer = str(id_info.get("iss") or "").strip()
+        if issuer not in {"accounts.google.com", "https://accounts.google.com"}:
+            raise HTTPException(status_code=401, detail="Invalid Google token issuer")
+
+        sub = str(id_info.get("sub") or "").strip()
+        if not sub:
+            raise HTTPException(status_code=401, detail="Google token missing subject")
+
+        email = str(id_info.get("email") or "").strip()
+        name = str(id_info.get("name") or "").strip() or email or "Google User"
+        picture = str(id_info.get("picture") or "").strip()
+
+        return {
+            "success": True,
+            "client_id": f"google:{sub}",
+            "user": {
+                "sub": sub,
+                "email": email,
+                "name": name,
+                "picture": picture,
+            },
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.warning("Google auth failed", error=str(exc))
+        raise HTTPException(status_code=401, detail="Invalid or expired Google credential")
+
+
 @app.post("/agents/report/generate")
 @app.post("/api/agents/report/generate")
 async def generate_agent_report(request: ReportGenerationRequest):
@@ -1757,6 +1827,7 @@ async def api_root():
         "endpoints": {
             "health": "GET /api/health",
             "chat": "POST /api/chat",
+            "google_auth": "POST /api/auth/google",
             "orchestrate": "POST /api/orchestrate",
             "analyze": "POST /api/analyze",
             "budget_sensitivity": "POST /api/budget-sensitivity",

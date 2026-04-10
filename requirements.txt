@@ -5,6 +5,7 @@ sqlalchemy>=2.0.0
 
 # AI/ML
 google-generativeai>=0.3.0
+google-auth>=2.35.0
 
 # Machine Learning & Data Processing
 catboost==1.2.7

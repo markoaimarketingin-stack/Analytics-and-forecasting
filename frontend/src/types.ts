@@ -648,6 +648,20 @@ export interface ReportGenerationApiResponse {
   detail?: string;
 }
 
+export interface GoogleAuthUser {
+  email: string;
+  name: string;
+  picture?: string;
+  sub: string;
+}
+
+export interface GoogleAuthApiResponse {
+  success: boolean;
+  client_id: string;
+  user: GoogleAuthUser;
+  timestamp: string;
+}
+
 export interface UISuggestionItem {
   id: string;
   title: string;
