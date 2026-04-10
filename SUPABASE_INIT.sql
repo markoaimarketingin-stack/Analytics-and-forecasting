@@ -128,6 +128,7 @@ ALTER TABLE IF EXISTS chat_threads
 
 ALTER TABLE IF EXISTS chat_messages
     ADD COLUMN IF NOT EXISTS thread_id UUID,
+    ADD COLUMN IF NOT EXISTS session_id UUID,
     ADD COLUMN IF NOT EXISTS role TEXT,
     ADD COLUMN IF NOT EXISTS content TEXT,
     ADD COLUMN IF NOT EXISTS metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
@@ -136,6 +137,7 @@ ALTER TABLE IF EXISTS chat_messages
 DO $$
 DECLARE
     v_id_type TEXT;
+    v_session_nullable TEXT;
 BEGIN
     -- Ensure FK exists if thread_id is present.
     IF EXISTS (
@@ -171,6 +173,31 @@ BEGIN
             -- Ignore if identity/default already configured.
             NULL;
         END;
+    END IF;
+
+    -- Some legacy schemas require session_id while current app uses thread_id.
+    IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'chat_messages'
+          AND column_name = 'session_id'
+    ) THEN
+        UPDATE chat_messages
+        SET session_id = thread_id
+        WHERE session_id IS NULL
+          AND thread_id IS NOT NULL;
+
+        SELECT is_nullable INTO v_session_nullable
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'chat_messages'
+          AND column_name = 'session_id'
+        LIMIT 1;
+
+        IF v_session_nullable = 'NO' THEN
+            ALTER TABLE chat_messages ALTER COLUMN session_id DROP NOT NULL;
+        END IF;
     END IF;
 END $$;
 

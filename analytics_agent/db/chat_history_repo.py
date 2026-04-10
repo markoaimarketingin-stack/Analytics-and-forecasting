@@ -165,6 +165,20 @@ def append_chat_message(
                 .insert(retry_payload)
                 .execute()
             )
+        elif "column \"session_id\"" in error_text and "not-null" in error_text:
+            retry_payload = {
+                **insert_payload,
+                "session_id": thread_id,
+            }
+            logger.warning(
+                "Retrying chat_messages insert with session_id compatibility",
+                thread_id=thread_id,
+            )
+            inserted = (
+                supabase.table("chat_messages")
+                .insert(retry_payload)
+                .execute()
+            )
         else:
             raise
 
