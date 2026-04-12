@@ -13,6 +13,34 @@ from analytics_agent.api.agent_manager import AgentManager
 logger = get_logger(__name__)
 
 
+SUPPORTED_EXECUTION_AGENTS = ["forecast", "scenario", "funnel", "attribution", "cohort", "budget_allocator"]
+
+# Fallback/default execution policy by intent. These are only used when the planner
+# does not provide a usable agent list, or when policy must add required agents.
+INTENT_DEFAULT_AGENTS: Dict[str, List[str]] = {
+    "forecast": ["forecast"],
+    "scenario_forecast": ["scenario", "forecast"],
+    "funnel_analysis": ["funnel"],
+    "attribution_analysis": ["attribution"],
+    "cohort_analysis": ["cohort"],
+    "dashboard": ["forecast", "funnel", "attribution", "cohort", "scenario"],
+    "report_generation": ["forecast", "funnel", "attribution", "cohort", "scenario"],
+    "budget_optimization": ["scenario"],
+    "break_even": ["scenario"],
+    "ltv_projection": ["cohort"],
+    "executive_summary": ["forecast", "scenario", "cohort"],
+    "budget_allocation": ["budget_allocator"],
+}
+
+INTENT_REQUIRED_AGENTS: Dict[str, List[str]] = {
+    "budget_optimization": ["scenario"],
+    "break_even": ["scenario"],
+    "ltv_projection": ["cohort"],
+    "executive_summary": ["forecast"],
+    "budget_allocation": ["budget_allocator"],
+}
+
+
 class AnalyticsSupervisor:
     """
     Production-grade orchestration layer.
@@ -171,7 +199,9 @@ class AnalyticsSupervisor:
         # Analysis Mode
         # ========================================================
         intent = plan.get("intent", "forecast")
-        agent_ids = plan.get("agents", ["forecast"])
+        raw_agent_ids = plan.get("agents", ["forecast"])
+        execution_plan = self._resolve_execution_plan(intent, raw_agent_ids)
+        agent_ids = execution_plan["approved_agents"]
         agents = self._map_agents(agent_ids)
 
         payload = self._build_base_payload()
@@ -180,7 +210,16 @@ class AnalyticsSupervisor:
         timeline: List[str] = [
             "User request received",
             f"Intent identified: {intent}",
+            (
+                "Execution plan resolved: "
+                + ", ".join(agent_ids)
+                if agent_ids
+                else "Execution plan resolved: no agents"
+            ),
         ]
+
+        if execution_plan["policy_notes"]:
+            timeline.append(f"Policy adjustments: {'; '.join(execution_plan['policy_notes'])}")
 
         # If the user asks to read/view existing agent outputs, return stored results directly.
         results_lookup = self._build_results_lookup_response(
@@ -202,7 +241,7 @@ class AnalyticsSupervisor:
         if is_clarification_reply:
             # Merge reply with previously extracted parameters for the same intent.
             prior = clarification_state.get("extracted_params", {})
-            merged_params = self._merge_clarified_answers(prior, normalized)
+            merged_params = self._merge_clarified_answers(intent, prior, normalized)
             missing_params = self._missing_params_for_intent(intent, merged_params)
 
             if missing_params:
@@ -320,7 +359,13 @@ class AnalyticsSupervisor:
             timeline.append(f"{agent['label']} activated")
 
         try:
-            result = self._execute(intent, payload)
+            result = self._execute(intent, payload, agent_ids)
+            if isinstance(result, dict):
+                result["execution_trace"] = {
+                    "requested_agents": execution_plan["requested_agents"],
+                    "approved_agents": execution_plan["approved_agents"],
+                    "policy_notes": execution_plan["policy_notes"],
+                }
             timeline.append("Specialist agents completed execution")
             timeline.append("Results combined")
 
@@ -488,14 +533,14 @@ class AnalyticsSupervisor:
 
         patterns = [
             r"\b(read|show|fetch|get)\b.*\bresults?\b",
-            r"\bresults?\b.*\b(agent|forecast|scenario|funnel|attribution|cohort)\b",
+            r"\bresults?\b.*\b(agent|forecast|scenario|funnel|attribution|cohort|budget)\b",
         ]
         return any(re.search(pattern, normalized_message) is not None for pattern in patterns)
 
     def _resolve_results_target_agent(self, normalized_message: str) -> str | None:
-        for candidate in ["attribution", "funnel", "cohort", "forecast", "scenario"]:
+        for candidate in ["attribution", "funnel", "cohort", "forecast", "scenario", "budget_allocator", "budget"]:
             if candidate in normalized_message:
-                return candidate
+                return "budget_allocator" if candidate == "budget" else candidate
         return None
 
     # ============================================================
@@ -591,6 +636,7 @@ Available agents:
 - funnel
 - attribution
 - cohort
+- budget_allocator
 - suggestion
 - dashboard
 - report
@@ -605,7 +651,7 @@ Use the recent conversation context to resolve follow-up requests like "same as 
 Schema:
 {{
   "mode": "conversation" | "analysis",
-  "intent": "forecast" | "scenario_forecast" | "funnel_analysis" | "attribution_analysis" | "dashboard" | "report_generation" | "budget_optimization" | "break_even" | "ltv_projection" | "executive_summary",
+  "intent": "forecast" | "scenario_forecast" | "funnel_analysis" | "attribution_analysis" | "dashboard" | "report_generation" | "budget_optimization" | "budget_allocation" | "break_even" | "ltv_projection" | "executive_summary",
   "agents": ["forecast", "scenario"],
   "payload_updates": {{
       "forecast_months": 3,
@@ -689,6 +735,14 @@ Recent conversation context:
                     "cohort",
                     "dashboard",
                 ],
+                "payload_updates": {},
+            }
+
+        if any(word in msg for word in ["budget allocator", "allocate budget", "budget allocation", "reallocate budget"]):
+            return {
+                "mode": "analysis",
+                "intent": "budget_allocation",
+                "agents": ["budget_allocator"],
                 "payload_updates": {},
             }
 
@@ -823,6 +877,7 @@ Recent conversation context:
             "funnel": "Funnel Agent",
             "attribution": "Attribution Agent",
             "cohort": "Cohort Agent",
+            "budget_allocator": "Budget Allocator Agent",
             "suggestion": "Suggestion Agent",
             "dashboard": "Dashboard Agent",
             "report": "Report Agent",
@@ -838,6 +893,58 @@ Recent conversation context:
             }
             for agent_id in agent_ids
         ]
+
+    def _resolve_execution_plan(
+        self,
+        intent: str,
+        requested_agents: List[str] | None,
+    ) -> Dict[str, Any]:
+        normalized_requested: List[str] = []
+        policy_notes: List[str] = []
+
+        for item in requested_agents or []:
+            candidate = str(item).strip().lower()
+            if not candidate:
+                continue
+            if candidate == "budget":
+                candidate = "budget_allocator"
+            if candidate in normalized_requested:
+                continue
+            normalized_requested.append(candidate)
+
+        approved_agents = [
+            agent for agent in normalized_requested if agent in SUPPORTED_EXECUTION_AGENTS
+        ]
+
+        dropped = [
+            agent for agent in normalized_requested if agent not in SUPPORTED_EXECUTION_AGENTS
+        ]
+        if dropped:
+            policy_notes.append(f"Dropped unsupported agents: {', '.join(dropped)}")
+
+        if not approved_agents:
+            approved_agents = list(INTENT_DEFAULT_AGENTS.get(intent, ["forecast"]))
+            policy_notes.append(
+                "No supported planned agents; used intent defaults"
+            )
+
+        required_agents = INTENT_REQUIRED_AGENTS.get(intent, [])
+        added_required: List[str] = []
+        for required in required_agents:
+            if required not in approved_agents:
+                approved_agents.append(required)
+                added_required.append(required)
+
+        if added_required:
+            policy_notes.append(
+                f"Added required agents for intent '{intent}': {', '.join(added_required)}"
+            )
+
+        return {
+            "requested_agents": normalized_requested,
+            "approved_agents": approved_agents,
+            "policy_notes": policy_notes,
+        }
 
     # ============================================================
     # Clarification System (Multi-turn Support)
@@ -864,6 +971,8 @@ Recent conversation context:
             return ["channel", "campaign_type", "spend", "impressions", "ctr", "conversion_rate"]
         if intent == "scenario_forecast":
             return ["base_spend", "adjustments"]
+        if intent == "budget_allocation":
+            return ["total_budget", "objective"]
         return []
 
     def _missing_params_for_intent(self, intent: str, params: Dict[str, Any]) -> List[str]:
@@ -988,15 +1097,23 @@ Recent conversation context:
         """Extract scenario parameters from user message"""
         msg_lower = message.lower()
         params = {}
-        
-        # Base spend
+
+        # Base spend: only capture if explicitly tied to spend/budget semantics.
         import re
-        spend_pattern = r'\$?\s*(\d+[,.]?\d*)[kK]?'
-        spend_matches = re.findall(spend_pattern, msg_lower)
-        if spend_matches:
+        money_match = re.search(r'\$\s*(\d+[,.]?\d*)\s*([kK]?)', msg_lower)
+        budget_match = re.search(
+            r'(?:base\s*spend|budget|spend)\s*(?:is|of|=|:|around|about|at)?\s*\$?\s*(\d+[,.]?\d*)\s*([kK]?)',
+            msg_lower,
+        )
+
+        spend_match = budget_match or money_match
+        if spend_match:
             try:
-                params["base_spend"] = float(spend_matches[0].replace(',', ''))
-            except:
+                numeric = float(spend_match.group(1).replace(',', ''))
+                if spend_match.group(2).lower() == 'k':
+                    numeric *= 1000
+                params["base_spend"] = numeric
+            except Exception:
                 pass
         
         # Adjustments (look for percentage changes)
@@ -1052,20 +1169,28 @@ Recent conversation context:
         
         return "\n".join([f"• {q}" for q in questions])
     
-    def _merge_clarified_answers(self, extracted_params: Dict[str, Any], user_answers: str) -> Dict[str, Any]:
+    def _merge_clarified_answers(self, intent: str, extracted_params: Dict[str, Any], user_answers: str) -> Dict[str, Any]:
         """
         Parse user's answers to clarification questions and merge with extracted params.
         Uses Gemini to understand natural language answers.
         """
         if not user_answers or not user_answers.strip():
             return extracted_params
+
+        merged = dict(extracted_params)
+
+        # Deterministic parser first to avoid clarification loops when LLM parsing is unavailable.
+        if intent == "scenario_forecast":
+            merged.update(self._extract_scenario_parameters(user_answers))
+        elif intent == "forecast":
+            merged.update(self._extract_forecast_parameters(user_answers))
         
         # Use Gemini to parse answers
         prompt = f"""
 Extract parameters from the user's answers. Return ONLY a JSON object with extracted values.
 
 Previously extracted parameters:
-{json.dumps(extracted_params, default=str)}
+{json.dumps(merged, default=str)}
 
 User's answers to clarification questions:
 {user_answers}
@@ -1078,6 +1203,8 @@ Extract and return JSON with these fields (if mentioned):
 - ctr: float (0-1)
 - conversion_rate: float (0-1)
 - horizon_days: int
+- base_spend: float
+- adjustments: object
 
 Return ONLY valid JSON, no other text.
 """
@@ -1086,35 +1213,46 @@ Return ONLY valid JSON, no other text.
             raw = self.gemini_client.generate(prompt)
             cleaned = raw.strip().replace("```json", "").replace("```", "").strip()
             parsed = json.loads(cleaned)
-            
-            # Merge with extracted params (user answers override)
-            extracted_params.update(parsed)
-            return extracted_params
+
+            # Normalize common aliases that models may emit.
+            if isinstance(parsed, dict):
+                if "spend_change_pct" in parsed and "adjustments" not in parsed:
+                    try:
+                        parsed["adjustments"] = {
+                            "spend_change": float(parsed["spend_change_pct"]) / 100.0
+                        }
+                    except Exception:
+                        pass
+
+                if "base_budget" in parsed and "base_spend" not in parsed:
+                    parsed["base_spend"] = parsed.get("base_budget")
+
+                # Merge only meaningful values; do not clobber deterministic fields with null/empty data.
+                for key, value in parsed.items():
+                    if value is None:
+                        continue
+                    if isinstance(value, str) and not value.strip():
+                        continue
+                    if isinstance(value, dict) and not value:
+                        continue
+                    merged[key] = value
+            return merged
         except Exception as e:
             logger.warning("Could not parse clarification answers", error=str(e))
-            return extracted_params
+            return merged
 
     # ============================================================
     # Execute Analytics
     # ============================================================
-    def _execute(self, intent: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-        # Map intent to agents to execute
-        agent_mapping = {
-            "forecast": ["forecast"],
-            "scenario_forecast": ["scenario", "forecast"],
-            "funnel_analysis": ["funnel"],
-            "attribution_analysis": ["attribution"],
-            "cohort_analysis": ["cohort"],
-            "dashboard": ["forecast", "funnel", "attribution", "cohort", "scenario"],
-            "report_generation": ["forecast", "funnel", "attribution", "cohort", "scenario"],
-            "budget_optimization": ["scenario"],
-            "break_even": ["scenario"],
-            "ltv_projection": ["cohort"],
-            "executive_summary": ["forecast", "scenario", "cohort"],
-        }
-        
-        agents_to_run = agent_mapping.get(intent, ["forecast"])
-        
+    def _execute(
+        self,
+        intent: str,
+        payload: Dict[str, Any],
+        agents_to_run: List[str],
+    ) -> Dict[str, Any]:
+        if not agents_to_run:
+            agents_to_run = list(INTENT_DEFAULT_AGENTS.get(intent, ["forecast"]))
+
         # Use AgentManager to orchestrate agents
         agent_results = self.agent_manager.orchestrate(
             intent=intent,

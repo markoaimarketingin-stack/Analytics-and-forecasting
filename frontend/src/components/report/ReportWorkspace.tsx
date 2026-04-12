@@ -38,6 +38,7 @@ const AGENT_OPTIONS: AgentOption[] = [
   { id: 'cohort', label: 'Cohort Agent' },
   { id: 'forecast', label: 'Forecast Agent' },
   { id: 'scenario', label: 'Scenario Agent' },
+  { id: 'budget_allocator', label: 'Budget Allocator Agent' },
 ];
 
 export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspaceProps) {
@@ -172,10 +173,10 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                         key={option.id}
                         type="button"
                         onClick={() => setReportType(option.id)}
-                        className={`flex h-11 w-full items-center justify-between rounded-xl border px-3 text-sm font-semibold transition ${
+                        className={`workspace-choice-card ${
                           isActive
-                            ? 'border-slate-700 bg-slate-900 text-white shadow-sm'
-                            : 'border-slate-200 bg-slate-50/70 text-slate-600 hover:border-slate-300 hover:bg-white'
+                            ? 'workspace-choice-card-active'
+                            : 'workspace-choice-card-idle'
                         }`}
                       >
                         <span>{option.label}</span>
@@ -199,10 +200,10 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                         key={option.id}
                         type="button"
                         onClick={() => setExportFormat(option.id)}
-                        className={`flex h-11 w-full items-center justify-between rounded-xl border px-3 text-sm font-semibold transition ${
+                        className={`workspace-choice-card ${
                           isActive
-                            ? 'border-slate-700 bg-slate-900 text-white shadow-sm'
-                            : 'border-slate-200 bg-slate-50/70 text-slate-600 hover:border-slate-300 hover:bg-white'
+                            ? 'workspace-choice-card-active'
+                            : 'workspace-choice-card-idle'
                         }`}
                       >
                         <span>{option.label}</span>
@@ -227,10 +228,10 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                         key={agent.id}
                         type="button"
                         onClick={() => toggleAgent(agent.id)}
-                        className={`flex h-11 items-center justify-between rounded-xl border px-3 text-sm font-semibold transition ${
+                        className={`workspace-choice-card ${
                           isSelected
-                            ? 'border-slate-700 bg-slate-900 text-white shadow-sm'
-                            : 'border-slate-200 bg-slate-50/70 text-slate-600 hover:border-slate-300 hover:bg-white'
+                            ? 'workspace-choice-card-active'
+                            : 'workspace-choice-card-idle'
                         }`}
                       >
                         <span>{agent.label}</span>
@@ -254,7 +255,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
           <div className="workspace-panel overflow-hidden rounded-[28px] border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-8 text-white shadow-[0_25px_50px_-25px_rgba(15,23,42,0.85)] lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <div className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-slate-300">
+                <div className="workspace-option-pill workspace-option-pill-ghost border-white/15 text-[10px] uppercase tracking-[0.28em] text-slate-300">
                   Generate Report
                 </div>
 
@@ -268,13 +269,13 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase text-slate-200">
+                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
                     {reportTypeLabel}
                   </span>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase text-slate-200">
+                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
                     {exportFormat}
                   </span>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase text-slate-200">
+                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
                     {selectedAgents.length} agent{selectedAgents.length === 1 ? '' : 's'}
                   </span>
                 </div>
@@ -342,7 +343,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                       </div>
 
                       <div className="mt-1 flex items-center gap-3 text-xs text-slate-500 lg:text-sm">
-                        <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 font-semibold uppercase text-slate-600">
+                        <span className="workspace-option-pill h-6 border-slate-200 bg-white px-2 text-[11px] uppercase text-slate-600">
                           {report.payload.export_format}
                         </span>
                         <span className="h-1 w-1 rounded-full bg-slate-300" />

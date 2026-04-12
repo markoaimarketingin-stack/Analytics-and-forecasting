@@ -3,8 +3,10 @@
 import type {
   AgentOrchestrationApiResponse,
   AgentOrchestrationRequest,
+  BudgetAllocatorOptionsApiResponse,
   GeneratedReportPayload,
   ForecastOptionsApiResponse,
+  CohortOptionsApiResponse,
   ScenarioOptionsApiResponse,
   FunnelOptionsApiResponse,
   ForecastPredictApiResponse,
@@ -12,6 +14,9 @@ import type {
   ForecastTrainApiResponse,
   ReportGenerationApiResponse,
   ReportGenerationRequest,
+  RecommendationLifecycleListApiResponse,
+  RecommendationLifecycleRecord,
+  RecommendationLifecycleUpsertApiResponse,
 } from '../types';
 
 const API_BASE_URL =
@@ -364,6 +369,15 @@ export const getForecastOptions = async (): Promise<ForecastOptionsApiResponse> 
   ]);
 };
 
+export const getCohortOptions = async (): Promise<CohortOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return getJsonWithFallback<CohortOptionsApiResponse>([
+    `${API_BASE_URL}/agents/cohort/options`,
+    `${API_ROOT_URL}/agents/cohort/options`,
+    `${baseWithoutApiSuffix}/agents/cohort/options`,
+  ]);
+};
+
 export const getScenarioOptions = async (): Promise<ScenarioOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
   return getJsonWithFallback<ScenarioOptionsApiResponse>([
@@ -371,6 +385,26 @@ export const getScenarioOptions = async (): Promise<ScenarioOptionsApiResponse> 
     `${API_ROOT_URL}/agents/scenario/options`,
     `${baseWithoutApiSuffix}/agents/scenario/options`,
   ]);
+};
+
+export const getBudgetAllocatorOptions = async (): Promise<BudgetAllocatorOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return getJsonWithFallback<BudgetAllocatorOptionsApiResponse>([
+    `${API_BASE_URL}/agents/budget/options`,
+    `${API_ROOT_URL}/agents/budget/options`,
+    `${baseWithoutApiSuffix}/agents/budget/options`,
+  ]);
+};
+
+export const runBudgetAllocator = async (
+  payload: Record<string, unknown>,
+): Promise<AgentOrchestrationApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return postJsonWithFallback<AgentOrchestrationApiResponse>([
+    `${API_ROOT_URL}/agents/budget/allocate`,
+    `${baseWithoutApiSuffix}/agents/budget/allocate`,
+    `${API_BASE_URL}/agents/budget/allocate`,
+  ], payload);
 };
 
 export const getAgentResults = async (agentId?: string, clientId?: string) => {
@@ -418,4 +452,48 @@ export const downloadGeneratedReport = (report: GeneratedReportPayload) => {
   window.URL.revokeObjectURL(url);
 };
 
+export const fetchRecommendationOutcomes = async (
+  clientId?: string,
+  threadId?: string,
+): Promise<RecommendationLifecycleListApiResponse> => {
+  const params = new URLSearchParams();
+  if (clientId) params.set('client_id', clientId);
+  if (threadId) params.set('thread_id', threadId);
+  const query = params.toString() ? `?${params.toString()}` : '';
 
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+
+  try {
+    return await getJsonWithFallback<RecommendationLifecycleListApiResponse>([
+      `${API_BASE_URL}/recommendations/outcomes${query}`,
+      `${API_ROOT_URL}/api/recommendations/outcomes${query}`,
+      `${API_ROOT_URL}/agents/recommendations/outcomes${query}`,
+      `${baseWithoutApiSuffix}/api/recommendations/outcomes${query}`,
+    ]);
+  } catch {
+    return {
+      success: false,
+      data: [],
+    };
+  }
+};
+
+export const upsertRecommendationOutcome = async (
+  payload: RecommendationLifecycleRecord,
+): Promise<RecommendationLifecycleUpsertApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+
+  try {
+    return await postJsonWithFallback<RecommendationLifecycleUpsertApiResponse>([
+      `${API_BASE_URL}/recommendations/outcomes`,
+      `${API_ROOT_URL}/api/recommendations/outcomes`,
+      `${API_ROOT_URL}/agents/recommendations/outcomes`,
+      `${baseWithoutApiSuffix}/api/recommendations/outcomes`,
+    ], payload);
+  } catch {
+    return {
+      success: false,
+      data: payload,
+    };
+  }
+};

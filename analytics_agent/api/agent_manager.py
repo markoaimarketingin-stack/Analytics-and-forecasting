@@ -79,11 +79,24 @@ class AgentManager:
                     "time_period": payload.get("time_period", "month"),
                     "cohort_period": payload.get("cohort_period", "month"),
                     "retention_months": payload.get("retention_months", 3),
+                    "signup_channel": payload.get("signup_channel", "all"),
+                    "contract_type": payload.get("contract_type", "all"),
+                    "signup_start_date": payload.get("signup_start_date"),
+                    "signup_end_date": payload.get("signup_end_date"),
+                    "min_tenure_months": payload.get("min_tenure_months", 0),
+                    "churn_probability_min": payload.get("churn_probability_min", 0),
+                    "top_n": payload.get("top_n", 8),
                     "budget_shift_cap_percent": payload.get("budget_shift_cap_percent", 20),
                     "funnel_type": payload.get("funnel_type"),
                     "segment": payload.get("segment"),
                     "event_type": payload.get("event_type"),
                     "improvement_capture_rate": payload.get("improvement_capture_rate", 0.2),
+                    "total_budget": payload.get("total_budget", 0),
+                    "objective": payload.get("objective", "profit"),
+                    "risk_tolerance": payload.get("risk_tolerance", "balanced"),
+                    "max_shift_pct": payload.get("max_shift_pct", 20),
+                    "min_channel_pct": payload.get("min_channel_pct", 5),
+                    "max_channel_pct": payload.get("max_channel_pct", 60),
                 },
                 run_agents=agents_to_run,
             )
@@ -110,6 +123,9 @@ class AgentManager:
                     "scenario": self._serialize(
                         state.scenario_analysis
                     ),
+                    "budget_allocator": self._serialize(
+                        state.budget_allocation_analysis
+                    ),
                 },
                 # New flattened fields used by AnalyticsSupervisor
                 "attribution_analysis": self._serialize(
@@ -126,6 +142,9 @@ class AgentManager:
                 ),
                 "scenario_analysis": self._serialize(
                     state.scenario_analysis
+                ),
+                "budget_allocation_analysis": self._serialize(
+                    state.budget_allocation_analysis
                 ),
                 "recommendations": state.recommendations,
                 "executive_summary": state.executive_summary,
@@ -152,6 +171,7 @@ class AgentManager:
                 "cohort": result.get("cohort_analysis") or {},
                 "forecast": result.get("forecast_analysis") or {},
                 "scenario": result.get("scenario_analysis") or {},
+                "budget_allocator": result.get("budget_allocation_analysis") or {},
             }
 
             self.execution_history.append(
@@ -246,6 +266,10 @@ class AgentManager:
             "scenario": {
                 "status": "ready",
                 "last_execution": self.agent_results.get("scenario", {}),
+            },
+            "budget_allocator": {
+                "status": "ready",
+                "last_execution": self.agent_results.get("budget_allocator", {}),
             },
         }
 

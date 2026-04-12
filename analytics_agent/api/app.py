@@ -37,6 +37,10 @@ from analytics_agent.db.agent_results_repo import (
     upsert_client_agent_results,
     upsert_client_latest_snapshot,
 )
+from analytics_agent.db.recommendation_outcomes_repo import (
+    list_recommendation_outcomes,
+    upsert_recommendation_outcome,
+)
 from analytics_agent.api.file_handler import FileHandler
 from analytics_agent.api.models import (
     AnalyticsPayloadRequest,
@@ -167,6 +171,37 @@ class FileDeleteResponse(BaseModel):
     message: str
     timestamp: str
 
+
+class RecommendationLifecycleRecord(BaseModel):
+    suggestion_id: str
+    client_id: Optional[str] = None
+    thread_id: Optional[str] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    prompt: Optional[str] = None
+    source: Optional[str] = None
+    status: Literal["pending", "accepted", "in_progress", "implemented", "rejected"] = "pending"
+    accepted_at: Optional[str] = None
+    submitted_at: Optional[str] = None
+    owner: Optional[str] = None
+    due_date: Optional[str] = None
+    expected_impact: Optional[str] = None
+    actual_impact: Optional[str] = None
+    outcome_notes: Optional[str] = None
+    last_updated_at: Optional[str] = None
+
+
+class RecommendationLifecycleListResponse(BaseModel):
+    success: bool = True
+    data: list[RecommendationLifecycleRecord] = Field(default_factory=list)
+    timestamp: str
+
+
+class RecommendationLifecycleUpsertResponse(BaseModel):
+    success: bool = True
+    data: RecommendationLifecycleRecord
+    timestamp: str
+
 # -----------------------------------------------------------------------------
 # Global services
 # -----------------------------------------------------------------------------
@@ -240,6 +275,7 @@ _AGENT_ANALYSIS_FIELDS = {
     "cohort": "cohort_analysis",
     "forecast": "forecast_analysis",
     "scenario": "scenario_analysis",
+    "budget_allocator": "budget_allocation_analysis",
 }
 
 
@@ -622,6 +658,64 @@ async def get_chat_history_thread(
         raise HTTPException(status_code=500, detail=f"Failed to fetch chat thread: {str(e)}")
 
 
+@app.get(
+    "/api/recommendations/outcomes",
+    response_model=RecommendationLifecycleListResponse,
+)
+@app.get(
+    "/agents/recommendations/outcomes",
+    response_model=RecommendationLifecycleListResponse,
+)
+async def get_recommendation_outcomes(
+    client_id: Optional[str] = Query(None, description="Client/session identifier"),
+    thread_id: Optional[str] = Query(None, description="Chat thread identifier"),
+):
+    try:
+        resolved_client_id = _resolve_client_id(client_id)
+        records = list_recommendation_outcomes(
+            client_id=resolved_client_id,
+            thread_id=thread_id,
+        )
+        return {
+            "success": True,
+            "data": records,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.error(
+            "Recommendation outcomes fetch failed",
+            error=str(e),
+            client_id=client_id,
+            thread_id=thread_id,
+        )
+        raise HTTPException(status_code=500, detail=f"Failed to fetch recommendation outcomes: {str(e)}")
+
+
+@app.post(
+    "/api/recommendations/outcomes",
+    response_model=RecommendationLifecycleUpsertResponse,
+)
+@app.post(
+    "/agents/recommendations/outcomes",
+    response_model=RecommendationLifecycleUpsertResponse,
+)
+async def save_recommendation_outcome(payload: RecommendationLifecycleRecord):
+    try:
+        record_data = payload.model_dump()
+        record_data["client_id"] = _resolve_client_id(record_data.get("client_id"))
+        saved = upsert_recommendation_outcome(record_data)
+        return {
+            "success": True,
+            "data": saved,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error("Recommendation outcome upsert failed", error=str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to save recommendation outcome: {str(e)}")
+
+
 # -----------------------------------------------------------------------------
 # Direct Analytics Endpoint
 # -----------------------------------------------------------------------------
@@ -986,7 +1080,19 @@ class ForecastOptionsResponse(BaseModel):
     timestamp: str
 
 
+class CohortOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
 class ScenarioOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
+class BudgetAllocatorOptionsResponse(BaseModel):
     success: bool = True
     data: dict
     timestamp: str
@@ -1218,6 +1324,12 @@ async def get_agents_data_mapping():
                 "compatible_datasets": ["events", "transactions", "customers"],
                 "icon": "Network"
             },
+            "budget_allocator": {
+                "name": "Budget Allocator Agent",
+                "description": "Allocates channel budgets using objectives, constraints, and risk tolerance",
+                "compatible_datasets": ["campaigns", "transactions"],
+                "icon": "Wallet"
+            },
         }
         
         return {
@@ -1261,13 +1373,14 @@ class ReportGenerationRequest(BaseModel):
     thread_id: Optional[str] = None
 
 
-_REPORT_AGENT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario"]
+_REPORT_AGENT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario", "budget_allocator"]
 _REPORT_AGENT_LABELS = {
     "attribution": "Attribution Agent",
     "funnel": "Funnel Agent",
     "cohort": "Cohort Agent",
     "forecast": "Forecast Agent",
     "scenario": "Scenario Agent",
+    "budget_allocator": "Budget Allocator Agent",
 }
 
 
@@ -1520,6 +1633,48 @@ async def get_scenario_options():
         raise HTTPException(
             status_code=500,
             detail=f"Failed to fetch scenario options: {str(e)}",
+        )
+
+
+@app.get("/agents/cohort/options", response_model=CohortOptionsResponse)
+@app.get("/api/agents/cohort/options", response_model=CohortOptionsResponse)
+@app.get("/cohort/options", response_model=CohortOptionsResponse)
+@app.get("/api/cohort/options", response_model=CohortOptionsResponse)
+async def get_cohort_options():
+    """Return cohort filters and defaults from Supabase customers/retention/transactions."""
+    try:
+        from analytics_agent.db.queries import get_cohort_filter_options
+
+        return {
+            "success": True,
+            "data": get_cohort_filter_options(),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch cohort options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch cohort options: {str(e)}",
+        )
+
+
+@app.get("/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
+@app.get("/api/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
+async def get_budget_allocator_options():
+    """Return budget allocator filters and defaults from Supabase campaigns data."""
+    try:
+        from analytics_agent.db.queries import get_budget_allocator_options as _get_budget_allocator_options
+
+        return {
+            "success": True,
+            "data": _get_budget_allocator_options(),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch budget allocator options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch budget allocator options: {str(e)}",
         )
 
 
@@ -1829,6 +1984,37 @@ async def predict_forecast(payload: dict):
         )
 
 
+@app.post("/agents/budget/allocate")
+@app.post("/api/agents/budget/allocate")
+async def run_budget_allocator(payload: dict):
+    """Run budget allocator agent with constraints and risk profile."""
+    if not marko_brain:
+        raise HTTPException(
+            status_code=503,
+            detail="Agent services not initialized",
+        )
+
+    try:
+        logger.info("Running budget allocator", payload=payload)
+        result = marko_brain.agent_manager.orchestrate(
+            intent="budget_allocation",
+            agents_to_run=["budget_allocator"],
+            payload=payload,
+        )
+
+        return {
+            "success": True,
+            "data": result,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Budget allocator execution failed", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Budget allocator execution failed: {str(e)}",
+        )
+
+
 @app.get("/api")
 
 async def api_root():
@@ -1856,8 +2042,10 @@ async def api_root():
                 "execution_history": "GET /agents/history",
                 "forecast_options": "GET /agents/forecast/options",
                 "scenario_options": "GET /agents/scenario/options",
+                "budget_options": "GET /agents/budget/options",
                 "forecast_train": "POST /agents/forecast/train",
                 "forecast_predict": "POST /agents/forecast/predict",
+                "budget_allocate": "POST /agents/budget/allocate",
             },
         },
     }
@@ -1876,4 +2064,6 @@ if __name__ == "__main__":
         reload=settings.DEBUG,
         workers=settings.API_WORKERS,
     )
+
+
 

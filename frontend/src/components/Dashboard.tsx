@@ -27,12 +27,14 @@ import type {
   ForecastAnalysis,
   FunnelAnalysis,
   ScenarioAnalysis,
+  UISuggestionItem,
 } from '../types';
 
 interface DashboardProps {
   result: unknown;
   isLoading: boolean;
   clientId?: string;
+  recommendationOutcomes?: UISuggestionItem[];
 }
 
 interface DashboardSnapshot {
@@ -51,7 +53,7 @@ interface AgentResultsResponse {
   executive_summary?: unknown;
 }
 
-export default function Dashboard({ result, isLoading, clientId }: DashboardProps) {
+export default function Dashboard({ result, isLoading, clientId, recommendationOutcomes = [] }: DashboardProps) {
   const [snapshot, setSnapshot] = useState<DashboardSnapshot | null>(null);
   const [loadingLatest, setLoadingLatest] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -165,6 +167,10 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
 
   const cohortRetention = cohort?.retention_curve ?? [];
   const cohortSignup = cohort?.signup_channel_value ?? [];
+  const cohortCurves = cohort?.cohort_curves ?? [];
+  const cohortTable = cohort?.cohort_table ?? [];
+  const cohortActionQueue = cohort?.churn_risk_actions ?? [];
+  const cohortFiltersApplied = (cohort?.filters_applied || cohort?.diagnostics?.filters_applied || {}) as Record<string, unknown>;
 
   const attributionCredit = attribution?.model_credit_chart ?? attribution?.channel_summary ?? [];
   const attributionTouchpoint = attribution?.touchpoint_position_chart ?? [];
@@ -182,6 +188,39 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
   const scenarioDownside = worstScenarioRevenue !== null && baseScenarioRevenue !== null
     ? baseScenarioRevenue - worstScenarioRevenue
     : null;
+
+  const recommendationSummary = recommendationOutcomes.reduce(
+    (acc, item) => {
+      if (item.submittedAt) {
+        acc.completed += 1;
+      } else if (item.status === 'in_progress') {
+        acc.inProgress += 1;
+      } else {
+        acc.open += 1;
+      }
+      return acc;
+    },
+    { open: 0, inProgress: 0, completed: 0 },
+  );
+
+  const submittedOutcomeItems = recommendationOutcomes
+    .filter((item) => Boolean(item.submittedAt))
+    .sort((a, b) => {
+      const aTime = new Date(a.submittedAt || a.lastUpdatedAt || 0).getTime();
+      const bTime = new Date(b.submittedAt || b.lastUpdatedAt || 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, 6)
+    .map((item) => ({
+      id: item.id,
+      title: item.title,
+      owner: item.owner,
+      status: item.status,
+      expectedImpact: (item.expectedImpact || '').trim() || 'Not provided',
+      actualImpact: (item.actualImpact || '').trim() || 'Not provided',
+      notes: (item.outcomeNotes || '').trim(),
+      timestamp: item.submittedAt || item.lastUpdatedAt || item.acceptedAt || '',
+    }));
 
   return (
     <div className="space-y-6">
@@ -209,9 +248,10 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
         <StatCard label="Forecast Revenue" value={formatCurrency(forecast?.next_30_day_revenue)} />
         <StatCard label="Forecast ROI" value={formatPercent(forecast?.predicted_roi)} />
+        <StatCard label="Forecast Confidence" value={formatConfidence(forecast?.confidence)} />
         <StatCard label="Scenario Base Revenue" value={formatCurrency(baseScenarioRevenue)} />
         <StatCard label="Funnel Uplift" value={formatPercent(funnel?.predicted_conversion_uplift_if_fixed)} />
         <StatCard label="Cohort 3M Retention" value={formatPercent(cohort?.three_month_retention)} />
@@ -246,6 +286,7 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
             <SimpleRow label="Predicted Purchases" value={formatCount(forecast?.predicted_purchases)} />
             <SimpleRow label="Predicted CTR" value={formatPercent(forecast?.predicted_ctr)} />
             <SimpleRow label="Predicted Conversion" value={formatPercent(forecast?.predicted_conversion_rate)} />
+            <SimpleRow label="Confidence Score" value={formatConfidence(forecast?.confidence)} />
           </div>
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <div>
@@ -365,6 +406,18 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
             <Users className="h-4 w-4" /> Cohort Agent
           </div>
           <h3 className="mt-2 text-lg font-bold text-gray-900">Retention and Segment Quality</h3>
+          {Object.keys(cohortFiltersApplied).length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2 text-xs">
+              {Object.entries(cohortFiltersApplied)
+                .filter(([, value]) => value !== undefined && value !== null && String(value).trim().length > 0)
+                .slice(0, 6)
+                .map(([key, value]) => (
+                  <span key={key} className="rounded-full bg-indigo-50 px-2.5 py-1 font-semibold text-indigo-700">
+                    {key.replace(/_/g, ' ')}: {String(value)}
+                  </span>
+                ))}
+            </div>
+          )}
           <div className="mt-4 h-[300px] w-full">
             {cohortRetention.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -416,6 +469,54 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
               <p className="text-gray-500">No segment-level cohort diagnostics available.</p>
             )}
           </div>
+
+          {cohortCurves.length > 0 && (
+            <div className="mt-5 h-[250px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={cohortCurves} margin={{ top: 8, right: 20, left: 8, bottom: 8 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="cohort_label" />
+                  <YAxis yAxisId="left" tickFormatter={(value) => `${Math.round(Number(value) * 100)}%`} />
+                  <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => formatCompactCurrency(Number(value))} />
+                  <Tooltip
+                    formatter={(value: number, name: string) =>
+                      name === 'Avg Revenue / Customer' ? formatCurrency(Number(value)) : formatPercent(Number(value))
+                    }
+                  />
+                  <Legend />
+                  <Line yAxisId="left" type="monotone" dataKey="retention_rate" stroke="#4f46e5" strokeWidth={2} dot={false} name="Retention" />
+                  <Line yAxisId="left" type="monotone" dataKey="churn_probability" stroke="#ef4444" strokeWidth={2} dot={false} name="Churn Probability" />
+                  <Line yAxisId="right" type="monotone" dataKey="avg_revenue_per_customer" stroke="#14b8a6" strokeWidth={2} dot={false} name="Avg Revenue / Customer" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          {cohortActionQueue.length > 0 && (
+            <div className="mt-5 space-y-2 text-sm">
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Churn Action Queue</div>
+              {cohortActionQueue.slice(0, 4).map((item, index) => (
+                <SimpleRow
+                  key={`${item.segment}-${index}`}
+                  label={`${item.segment} (${item.priority || 'priority'})`}
+                  value={item.expected_impact || item.recommended_action || 'Action queued'}
+                />
+              ))}
+            </div>
+          )}
+
+          {cohortTable.length > 0 && (
+            <div className="mt-5 space-y-2 text-sm">
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Cohort Table Highlights</div>
+              {cohortTable.slice(0, 4).map((row, index) => (
+                <SimpleRow
+                  key={`${row.cohort_label}-${row.tenure_months}-${index}`}
+                  label={`${row.cohort_label} | ${row.tenure_months}m | ${formatCount(row.customers)} users`}
+                  value={`Retention ${formatPercent(row.retention_rate)} | Churn ${formatPercent(row.churn_probability)}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -556,6 +657,30 @@ export default function Dashboard({ result, isLoading, clientId }: DashboardProp
 
       <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
         <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+          <Sparkles className="h-4 w-4" /> Recommendation Outcomes
+        </div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-3">
+          <SimpleRow label="Open" value={formatCount(recommendationSummary.open)} />
+          <SimpleRow label="In Progress" value={formatCount(recommendationSummary.inProgress)} />
+          <SimpleRow label="Completed" value={formatCount(recommendationSummary.completed)} />
+        </div>
+        <div className="mt-4 space-y-2 text-sm">
+          {submittedOutcomeItems.length > 0 ? (
+            submittedOutcomeItems.map((item) => (
+              <SimpleRow
+                key={item.id}
+                label={`${item.title} (${item.owner || 'Unassigned'}) - ${formatRecommendationStatus(item.status)}`}
+                value={`Expected KPI: ${item.expectedImpact} | Actual KPI: ${item.actualImpact}${item.notes ? ` | Notes: ${item.notes}` : ''}`}
+              />
+            ))
+          ) : (
+            <p className="text-gray-500">No submissions yet. Submit implemented or rejected recommendations from Suggestions.</p>
+          )}
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
           <Sparkles className="h-4 w-4" /> Recommended Actions
         </div>
         <ul className="mt-3 space-y-2 text-sm text-gray-700">
@@ -606,6 +731,14 @@ function ScenarioMini({ title, revenue, roi }: { title: string; revenue?: number
       <div className="truncate text-xs text-gray-600" title={`ROI ${formatPercent(roi)}`}>ROI {formatPercent(roi)}</div>
     </div>
   );
+}
+
+function formatRecommendationStatus(status: UISuggestionItem['status']): string {
+  if (status === 'in_progress') return 'In Progress';
+  if (status === 'implemented') return 'Implemented';
+  if (status === 'rejected') return 'Rejected';
+  if (status === 'accepted') return 'Accepted';
+  return 'Pending';
 }
 
 function formatDecimal(value: unknown): string {

@@ -395,13 +395,86 @@ export interface CohortAnalysis {
     revenue: number;
     average_ltv: number;
   }>;
+  cohort_curves?: Array<{
+    cohort_label: string;
+    customers: number;
+    avg_tenure_months: number;
+    retention_rate: number;
+    churn_probability: number;
+    avg_revenue_per_customer: number;
+  }>;
+  cohort_table?: Array<{
+    cohort_label: string;
+    tenure_months: number;
+    customers: number;
+    retention_rate: number;
+    churn_probability: number;
+    avg_revenue_per_customer: number;
+    avg_monthly_logins: number;
+  }>;
+  churn_risk_actions?: Array<{
+    priority: string;
+    segment: string;
+    signup_channel: string;
+    contract_type: string;
+    customers: number;
+    avg_ltv: number;
+    churn_risk: number;
+    recommended_action: string;
+    expected_impact: string;
+  }>;
+  filters_applied?: Record<string, unknown>;
   diagnostics?: {
     data_points?: Record<string, number>;
     source_info?: Record<string, string>;
     retention_months?: number;
     cohort_period?: string;
+    filters_applied?: Record<string, unknown>;
   };
   data_source?: string;
+}
+
+export interface CohortOptions {
+  segments: string[];
+  signup_channels: string[];
+  contract_types: string[];
+  cohort_periods: string[];
+  defaults: {
+    cohort_period: string;
+    retention_months: number;
+    segment: string;
+    signup_channel: string;
+    contract_type: string;
+    signup_start_date?: string;
+    signup_end_date?: string;
+    min_tenure_months: number;
+    churn_probability_min: number;
+    top_n: number;
+  };
+  limits?: {
+    max_tenure_months?: number;
+    max_top_n?: number;
+  };
+  available_filters?: {
+    segment?: boolean;
+    signup_channel?: boolean;
+    contract_type?: boolean;
+    signup_date?: boolean;
+    min_tenure_months?: boolean;
+    churn_probability_min?: boolean;
+  };
+  sources?: Record<string, string>;
+  row_counts?: Record<string, number>;
+  date_range?: {
+    signup_min?: string;
+    signup_max?: string;
+  };
+}
+
+export interface CohortOptionsApiResponse {
+  success: boolean;
+  data?: CohortOptions;
+  detail?: string;
 }
 
 export interface ForecastAnalysis {
@@ -586,6 +659,81 @@ export interface ScenarioAnalysis {
   data_source?: string;
 }
 
+export interface BudgetAllocationAnalysis {
+  objective: string;
+  risk_tolerance: string;
+  total_budget: number;
+  baseline_budget: number;
+  expected_kpi_delta: number;
+  expected_roi_delta: number;
+  confidence_band?: {
+    low: number;
+    base: number;
+    high: number;
+  };
+  channel_allocations: Array<{
+    channel: string;
+    baseline_spend: number;
+    recommended_spend: number;
+    delta_amount: number;
+    delta_percent: number;
+    expected_revenue: number;
+    expected_roi: number;
+    score: number;
+  }>;
+  plans?: Record<string, {
+    channel_allocations: Array<Record<string, unknown>>;
+    expected_kpi_delta: number;
+    expected_roi_delta: number;
+    confidence_band: {
+      low: number;
+      base: number;
+      high: number;
+    };
+    constraint_log: string[];
+  }>;
+  constraint_log?: string[];
+  assumptions?: string[];
+  diagnostics?: Record<string, unknown>;
+  data_source?: string;
+}
+
+export interface BudgetAllocatorOptions {
+  channels: string[];
+  campaign_types: string[];
+  campaign_ids: string[];
+  objectives: string[];
+  risk_tolerances: string[];
+  defaults: {
+    channel: string;
+    campaign_type: string;
+    campaign_id: string;
+    objective: string;
+    risk_tolerance: string;
+    total_budget: number;
+    max_shift_pct: number;
+    min_channel_pct: number;
+    max_channel_pct: number;
+  };
+  available_filters: {
+    channel: boolean;
+    campaign_type: boolean;
+    campaign_id: boolean;
+  };
+  sources: {
+    campaigns: string;
+  };
+  row_counts: {
+    campaigns: number;
+  };
+}
+
+export interface BudgetAllocatorOptionsApiResponse {
+  success: boolean;
+  data?: BudgetAllocatorOptions;
+  detail?: string;
+}
+
 export interface AgentOrchestrationRequest {
   intent: string;
   agents: string[];
@@ -603,6 +751,7 @@ export interface AgentOrchestrationResult {
   cohort_analysis?: CohortAnalysis | null;
   forecast_analysis?: ForecastAnalysis | null;
   scenario_analysis?: ScenarioAnalysis | null;
+  budget_allocation_analysis?: BudgetAllocationAnalysis | null;
   recommendations?: string[];
   executive_summary?: string;
   confidence_score?: number;
@@ -648,11 +797,60 @@ export interface ReportGenerationApiResponse {
   detail?: string;
 }
 
+export type RecommendationStatus =
+  | 'pending'
+  | 'accepted'
+  | 'in_progress'
+  | 'implemented'
+  | 'rejected';
+
+export interface RecommendationLifecycleRecord {
+  suggestion_id: string;
+  client_id?: string;
+  thread_id?: string;
+  title?: string;
+  description?: string;
+  prompt?: string;
+  source?: string;
+  status: RecommendationStatus;
+  accepted_at?: string;
+  submitted_at?: string;
+  owner?: string;
+  due_date?: string;
+  expected_impact?: string;
+  actual_impact?: string;
+  outcome_notes?: string;
+  last_updated_at?: string;
+}
+
+export interface RecommendationLifecycleListApiResponse {
+  success: boolean;
+  data?: RecommendationLifecycleRecord[];
+  detail?: string;
+}
+
+export interface RecommendationLifecycleUpsertApiResponse {
+  success: boolean;
+  data?: RecommendationLifecycleRecord;
+  detail?: string;
+}
+
 export interface UISuggestionItem {
   id: string;
   title: string;
   description: string;
   prompt: string;
   source: string;
+  status: RecommendationStatus;
+  acceptedAt?: string;
+  submittedAt?: string;
+  owner?: string;
+  dueDate?: string;
+  expectedImpact?: string;
+  actualImpact?: string;
+  outcomeNotes?: string;
+  lastUpdatedAt?: string;
+  clientId?: string;
+  threadId?: string;
 }
 

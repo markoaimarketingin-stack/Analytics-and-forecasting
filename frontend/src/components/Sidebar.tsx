@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import {
   LayoutDashboard,
@@ -13,11 +12,12 @@ import {
   X,
   PanelsTopLeft,
   FileBarChart2,
+  DollarSign,
   Lightbulb,
   Play,
   LogOut,
 } from 'lucide-react';
-import type { ChatThreadSummary, UISuggestionItem } from '../types';
+import type { ChatThreadSummary, RecommendationStatus, UISuggestionItem } from '../types';
 
 interface SidebarProps {
   activeSection: string;
@@ -26,6 +26,7 @@ interface SidebarProps {
   onMobileClose: () => void;
   suggestions: UISuggestionItem[];
   onExecuteSuggestion: (suggestion: UISuggestionItem) => void;
+  onUpdateSuggestion: (suggestionId: string, updates: Partial<UISuggestionItem>) => void;
   chatThreads: ChatThreadSummary[];
   isHistoryLoading: boolean;
   activeThreadId: string | null;
@@ -42,6 +43,7 @@ export default function Sidebar({
   onMobileClose,
   suggestions,
   onExecuteSuggestion,
+  onUpdateSuggestion,
   chatThreads,
   isHistoryLoading,
   activeThreadId,
@@ -79,6 +81,11 @@ export default function Sidebar({
       name: 'Attribution Agent',
       icon: Network,
     },
+    {
+      id: 'budget',
+      name: 'Budget Allocator',
+      icon: DollarSign,
+    },
   ];
 
   const formatRelativeTime = (value?: string) => {
@@ -105,6 +112,43 @@ export default function Sidebar({
     if (!source) return 'U';
     return source.charAt(0).toUpperCase();
   })();
+
+  const statusLabel = (status: RecommendationStatus, isClosed: boolean) => {
+    if (isClosed) return 'Closed';
+    if (status === 'in_progress') return 'In Progress';
+    if (status === 'implemented') return 'Implemented';
+    if (status === 'rejected') return 'Rejected';
+    if (status === 'accepted') return 'Accepted';
+    return 'Pending';
+  };
+
+  const statusBadgeClass = (status: RecommendationStatus, isClosed: boolean) => {
+    if (isClosed) return 'bg-slate-100 text-slate-700';
+    if (status === 'implemented') return 'bg-emerald-100 text-emerald-700';
+    if (status === 'in_progress') return 'bg-blue-100 text-blue-700';
+    if (status === 'accepted') return 'bg-indigo-100 text-indigo-700';
+    if (status === 'rejected') return 'bg-rose-100 text-rose-700';
+    return 'bg-gray-100 text-gray-600';
+  };
+
+  const statusButtonClass = (isActive: boolean) =>
+    `rounded-lg border px-2 py-1 text-[11px] font-semibold transition ${
+      isActive
+        ? 'border-gray-900 bg-gray-900 text-white'
+        : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'
+    }`;
+
+  const handleSubmitOutcome = (suggestion: UISuggestionItem) => {
+    onUpdateSuggestion(suggestion.id, {
+      status: suggestion.status,
+      owner: suggestion.owner,
+      dueDate: suggestion.dueDate,
+      expectedImpact: suggestion.expectedImpact,
+      actualImpact: suggestion.actualImpact,
+      outcomeNotes: suggestion.outcomeNotes,
+      submittedAt: new Date().toISOString(),
+    });
+  };
 
   return (
     <>
@@ -400,32 +444,159 @@ export default function Sidebar({
           <div className="flex-1 overflow-y-auto p-6">
             <div className="space-y-4">
               {suggestions.length > 0 ? (
-                suggestions.map((item) => (
+                suggestions.map((item) => {
+                  const isClosed = Boolean(item.submittedAt);
+                  const canSubmit = !isClosed && (item.status === 'implemented' || item.status === 'rejected');
+
+                  return (
                   <div
                     key={item.id}
                     className="w-full rounded-3xl border border-gray-200 bg-white p-5 text-left"
                   >
-                    <div className="text-sm font-semibold text-gray-900">
-                      {item.title}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {item.title}
+                      </div>
+                      <span className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase ${statusBadgeClass(item.status, isClosed)}`}>
+                        {statusLabel(item.status, isClosed)}
+                      </span>
                     </div>
+
                     <div className="mt-2 text-sm leading-6 text-gray-500">
                       {item.description}
                     </div>
+
                     <div className="mt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
                       Source: {item.source}
                     </div>
-                    <button
-                      onClick={() => {
-                        onExecuteSuggestion(item);
-                        setIsSuggestionsOpen(false);
-                      }}
-                      className="mt-4 inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-amber-600"
-                    >
-                      <Play className="h-3.5 w-3.5" />
-                      Execute in Chat
-                    </button>
+
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        className={statusButtonClass(item.status === 'accepted')}
+                        disabled={isClosed}
+                        onClick={() => onUpdateSuggestion(item.id, { status: 'accepted' })}
+                      >
+                        Accepted
+                      </button>
+                      <button
+                        type="button"
+                        className={statusButtonClass(item.status === 'in_progress')}
+                        disabled={isClosed}
+                        onClick={() => onUpdateSuggestion(item.id, { status: 'in_progress' })}
+                      >
+                        In Progress
+                      </button>
+                      <button
+                        type="button"
+                        className={statusButtonClass(item.status === 'implemented')}
+                        disabled={isClosed}
+                        onClick={() => onUpdateSuggestion(item.id, { status: 'implemented' })}
+                      >
+                        Implemented
+                      </button>
+                      <button
+                        type="button"
+                        className={statusButtonClass(item.status === 'rejected')}
+                        disabled={isClosed}
+                        onClick={() => onUpdateSuggestion(item.id, { status: 'rejected' })}
+                      >
+                        Rejected
+                      </button>
+                    </div>
+
+                    <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <label className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+                        Owner
+                        <input
+                          type="text"
+                          value={item.owner || ''}
+                          disabled={isClosed}
+                          onChange={(event) => onUpdateSuggestion(item.id, { owner: event.target.value })}
+                          className="mt-1 w-full rounded-lg border border-gray-200 px-2 py-1.5 text-xs font-medium text-gray-700"
+                          placeholder="Assign owner"
+                        />
+                      </label>
+
+                      <label className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+                        Due Date
+                        <input
+                          type="date"
+                          value={item.dueDate || ''}
+                          disabled={isClosed}
+                          onChange={(event) => onUpdateSuggestion(item.id, { dueDate: event.target.value })}
+                          className="mt-1 w-full rounded-lg border border-gray-200 px-2 py-1.5 text-xs font-medium text-gray-700"
+                        />
+                      </label>
+
+                      {item.status === 'implemented' ? (
+                        <label className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+                          Actual KPI Delta
+                          <input
+                            type="text"
+                            value={item.actualImpact || ''}
+                            disabled={isClosed}
+                            onChange={(event) => onUpdateSuggestion(item.id, { actualImpact: event.target.value })}
+                            className="mt-1 w-full rounded-lg border border-gray-200 px-2 py-1.5 text-xs font-medium text-gray-700"
+                            placeholder="e.g. +5.2% ROAS"
+                          />
+                        </label>
+                      ) : null}
+                    </div>
+
+                    <label className="mt-2 block text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+                      Outcome Notes
+                      <textarea
+                        value={item.outcomeNotes || ''}
+                        disabled={isClosed}
+                        onChange={(event) => onUpdateSuggestion(item.id, { outcomeNotes: event.target.value })}
+                        className="mt-1 min-h-[72px] w-full rounded-lg border border-gray-200 px-2 py-1.5 text-xs font-medium text-gray-700"
+                        placeholder="Capture experiment outcome, blockers, or decisions"
+                      />
+                    </label>
+
+                    {!isClosed && item.status === 'accepted' ? (
+                      <button
+                        onClick={() => {
+                          onExecuteSuggestion(item);
+                          setIsSuggestionsOpen(false);
+                        }}
+                        className="mt-4 inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-amber-600"
+                      >
+                        <Play className="h-3.5 w-3.5" />
+                        Execute in Chat
+                      </button>
+                    ) : null}
+
+                    {canSubmit ? (
+                      <button
+                        type="button"
+                        onClick={() => handleSubmitOutcome(item)}
+                        className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-violet-600 px-4 py-2 text-sm font-semibold text-white shadow transition hover:from-blue-700 hover:to-violet-700"
+                      >
+                        Submit
+                      </button>
+                    ) : null}
+
+                    {isClosed ? (
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-600">
+                        Closed {item.submittedAt ? `on ${formatRelativeTime(item.submittedAt)}` : ''}
+                      </p>
+                    ) : null}
+
+                    {item.status === 'in_progress' ? (
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-blue-600">
+                        Execution in progress. Mark implemented or rejected, then submit.
+                      </p>
+                    ) : null}
+
+                    {item.status === 'pending' ? (
+                      <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Mark as accepted to enable execution.
+                      </p>
+                    ) : null}
                   </div>
-                ))
+                )})
               ) : (
                 <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5 text-sm leading-6 text-gray-600">
                   No suggestions yet. Run any specialist agent to generate actionable recommendations here.

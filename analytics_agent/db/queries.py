@@ -401,6 +401,130 @@ def get_scenario_filter_options() -> dict[str, Any]:
     }
 
 
+def get_budget_allocator_options() -> dict[str, Any]:
+    campaigns_df = get_campaign_dataframe_remote_only()
+    if campaigns_df.empty:
+        raise ValueError("No campaigns data found in Supabase for budget allocator options")
+
+    channels = _unique_non_empty_values(campaigns_df, "channel")
+    campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
+    campaign_ids = _unique_non_empty_values(campaigns_df, "campaign_id")
+
+    baseline_budget = 0.0
+    if "spend" in campaigns_df.columns:
+        baseline_budget = float(pd.to_numeric(campaigns_df["spend"], errors="coerce").fillna(0.0).sum())
+
+    return {
+        "channels": channels,
+        "campaign_types": campaign_types,
+        "campaign_ids": campaign_ids,
+        "objectives": ["profit", "revenue", "roas", "new_customers"],
+        "risk_tolerances": ["conservative", "balanced", "aggressive"],
+        "defaults": {
+            "channel": "all",
+            "campaign_type": "all",
+            "campaign_id": "all",
+            "objective": "profit",
+            "risk_tolerance": "balanced",
+            "total_budget": round(baseline_budget, 2),
+            "max_shift_pct": 20,
+            "min_channel_pct": 5,
+            "max_channel_pct": 60,
+        },
+        "available_filters": {
+            "channel": bool(channels),
+            "campaign_type": bool(campaign_types),
+            "campaign_id": bool(campaign_ids),
+        },
+        "sources": {
+            "campaigns": "supabase",
+        },
+        "row_counts": {
+            "campaigns": int(len(campaigns_df.index)),
+        },
+        "schema_details": {
+            "campaigns": {
+                "source": "supabase",
+                "columns": campaigns_df.columns.tolist(),
+            }
+        },
+    }
+
+
+def get_cohort_filter_options() -> dict[str, Any]:
+    customers_df, customers_source = get_dataset_dataframe_with_source("customers", prefer_remote=True)
+    retention_df, retention_source = get_dataset_dataframe_with_source("retention", prefer_remote=True)
+    transactions_df, transactions_source = get_dataset_dataframe_with_source("transactions", prefer_remote=True)
+
+    customers_df = customers_df if customers_source == "supabase" else pd.DataFrame()
+    retention_df = retention_df if retention_source == "supabase" else pd.DataFrame()
+    transactions_df = transactions_df if transactions_source == "supabase" else pd.DataFrame()
+
+    # Cohort workspace is intended to be Supabase-first; if remote is unavailable,
+    # return empty options so UI can fail gracefully.
+    if customers_df.empty:
+        raise ValueError("No customers data found in Supabase for cohort options")
+
+    if "signup_date" in customers_df.columns:
+        signup_dates = pd.to_datetime(customers_df["signup_date"], errors="coerce").dropna()
+        min_signup_date = signup_dates.min().date().isoformat() if not signup_dates.empty else ""
+        max_signup_date = signup_dates.max().date().isoformat() if not signup_dates.empty else ""
+    else:
+        min_signup_date = ""
+        max_signup_date = ""
+
+    max_tenure = 24
+    if not retention_df.empty and "tenure_months" in retention_df.columns:
+        tenure_values = pd.to_numeric(retention_df["tenure_months"], errors="coerce").dropna()
+        if not tenure_values.empty:
+            max_tenure = int(max(1, tenure_values.max()))
+
+    return {
+        "segments": _unique_non_empty_values(customers_df, "segment"),
+        "signup_channels": _unique_non_empty_values(customers_df, "signup_channel"),
+        "contract_types": _unique_non_empty_values(customers_df, "contract_type"),
+        "cohort_periods": ["week", "month", "quarter"],
+        "defaults": {
+            "cohort_period": "month",
+            "retention_months": 3,
+            "segment": "all",
+            "signup_channel": "all",
+            "contract_type": "all",
+            "signup_start_date": min_signup_date,
+            "signup_end_date": max_signup_date,
+            "min_tenure_months": 0,
+            "churn_probability_min": 0.0,
+            "top_n": 8,
+        },
+        "limits": {
+            "max_tenure_months": max_tenure,
+            "max_top_n": 20,
+        },
+        "available_filters": {
+            "segment": bool(_unique_non_empty_values(customers_df, "segment")),
+            "signup_channel": bool(_unique_non_empty_values(customers_df, "signup_channel")),
+            "contract_type": bool(_unique_non_empty_values(customers_df, "contract_type")),
+            "signup_date": "signup_date" in customers_df.columns,
+            "min_tenure_months": not retention_df.empty,
+            "churn_probability_min": ("churn_probability" in retention_df.columns) if not retention_df.empty else False,
+        },
+        "sources": {
+            "customers": customers_source,
+            "retention": retention_source,
+            "transactions": transactions_source,
+        },
+        "row_counts": {
+            "customers": int(len(customers_df.index)),
+            "retention": int(len(retention_df.index)),
+            "transactions": int(len(transactions_df.index)),
+        },
+        "date_range": {
+            "signup_min": min_signup_date,
+            "signup_max": max_signup_date,
+        },
+    }
+
+
 def get_campaigns_by_channel(channel: str) -> list[dict[str, Any]]:
     return _safe_to_records(_filter_eq(get_campaign_dataframe(), "channel", channel))
 

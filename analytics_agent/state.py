@@ -71,6 +71,7 @@ class AnalyticsState(BaseModel):
     cohort_analysis: Optional[CohortAnalysis] = None
     forecast_analysis: Optional[ForecastAnalysis] = None
     scenario_analysis: Optional[ScenarioAnalysis] = None
+    budget_allocation_analysis: Optional[BudgetAllocationAnalysis] = None
     recommendations: List[str] = Field(default_factory=list)
     executive_summary: Optional[str] = None
 
@@ -152,6 +153,10 @@ class CohortAnalysis(BaseModel):
     segment_breakdown: List[Dict[str, Any]] = Field(default_factory=list)
     retention_curve: List[Dict[str, Any]] = Field(default_factory=list)
     signup_channel_value: List[Dict[str, Any]] = Field(default_factory=list)
+    cohort_curves: List[Dict[str, Any]] = Field(default_factory=list)
+    cohort_table: List[Dict[str, Any]] = Field(default_factory=list)
+    churn_risk_actions: List[Dict[str, Any]] = Field(default_factory=list)
+    filters_applied: Dict[str, Any] = Field(default_factory=dict)
     diagnostics: Dict[str, Any] = Field(default_factory=dict)
     data_source: str = ""
 
@@ -194,6 +199,22 @@ class ScenarioAnalysis(BaseModel):
     data_source: str = ""
 
 
+class BudgetAllocationAnalysis(BaseModel):
+    objective: str = "profit"
+    risk_tolerance: str = "balanced"
+    total_budget: float = 0.0
+    baseline_budget: float = 0.0
+    expected_kpi_delta: float = 0.0
+    expected_roi_delta: float = 0.0
+    confidence_band: Dict[str, float] = Field(default_factory=dict)
+    channel_allocations: List[Dict[str, Any]] = Field(default_factory=list)
+    plans: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    constraint_log: List[str] = Field(default_factory=list)
+    assumptions: List[str] = Field(default_factory=list)
+    diagnostics: Dict[str, Any] = Field(default_factory=dict)
+    data_source: str = ""
+
+
 class UserAnalyticsRequest(BaseModel):
     horizon_days: int = 30
     objective: str = "growth"
@@ -213,6 +234,7 @@ DEFAULT_STATE_TEMPLATE: Dict[str, Any] = {
     "cohort_analysis": None,
     "forecast_analysis": None,
     "scenario_analysis": None,
+    "budget_allocation_analysis": None,
     "recommendations": [],
     "executive_summary": None,
 }

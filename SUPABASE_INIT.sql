@@ -229,6 +229,30 @@ CREATE TABLE IF NOT EXISTS client_latest_analysis_snapshots (
 CREATE INDEX IF NOT EXISTS idx_client_latest_analysis_snapshots_updated
     ON client_latest_analysis_snapshots(updated_at DESC);
 
+-- 16. Create RECOMMENDATION_OUTCOMES table
+CREATE TABLE IF NOT EXISTS recommendation_outcomes (
+    client_id TEXT NOT NULL,
+    thread_id TEXT NOT NULL DEFAULT 'global',
+    suggestion_id TEXT NOT NULL,
+    title TEXT NULL,
+    description TEXT NULL,
+    prompt TEXT NULL,
+    source TEXT NULL,
+    status TEXT NOT NULL DEFAULT 'pending',
+    accepted_at TIMESTAMPTZ NULL,
+    submitted_at TIMESTAMPTZ NULL,
+    owner TEXT NULL,
+    due_date DATE NULL,
+    expected_impact TEXT NULL,
+    actual_impact TEXT NULL,
+    outcome_notes TEXT NULL,
+    last_updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now()),
+    PRIMARY KEY (client_id, thread_id, suggestion_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_recommendation_outcomes_client_updated
+    ON recommendation_outcomes(client_id, last_updated_at DESC);
+
 -- ============================================================================
 -- Insert a default agent for the application
 -- ============================================================================

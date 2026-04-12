@@ -14,16 +14,23 @@ import ScenarioWorkspace from './components/scenario/ScenarioWorkspace';
 import FunnelWorkspace from './components/funnel/FunnelWorkspace';
 import CohortWorkspace from './components/cohort/CohortWorkspace';
 import AttributionWorkspace from './components/attribution/AttributionWorkspace';
+import BudgetAllocatorWorkspace from './components/budget/BudgetAllocatorWorkspace';
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
-import { orchestrateAgents } from './services/api';
+import {
+  fetchRecommendationOutcomes,
+  orchestrateAgents,
+  upsertRecommendationOutcome,
+} from './services/api';
 
 import type {
   AnalysisRun,
   AgentOrchestrationResult,
   ChatThreadSummary,
   Message,
+  RecommendationLifecycleRecord,
+  RecommendationStatus,
   UISuggestionItem,
 } from './types';
 
@@ -38,6 +45,119 @@ interface ActivatedAgent {
 }
 
 const THEME_STORAGE_KEY = 'analytics_theme_dark_mode';
+const RECOMMENDATION_STORAGE_PREFIX = 'recommendation-lifecycle';
+
+const toIsoNow = () => new Date().toISOString();
+
+const recommendationStorageKey = (clientId: string, threadId?: string | null) =>
+  `${RECOMMENDATION_STORAGE_PREFIX}:${clientId || 'anonymous-client'}:${threadId || 'global'}`;
+
+const toTitleCase = (value: string): string =>
+  value
+    .split(' ')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+const buildSuggestionBaseTitle = (text: string, fallbackIndex: number): string => {
+  const normalized = text
+    .replace(/\s+/g, ' ')
+    .replace(/[.!?]+$/g, '')
+    .trim();
+
+  if (!normalized) return `Recommendation ${fallbackIndex}`;
+
+  const snippet = normalized.split(/[.!?]/)[0]?.trim() || normalized;
+  const words = snippet.split(' ').filter(Boolean).slice(0, 6);
+  if (words.length === 0) return `Recommendation ${fallbackIndex}`;
+
+  return toTitleCase(words.join(' '));
+};
+
+const asNumber = (value: unknown): number | null => {
+  const next = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(next) ? next : null;
+};
+
+const deriveExpectedOutcomeFromResult = (result: AgentOrchestrationResult): string | null => {
+  const forecastRoi = asNumber(result.forecast_analysis?.predicted_roi);
+  const forecastRevenue = asNumber(result.forecast_analysis?.next_30_day_revenue);
+  const scenarioUpside =
+    asNumber(result.scenario_analysis?.best_case?.revenue) !== null &&
+    asNumber(result.scenario_analysis?.base_case?.revenue) !== null
+      ? (asNumber(result.scenario_analysis?.best_case?.revenue) as number) -
+        (asNumber(result.scenario_analysis?.base_case?.revenue) as number)
+      : null;
+  const funnelUplift = asNumber(result.funnel_analysis?.predicted_conversion_uplift_if_fixed);
+  const retentionRate = asNumber(result.cohort_analysis?.three_month_retention);
+  const confidence = asNumber(result.confidence_score);
+
+  if (forecastRoi !== null && forecastRevenue !== null) {
+    return `Projected ROI ${forecastRoi.toFixed(1)}% with ${Math.round(forecastRevenue).toLocaleString()} expected revenue in next 30 days`;
+  }
+  if (scenarioUpside !== null) {
+    return `Expected upside of ${Math.round(scenarioUpside).toLocaleString()} revenue vs base scenario`;
+  }
+  if (funnelUplift !== null) {
+    return `Estimated conversion uplift of ${funnelUplift.toFixed(1)}% if recommendation is applied`;
+  }
+  if (retentionRate !== null) {
+    return `Expected 3-month retention around ${retentionRate.toFixed(1)}% for the targeted cohort mix`;
+  }
+  if (confidence !== null) {
+    return `Expected KPI improvement based on orchestration confidence score ${confidence.toFixed(1)}%`;
+  }
+
+  return null;
+};
+
+const normalizeRecommendationStatus = (value: unknown): RecommendationStatus => {
+  const raw = String(value || '').trim().toLowerCase();
+  if (raw === 'accepted' || raw === 'in_progress' || raw === 'implemented' || raw === 'rejected') {
+    return raw;
+  }
+  return 'pending';
+};
+
+const toLifecycleRecord = (item: UISuggestionItem): RecommendationLifecycleRecord => ({
+  suggestion_id: item.id,
+  client_id: item.clientId,
+  thread_id: item.threadId,
+  title: item.title,
+  description: item.description,
+  prompt: item.prompt,
+  source: item.source,
+  status: item.status,
+  accepted_at: item.acceptedAt,
+  submitted_at: item.submittedAt,
+  owner: item.owner,
+  due_date: item.dueDate,
+  expected_impact: item.expectedImpact,
+  actual_impact: item.actualImpact,
+  outcome_notes: item.outcomeNotes,
+  last_updated_at: item.lastUpdatedAt,
+});
+
+const fromLifecycleRecord = (record: RecommendationLifecycleRecord): UISuggestionItem => ({
+  id: record.suggestion_id,
+  title: record.title || 'Recommendation',
+  description: record.description || '',
+  prompt: record.prompt || record.description || '',
+  source: record.source || 'Lifecycle',
+  status: normalizeRecommendationStatus(record.status),
+  acceptedAt: record.accepted_at,
+  submittedAt: record.submitted_at,
+  owner: record.owner,
+  dueDate: record.due_date,
+  expectedImpact: record.expected_impact,
+  actualImpact: record.actual_impact,
+  outcomeNotes: record.outcome_notes,
+  lastUpdatedAt: record.last_updated_at,
+  clientId: record.client_id,
+  threadId: record.thread_id,
+});
+
+const DEFAULT_SECTION = 'supervisor';
 
 interface AppProps {
   clientId: string;
@@ -61,7 +181,7 @@ export default function App({
 
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
   });
-  const [activeSection, setActiveSection] = useState('supervisor');
+  const [activeSection, setActiveSection] = useState(DEFAULT_SECTION);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -150,6 +270,57 @@ export default function App({
     }
   };
 
+  useEffect(() => {
+    if (!clientId) return;
+
+    const contextKey = recommendationStorageKey(clientId, currentThreadId);
+
+    // Load local lifecycle snapshot first for immediate UX.
+    try {
+      const localRaw = localStorage.getItem(contextKey);
+      if (localRaw) {
+        const parsed = JSON.parse(localRaw) as UISuggestionItem[];
+        if (Array.isArray(parsed)) {
+          setSuggestions((prev) => {
+            const map = new Map<string, UISuggestionItem>();
+            prev.forEach((item) => map.set(item.id, item));
+            parsed.forEach((item) => map.set(item.id, item));
+            return Array.from(map.values()).slice(0, 50);
+          });
+        }
+      }
+    } catch {
+      // Non-blocking local parse fallback.
+    }
+
+    let cancelled = false;
+
+    const hydrateFromApi = async () => {
+      const response = await fetchRecommendationOutcomes(clientId, currentThreadId || undefined);
+      if (cancelled || !response.success || !Array.isArray(response.data)) return;
+
+      const mapped = response.data.map(fromLifecycleRecord);
+      setSuggestions((prev) => {
+        const map = new Map<string, UISuggestionItem>();
+        prev.forEach((item) => map.set(item.id, item));
+        mapped.forEach((item) => map.set(item.id, item));
+        return Array.from(map.values()).slice(0, 50);
+      });
+    };
+
+    hydrateFromApi();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId, currentThreadId]);
+
+  useEffect(() => {
+    if (!clientId) return;
+    const contextKey = recommendationStorageKey(clientId, currentThreadId);
+    localStorage.setItem(contextKey, JSON.stringify(suggestions));
+  }, [clientId, currentThreadId, suggestions]);
+
   const addSuggestionsFromResult = (
     source: string,
     result?: Partial<AgentOrchestrationResult> | null,
@@ -158,22 +329,111 @@ export default function App({
     const recs = result.recommendations || [];
     if (!Array.isArray(recs) || recs.length === 0) return;
 
-    const mapped: UISuggestionItem[] = recs.map((text, index) => ({
-      id: `${source}-${Date.now()}-${index}`,
-      title: `Recommendation ${index + 1}`,
-      description: text,
-      prompt: text,
-      source,
-    }));
+    const now = toIsoNow();
+    const usedTitles = new Set(
+      suggestions
+        .map((item) => item.title?.trim())
+        .filter((title): title is string => Boolean(title)),
+    );
+
+    const mapped: UISuggestionItem[] = recs.map((text, index) => {
+      const baseTitle = buildSuggestionBaseTitle(text, index + 1);
+      let uniqueTitle = baseTitle;
+      let suffix = 2;
+      while (usedTitles.has(uniqueTitle)) {
+        uniqueTitle = `${baseTitle} (${suffix})`;
+        suffix += 1;
+      }
+      usedTitles.add(uniqueTitle);
+
+      return {
+        id: `${source}-${Date.now()}-${index}`,
+        title: uniqueTitle,
+        description: text,
+        prompt: text,
+        source,
+        status: 'pending',
+        lastUpdatedAt: now,
+        clientId,
+        threadId: currentThreadId || undefined,
+      };
+    });
 
     setSuggestions((prev) => {
-      const existingPrompts = new Set(prev.map((item) => item.prompt.toLowerCase()));
-      const deduped = mapped.filter((item) => !existingPrompts.has(item.prompt.toLowerCase()));
-      return [...deduped, ...prev].slice(0, 20);
+      const existingByPrompt = new Map(prev.map((item) => [item.prompt.toLowerCase(), item]));
+      const nextItems = mapped.map((item) => {
+        const existing = existingByPrompt.get(item.prompt.toLowerCase());
+        if (!existing) return item;
+        return {
+          ...item,
+          id: existing.id,
+          title: existing.title || item.title,
+          status: existing.status,
+          acceptedAt: existing.acceptedAt,
+          submittedAt: existing.submittedAt,
+          owner: existing.owner,
+          dueDate: existing.dueDate,
+          expectedImpact: existing.expectedImpact,
+          actualImpact: existing.actualImpact,
+          outcomeNotes: existing.outcomeNotes,
+          lastUpdatedAt: existing.lastUpdatedAt || now,
+        };
+      });
+
+      const map = new Map<string, UISuggestionItem>();
+      [...nextItems, ...prev].forEach((item) => map.set(item.id, item));
+      return Array.from(map.values()).slice(0, 50);
     });
   };
 
-  const handleSendMessage = async (message: string): Promise<boolean> => {
+  const persistSuggestionOutcome = async (item: UISuggestionItem) => {
+    try {
+      await upsertRecommendationOutcome(toLifecycleRecord(item));
+    } catch {
+      // Local persistence remains the fallback.
+    }
+  };
+
+  const handleUpdateSuggestion = (
+    suggestionId: string,
+    updates: Partial<UISuggestionItem>,
+  ) => {
+    const now = toIsoNow();
+
+    setSuggestions((prev) => {
+      const next = prev.map((item) => {
+        if (item.id !== suggestionId) return item;
+
+        const nextStatus = updates.status || item.status;
+        const shouldSetAcceptedAt =
+          nextStatus === 'accepted' &&
+          !item.acceptedAt &&
+          !updates.acceptedAt;
+
+        const updated: UISuggestionItem = {
+          ...item,
+          ...updates,
+          status: normalizeRecommendationStatus(nextStatus),
+          acceptedAt: shouldSetAcceptedAt ? now : (updates.acceptedAt ?? item.acceptedAt),
+          submittedAt: updates.submittedAt ?? item.submittedAt,
+          lastUpdatedAt: now,
+          clientId: item.clientId || clientId,
+          threadId: item.threadId || currentThreadId || undefined,
+        };
+
+        // Fire-and-forget API upsert.
+        void persistSuggestionOutcome(updated);
+        return updated;
+      });
+
+      return next;
+    });
+  };
+
+  const handleSendMessage = async (
+    message: string,
+    executionContext?: { executedSuggestionId?: string },
+  ): Promise<boolean> => {
     if (!message.trim()) return false;
 
     const userMessage: Message = {
@@ -291,6 +551,16 @@ export default function App({
 
       if (data.result) {
         addSuggestionsFromResult('Supervisor', data.result);
+
+        if (executionContext?.executedSuggestionId) {
+          const expected = deriveExpectedOutcomeFromResult(data.result);
+          if (expected) {
+            handleUpdateSuggestion(executionContext.executedSuggestionId, {
+              expectedImpact: expected,
+            });
+          }
+        }
+
         const run: AnalysisRun = {
           id: `${Date.now()}-analysis`,
           timestamp: new Date(),
@@ -434,7 +704,11 @@ export default function App({
   };
 
   const handleExecuteSuggestion = (suggestion: UISuggestionItem) => {
-    handleSendMessage(suggestion.prompt);
+    handleUpdateSuggestion(suggestion.id, {
+      status: 'in_progress',
+      acceptedAt: suggestion.acceptedAt || toIsoNow(),
+    });
+    void handleSendMessage(suggestion.prompt, { executedSuggestionId: suggestion.id });
   };
 
   const handleWorkspaceRunResult = (source: string, result: AgentOrchestrationResult) => {
@@ -469,6 +743,7 @@ export default function App({
                   result={currentAnalysis?.result ?? null}
                   isLoading={false}
                   clientId={clientId}
+                  recommendationOutcomes={suggestions}
                 />
               </div>
             </div>
@@ -489,6 +764,9 @@ export default function App({
 
       case 'attribution':
         return <AttributionWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Attribution Agent', result)} />;
+
+      case 'budget':
+        return <BudgetAllocatorWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Budget Allocator Agent', result)} />;
 
       case 'report':
         return <ReportWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Report Generator', result)} />;
@@ -517,6 +795,7 @@ export default function App({
         onMobileClose={() => setIsSidebarOpen(false)}
         suggestions={suggestions}
         onExecuteSuggestion={handleExecuteSuggestion}
+        onUpdateSuggestion={handleUpdateSuggestion}
         chatThreads={chatThreads}
         isHistoryLoading={isHistoryLoading}
         activeThreadId={currentThreadId}

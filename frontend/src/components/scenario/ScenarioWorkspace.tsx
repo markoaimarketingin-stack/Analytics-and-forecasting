@@ -174,11 +174,11 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
         <div className="mx-auto w-full max-w-6xl space-y-6">
           <div className="workspace-panel">
             <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-gray-500">
-              <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1">
+              <span className="workspace-option-pill">
                 <Database className="h-3.5 w-3.5" /> Source: {optionsSourceLabel}
               </span>
               {options?.row_counts?.campaigns ? (
-                <span className="rounded-full bg-gray-100 px-3 py-1">
+                <span className="workspace-option-pill">
                   Campaign rows: {formatCount(options.row_counts.campaigns)}
                 </span>
               ) : null}

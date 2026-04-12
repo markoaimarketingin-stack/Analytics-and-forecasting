@@ -13,10 +13,18 @@ from analytics_agent.state import AnalyticsState, CohortAnalysis
 class CohortRequest:
     retention_months: int = 3
     cohort_period: str = "month"
+    segment: str = "all"
+    signup_channel: str = "all"
+    contract_type: str = "all"
+    signup_start_date: str | None = None
+    signup_end_date: str | None = None
+    min_tenure_months: int = 0
+    churn_probability_min: float = 0.0
+    top_n: int = 8
 
 
 class CohortAgent:
-    """Evaluates retention quality, churn risk, and customer-value segments."""
+    """Supabase-first cohort analytics for retention, churn and value diagnostics."""
 
     def analyze(
         self,
@@ -25,36 +33,99 @@ class CohortAgent:
     ) -> AnalyticsState:
         request = self._build_request(state, request)
 
-        customers_df, transactions_df, retention_df, source_info = self._load_dataframes(state)
+        customers_df, transactions_df, retention_df, source_info = self._load_dataframes()
 
-        if customers_df.empty:
-            state.cohort_analysis = CohortAnalysis()
+        if customers_df.empty or retention_df.empty:
+            state.cohort_analysis = CohortAnalysis(
+                diagnostics={
+                    "source_info": source_info,
+                    "reason": "customers or retention data is missing in Supabase",
+                    "data_points": {
+                        "customer_rows": int(len(customers_df.index)),
+                        "transaction_rows": int(len(transactions_df.index)),
+                        "retention_rows": int(len(retention_df.index)),
+                    },
+                },
+                filters_applied=self._filters_payload(request),
+                data_source="supabase",
+            )
             return state
 
-        revenue_per_customer = self._revenue_by_customer(transactions_df)
-        cohort_df = customers_df.merge(revenue_per_customer, on="customer_id", how="left")
-        cohort_df["customer_revenue"] = cohort_df["customer_revenue"].fillna(0.0)
+        customers_df = self._prepare_customers(customers_df)
+        transactions_df = self._prepare_transactions(transactions_df)
+        retention_df = self._prepare_retention(retention_df)
 
-        average_ltv = float(cohort_df["customer_revenue"].mean()) if not cohort_df.empty else 0.0
-        repeat_purchase_rate = self._repeat_purchase_rate(transactions_df)
-        three_month_retention = self._retention_rate(retention_df, request.retention_months)
-        churn_risk = self._churn_risk(retention_df)
-        high_value_segment = self._highest_value_segment(cohort_df)
-        high_churn_segment = self._highest_churn_segment(customers_df, retention_df)
+        filtered_customers = self._apply_customer_filters(customers_df, request)
+        if filtered_customers.empty:
+            state.cohort_analysis = CohortAnalysis(
+                diagnostics={
+                    "source_info": source_info,
+                    "reason": "No customers matched selected filters",
+                    "filters_applied": self._filters_payload(request),
+                },
+                filters_applied=self._filters_payload(request),
+                data_source="supabase",
+            )
+            return state
 
-        segment_breakdown = self._segment_breakdown(cohort_df, retention_df)
-        retention_curve = self._retention_curve(retention_df)
-        signup_channel_value = self._signup_channel_value(customers_df, revenue_per_customer)
+        scoped_ids = set(filtered_customers["customer_id"].astype(str))
+        filtered_retention = retention_df[retention_df["customer_id"].astype(str).isin(scoped_ids)].copy()
+        filtered_transactions = transactions_df[transactions_df["customer_id"].astype(str).isin(scoped_ids)].copy()
+
+        if request.min_tenure_months > 0 and "tenure_months" in filtered_retention.columns:
+            filtered_retention = filtered_retention[filtered_retention["tenure_months"] >= request.min_tenure_months]
+
+        if request.churn_probability_min > 0 and "churn_probability" in filtered_retention.columns:
+            filtered_retention = filtered_retention[filtered_retention["churn_probability"] >= request.churn_probability_min]
+
+        scoped_ids = set(filtered_retention["customer_id"].astype(str))
+        filtered_customers = filtered_customers[filtered_customers["customer_id"].astype(str).isin(scoped_ids)].copy()
+        filtered_transactions = filtered_transactions[filtered_transactions["customer_id"].astype(str).isin(scoped_ids)].copy()
+
+        if filtered_customers.empty or filtered_retention.empty:
+            state.cohort_analysis = CohortAnalysis(
+                diagnostics={
+                    "source_info": source_info,
+                    "reason": "No rows remaining after retention filters",
+                    "filters_applied": self._filters_payload(request),
+                },
+                filters_applied=self._filters_payload(request),
+                data_source="supabase",
+            )
+            return state
+
+        profile = self._build_customer_profile(filtered_customers, filtered_retention, filtered_transactions)
+
+        average_ltv = float(profile["customer_revenue"].mean()) if not profile.empty else 0.0
+        repeat_purchase_rate = float(profile["is_repeat"].mean()) if not profile.empty else 0.0
+        retention_curve = self._retention_curve(filtered_retention)
+        three_month_retention = self._retention_rate_from_curve(retention_curve, request.retention_months)
+        churn_risk = 1.0 - three_month_retention if three_month_retention > 0 else self._safe_mean(filtered_retention, "churn_probability")
+
+        segment_breakdown = self._segment_breakdown(profile)
+        signup_channel_value = self._signup_channel_value(profile)
+        cohort_curves = self._cohort_curves(profile, request)
+        cohort_table = self._cohort_table(profile, request)
+        churn_risk_actions = self._churn_risk_actions(profile, request.top_n)
+
+        high_value_segment = segment_breakdown[0]["segment"] if segment_breakdown else ""
+        high_churn_segment = (
+            sorted(segment_breakdown, key=lambda item: item.get("churn_risk", 0.0), reverse=True)[0]["segment"]
+            if segment_breakdown
+            else ""
+        )
 
         diagnostics = {
             "data_points": {
-                "customer_rows": int(len(customers_df.index)),
-                "transaction_rows": int(len(transactions_df.index)),
-                "retention_rows": int(len(retention_df.index)),
+                "customer_rows": int(len(filtered_customers.index)),
+                "transaction_rows": int(len(filtered_transactions.index)),
+                "retention_rows": int(len(filtered_retention.index)),
+                "cohort_rows": int(len(cohort_table)),
             },
             "source_info": source_info,
             "retention_months": int(request.retention_months),
             "cohort_period": request.cohort_period,
+            "filters_applied": self._filters_payload(request),
         }
 
         analysis = CohortAnalysis(
@@ -68,8 +139,12 @@ class CohortAgent:
         analysis.segment_breakdown = segment_breakdown
         analysis.retention_curve = retention_curve
         analysis.signup_channel_value = signup_channel_value
+        analysis.cohort_curves = cohort_curves
+        analysis.cohort_table = cohort_table
+        analysis.churn_risk_actions = churn_risk_actions
+        analysis.filters_applied = self._filters_payload(request)
         analysis.diagnostics = diagnostics
-        analysis.data_source = "supabase" if any(source == "supabase" for source in source_info.values()) else "local"
+        analysis.data_source = "supabase"
 
         state.cohort_analysis = analysis
         return state
@@ -82,11 +157,18 @@ class CohortAgent:
         return CohortRequest(
             retention_months=int(user_request.get("retention_months", 3) or 3),
             cohort_period=str(user_request.get("cohort_period", "month") or "month"),
+            segment=str(user_request.get("segment", "all") or "all"),
+            signup_channel=str(user_request.get("signup_channel", "all") or "all"),
+            contract_type=str(user_request.get("contract_type", "all") or "all"),
+            signup_start_date=user_request.get("signup_start_date"),
+            signup_end_date=user_request.get("signup_end_date"),
+            min_tenure_months=int(user_request.get("min_tenure_months", 0) or 0),
+            churn_probability_min=float(user_request.get("churn_probability_min", 0.0) or 0.0),
+            top_n=max(3, int(user_request.get("top_n", 8) or 8)),
         )
 
     def _load_dataframes(
         self,
-        state: AnalyticsState,
     ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
         customers_remote, customers_source = queries.get_dataset_dataframe_with_source(
             "customers",
@@ -101,10 +183,9 @@ class CohortAgent:
             prefer_remote=True,
         )
 
-        customer_records = state.customer_data or state.customers_data or []
-        customers_df = customers_remote if not customers_remote.empty else pd.DataFrame(customer_records)
-        transactions_df = transactions_remote if not transactions_remote.empty else pd.DataFrame(state.transactions_data or [])
-        retention_df = retention_remote if not retention_remote.empty else pd.DataFrame(state.retention_data or [])
+        customers_df = customers_remote if customers_source == "supabase" else pd.DataFrame()
+        transactions_df = transactions_remote if transactions_source == "supabase" else pd.DataFrame()
+        retention_df = retention_remote if retention_source == "supabase" else pd.DataFrame()
 
         return customers_df, transactions_df, retention_df, {
             "customers": customers_source,
@@ -112,64 +193,129 @@ class CohortAgent:
             "retention": retention_source,
         }
 
-    def _revenue_by_customer(self, transactions_df: pd.DataFrame) -> pd.DataFrame:
-        if transactions_df.empty or "customer_id" not in transactions_df.columns:
-            return pd.DataFrame(columns=["customer_id", "customer_revenue"])
+    def _prepare_customers(self, customers_df: pd.DataFrame) -> pd.DataFrame:
+        out = customers_df.copy()
+        if "customer_id" not in out.columns:
+            out["customer_id"] = ""
+        if "signup_date" in out.columns:
+            out["signup_date"] = pd.to_datetime(out["signup_date"], errors="coerce")
+        for column in ["segment", "signup_channel", "contract_type"]:
+            if column not in out.columns:
+                out[column] = "Unknown"
+            out[column] = out[column].fillna("Unknown").astype(str)
+        return out
 
-        if "revenue" not in transactions_df.columns:
-            transactions_df = transactions_df.copy()
-            transactions_df["revenue"] = 0.0
+    def _prepare_retention(self, retention_df: pd.DataFrame) -> pd.DataFrame:
+        out = retention_df.copy()
+        if "customer_id" not in out.columns:
+            out["customer_id"] = ""
+        for column in ["tenure_months", "monthly_logins", "churn_probability"]:
+            if column not in out.columns:
+                out[column] = 0
+            out[column] = pd.to_numeric(out[column], errors="coerce").fillna(0)
+        if "churned" not in out.columns:
+            out["churned"] = False
+        out["churned"] = out["churned"].fillna(False).astype(bool)
+        out["active_probability"] = 1.0 - out["churn_probability"].clip(lower=0.0, upper=1.0)
+        out.loc[out["churned"], "active_probability"] = 0.0
+        return out
 
-        return (
+    def _prepare_transactions(self, transactions_df: pd.DataFrame) -> pd.DataFrame:
+        if transactions_df.empty:
+            return pd.DataFrame(columns=["customer_id", "revenue", "order_number", "is_repeat_purchase", "purchase_date"])
+
+        out = transactions_df.copy()
+        if "customer_id" not in out.columns:
+            out["customer_id"] = ""
+        if "revenue" not in out.columns:
+            out["revenue"] = 0.0
+        out["revenue"] = pd.to_numeric(out["revenue"], errors="coerce").fillna(0.0)
+        if "order_number" not in out.columns:
+            out["order_number"] = 1
+        if "is_repeat_purchase" not in out.columns:
+            out["is_repeat_purchase"] = False
+        if "purchase_date" in out.columns:
+            out["purchase_date"] = pd.to_datetime(out["purchase_date"], errors="coerce")
+        return out
+
+    def _apply_customer_filters(self, customers_df: pd.DataFrame, request: CohortRequest) -> pd.DataFrame:
+        filtered = customers_df.copy()
+
+        if request.segment and request.segment.lower() != "all" and "segment" in filtered.columns:
+            filtered = filtered[filtered["segment"].astype(str) == request.segment]
+
+        if request.signup_channel and request.signup_channel.lower() != "all" and "signup_channel" in filtered.columns:
+            filtered = filtered[filtered["signup_channel"].astype(str) == request.signup_channel]
+
+        if request.contract_type and request.contract_type.lower() != "all" and "contract_type" in filtered.columns:
+            filtered = filtered[filtered["contract_type"].astype(str) == request.contract_type]
+
+        if request.signup_start_date and "signup_date" in filtered.columns:
+            start_dt = pd.to_datetime(request.signup_start_date, errors="coerce")
+            if not pd.isna(start_dt):
+                filtered = filtered[filtered["signup_date"] >= start_dt]
+
+        if request.signup_end_date and "signup_date" in filtered.columns:
+            end_dt = pd.to_datetime(request.signup_end_date, errors="coerce")
+            if not pd.isna(end_dt):
+                filtered = filtered[filtered["signup_date"] <= end_dt]
+
+        return filtered
+
+    def _build_customer_profile(
+        self,
+        customers_df: pd.DataFrame,
+        retention_df: pd.DataFrame,
+        transactions_df: pd.DataFrame,
+    ) -> pd.DataFrame:
+        revenue_per_customer = (
             transactions_df.groupby("customer_id")["revenue"]
             .sum()
             .reset_index()
             .rename(columns={"revenue": "customer_revenue"})
+            if not transactions_df.empty
+            else pd.DataFrame(columns=["customer_id", "customer_revenue"])
+        )
+        order_counts = (
+            transactions_df.groupby("customer_id")
+            .size()
+            .reset_index(name="orders")
+            if not transactions_df.empty
+            else pd.DataFrame(columns=["customer_id", "orders"])
         )
 
-    def _segment_breakdown(self, cohort_df: pd.DataFrame, retention_df: pd.DataFrame) -> list[dict[str, Any]]:
-        if cohort_df.empty or "segment" not in cohort_df.columns:
+        profile = customers_df.merge(retention_df, on="customer_id", how="left")
+        profile = profile.merge(revenue_per_customer, on="customer_id", how="left")
+        profile = profile.merge(order_counts, on="customer_id", how="left")
+        profile["customer_revenue"] = pd.to_numeric(profile.get("customer_revenue"), errors="coerce").fillna(0.0)
+        profile["orders"] = pd.to_numeric(profile.get("orders"), errors="coerce").fillna(0)
+        profile["is_repeat"] = profile["orders"].gt(1).astype(float)
+        return profile
+
+    def _segment_breakdown(self, profile: pd.DataFrame) -> list[dict[str, Any]]:
+        if profile.empty or "segment" not in profile.columns:
             return []
 
         grouped = (
-            cohort_df.groupby("segment", dropna=False)
+            profile.groupby("segment", dropna=False)
             .agg(
-                customers=("segment", "size"),
+                customers=("customer_id", "nunique"),
                 average_ltv=("customer_revenue", "mean"),
+                repeat_purchase_rate=("is_repeat", "mean"),
+                churn_risk=("churn_probability", "mean"),
             )
             .reset_index()
         )
 
-        churn_by_customer = pd.DataFrame()
-        if not retention_df.empty and {"customer_id", "churn_probability"}.issubset(set(retention_df.columns)):
-            churn_by_customer = (
-                retention_df.groupby("customer_id")["churn_probability"]
-                .mean()
-                .reset_index()
-            )
-
         out: list[dict[str, Any]] = []
         for _, row in grouped.iterrows():
-            segment = str(row.get("segment", "Unknown"))
-            segment_customers = cohort_df[cohort_df["segment"].astype(str) == segment]
-
-            repeat_rate = 0.0
-            if "customer_revenue" in segment_customers.columns:
-                repeat_rate = float(segment_customers["customer_revenue"].gt(0).mean())
-
-            churn_risk = 0.0
-            if not churn_by_customer.empty and "customer_id" in segment_customers.columns:
-                merged = segment_customers[["customer_id"]].merge(churn_by_customer, on="customer_id", how="left")
-                churn_vals = pd.to_numeric(merged["churn_probability"], errors="coerce").dropna()
-                churn_risk = float(churn_vals.mean()) if not churn_vals.empty else 0.0
-
             out.append(
                 {
-                    "segment": segment,
+                    "segment": str(row.get("segment", "Unknown")),
                     "customers": int(row.get("customers", 0)),
                     "average_ltv": round(float(row.get("average_ltv", 0.0)), 2),
-                    "repeat_purchase_rate": round(repeat_rate, 4),
-                    "churn_risk": round(churn_risk, 4),
+                    "repeat_purchase_rate": round(float(row.get("repeat_purchase_rate", 0.0)), 4),
+                    "churn_risk": round(float(row.get("churn_risk", 0.0)), 4),
                 }
             )
 
@@ -205,25 +351,19 @@ class CohortAgent:
                     "retention_rate": round(retention_rate, 4),
                     "churn_rate": round(churn_rate, 4),
                     "customers": int(len(grp.index)),
+                    "avg_monthly_logins": round(float(pd.to_numeric(grp.get("monthly_logins", 0), errors="coerce").fillna(0.0).mean()), 2),
                 }
             )
 
         out.sort(key=lambda item: item["tenure_months"])
         return out
 
-    def _signup_channel_value(
-        self,
-        customers_df: pd.DataFrame,
-        revenue_per_customer: pd.DataFrame,
-    ) -> list[dict[str, Any]]:
-        if customers_df.empty or "signup_channel" not in customers_df.columns or "customer_id" not in customers_df.columns:
+    def _signup_channel_value(self, profile: pd.DataFrame) -> list[dict[str, Any]]:
+        if profile.empty or "signup_channel" not in profile.columns or "customer_id" not in profile.columns:
             return []
 
-        merged = customers_df.merge(revenue_per_customer, on="customer_id", how="left")
-        merged["customer_revenue"] = pd.to_numeric(merged.get("customer_revenue"), errors="coerce").fillna(0.0)
-
         grouped = (
-            merged.groupby("signup_channel", dropna=False)
+            profile.groupby("signup_channel", dropna=False)
             .agg(
                 customers=("customer_id", "nunique"),
                 revenue=("customer_revenue", "sum"),
@@ -247,77 +387,160 @@ class CohortAgent:
         out.sort(key=lambda item: item.get("revenue", 0.0), reverse=True)
         return out
 
-    def _repeat_purchase_rate(self, transactions_df: pd.DataFrame) -> float:
-        if transactions_df.empty or "customer_id" not in transactions_df.columns:
+    def _cohort_period_labels(self, signup_dates: pd.Series, cohort_period: str) -> pd.Series:
+        period = (cohort_period or "month").strip().lower()
+        parsed = pd.to_datetime(signup_dates, errors="coerce")
+        if period == "week":
+            return parsed.dt.to_period("W").astype(str)
+        if period == "quarter":
+            return parsed.dt.to_period("Q").astype(str)
+        return parsed.dt.to_period("M").astype(str)
+
+    def _cohort_curves(self, profile: pd.DataFrame, request: CohortRequest) -> list[dict[str, Any]]:
+        if profile.empty or "signup_date" not in profile.columns:
+            return []
+
+        df = profile.copy()
+        df["cohort_label"] = self._cohort_period_labels(df["signup_date"], request.cohort_period)
+        df = df[df["cohort_label"].astype(str) != "NaT"]
+        if df.empty:
+            return []
+
+        grouped = (
+            df.groupby("cohort_label", dropna=False)
+            .agg(
+                customers=("customer_id", "nunique"),
+                avg_tenure_months=("tenure_months", "mean"),
+                retention_rate=("active_probability", "mean"),
+                churn_probability=("churn_probability", "mean"),
+                avg_revenue_per_customer=("customer_revenue", "mean"),
+            )
+            .reset_index()
+            .sort_values("cohort_label")
+        )
+
+        return [
+            {
+                "cohort_label": str(row.get("cohort_label", "Unknown")),
+                "customers": int(row.get("customers", 0)),
+                "avg_tenure_months": round(float(row.get("avg_tenure_months", 0.0)), 2),
+                "retention_rate": round(float(row.get("retention_rate", 0.0)), 4),
+                "churn_probability": round(float(row.get("churn_probability", 0.0)), 4),
+                "avg_revenue_per_customer": round(float(row.get("avg_revenue_per_customer", 0.0)), 2),
+            }
+            for _, row in grouped.iterrows()
+        ]
+
+    def _cohort_table(self, profile: pd.DataFrame, request: CohortRequest) -> list[dict[str, Any]]:
+        if profile.empty or "signup_date" not in profile.columns:
+            return []
+
+        df = profile.copy()
+        df["cohort_label"] = self._cohort_period_labels(df["signup_date"], request.cohort_period)
+        df = df[df["cohort_label"].astype(str) != "NaT"]
+        if df.empty:
+            return []
+
+        grouped = (
+            df.groupby(["cohort_label", "tenure_months"], dropna=False)
+            .agg(
+                customers=("customer_id", "nunique"),
+                retention_rate=("active_probability", "mean"),
+                churn_probability=("churn_probability", "mean"),
+                avg_revenue_per_customer=("customer_revenue", "mean"),
+                avg_monthly_logins=("monthly_logins", "mean"),
+            )
+            .reset_index()
+            .sort_values(["cohort_label", "tenure_months"])
+        )
+
+        out = [
+            {
+                "cohort_label": str(row.get("cohort_label", "Unknown")),
+                "tenure_months": int(row.get("tenure_months", 0) or 0),
+                "customers": int(row.get("customers", 0)),
+                "retention_rate": round(float(row.get("retention_rate", 0.0)), 4),
+                "churn_probability": round(float(row.get("churn_probability", 0.0)), 4),
+                "avg_revenue_per_customer": round(float(row.get("avg_revenue_per_customer", 0.0)), 2),
+                "avg_monthly_logins": round(float(row.get("avg_monthly_logins", 0.0)), 2),
+            }
+            for _, row in grouped.iterrows()
+        ]
+        return out[:400]
+
+    def _retention_rate_from_curve(self, curve: list[dict[str, Any]], retention_months: int) -> float:
+        if not curve:
             return 0.0
 
-        if "is_repeat_purchase" in transactions_df.columns:
-            repeaters = transactions_df.groupby("customer_id")["is_repeat_purchase"].max()
-            return float(repeaters.mean())
+        scoped = [item for item in curve if int(item.get("tenure_months", 0)) >= int(retention_months)]
+        if not scoped:
+            scoped = curve
 
-        orders_per_customer = transactions_df.groupby("customer_id").size()
-        return float(orders_per_customer.gt(1).astype(float).mean())
-
-    def _retention_rate(self, retention_df: pd.DataFrame, retention_months: int) -> float:
-        if retention_df.empty:
+        weights = [max(1, int(item.get("customers", 0))) for item in scoped]
+        values = [float(item.get("retention_rate", 0.0)) for item in scoped]
+        total_weight = float(sum(weights))
+        if total_weight <= 0:
             return 0.0
+        return float(sum(value * weight for value, weight in zip(values, weights)) / total_weight)
 
-        scoped = retention_df.copy()
-        if "tenure_months" in scoped.columns:
-            scoped = scoped[scoped["tenure_months"] >= retention_months]
+    def _churn_risk_actions(self, profile: pd.DataFrame, top_n: int) -> list[dict[str, Any]]:
+        if profile.empty:
+            return []
 
-        if scoped.empty:
+        grouped = (
+            profile.groupby(["segment", "signup_channel", "contract_type"], dropna=False)
+            .agg(
+                customers=("customer_id", "nunique"),
+                churn_risk=("churn_probability", "mean"),
+                avg_ltv=("customer_revenue", "mean"),
+            )
+            .reset_index()
+            .sort_values(["churn_risk", "customers"], ascending=[False, False])
+        )
+
+        actions: list[dict[str, Any]] = []
+        for _, row in grouped.head(max(3, top_n)).iterrows():
+            churn_risk = float(row.get("churn_risk", 0.0))
+            expected_retention_lift = min(0.12, max(0.01, churn_risk * 0.25))
+            priority = "high" if churn_risk >= 0.55 else "medium" if churn_risk >= 0.35 else "low"
+            actions.append(
+                {
+                    "priority": priority,
+                    "segment": str(row.get("segment", "Unknown")),
+                    "signup_channel": str(row.get("signup_channel", "Unknown")),
+                    "contract_type": str(row.get("contract_type", "Unknown")),
+                    "customers": int(row.get("customers", 0)),
+                    "avg_ltv": round(float(row.get("avg_ltv", 0.0)), 2),
+                    "churn_risk": round(churn_risk, 4),
+                    "recommended_action": (
+                        f"Launch targeted save playbook for {row.get('segment', 'target segment')} acquired via "
+                        f"{row.get('signup_channel', 'primary channel')} with {row.get('contract_type', 'current contract')} specific incentive."
+                    ),
+                    "expected_impact": f"+{expected_retention_lift * 100:.1f}% retention for this cohort cluster",
+                }
+            )
+
+        return actions
+
+    def _safe_mean(self, df: pd.DataFrame, column: str) -> float:
+        if df.empty or column not in df.columns:
             return 0.0
-
-        if "churned" in scoped.columns:
-            return float(1.0 - scoped["churned"].astype(float).mean())
-
-        if "churn_probability" in scoped.columns:
-            return float(1.0 - scoped["churn_probability"].astype(float).mean())
-
-        return 0.0
-
-    def _churn_risk(self, retention_df: pd.DataFrame) -> float:
-        if retention_df.empty:
+        values = pd.to_numeric(df[column], errors="coerce").dropna()
+        if values.empty:
             return 0.0
+        return float(values.mean())
 
-        if "churn_probability" in retention_df.columns:
-            return float(retention_df["churn_probability"].astype(float).mean())
-
-        if "churned" in retention_df.columns:
-            return float(retention_df["churned"].astype(float).mean())
-
-        return 0.0
-
-    def _highest_value_segment(self, cohort_df: pd.DataFrame) -> str:
-        if cohort_df.empty or "segment" not in cohort_df.columns:
-            return ""
-
-        scores = cohort_df.groupby("segment")["customer_revenue"].mean()
-        if scores.empty:
-            return ""
-        return str(scores.idxmax())
-
-    def _highest_churn_segment(self, customers_df: pd.DataFrame, retention_df: pd.DataFrame) -> str:
-        if customers_df.empty or retention_df.empty:
-            return ""
-
-        if "customer_id" not in customers_df.columns or "customer_id" not in retention_df.columns:
-            return ""
-
-        merged = customers_df.merge(retention_df, on="customer_id", how="inner")
-        if merged.empty:
-            return ""
-
-        if "churn_probability" in merged.columns and "contract_type" in merged.columns:
-            churn_scores = merged.groupby("contract_type")["churn_probability"].mean()
-            if not churn_scores.empty:
-                return f"{churn_scores.idxmax()} Users"
-
-        if "churn_probability" in merged.columns and "segment" in merged.columns:
-            churn_scores = merged.groupby("segment")["churn_probability"].mean()
-            if not churn_scores.empty:
-                return str(churn_scores.idxmax())
-
-        return ""
+    def _filters_payload(self, request: CohortRequest) -> dict[str, Any]:
+        return {
+            "cohort_period": request.cohort_period,
+            "retention_months": request.retention_months,
+            "segment": request.segment,
+            "signup_channel": request.signup_channel,
+            "contract_type": request.contract_type,
+            "signup_start_date": request.signup_start_date,
+            "signup_end_date": request.signup_end_date,
+            "min_tenure_months": request.min_tenure_months,
+            "churn_probability_min": request.churn_probability_min,
+            "top_n": request.top_n,
+        }
 

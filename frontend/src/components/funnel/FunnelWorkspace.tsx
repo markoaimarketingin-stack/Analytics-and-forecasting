@@ -242,11 +242,11 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
         <div className="mx-auto w-full max-w-6xl space-y-6">
           <div className="workspace-panel">
             <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-gray-500">
-              <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1">
+              <span className="workspace-option-pill">
                 <Database className="h-3.5 w-3.5" /> Source: {optionsSourceLabel}
               </span>
               {options?.row_counts && (
-                <span className="rounded-full bg-gray-100 px-3 py-1">
+                <span className="workspace-option-pill">
                   Rows: campaigns {formatCount(options.row_counts.campaigns)} | events {formatCount(options.row_counts.events)}
                 </span>
               )}
@@ -615,7 +615,9 @@ function TabButton({ label, active, onClick }: { label: string; active: boolean;
     <button
       onClick={onClick}
       className={`workspace-tab ${
-        active ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-[0_8px_20px_rgba(5,150,105,0.3)]' : 'bg-gray-100/80 text-gray-700 hover:bg-gray-200'
+        active
+          ? 'border border-emerald-500/20 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-[0_10px_24px_rgba(5,150,105,0.32)]'
+          : 'border border-gray-200 bg-gray-100/80 text-gray-700 hover:bg-white'
       }`}
       type="button"
     >

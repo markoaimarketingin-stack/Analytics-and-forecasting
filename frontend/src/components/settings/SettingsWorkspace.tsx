@@ -69,10 +69,12 @@ function SettingRow({ icon, title, description, checked, onChange }: SettingRowP
 
       <button
         onClick={() => onChange(!checked)}
-        className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-[0_6px_16px_rgba(37,99,235,0.38)]' : 'bg-gray-300'}`}
+        type="button"
+        aria-pressed={checked}
+        className={`workspace-toggle-switch ${checked ? 'workspace-toggle-switch-on' : 'workspace-toggle-switch-off'}`}
       >
         <span
-          className={`absolute top-1 h-5 w-5 rounded-full bg-white transition ${checked ? 'left-6' : 'left-1'}`}
+          className={`workspace-toggle-thumb ${checked ? 'left-6' : 'left-1'}`}
         />
       </button>
     </div>

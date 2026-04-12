@@ -4,6 +4,10 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from analytics_agent.agents.attribution_agent import AttributionAgent
+from analytics_agent.agents.budget_allocator_agent import (
+    BudgetAllocatorAgent,
+    BudgetAllocatorRequest,
+)
 from analytics_agent.agents.cohort_agent import CohortAgent
 from analytics_agent.agents.forecast_agent import ForecastAgent, ForecastRequest
 from analytics_agent.agents.funnel_agent import FunnelAgent
@@ -21,7 +25,7 @@ class OrchestratorRequest:
 class OrchestratorAgent:
     """Chief analytics strategist that coordinates specialist agents end-to-end."""
 
-    DEFAULT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario"]
+    DEFAULT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario", "budget_allocator"]
 
     def __init__(self) -> None:
         self.attribution_agent = AttributionAgent()
@@ -29,6 +33,7 @@ class OrchestratorAgent:
         self.cohort_agent = CohortAgent()
         self.forecast_agent = ForecastAgent()
         self.scenario_agent = ScenarioAgent()
+        self.budget_allocator_agent = BudgetAllocatorAgent()
 
     def run(self, request: OrchestratorRequest | None = None, state: AnalyticsState | None = None) -> AnalyticsState:
         request = request or OrchestratorRequest()
@@ -60,9 +65,9 @@ class OrchestratorAgent:
                 ForecastRequest(
                     horizon_days=horizon,
                     kpi_metric=str(state.user_request.get("kpi_metric", "revenue")),
-                    channel=str(state.user_request.get("channel", "all")),
-                    campaign_type=str(state.user_request.get("campaign_type", "all")),
-                    campaign_id=str(state.user_request.get("campaign_id", "all")),
+                    channel=self._normalize_filter(state.user_request.get("channel"), default="all"),
+                    campaign_type=self._normalize_filter(state.user_request.get("campaign_type"), default="all"),
+                    campaign_id=self._normalize_filter(state.user_request.get("campaign_id"), default="all"),
                     spend_change_pct=float(state.user_request.get("spend_change_pct", 0)),
                     ctr_lift_pct=float(state.user_request.get("ctr_lift_pct", 0)),
                     conversion_lift_pct=float(state.user_request.get("conversion_lift_pct", 0)),
@@ -77,9 +82,9 @@ class OrchestratorAgent:
                 ScenarioRequest(
                     horizon_days=int(state.user_request.get("horizon_days", 90)),
                     kpi_metric=str(state.user_request.get("kpi_metric", "revenue")),
-                    channel=str(state.user_request.get("channel", "all")),
-                    campaign_type=str(state.user_request.get("campaign_type", "all")),
-                    campaign_id=str(state.user_request.get("campaign_id", "all")),
+                    channel=self._normalize_filter(state.user_request.get("channel"), default="all"),
+                    campaign_type=self._normalize_filter(state.user_request.get("campaign_type"), default="all"),
+                    campaign_id=self._normalize_filter(state.user_request.get("campaign_id"), default="all"),
                     base_spend_change_pct=float(state.user_request.get("base_spend_change_pct", 0)),
                     base_ctr_lift_pct=float(state.user_request.get("base_ctr_lift_pct", 0)),
                     base_conversion_lift_pct=float(state.user_request.get("base_conversion_lift_pct", 0)),
@@ -88,19 +93,46 @@ class OrchestratorAgent:
                 ),
             )
 
+        if name in {"budget_allocator", "budget"}:
+            return self.budget_allocator_agent.analyze(
+                state,
+                BudgetAllocatorRequest(
+                    total_budget=float(state.user_request.get("total_budget", 0) or 0),
+                    objective=str(state.user_request.get("objective", "profit") or "profit"),
+                    risk_tolerance=str(state.user_request.get("risk_tolerance", "balanced") or "balanced"),
+                    max_shift_pct=float(state.user_request.get("max_shift_pct", 20) or 20),
+                    min_channel_pct=float(state.user_request.get("min_channel_pct", 5) or 5),
+                    max_channel_pct=float(state.user_request.get("max_channel_pct", 60) or 60),
+                    channel=self._normalize_filter(state.user_request.get("channel"), default="all"),
+                    campaign_type=self._normalize_filter(state.user_request.get("campaign_type"), default="all"),
+                    campaign_id=self._normalize_filter(state.user_request.get("campaign_id"), default="all"),
+                ),
+            )
+
         return state
+
+    def _normalize_filter(self, value: Any, default: str = "all") -> str:
+        if value is None:
+            return default
+        text = str(value).strip()
+        if not text:
+            return default
+        if text.casefold() in {"none", "null", "nil", "n/a", "na", "all channels", "all channel"}:
+            return default
+        return text
 
     def _load_data(self, state: AnalyticsState, ordered_agents: list[str]) -> None:
         forecast_only = ordered_agents == ["forecast"]
         scenario_only = ordered_agents == ["scenario"]
+        budget_only = ordered_agents == ["budget_allocator"]
 
         if state.campaign_data is None:
-            if forecast_only or scenario_only:
+            if forecast_only or scenario_only or budget_only:
                 state.campaign_data = queries.get_campaign_data_remote_only()
             else:
                 state.campaign_data = queries.get_campaign_data()
 
-        if forecast_only or scenario_only:
+        if forecast_only or scenario_only or budget_only:
             return
 
         if state.customer_data is None and state.customers_data is None:
@@ -122,7 +154,14 @@ class OrchestratorAgent:
         if not run_agents:
             return self.DEFAULT_ORDER
 
-        normalized = [name.strip().lower() for name in run_agents if str(name).strip()]
+        normalized: list[str] = []
+        for raw in run_agents:
+            name = str(raw).strip().lower()
+            if not name:
+                continue
+            if name == "budget":
+                name = "budget_allocator"
+            normalized.append(name)
         selected = [name for name in self.DEFAULT_ORDER if name in normalized]
         return selected or self.DEFAULT_ORDER
 
@@ -142,6 +181,12 @@ class OrchestratorAgent:
 
         if state.cohort_analysis and state.cohort_analysis.high_value_segment:
             recommendations.append(f"Target {state.cohort_analysis.high_value_segment} customers with retention offers")
+
+        if state.budget_allocation_analysis and state.budget_allocation_analysis.channel_allocations:
+            top = state.budget_allocation_analysis.channel_allocations[0]
+            recommendations.append(
+                f"Allocate ${top.get('recommended_spend', 0):,.0f} to {top.get('channel', 'top channel')} for {state.budget_allocation_analysis.objective} optimization"
+            )
 
         state.recommendations = recommendations
 

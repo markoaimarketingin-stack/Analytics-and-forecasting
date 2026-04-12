@@ -12,8 +12,8 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getAgentResults, orchestrateAgents } from '../../services/api';
-import type { AgentOrchestrationResult, CohortAnalysis } from '../../types';
+import { getAgentResults, getCohortOptions, orchestrateAgents } from '../../services/api';
+import type { AgentOrchestrationResult, CohortAnalysis, CohortOptions } from '../../types';
 
 interface CohortWorkspaceProps {
   clientId?: string;
@@ -23,9 +23,51 @@ interface CohortWorkspaceProps {
 export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspaceProps) {
   const [cohortPeriod, setCohortPeriod] = useState('month');
   const [retentionMonths, setRetentionMonths] = useState(3);
+  const [segment, setSegment] = useState('all');
+  const [signupChannel, setSignupChannel] = useState('all');
+  const [contractType, setContractType] = useState('all');
+  const [signupStartDate, setSignupStartDate] = useState('');
+  const [signupEndDate, setSignupEndDate] = useState('');
+  const [minTenureMonths, setMinTenureMonths] = useState(0);
+  const [churnProbabilityMin, setChurnProbabilityMin] = useState(0);
+  const [topN, setTopN] = useState(8);
+  const [options, setOptions] = useState<CohortOptions | null>(null);
   const [result, setResult] = useState<CohortAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [isLoadingOptions, setIsLoadingOptions] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const hydrateOptions = async () => {
+      setIsLoadingOptions(true);
+      try {
+        const response = await getCohortOptions();
+        if (cancelled || !response.success || !response.data) return;
+        setOptions(response.data);
+        setCohortPeriod(response.data.defaults?.cohort_period || 'month');
+        setRetentionMonths(response.data.defaults?.retention_months || 3);
+        setSegment(response.data.defaults?.segment || 'all');
+        setSignupChannel(response.data.defaults?.signup_channel || 'all');
+        setContractType(response.data.defaults?.contract_type || 'all');
+        setSignupStartDate(response.data.defaults?.signup_start_date || response.data.date_range?.signup_min || '');
+        setSignupEndDate(response.data.defaults?.signup_end_date || response.data.date_range?.signup_max || '');
+        setMinTenureMonths(response.data.defaults?.min_tenure_months || 0);
+        setChurnProbabilityMin(response.data.defaults?.churn_probability_min || 0);
+        setTopN(response.data.defaults?.top_n || 8);
+      } catch {
+        // Keep local defaults if options endpoint is unavailable.
+      } finally {
+        if (!cancelled) setIsLoadingOptions(false);
+      }
+    };
+
+    hydrateOptions();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!clientId || result) return;
@@ -60,6 +102,9 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
   const retentionCurve = result?.retention_curve ?? [];
   const segmentBreakdown = result?.segment_breakdown ?? [];
   const signupChannelValue = result?.signup_channel_value ?? [];
+  const cohortCurves = result?.cohort_curves ?? [];
+  const cohortTable = result?.cohort_table ?? [];
+  const churnRiskActions = result?.churn_risk_actions ?? [];
 
   const topSegments = useMemo(
     () => [...segmentBreakdown].sort((a, b) => b.average_ltv - a.average_ltv).slice(0, 6),
@@ -78,6 +123,14 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
         payload: {
           cohort_period: cohortPeriod,
           retention_months: retentionMonths,
+          segment,
+          signup_channel: signupChannel,
+          contract_type: contractType,
+          signup_start_date: signupStartDate || undefined,
+          signup_end_date: signupEndDate || undefined,
+          min_tenure_months: minTenureMonths,
+          churn_probability_min: churnProbabilityMin,
+          top_n: topN,
         },
       });
 
@@ -109,13 +162,13 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
           <div className="workspace-panel">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-4">
               <label className="text-sm text-gray-600">
                 Cohort Period
                 <select value={cohortPeriod} onChange={(event) => setCohortPeriod(event.target.value)} className="workspace-control">
-                  <option value="week">Weekly</option>
-                  <option value="month">Monthly</option>
-                  <option value="quarter">Quarterly</option>
+                  {(options?.cohort_periods || ['week', 'month', 'quarter']).map((period) => (
+                    <option key={period} value={period}>{period.charAt(0).toUpperCase() + period.slice(1)}</option>
+                  ))}
                 </select>
               </label>
 
@@ -124,9 +177,80 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
                 <input
                   type="number"
                   min={1}
-                  max={24}
+                  max={options?.limits?.max_tenure_months || 24}
                   value={retentionMonths}
                   onChange={(event) => setRetentionMonths(Number(event.target.value))}
+                  className="workspace-control"
+                />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Segment
+                <select value={segment} onChange={(event) => setSegment(event.target.value)} className="workspace-control">
+                  <option value="all">All segments</option>
+                  {(options?.segments || []).map((item) => <option key={item} value={item}>{item}</option>)}
+                </select>
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Signup Channel
+                <select value={signupChannel} onChange={(event) => setSignupChannel(event.target.value)} className="workspace-control">
+                  <option value="all">All channels</option>
+                  {(options?.signup_channels || []).map((item) => <option key={item} value={item}>{item}</option>)}
+                </select>
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Contract Type
+                <select value={contractType} onChange={(event) => setContractType(event.target.value)} className="workspace-control">
+                  <option value="all">All contracts</option>
+                  {(options?.contract_types || []).map((item) => <option key={item} value={item}>{item}</option>)}
+                </select>
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Signup Start Date
+                <input type="date" value={signupStartDate} onChange={(event) => setSignupStartDate(event.target.value)} className="workspace-control" />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Signup End Date
+                <input type="date" value={signupEndDate} onChange={(event) => setSignupEndDate(event.target.value)} className="workspace-control" />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Min Tenure (months)
+                <input
+                  type="number"
+                  min={0}
+                  max={options?.limits?.max_tenure_months || 24}
+                  value={minTenureMonths}
+                  onChange={(event) => setMinTenureMonths(Number(event.target.value))}
+                  className="workspace-control"
+                />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Min Churn Probability
+                <input
+                  type="number"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={churnProbabilityMin}
+                  onChange={(event) => setChurnProbabilityMin(Number(event.target.value))}
+                  className="workspace-control"
+                />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Top Cohorts / Actions
+                <input
+                  type="number"
+                  min={3}
+                  max={options?.limits?.max_top_n || 20}
+                  value={topN}
+                  onChange={(event) => setTopN(Number(event.target.value))}
                   className="workspace-control"
                 />
               </label>
@@ -139,6 +263,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
             </div>
 
             {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {isLoadingOptions && <p className="mt-3 text-xs text-gray-500">Loading Supabase cohort filters...</p>}
             {result?.data_source && <p className="mt-3 text-xs text-gray-500">Data source: {result.data_source}</p>}
           </div>
 
@@ -190,6 +315,30 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
                   </ResponsiveContainer>
                 ) : (
                   <EmptyChart text="No segment-level cohort data available." />
+                )}
+              </div>
+            </div>
+
+            <div className="workspace-panel xl:col-span-2">
+              <h3 className="text-lg font-semibold text-gray-900">Signup Cohort Curve</h3>
+              <p className="mt-1 text-sm text-gray-500">Compare retention by signup cohort period.</p>
+              <div className="mt-4 h-[320px] w-full">
+                {cohortCurves.length > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={cohortCurves} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis dataKey="cohort_label" />
+                      <YAxis yAxisId="left" tickFormatter={(value) => `${Math.round(Number(value) * 100)}%`} />
+                      <YAxis yAxisId="right" orientation="right" tickFormatter={(value) => compactCurrency(Number(value))} />
+                      <Tooltip formatter={(value: number, name: string) => (name.includes('Revenue') ? formatCurrency(Number(value)) : formatPercent(Number(value)))} />
+                      <Legend />
+                      <Line yAxisId="left" type="monotone" dataKey="retention_rate" stroke="#4f46e5" strokeWidth={2} dot={false} name="Retention" />
+                      <Line yAxisId="left" type="monotone" dataKey="churn_probability" stroke="#ef4444" strokeWidth={2} dot={false} name="Churn Probability" />
+                      <Line yAxisId="right" type="monotone" dataKey="avg_revenue_per_customer" stroke="#14b8a6" strokeWidth={2} dot={false} name="Avg Revenue / Customer" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <EmptyChart text="Run cohort analysis to render signup cohort performance." />
                 )}
               </div>
             </div>
@@ -249,6 +398,66 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <div className="workspace-panel">
+            <h3 className="text-lg font-semibold text-gray-900">Cohort Detail Table</h3>
+            <div className="mt-4 overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <thead className="text-gray-500">
+                  <tr>
+                    <th className="px-3 py-2">Cohort</th>
+                    <th className="px-3 py-2">Tenure</th>
+                    <th className="px-3 py-2">Customers</th>
+                    <th className="px-3 py-2">Retention</th>
+                    <th className="px-3 py-2">Churn</th>
+                    <th className="px-3 py-2">Avg Revenue</th>
+                    <th className="px-3 py-2">Avg Logins</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cohortTable.length > 0 ? (
+                    cohortTable.slice(0, 80).map((row, index) => (
+                      <tr key={`${row.cohort_label}-${row.tenure_months}-${index}`} className="border-t border-gray-100">
+                        <td className="px-3 py-2 font-semibold text-gray-900">{row.cohort_label}</td>
+                        <td className="px-3 py-2">{row.tenure_months}m</td>
+                        <td className="px-3 py-2">{formatCount(row.customers)}</td>
+                        <td className="px-3 py-2">{formatPercent(row.retention_rate)}</td>
+                        <td className="px-3 py-2">{formatPercent(row.churn_probability)}</td>
+                        <td className="px-3 py-2">{formatCurrency(row.avg_revenue_per_customer)}</td>
+                        <td className="px-3 py-2">{Number(row.avg_monthly_logins || 0).toFixed(1)}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td className="px-3 py-4 text-gray-500" colSpan={7}>Run analysis to view cohort-level rows.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="workspace-panel">
+            <h3 className="text-lg font-semibold text-gray-900">Churn Risk Action Queue</h3>
+            <div className="mt-4 grid gap-3">
+              {churnRiskActions.length > 0 ? (
+                churnRiskActions.map((item, index) => (
+                  <div key={`${item.segment}-${index}`} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="font-semibold text-gray-900">{item.segment} / {item.signup_channel} / {item.contract_type}</div>
+                      <div className="text-xs font-semibold uppercase tracking-wide text-indigo-700">{item.priority} priority</div>
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">{item.recommended_action}</div>
+                    <div className="mt-2 text-xs text-gray-600">
+                      Customers: {formatCount(item.customers)} | Churn Risk: {formatPercent(item.churn_risk)} | Avg LTV: {formatCurrency(item.avg_ltv)} | Expected Impact: {item.expected_impact}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">Run analysis to generate prioritized retention playbooks.</p>
+              )}
             </div>
           </div>
         </div>

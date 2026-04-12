@@ -228,16 +228,16 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
         <div className="mx-auto w-full max-w-6xl space-y-6">
           <div className="workspace-panel">
             <div className="mb-4 flex flex-wrap items-center gap-3 text-xs text-gray-500">
-              <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1">
+              <span className="workspace-option-pill">
                 <Database className="h-3.5 w-3.5" /> Source: {optionsSourceLabel}
               </span>
               {options?.row_counts?.campaigns ? (
-                <span className="rounded-full bg-gray-100 px-3 py-1">
+                <span className="workspace-option-pill">
                   Campaign rows: {formatCount(options.row_counts.campaigns)}
                 </span>
               ) : null}
               {options?.date_range?.min && options?.date_range?.max ? (
-                <span className="rounded-full bg-gray-100 px-3 py-1">
+                <span className="workspace-option-pill">
                   Date range: {options.date_range.min} to {options.date_range.max}
                 </span>
               ) : null}
@@ -367,11 +367,12 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
             {warnings.length > 0 && <p className="mt-3 text-sm text-amber-700">{warnings.join(' | ')}</p>}
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <MetricCard title="Forecast Horizon" value={horizonLabel} icon={<Calendar className="h-4 w-4" />} />
             <MetricCard title="Next 30 Day Revenue" value={formatCurrencyCompact(result?.next_30_day_revenue)} icon={<TrendingUp className="h-4 w-4" />} />
             <MetricCard title="Predicted ROI" value={formatPercentCompact(result?.predicted_roi)} icon={<Target className="h-4 w-4" />} />
             <MetricCard title="Predicted Profit" value={formatCurrencyCompact(result?.predicted_profit)} icon={<Sparkles className="h-4 w-4" />} />
+            <MetricCard title="Forecast Confidence" value={formatConfidenceCompact(result?.confidence)} icon={<Settings2 className="h-4 w-4" />} />
           </div>
 
           <div className="grid gap-6 xl:grid-cols-2">
@@ -625,3 +626,8 @@ function formatCompactKpi(metric: string, value: number): string {
   return new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
 }
 
+function formatConfidenceCompact(value: number | undefined): string {
+  if (value === undefined || value === null || Number.isNaN(value)) return '-';
+  const normalized = value <= 1 ? value * 100 : value;
+  return `${normalized.toFixed(1)}%`;
+}
