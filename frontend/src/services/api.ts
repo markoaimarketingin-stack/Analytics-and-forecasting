@@ -3,6 +3,7 @@
 import type {
   AgentOrchestrationApiResponse,
   AgentOrchestrationRequest,
+  AttributionOptionsApiResponse,
   BudgetAllocatorOptionsApiResponse,
   GeneratedReportPayload,
   ForecastOptionsApiResponse,
@@ -358,6 +359,15 @@ export const getFunnelOptions = async (): Promise<FunnelOptionsApiResponse> => {
       },
     };
   }
+};
+
+export const getAttributionOptions = async (): Promise<AttributionOptionsApiResponse> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return getJsonWithFallback<AttributionOptionsApiResponse>([
+    `${API_BASE_URL}/agents/attribution/options`,
+    `${API_ROOT_URL}/agents/attribution/options`,
+    `${baseWithoutApiSuffix}/agents/attribution/options`,
+  ]);
 };
 
 export const getForecastOptions = async (): Promise<ForecastOptionsApiResponse> => {

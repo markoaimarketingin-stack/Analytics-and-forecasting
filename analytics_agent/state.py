@@ -116,10 +116,14 @@ class AttributionAnalysis(BaseModel):
     worst_channel: str = ""
     channel_weights: Dict[str, float] = Field(default_factory=dict)
     recommended_shift: Dict[str, Any] = Field(default_factory=dict)
+    summary_metrics: Dict[str, float] = Field(default_factory=dict)
     channel_summary: List[Dict[str, Any]] = Field(default_factory=list)
     model_credit_chart: List[Dict[str, Any]] = Field(default_factory=list)
     touchpoint_position_chart: List[Dict[str, Any]] = Field(default_factory=list)
     budget_scenario_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    efficiency_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    conversion_quality_chart: List[Dict[str, Any]] = Field(default_factory=list)
+    filters_applied: Dict[str, Any] = Field(default_factory=dict)
     diagnostics: Dict[str, Any] = Field(default_factory=dict)
     data_source: str = ""
 

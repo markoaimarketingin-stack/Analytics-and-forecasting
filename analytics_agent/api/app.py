@@ -1074,6 +1074,12 @@ class FunnelOptionsResponse(BaseModel):
     timestamp: str
 
 
+class AttributionOptionsResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
 class ForecastOptionsResponse(BaseModel):
     success: bool = True
     data: dict
@@ -1616,6 +1622,26 @@ async def get_forecast_options():
         )
 
 
+@app.get("/agents/attribution/options", response_model=AttributionOptionsResponse)
+@app.get("/api/agents/attribution/options", response_model=AttributionOptionsResponse)
+async def get_attribution_options():
+    """Return attribution filters and toggles from Supabase campaigns/events/transactions only."""
+    try:
+        from analytics_agent.db.queries import get_attribution_filter_options
+
+        return {
+            "success": True,
+            "data": get_attribution_filter_options(),
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.exception("Failed to fetch attribution options", error=str(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch attribution options: {str(e)}",
+        )
+
+
 @app.get("/agents/scenario/options", response_model=ScenarioOptionsResponse)
 @app.get("/api/agents/scenario/options", response_model=ScenarioOptionsResponse)
 async def get_scenario_options():
@@ -2041,6 +2067,7 @@ async def api_root():
                 "agent_results": "GET /agents/results",
                 "execution_history": "GET /agents/history",
                 "forecast_options": "GET /agents/forecast/options",
+                "attribution_options": "GET /agents/attribution/options",
                 "scenario_options": "GET /agents/scenario/options",
                 "budget_options": "GET /agents/budget/options",
                 "forecast_train": "POST /agents/forecast/train",

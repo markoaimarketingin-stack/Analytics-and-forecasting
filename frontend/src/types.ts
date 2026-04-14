@@ -204,15 +204,47 @@ export interface AttributionAnalysis {
     from?: string;
     to?: string;
     percent?: number;
+    driver_metric?: string;
+  };
+  summary_metrics?: {
+    total_spend?: number;
+    attributed_revenue?: number;
+    blended_roas?: number;
+    blended_roi?: number;
+    blended_cac?: number;
+    blended_cpa?: number;
+    ctr?: number;
+    conversion_rate?: number;
+    aov?: number;
+    cpc?: number;
+    cpm?: number;
   };
   channel_summary: Array<{
     channel: string;
     first_touch_revenue: number;
     last_touch_revenue: number;
     linear_revenue: number;
+    time_decay_revenue?: number;
+    selected_revenue?: number;
     blended_revenue: number;
     spend: number;
+    impressions?: number;
+    clicks?: number;
+    purchases?: number;
+    attributed_customers?: number;
+    first_touch_customers?: number;
+    ctr?: number;
+    conversion_rate?: number;
+    cpc?: number;
+    cpm?: number;
+    aov?: number;
     blended_roas: number;
+    blended_roi?: number;
+    cac?: number;
+    cpa?: number;
+    revenue_per_customer?: number;
+    selected_metric?: string;
+    selected_metric_value?: number;
   }>;
   model_credit_chart?: Array<{
     channel: string;
@@ -235,13 +267,68 @@ export interface AttributionAnalysis {
     projected_spend: number;
     current_revenue: number;
     projected_revenue: number;
+    current_roi?: number;
+    projected_roi?: number;
+    selected_metric?: string;
+    selected_metric_value?: number;
   }>;
+  efficiency_chart?: Array<{
+    channel: string;
+    roas: number;
+    roi: number;
+    cac: number;
+    cpa: number;
+    cpc: number;
+    cpm: number;
+  }>;
+  conversion_quality_chart?: Array<{
+    channel: string;
+    ctr: number;
+    conversion_rate: number;
+    aov: number;
+    purchases: number;
+  }>;
+  filters_applied?: Record<string, unknown>;
   diagnostics?: {
     source_info?: Record<string, string>;
     data_points?: Record<string, number>;
     request?: Record<string, string | number>;
+    filters_applied?: Record<string, string>;
   };
   data_source?: string;
+}
+
+export interface AttributionOptions {
+  channels: string[];
+  campaign_types: string[];
+  attribution_models: string[];
+  metrics: string[];
+  defaults: {
+    channel: string;
+    campaign_type: string;
+    attribution_model: string;
+    metric: string;
+    budget_shift_cap_percent: number;
+    start_date?: string;
+    end_date?: string;
+  };
+  available_filters: {
+    channel: boolean;
+    campaign_type: boolean;
+    date_range: boolean;
+  };
+  sources: Record<string, string>;
+  row_counts: Record<string, number>;
+  date_range?: {
+    min?: string;
+    max?: string;
+  };
+}
+
+export interface AttributionOptionsApiResponse {
+  success: boolean;
+  data?: AttributionOptions;
+  detail?: string;
 }
 
 export interface FunnelAnalysis {

@@ -282,6 +282,89 @@ def get_campaign_data_remote_only(limit: int | None = None) -> list[dict[str, An
     return _safe_to_records(get_campaign_dataframe_remote_only(limit))
 
 
+def get_attribution_filter_options() -> dict[str, Any]:
+    campaigns_df = get_campaign_dataframe_remote_only()
+    events_df = _read_remote_table("events")
+    transactions_df = _read_remote_table("transactions")
+
+    if campaigns_df.empty or events_df.empty or transactions_df.empty:
+        raise ValueError("Supabase attribution datasets are incomplete. campaigns, events, and transactions are required")
+
+    channels = sorted(
+        set(_unique_non_empty_values(campaigns_df, "channel")).union(
+            set(_unique_non_empty_values(events_df, "channel"))
+        )
+    )
+    campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
+    attribution_models = ["linear", "first_click", "last_click", "time_decay"]
+    metrics = ["revenue", "roas", "roi", "cac", "cpa", "conversions"]
+
+    min_date = ""
+    max_date = ""
+    date_series: list[pd.Series] = []
+    if "date" in campaigns_df.columns:
+        date_series.append(pd.to_datetime(campaigns_df["date"], errors="coerce"))
+    if "timestamp" in events_df.columns:
+        date_series.append(pd.to_datetime(events_df["timestamp"], errors="coerce"))
+    if "purchase_date" in transactions_df.columns:
+        date_series.append(pd.to_datetime(transactions_df["purchase_date"], errors="coerce"))
+
+    if date_series:
+        merged = pd.concat(date_series, ignore_index=True).dropna()
+        if not merged.empty:
+            min_date = merged.min().date().isoformat()
+            max_date = merged.max().date().isoformat()
+
+    return {
+        "channels": channels,
+        "campaign_types": campaign_types,
+        "attribution_models": attribution_models,
+        "metrics": metrics,
+        "defaults": {
+            "channel": "all",
+            "campaign_type": "all",
+            "attribution_model": "linear",
+            "metric": "revenue",
+            "budget_shift_cap_percent": 20,
+            "start_date": min_date,
+            "end_date": max_date,
+        },
+        "available_filters": {
+            "channel": bool(channels),
+            "campaign_type": bool(campaign_types),
+            "date_range": bool(min_date and max_date),
+        },
+        "sources": {
+            "campaigns": "supabase",
+            "events": "supabase",
+            "transactions": "supabase",
+        },
+        "row_counts": {
+            "campaigns": int(len(campaigns_df.index)),
+            "events": int(len(events_df.index)),
+            "transactions": int(len(transactions_df.index)),
+        },
+        "date_range": {
+            "min": min_date,
+            "max": max_date,
+        },
+        "schema_details": {
+            "campaigns": {
+                "source": "supabase",
+                "columns": campaigns_df.columns.tolist(),
+            },
+            "events": {
+                "source": "supabase",
+                "columns": events_df.columns.tolist(),
+            },
+            "transactions": {
+                "source": "supabase",
+                "columns": transactions_df.columns.tolist(),
+            },
+        },
+    }
+
+
 def get_forecast_filter_options() -> dict[str, Any]:
     campaigns_df = get_campaign_dataframe_remote_only()
     if campaigns_df.empty:

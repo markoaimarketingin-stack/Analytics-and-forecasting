@@ -1,5 +1,6 @@
 import { Network, Sparkles } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import {
   Bar,
   BarChart,
@@ -10,21 +11,90 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { getAgentResults, orchestrateAgents } from '../../services/api';
-import type { AgentOrchestrationResult, AttributionAnalysis } from '../../types';
+import { getAgentResults, getAttributionOptions, orchestrateAgents } from '../../services/api';
+import type {
+  AgentOrchestrationResult,
+  AttributionAnalysis,
+  AttributionOptions,
+} from '../../types';
 
 interface AttributionWorkspaceProps {
   clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
 
+type AttributionTab = 'credit' | 'touchpoints' | 'scenario' | 'efficiency' | 'quality';
+
+const DEFAULT_OPTIONS: AttributionOptions = {
+  channels: [],
+  campaign_types: [],
+  attribution_models: ['linear', 'first_click', 'last_click', 'time_decay'],
+  metrics: ['revenue', 'roas', 'roi', 'cac', 'cpa', 'conversions'],
+  defaults: {
+    channel: 'all',
+    campaign_type: 'all',
+    attribution_model: 'linear',
+    metric: 'revenue',
+    budget_shift_cap_percent: 20,
+    start_date: '',
+    end_date: '',
+  },
+  available_filters: {
+    channel: false,
+    campaign_type: false,
+    date_range: false,
+  },
+  sources: {},
+  row_counts: {},
+};
+
 export default function AttributionWorkspace({ clientId, onRunResult }: AttributionWorkspaceProps) {
+  const [options, setOptions] = useState<AttributionOptions>(DEFAULT_OPTIONS);
   const [attributionModel, setAttributionModel] = useState('linear');
   const [metric, setMetric] = useState('revenue');
+  const [channel, setChannel] = useState('all');
+  const [campaignType, setCampaignType] = useState('all');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [shiftCap, setShiftCap] = useState(20);
   const [result, setResult] = useState<AttributionAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [isLoadingOptions, setIsLoadingOptions] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'credit' | 'touchpoints' | 'scenario'>('credit');
+  const [activeTab, setActiveTab] = useState<AttributionTab>('credit');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadOptions = async () => {
+      setIsLoadingOptions(true);
+      try {
+        const response = await getAttributionOptions();
+        if (cancelled || !response.success || !response.data) return;
+
+        const loaded = response.data;
+        setOptions(loaded);
+        setAttributionModel(loaded.defaults.attribution_model || 'linear');
+        setMetric(loaded.defaults.metric || 'revenue');
+        setChannel(loaded.defaults.channel || 'all');
+        setCampaignType(loaded.defaults.campaign_type || 'all');
+        setShiftCap(Number(loaded.defaults.budget_shift_cap_percent || 20));
+        setStartDate(loaded.defaults.start_date || loaded.date_range?.min || '');
+        setEndDate(loaded.defaults.end_date || loaded.date_range?.max || '');
+      } catch {
+        // Keep defaults if options endpoint is unavailable.
+      } finally {
+        if (!cancelled) {
+          setIsLoadingOptions(false);
+        }
+      }
+    };
+
+    loadOptions();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     if (!clientId || result) return;
@@ -46,7 +116,7 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
           setResult(maybeAttribution as AttributionAnalysis);
         }
       } catch {
-        // Hydration is best-effort; don't block normal workspace usage.
+        // Hydration is best-effort; do nothing.
       }
     };
 
@@ -57,9 +127,12 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
   }, [clientId, result]);
 
   const channels = useMemo(() => result?.channel_summary ?? [], [result]);
+  const summary = result?.summary_metrics;
   const modelCreditChart = result?.model_credit_chart ?? channels;
   const touchpointChart = result?.touchpoint_position_chart ?? [];
   const budgetScenarioChart = result?.budget_scenario_chart ?? [];
+  const efficiencyChart = result?.efficiency_chart ?? [];
+  const qualityChart = result?.conversion_quality_chart ?? [];
 
   const runAttribution = async () => {
     setIsRunning(true);
@@ -73,6 +146,11 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
         payload: {
           attribution_model: attributionModel,
           metric,
+          channel,
+          campaign_type: campaignType,
+          start_date: startDate || null,
+          end_date: endDate || null,
+          budget_shift_cap_percent: shiftCap,
         },
       });
 
@@ -81,7 +159,6 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
       }
 
       onRunResult?.(response.data);
-
       setResult(response.data.attribution_analysis ?? null);
     } catch (runError) {
       setError(runError instanceof Error ? runError.message : 'Failed to run attribution agent.');
@@ -104,28 +181,72 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
           <div className="workspace-panel">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-4">
               <label className="text-sm text-gray-600">
                 Attribution Model
                 <select value={attributionModel} onChange={(event) => setAttributionModel(event.target.value)} className="workspace-control">
-                  <option value="linear">Linear</option>
-                  <option value="first_click">First Click</option>
-                  <option value="last_click">Last Click</option>
-                  <option value="time_decay">Time Decay</option>
+                  {options.attribution_models.map((model) => (
+                    <option key={model} value={model}>{toLabel(model)}</option>
+                  ))}
                 </select>
               </label>
 
               <label className="text-sm text-gray-600">
                 Optimization Metric
                 <select value={metric} onChange={(event) => setMetric(event.target.value)} className="workspace-control">
-                  <option value="revenue">Revenue</option>
-                  <option value="conversions">Conversions</option>
-                  <option value="engagement">Engagement</option>
+                  {options.metrics.map((item) => (
+                    <option key={item} value={item}>{toLabel(item)}</option>
+                  ))}
                 </select>
               </label>
 
+              <label className="text-sm text-gray-600">
+                Channel
+                <select value={channel} onChange={(event) => setChannel(event.target.value)} className="workspace-control">
+                  <option value="all">All</option>
+                  {options.channels.map((item) => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Campaign Type
+                <select value={campaignType} onChange={(event) => setCampaignType(event.target.value)} className="workspace-control">
+                  <option value="all">All</option>
+                  {options.campaign_types.map((item) => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="mt-4 grid gap-4 md:grid-cols-4">
+              <label className="text-sm text-gray-600">
+                Start Date
+                <input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} className="workspace-control" />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                End Date
+                <input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} className="workspace-control" />
+              </label>
+
+              <label className="text-sm text-gray-600">
+                Max Budget Shift (%)
+                <input
+                  type="number"
+                  min={0}
+                  max={100}
+                  step={1}
+                  value={shiftCap}
+                  onChange={(event) => setShiftCap(Number(event.target.value) || 0)}
+                  className="workspace-control"
+                />
+              </label>
+
               <div className="flex items-end">
-                <button onClick={runAttribution} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-rose-600 to-pink-600 disabled:opacity-60">
+                <button onClick={runAttribution} disabled={isRunning || isLoadingOptions} className="workspace-action-btn w-full bg-gradient-to-r from-rose-600 to-pink-600 disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Analyze Attribution'}
                 </button>
               </div>
@@ -133,6 +254,15 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
 
             {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
             {result?.data_source && <p className="mt-3 text-xs text-gray-500">Data source: {result.data_source}</p>}
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+            <InfoCard title="ROAS" value={formatMetric(summary?.blended_roas, 'ratio')} />
+            <InfoCard title="ROI" value={formatMetric(summary?.blended_roi, 'percent')} />
+            <InfoCard title="CAC" value={formatMetric(summary?.blended_cac, 'currency')} />
+            <InfoCard title="CPA" value={formatMetric(summary?.blended_cpa, 'currency')} />
+            <InfoCard title="CTR" value={formatMetric(summary?.ctr, 'percent')} />
+            <InfoCard title="CVR" value={formatMetric(summary?.conversion_rate, 'percent')} />
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -143,7 +273,7 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
               value={result?.recommended_shift?.percent ? `${result.recommended_shift.percent}%` : '-'}
               helper={
                 result?.recommended_shift?.from && result?.recommended_shift?.to
-                  ? `${result.recommended_shift.from} -> ${result.recommended_shift.to}`
+                  ? `${result.recommended_shift.from} -> ${result.recommended_shift.to} (${toLabel(result.recommended_shift.driver_metric || metric)})`
                   : 'Run analysis to get budget recommendation.'
               }
             />
@@ -154,81 +284,119 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
               <TabButton label="Model Credit" active={activeTab === 'credit'} onClick={() => setActiveTab('credit')} />
               <TabButton label="Touchpoint Mix" active={activeTab === 'touchpoints'} onClick={() => setActiveTab('touchpoints')} />
               <TabButton label="Budget Scenario" active={activeTab === 'scenario'} onClick={() => setActiveTab('scenario')} />
+              <TabButton label="Efficiency" active={activeTab === 'efficiency'} onClick={() => setActiveTab('efficiency')} />
+              <TabButton label="Conversion Quality" active={activeTab === 'quality'} onClick={() => setActiveTab('quality')} />
             </div>
 
             {activeTab === 'credit' && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-gray-900">Attribution Credit by Model</h3>
-                <p className="mt-1 text-sm text-gray-500">Compare first-touch, last-touch, linear, and blended channel credit.</p>
-                <div className="mt-4 h-[360px] w-full">
-                  {modelCreditChart.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={modelCreditChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis dataKey="channel" />
-                        <YAxis tickFormatter={(value) => compactCurrency(Number(value))} />
-                        <Tooltip formatter={(value: number) => formatCurrency(Number(value))} />
-                        <Legend />
-                        <Bar dataKey="first_touch_revenue" name="First Touch" fill="#60a5fa" radius={[8, 8, 0, 0]} />
-                        <Bar dataKey="last_touch_revenue" name="Last Touch" fill="#f97316" radius={[8, 8, 0, 0]} />
-                        <Bar dataKey="linear_revenue" name="Linear" fill="#a78bfa" radius={[8, 8, 0, 0]} />
-                        <Bar dataKey="blended_revenue" name="Blended" fill="#10b981" radius={[8, 8, 0, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <EmptyChart text="Run attribution analysis to render model credit chart." />
-                  )}
-                </div>
-              </div>
+              <ChartWrap
+                title="Attribution Credit by Model"
+                description="Compare first-touch, last-touch, linear, time-decay, and blended credit by channel."
+                emptyText="Run attribution analysis to render model credit chart."
+                hasData={modelCreditChart.length > 0}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={modelCreditChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="channel" />
+                    <YAxis tickFormatter={(value) => compactCurrency(Number(value))} />
+                    <Tooltip formatter={(value: number) => formatCurrency(Number(value))} />
+                    <Legend />
+                    <Bar dataKey="first_touch_revenue" name="First Touch" fill="#60a5fa" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="last_touch_revenue" name="Last Touch" fill="#f97316" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="linear_revenue" name="Linear" fill="#a78bfa" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="time_decay_revenue" name="Time Decay" fill="#38bdf8" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="blended_revenue" name="Blended" fill="#10b981" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartWrap>
             )}
 
             {activeTab === 'touchpoints' && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-gray-900">Touchpoint Position Mix</h3>
-                <p className="mt-1 text-sm text-gray-500">Understand where each channel appears in customer journeys.</p>
-                <div className="mt-4 h-[340px] w-full">
-                  {touchpointChart.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={touchpointChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis dataKey="channel" />
-                        <YAxis />
-                        <Tooltip formatter={(value: number) => formatCount(Number(value))} />
-                        <Legend />
-                        <Bar dataKey="first_touch_count" name="First Touch" stackId="touch" fill="#3b82f6" />
-                        <Bar dataKey="middle_touch_count" name="Middle Touch" stackId="touch" fill="#f59e0b" />
-                        <Bar dataKey="last_touch_count" name="Last Touch" stackId="touch" fill="#22c55e" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <EmptyChart text="Touchpoint mix needs event journey data." />
-                  )}
-                </div>
-              </div>
+              <ChartWrap
+                title="Touchpoint Position Mix"
+                description="Understand where each channel appears in customer journeys."
+                emptyText="Touchpoint mix needs event journey data."
+                hasData={touchpointChart.length > 0}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={touchpointChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="channel" />
+                    <YAxis />
+                    <Tooltip formatter={(value: number) => formatCount(Number(value))} />
+                    <Legend />
+                    <Bar dataKey="first_touch_count" name="First Touch" stackId="touch" fill="#3b82f6" />
+                    <Bar dataKey="middle_touch_count" name="Middle Touch" stackId="touch" fill="#f59e0b" />
+                    <Bar dataKey="last_touch_count" name="Last Touch" stackId="touch" fill="#22c55e" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartWrap>
             )}
 
             {activeTab === 'scenario' && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-gray-900">Budget Shift Scenario</h3>
-                <p className="mt-1 text-sm text-gray-500">Compare current vs projected revenue after recommended budget reallocation.</p>
-                <div className="mt-4 h-[340px] w-full">
-                  {budgetScenarioChart.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={budgetScenarioChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis dataKey="channel" />
-                        <YAxis tickFormatter={(value) => compactCurrency(Number(value))} />
-                        <Tooltip formatter={(value: number) => formatCurrency(Number(value))} />
-                        <Legend />
-                        <Bar dataKey="current_revenue" name="Current Revenue" fill="#94a3b8" radius={[8, 8, 0, 0]} />
-                        <Bar dataKey="projected_revenue" name="Projected Revenue" fill="#ef4444" radius={[8, 8, 0, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <EmptyChart text="Run analysis to simulate budget scenario impact." />
-                  )}
-                </div>
-              </div>
+              <ChartWrap
+                title="Budget Shift Scenario"
+                description="Compare current vs projected revenue after recommended budget reallocation."
+                emptyText="Run analysis to simulate budget scenario impact."
+                hasData={budgetScenarioChart.length > 0}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={budgetScenarioChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="channel" />
+                    <YAxis tickFormatter={(value) => compactCurrency(Number(value))} />
+                    <Tooltip formatter={(value: number) => formatCurrency(Number(value))} />
+                    <Legend />
+                    <Bar dataKey="current_revenue" name="Current Revenue" fill="#94a3b8" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="projected_revenue" name="Projected Revenue" fill="#ef4444" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartWrap>
+            )}
+
+            {activeTab === 'efficiency' && (
+              <ChartWrap
+                title="Channel Efficiency"
+                description="ROAS, ROI, CAC and CPA by channel using real campaign and attribution outputs."
+                emptyText="Run analysis to render efficiency metrics."
+                hasData={efficiencyChart.length > 0}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={efficiencyChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="channel" />
+                    <YAxis />
+                    <Tooltip formatter={(value: number, name: string) => name.toLowerCase().includes('cac') || name.toLowerCase().includes('cpa') ? formatCurrency(Number(value)) : formatDecimal(Number(value))} />
+                    <Legend />
+                    <Bar dataKey="roas" name="ROAS" fill="#6366f1" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="roi" name="ROI" fill="#0ea5e9" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="cac" name="CAC" fill="#ef4444" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="cpa" name="CPA" fill="#f59e0b" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartWrap>
+            )}
+
+            {activeTab === 'quality' && (
+              <ChartWrap
+                title="Conversion Quality"
+                description="CTR and conversion rate by channel with purchase and AOV context."
+                emptyText="Run analysis to render conversion quality metrics."
+                hasData={qualityChart.length > 0}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={qualityChart} margin={{ top: 8, right: 20, left: 10, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="channel" />
+                    <YAxis tickFormatter={(value) => `${(Number(value) * 100).toFixed(0)}%`} />
+                    <Tooltip formatter={(value: number) => `${(Number(value) * 100).toFixed(2)}%`} />
+                    <Legend />
+                    <Bar dataKey="ctr" name="CTR" fill="#14b8a6" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="conversion_rate" name="Conversion Rate" fill="#8b5cf6" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartWrap>
             )}
           </div>
 
@@ -239,10 +407,14 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
                 <thead className="text-gray-500">
                   <tr>
                     <th className="px-3 py-2">Channel</th>
-                    <th className="px-3 py-2">First Touch</th>
-                    <th className="px-3 py-2">Last Touch</th>
-                    <th className="px-3 py-2">Linear</th>
-                    <th className="px-3 py-2">Blended</th>
+                    <th className="px-3 py-2">Blended Rev</th>
+                    <th className="px-3 py-2">Spend</th>
+                    <th className="px-3 py-2">ROAS</th>
+                    <th className="px-3 py-2">ROI</th>
+                    <th className="px-3 py-2">CAC</th>
+                    <th className="px-3 py-2">CPA</th>
+                    <th className="px-3 py-2">CTR</th>
+                    <th className="px-3 py-2">CVR</th>
                     <th className="px-3 py-2">Weight</th>
                   </tr>
                 </thead>
@@ -251,16 +423,20 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
                     channels.map((row) => (
                       <tr key={row.channel} className="border-t border-gray-100">
                         <td className="px-3 py-2 font-semibold text-gray-900">{row.channel}</td>
-                        <td className="px-3 py-2">{formatCurrency(row.first_touch_revenue)}</td>
-                        <td className="px-3 py-2">{formatCurrency(row.last_touch_revenue)}</td>
-                        <td className="px-3 py-2">{formatCurrency(row.linear_revenue)}</td>
                         <td className="px-3 py-2">{formatCurrency(row.blended_revenue)}</td>
+                        <td className="px-3 py-2">{formatCurrency(row.spend)}</td>
+                        <td className="px-3 py-2">{formatDecimal(row.blended_roas)}</td>
+                        <td className="px-3 py-2">{formatPercent(row.blended_roi)}</td>
+                        <td className="px-3 py-2">{formatCurrency(row.cac)}</td>
+                        <td className="px-3 py-2">{formatCurrency(row.cpa)}</td>
+                        <td className="px-3 py-2">{formatPercent(row.ctr)}</td>
+                        <td className="px-3 py-2">{formatPercent(row.conversion_rate)}</td>
                         <td className="px-3 py-2">{formatPercent(result?.channel_weights?.[row.channel])}</td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td className="px-3 py-4 text-gray-500" colSpan={6}>No attribution output yet. Run analysis to populate this table.</td>
+                      <td className="px-3 py-4 text-gray-500" colSpan={10}>No attribution output yet. Run analysis to populate this table.</td>
                     </tr>
                   )}
                 </tbody>
@@ -268,6 +444,30 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ChartWrap({
+  title,
+  description,
+  hasData,
+  emptyText,
+  children,
+}: {
+  title: string;
+  description: string;
+  hasData: boolean;
+  emptyText: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="mt-4">
+      <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      <p className="mt-1 text-sm text-gray-500">{description}</p>
+      <div className="mt-4 h-[360px] w-full">
+        {hasData ? children : <EmptyChart text={emptyText} />}
       </div>
     </div>
   );
@@ -290,7 +490,18 @@ function formatCurrency(value?: number): string {
 
 function formatPercent(value?: number): string {
   if (value === undefined || value === null) return '-';
-  return `${(value * 100).toFixed(1)}%`;
+  return `${(value * 100).toFixed(2)}%`;
+}
+
+function formatDecimal(value?: number): string {
+  if (value === undefined || value === null) return '-';
+  return Number(value).toFixed(2);
+}
+
+function toLabel(value: string): string {
+  return value
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 function TabButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
@@ -327,3 +538,9 @@ function compactCurrency(value: number): string {
   }).format(value);
 }
 
+function formatMetric(value: number | undefined, mode: 'currency' | 'percent' | 'ratio'): string {
+  if (value === undefined || value === null) return '-';
+  if (mode === 'currency') return formatCurrency(value);
+  if (mode === 'percent') return formatPercent(value);
+  return formatDecimal(value);
+}
