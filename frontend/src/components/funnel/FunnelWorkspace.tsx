@@ -229,12 +229,12 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-emerald-600 to-teal-600">
+          <div className="workspace-agent-icon">
             <Filter className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Funnel Agent</h1>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900">Funnel Agent</h1>
         </div>
       </div>
 
@@ -301,9 +301,9 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
                 <button
                   onClick={runFunnel}
                   disabled={isRunning || isLoadingOptions}
-                  className="workspace-action-btn h-11 w-full whitespace-nowrap bg-gradient-to-r from-emerald-600 to-teal-600 disabled:opacity-60"
+                  className="workspace-action-btn h-11 w-full whitespace-nowrap bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60"
                 >
-                  <Sparkles className="h-4 w-4 shrink-0" />
+
                   <span>{isRunning ? 'Running...' : 'Analyze Funnel'}</span>
                 </button>
               </div>
@@ -311,8 +311,8 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
 
             <div className="mt-4">
               {isLoadingOptions && <p className="text-sm text-gray-500">Loading available funnel filters...</p>}
-              {optionsError && <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">{optionsError}</p>}
-              {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+              {optionsError && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{optionsError}</p>}
+              {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
 
               {/* Intentionally hidden: technical mapping/event-stage notes for cleaner end-user UX. */}
             </div>
@@ -616,7 +616,7 @@ function TabButton({ label, active, onClick }: { label: string; active: boolean;
       onClick={onClick}
       className={`workspace-tab ${
         active
-          ? 'border border-emerald-500/20 bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-[0_10px_24px_rgba(5,150,105,0.32)]'
+          ? 'border border-gray-900 bg-gray-900 text-white shadow-[0_10px_24px_rgba(15,23,42,0.24)]'
           : 'border border-gray-200 bg-gray-100/80 text-gray-700 hover:bg-white'
       }`}
       type="button"

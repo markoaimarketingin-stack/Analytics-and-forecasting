@@ -4,22 +4,24 @@ import type { ReactNode } from 'react';
 type SettingsWorkspaceProps = {
   darkMode: boolean;
   onToggleDarkMode: (value: boolean) => void;
+  onLogout: () => void;
 };
 
 export default function SettingsWorkspace({
   darkMode,
   onToggleDarkMode,
+  onLogout,
 }: SettingsWorkspaceProps) {
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-slate-900 to-indigo-700">
+          <div className="workspace-agent-icon">
             <Settings className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">Workspace Settings</h1>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Workspace Settings</h1>
           </div>
         </div>
       </div>
@@ -40,6 +42,18 @@ export default function SettingsWorkspace({
                 checked={darkMode}
                 onChange={onToggleDarkMode}
               />
+            </div>
+
+            <div className="mt-8 border-t border-gray-200 pt-6">
+              <div className="text-sm font-semibold text-gray-900">Account</div>
+              <p className="mt-1 text-sm text-gray-500">Sign out to return to the login screen.</p>
+              <button
+                type="button"
+                onClick={onLogout}
+                className="mt-4 inline-flex h-10 items-center justify-center rounded-xl bg-black px-4 text-sm font-semibold text-white transition hover:bg-gray-900"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>

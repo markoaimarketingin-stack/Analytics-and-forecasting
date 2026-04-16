@@ -196,6 +196,7 @@ export default function App({
   const [chatThreads, setChatThreads] = useState<ChatThreadSummary[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [isChatPanelCollapsed, setIsChatPanelCollapsed] = useState(false);
+  const [supervisorResetToken, setSupervisorResetToken] = useState(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -243,6 +244,7 @@ export default function App({
     setActivatedAgents([]);
     setExecutionTimeline([]);
     setCurrentThreadId(null);
+    setSupervisorResetToken((prev) => prev + 1);
   };
 
   const handleOpenHistoryThread = async (threadId: string) => {
@@ -711,6 +713,10 @@ export default function App({
     void handleSendMessage(suggestion.prompt, { executedSuggestionId: suggestion.id });
   };
 
+  const handleRemoveSuggestion = (suggestionId: string) => {
+    setSuggestions((prev) => prev.filter((item) => item.id !== suggestionId));
+  };
+
   const handleWorkspaceRunResult = (source: string, result: AgentOrchestrationResult) => {
     addSuggestionsFromResult(source, result);
     setCurrentAnalysis({
@@ -730,6 +736,7 @@ export default function App({
             <SupervisorWorkspace
               onRunAnalysis={handleRunSupervisorPipeline}
               onOpenDashboard={() => setActiveSection('dashboard')}
+              resetToken={supervisorResetToken}
             />
           </div>
         );
@@ -776,6 +783,7 @@ export default function App({
           <SettingsWorkspace
             darkMode={darkMode}
             onToggleDarkMode={setDarkMode}
+            onLogout={onLogout}
           />
         );
 
@@ -796,6 +804,7 @@ export default function App({
         suggestions={suggestions}
         onExecuteSuggestion={handleExecuteSuggestion}
         onUpdateSuggestion={handleUpdateSuggestion}
+        onRemoveSuggestion={handleRemoveSuggestion}
         chatThreads={chatThreads}
         isHistoryLoading={isHistoryLoading}
         activeThreadId={currentThreadId}

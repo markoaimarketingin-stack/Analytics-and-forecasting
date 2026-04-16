@@ -150,12 +150,12 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-indigo-600 to-cyan-600">
+          <div className="workspace-agent-icon">
             <Users className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Cohort Agent</h1>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900">Cohort Agent</h1>
         </div>
       </div>
 
@@ -256,13 +256,13 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
               </label>
 
               <div className="flex items-end">
-                <button onClick={runCohort} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-indigo-600 to-cyan-600 disabled:opacity-60">
-                  <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Analyze Cohorts'}
+                <button onClick={runCohort} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                   {isRunning ? 'Running...' : 'Analyze Cohorts'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
             {isLoadingOptions && <p className="mt-3 text-xs text-gray-500">Loading Supabase cohort filters...</p>}
             {result?.data_source && <p className="mt-3 text-xs text-gray-500">Data source: {result.data_source}</p>}
           </div>
@@ -447,7 +447,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
                   <div key={`${item.segment}-${index}`} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="font-semibold text-gray-900">{item.segment} / {item.signup_channel} / {item.contract_type}</div>
-                      <div className="text-xs font-semibold uppercase tracking-wide text-indigo-700">{item.priority} priority</div>
+                      <div className="text-xs font-semibold uppercase tracking-wide text-gray-700">{item.priority} priority</div>
                     </div>
                     <div className="mt-1 text-sm text-gray-600">{item.recommended_action}</div>
                     <div className="mt-2 text-xs text-gray-600">

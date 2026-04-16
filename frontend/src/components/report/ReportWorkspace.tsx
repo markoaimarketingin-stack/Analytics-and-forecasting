@@ -127,14 +127,14 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-slate-900 to-slate-700">
+          <div className="workspace-agent-icon">
             <FileText className="h-7 w-7" />
           </div>
 
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">
               Report Generator
             </h1>
           </div>
@@ -143,13 +143,13 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-7">
-          <div className="workspace-panel rounded-[28px] border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/40 p-7 shadow-[0_20px_45px_-30px_rgba(15,23,42,0.35)] lg:p-10">
+          <div className="workspace-panel rounded-[24px] border border-gray-200 bg-white p-6 lg:p-8">
             <div className="mx-auto max-w-3xl text-center">
               <div className="text-[11px] font-semibold uppercase tracking-[0.32em] text-slate-400">
                 Executive Reporting
               </div>
 
-              <h2 className="mt-4 text-4xl font-bold leading-tight text-slate-900">
+              <h2 className="mt-4 text-3xl font-bold leading-tight text-slate-900">
                 Configure Your Analytics Report
               </h2>
 
@@ -244,7 +244,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
             </div>
 
             {error ? (
-              <div className="mt-5 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              <div className="mt-5 flex items-center gap-2 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">
                 <AlertCircle className="h-4 w-4" />
                 {error}
               </div>
@@ -252,30 +252,30 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
 
           </div>
 
-          <div className="workspace-panel overflow-hidden rounded-[28px] border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-8 text-white shadow-[0_25px_50px_-25px_rgba(15,23,42,0.85)] lg:p-10">
+          <div className="workspace-panel overflow-hidden rounded-[24px] border border-gray-200 bg-white p-7 text-gray-900 lg:p-8">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
-                <div className="workspace-option-pill workspace-option-pill-ghost border-white/15 text-[10px] uppercase tracking-[0.28em] text-slate-300">
+                <div className="workspace-option-pill border-gray-300 bg-gray-100 text-[10px] uppercase tracking-[0.28em] text-gray-700">
                   Generate Report
                 </div>
 
-                <h3 className="mt-5 text-4xl font-bold leading-tight">
+                <h3 className="mt-4 text-3xl font-bold leading-tight text-gray-900">
                   Ready To Export
                 </h3>
 
-                <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+                <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
                   Generate your final report and instantly download it in the
                   selected format.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
+                  <span className="workspace-option-pill uppercase">
                     {reportTypeLabel}
                   </span>
-                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
+                  <span className="workspace-option-pill uppercase">
                     {exportFormat}
                   </span>
-                  <span className="workspace-option-pill workspace-option-pill-ghost uppercase">
+                  <span className="workspace-option-pill uppercase">
                     {selectedAgents.length} agent{selectedAgents.length === 1 ? '' : 's'}
                   </span>
                 </div>
@@ -286,7 +286,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                   type="button"
                   onClick={handleGenerateReport}
                   disabled={isGenerating}
-                  className="workspace-action-btn h-12 rounded-xl bg-white px-5 text-sm font-semibold text-slate-900 shadow-[0_10px_25px_rgba(255,255,255,0.2)] hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="workspace-action-btn h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Sparkles className="h-4 w-4" />
                   {isGenerating ? 'Generating...' : 'Generate Report'}
@@ -296,7 +296,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                   type="button"
                   onClick={handleDownloadLatest}
                   disabled={!latestReport}
-                  className="workspace-action-btn h-12 rounded-xl border border-white/25 bg-white/5 px-5 text-sm font-semibold text-white shadow-none hover:border-white/45 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="workspace-action-btn h-11 rounded-xl border border-gray-300 bg-white px-5 text-sm font-semibold text-gray-800 shadow-none hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Download className="h-4 w-4" />
                   Download Latest

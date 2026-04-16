@@ -149,12 +149,12 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-emerald-600 to-teal-600">
+          <div className="workspace-agent-icon">
             <DollarSign className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Budget Allocator Agent</h1>
+          <h1 className="text-xl font-bold tracking-tight text-gray-900">Budget Allocator Agent</h1>
         </div>
       </div>
 
@@ -262,13 +262,13 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
               </label>
 
               <div className="flex items-end xl:col-span-2">
-                <button onClick={runAllocation} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-emerald-600 to-teal-600 disabled:opacity-60">
-                  <Sparkles className="h-4 w-4" /> {isRunning ? 'Allocating...' : 'Generate Budget Plan'}
+                <button onClick={runAllocation} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                  {isRunning ? 'Allocating...' : 'Generate Budget Plan'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
@@ -353,7 +353,7 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
               <h3 className="text-base font-semibold text-gray-900">Plan Variants</h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {planOptions.length > 0 ? planOptions.map((name) => (
-                  <span key={name} className="workspace-option-pill border-emerald-200 bg-emerald-50 text-emerald-700">
+                  <span key={name} className="workspace-option-pill border-gray-300 bg-gray-100 text-gray-700">
                     {name}
                   </span>
                 )) : <span className="text-sm text-gray-500">Run allocator to generate conservative / balanced / aggressive plans.</span>}

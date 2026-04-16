@@ -213,13 +213,13 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
 
   return (
     <div className="workspace-surface workspace-modern">
-      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-3">
+      <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
         <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon bg-gradient-to-br from-blue-600 to-indigo-600">
+          <div className="workspace-agent-icon">
             <TrendingUp className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">Forecast Agent</h1>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Forecast Agent</h1>
           </div>
         </div>
       </div>
@@ -329,13 +329,13 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
                   onClick={() => setIsAssumptionsOpen((prev) => !prev)}
                   className="workspace-action-btn w-full bg-gray-900 text-white"
                 >
-                  <Settings2 className="h-4 w-4" /> {isAssumptionsOpen ? 'Hide Assumptions' : 'Advanced Assumptions'}
+                  <Settings2 className="h-4 w-4" /> {isAssumptionsOpen ? 'Hide Assumptions' : ' Assumptions'}
                 </button>
               </div>
 
               <div className="flex items-end">
                 <button onClick={runForecast} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
-                  <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Run Forecast'}
+                  {isRunning ? 'Running...' : 'Run Forecast'}
                 </button>
               </div>
             </div>
@@ -362,9 +362,9 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
               </div>
             ) : null}
 
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-            {optionsError && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{optionsError}</p>}
-            {warnings.length > 0 && <p className="mt-3 text-sm text-amber-700">{warnings.join(' | ')}</p>}
+            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
+            {optionsError && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{optionsError}</p>}
+            {warnings.length > 0 && <p className="mt-3 text-sm text-gray-700">{warnings.join(' | ')}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">

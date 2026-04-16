@@ -52,7 +52,7 @@ export default function ChatPanel({
       {/* Keep this header h-20 to align with main workspace headers. */}
       <div className="chat-panel-header relative flex h-20 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_10px_24px_rgba(79,70,229,0.35)]">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black text-white shadow-[0_10px_20px_rgba(0,0,0,0.24)]">
             <Bot className="h-5 w-5" />
           </div>
         </div>
@@ -60,15 +60,15 @@ export default function ChatPanel({
         <div className="mr-12 flex items-center gap-2">
           <button
             onClick={onNewChat}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(59,130,246,0.3)] transition hover:brightness-105"
           >
             <Plus className="h-3.5 w-3.5" /> New Chat
           </button>
           <button
             onClick={openDatasetSelectionModal}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-violet-200 bg-violet-50 px-3 text-xs font-semibold text-violet-700 transition hover:bg-violet-100"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border-2 border-solid border-[#7c3aed] bg-white px-3 text-xs font-semibold text-violet-600 transition hover:bg-violet-50"
           >
-            <BookOpen className="h-3.5 w-3.5" /> Knowledge Base
+            <BookOpen className="h-4 w-4" /> Knowledge Base
           </button>
         </div>
 

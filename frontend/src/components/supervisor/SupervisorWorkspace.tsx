@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
 import {
   AlertTriangle,
+  Bot,
   CheckCircle2,
   Filter,
   LayoutDashboard,
@@ -18,6 +19,7 @@ type StageStatus = 'idle' | 'running' | 'done' | 'error';
 interface SupervisorWorkspaceProps {
   onRunAnalysis: () => Promise<boolean>;
   onOpenDashboard: () => void;
+  resetToken: number;
 }
 
 type AgentStage = 'parallel' | 'forecast' | 'scenario';
@@ -59,29 +61,29 @@ function StageCard({
   const styles =
     status === 'done'
       ? {
-          shell: 'border-emerald-200/90 bg-emerald-50 shadow-[0_10px_30px_rgba(5,150,105,0.12)]',
-          icon: 'bg-emerald-600 text-white',
-          text: 'text-emerald-900',
-          sub: 'text-emerald-700/90',
-          tag: 'bg-emerald-100 text-emerald-700',
+          shell: 'border-gray-900 bg-gray-950 shadow-[0_12px_24px_rgba(0,0,0,0.22)]',
+          icon: 'bg-white text-black',
+          text: 'text-white',
+          sub: 'text-gray-300',
+          tag: 'bg-white text-black',
           tagText: 'Completed',
         }
       : status === 'running'
         ? {
-            shell: 'border-blue-200/90 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-[0_12px_34px_rgba(59,130,246,0.18)] ring-2 ring-blue-100',
-            icon: 'bg-blue-600 text-white',
-            text: 'text-blue-950',
-            sub: 'text-blue-700/90',
-            tag: 'bg-blue-100 text-blue-700',
+            shell: 'border-gray-400 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)] ring-1 ring-gray-200',
+            icon: 'bg-black text-white',
+            text: 'text-gray-950',
+            sub: 'text-gray-600',
+            tag: 'bg-black text-white',
             tagText: 'Running',
           }
         : status === 'error'
           ? {
-              shell: 'border-red-200/90 bg-red-50 shadow-[0_10px_30px_rgba(239,68,68,0.16)]',
-              icon: 'bg-red-600 text-white',
-              text: 'text-red-900',
-              sub: 'text-red-700/90',
-              tag: 'bg-red-100 text-red-700',
+              shell: 'border-gray-300 bg-gray-100',
+              icon: 'bg-black text-white',
+              text: 'text-gray-900',
+              sub: 'text-gray-600',
+              tag: 'bg-gray-900 text-white',
               tagText: 'Failed',
             }
           : {
@@ -117,7 +119,7 @@ function StageCard({
   );
 }
 
-export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: SupervisorWorkspaceProps) {
+export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, resetToken }: SupervisorWorkspaceProps) {
   const [parallelStatus, setParallelStatus] = useState<StageStatus>('idle');
   const [forecastStatus, setForecastStatus] = useState<StageStatus>('idle');
   const [scenarioStatus, setScenarioStatus] = useState<StageStatus>('idle');
@@ -145,6 +147,12 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: 
       clearTimers();
     };
   }, []);
+
+  useEffect(() => {
+    clearTimers();
+    setRunState('idle');
+    resetPipeline();
+  }, [resetToken]);
 
   const playPipelineTimeline = () =>
     new Promise<void>((resolve) => {
@@ -215,15 +223,6 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: 
     }
   };
 
-  const statusBadge =
-    runState === 'completed'
-      ? { text: 'Pipeline complete', cls: 'bg-emerald-100 text-emerald-700 border-emerald-200' }
-      : runState === 'running'
-        ? { text: 'Pipeline running', cls: 'bg-blue-100 text-blue-700 border-blue-200' }
-        : runState === 'error'
-          ? { text: 'Pipeline failed', cls: 'bg-red-100 text-red-700 border-red-200' }
-          : { text: 'Ready to run', cls: 'bg-gray-100 text-gray-600 border-gray-200' };
-
   const getStepStatus = (stage: AgentStage): StageStatus => {
     if (stage === 'parallel') return parallelStatus;
     if (stage === 'forecast') return forecastStatus;
@@ -231,33 +230,24 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: 
   };
 
   return (
-    <div className="workspace-surface workspace-modern">
-      <div className="workspace-content">
-        <div className="mx-auto w-full max-w-6xl space-y-6">
-        <div className="workspace-panel relative overflow-hidden rounded-[28px] border border-gray-200 bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#1e293b] p-8 text-white shadow-[0_20px_60px_rgba(15,23,42,0.28)]">
-          <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl" />
-          <div className="absolute -bottom-20 left-20 h-56 w-56 rounded-full bg-violet-500/20 blur-3xl" />
-
-          <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.3em] text-blue-200/85">Orchestration Center</div>
-              <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white md:text-4xl">Analytics Supervisor</h1>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-200 md:text-base">
-                Launch a full multi-agent run where funnel, cohort, and attribution process in parallel, followed by
-                forecast and scenario analysis for dashboard-ready business insights.
-              </p>
+    <div className="flex h-full flex-col bg-[#f3f4f6]">
+      <div className="border-b border-gray-200 bg-white px-6 py-3">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-black text-white">
+              <Bot className="h-5 w-5" />
             </div>
-
-            <div className={`rounded-xl border px-3 py-2 text-xs font-semibold ${statusBadge.cls}`}>
-              {statusBadge.text}
+            <div>
+              <h1 className="text-2xl font-extrabold tracking-tight text-black">Analytics Supervisor</h1>
+              <p className="mt-0.5 text-sm text-gray-600">Orchestrator</p>
             </div>
           </div>
 
-          <div className="relative z-10 mt-7 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-3">
             <button
               onClick={handleRun}
               disabled={runState === 'running'}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_28px_rgba(59,130,246,0.4)] transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex h-10 items-center gap-2 rounded-[999px] bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(59,130,246,0.28)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {runState === 'running' ? (
                 <>
@@ -271,11 +261,46 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: 
                 </>
               )}
             </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-6 py-6">
+        <div className="mx-auto w-full max-w-6xl space-y-6">
+          {!hasStarted ? (
+            <div className="flex min-h-[430px] flex-col items-center justify-center px-6 text-center">
+              <div className="flex h-36 w-36 items-center justify-center rounded-full border border-gray-200 bg-white shadow-[0_10px_28px_rgba(0,0,0,0.08)]">
+                <Bot className="h-11 w-11 text-black" />
+              </div>
+
+              <h2 className="mt-7 text-3xl font-extrabold tracking-tight text-black">I am your Analytics Supervisor Agent</h2>
+              <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-600">
+                Specialized in orchestrating funnel, cohort, attribution, forecast, and scenario workflows for
+                unified, decision-ready insights.
+              </p>
+            </div>
+          ) : (
+            <div className="workspace-panel md:p-8">
+              <div className="mt-5 space-y-3">
+                {AGENT_SEQUENCE.map((agent, index) => (
+                  <StageCard
+                    key={agent.label}
+                    label={agent.label}
+                    hint={agent.hint}
+                    icon={agent.icon}
+                    status={getStepStatus(agent.stage)}
+                    visible={index < visibleSteps}
+                    stepNumber={index + 1}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
             {runState === 'completed' && (
               <button
                 onClick={onOpenDashboard}
-                className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(16,185,129,0.35)] transition hover:bg-emerald-600"
+                className="inline-flex items-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-semibold text-white transition hover:bg-gray-900"
               >
                 <LayoutDashboard className="h-4 w-4" />
                 Open Dashboard
@@ -288,57 +313,33 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard }: 
                   setRunState('idle');
                   resetPipeline();
                 }}
-                className="inline-flex items-center gap-2 rounded-xl bg-white/95 px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-white"
+                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
               >
-                <AlertTriangle className="h-4 w-4 text-red-500" />
+                <AlertTriangle className="h-4 w-4 text-gray-600" />
                 Reset Pipeline
               </button>
             )}
-          </div>
-        </div>
-
-        <div className="workspace-panel md:p-8">
-          {!hasStarted ? (
-            <div className="mt-2 flex min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-5 py-8 text-center">
-              <span className="text-lg font-semibold text-gray-700">Click Run Analysis</span>
-            </div>
-          ) : (
-            <div className="mt-5 space-y-3">
-              {AGENT_SEQUENCE.map((agent, index) => (
-                <StageCard
-                  key={agent.label}
-                  label={agent.label}
-                  hint={agent.hint}
-                  icon={agent.icon}
-                  status={getStepStatus(agent.stage)}
-                  visible={index < visibleSteps}
-                  stepNumber={index + 1}
-                />
-              ))}
-            </div>
-          )}
 
           {runState !== 'idle' && (
             <div className="mt-5 rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-600">
               {runState === 'completed' ? (
-                <div className="flex items-center gap-2 text-emerald-700">
+                <div className="flex items-center gap-2 text-gray-800">
                   <CheckCircle2 className="h-4 w-4" />
                   Pipeline finished. Open the dashboard to review unified insights and recommendations.
                 </div>
               ) : runState === 'running' ? (
-                <div className="flex items-center gap-2 text-blue-700">
+                <div className="flex items-center gap-2 text-gray-800">
                   <LoaderCircle className="h-4 w-4 animate-spin" />
-                  Agents are appearing and executing in sequence.
+                  Executing...
                 </div>
               ) : (
-                <div className="flex items-center gap-2 text-red-700">
+                <div className="flex items-center gap-2 text-gray-800">
                   <AlertTriangle className="h-4 w-4" />
                   Run failed. Reset and retry the pipeline.
                 </div>
               )}
             </div>
           )}
-        </div>
         </div>
       </div>
     </div>
