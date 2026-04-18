@@ -31,10 +31,12 @@ class BudgetAllocatorAgent:
         request: BudgetAllocatorRequest | None = None,
     ) -> AnalyticsState:
         request = request or self._build_request(state)
+        client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
 
         campaigns_df, source = queries.get_dataset_dataframe_with_source(
             "campaigns",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         if campaigns_df.empty:
             state.budget_allocation_analysis = BudgetAllocationAnalysis(

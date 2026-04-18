@@ -5,6 +5,7 @@ from analytics_agent.agents.forecast_agent import ForecastAgent
 from analytics_agent.agents.funnel_agent import FunnelAgent
 from analytics_agent.agents.orchestrator_agent import OrchestratorAgent
 from analytics_agent.agents.scenario_agent import ScenarioAgent
+from analytics_agent.agents.data_query_agent import DataQueryAgent
 
 __all__ = [
     "AttributionAgent",
@@ -14,5 +15,6 @@ __all__ = [
     "ForecastAgent",
     "ScenarioAgent",
     "OrchestratorAgent",
+    "DataQueryAgent",
 ]
 

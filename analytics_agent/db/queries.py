@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any, Iterable
 
 import pandas as pd
 
-from analytics_agent.clients.supabase_client import get_supabase_client
+from analytics_agent.clients.supabase_client import (
+    get_supabase_client,
+    list_training_upload_records,
+)
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 SUPPORTED_DATASETS = {"campaigns", "customers", "events", "retention", "transactions"}
@@ -19,6 +23,16 @@ UPSERT_CONFLICT_COLUMNS: dict[str, str] = {
 }
 
 _SUPABASE = None
+CLIENT_DATASET_CATEGORIES = {"campaigns", "customers", "events", "retention", "transactions"}
+
+AGENT_DATASET_REQUIREMENTS: dict[str, list[tuple[str, ...]]] = {
+    "forecast": [("campaigns",)],
+    "scenario": [("campaigns",)],
+    "budget_allocator": [("campaigns",)],
+    "attribution": [("campaigns",), ("events",), ("transactions",)],
+    "cohort": [("customers",), ("retention",), ("transactions",)],
+    "funnel": [("campaigns", "events")],
+}
 
 
 def _get_supabase():
@@ -64,6 +78,127 @@ def _get_table_dataframe(table_name: str, limit: int | None = None) -> pd.DataFr
     return remote_df.head(limit) if limit is not None and not remote_df.empty else remote_df
 
 
+def _normalize_client_id(client_id: str | None) -> str:
+    return str(client_id or "").strip()
+
+
+def _list_client_training_uploads(client_id: str) -> list[dict[str, Any]]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if not normalized_client_id:
+        return []
+
+    try:
+        response = list_training_upload_records(normalized_client_id)
+        return response.data or []
+    except Exception:
+        return []
+
+
+def _parse_uploaded_dataset_file(path: Path) -> pd.DataFrame:
+    suffix = path.suffix.lower()
+    if suffix == ".csv":
+        return pd.read_csv(path)
+
+    if suffix == ".json":
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+
+        if isinstance(payload, list):
+            return pd.DataFrame(payload)
+
+        if isinstance(payload, dict):
+            for key in ("rows", "data", "records", "items"):
+                value = payload.get(key)
+                if isinstance(value, list):
+                    return pd.DataFrame(value)
+            return pd.DataFrame([payload])
+
+    raise ValueError(f"Unsupported dataset file format: {path.suffix or 'unknown'}")
+
+
+def get_client_dataset_dataframe_with_source(
+    dataset_name: str,
+    client_id: str,
+    limit: int | None = None,
+) -> tuple[pd.DataFrame, str]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if dataset_name not in CLIENT_DATASET_CATEGORIES or not normalized_client_id:
+        return pd.DataFrame(), "missing_client_context"
+
+    records = [
+        row
+        for row in _list_client_training_uploads(normalized_client_id)
+        if str(row.get("category") or "").strip().lower() == dataset_name
+    ]
+    if not records:
+        return pd.DataFrame(), "missing_client_upload"
+
+    parsed_frames: list[pd.DataFrame] = []
+    for row in records:
+        local_path = Path(str(row.get("local_storage_path") or "").strip())
+        if not local_path.exists():
+            continue
+
+        try:
+            frame = _parse_uploaded_dataset_file(local_path)
+        except Exception:
+            continue
+
+        if frame.empty:
+            continue
+        parsed_frames.append(frame)
+
+    if not parsed_frames:
+        return pd.DataFrame(), "missing_client_upload"
+
+    combined = pd.concat(parsed_frames, ignore_index=True, sort=False)
+    if limit is not None:
+        combined = combined.head(limit)
+    return combined, "client_uploads"
+
+
+def get_missing_client_datasets_for_agents(client_id: str, agent_names: Iterable[str]) -> list[str]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if not normalized_client_id:
+        return []
+
+    missing: list[str] = []
+    availability_cache: dict[str, bool] = {}
+
+    def _has_usable_dataset(category: str) -> bool:
+        if category in availability_cache:
+            return availability_cache[category]
+        frame, _ = get_client_dataset_dataframe_with_source(category, normalized_client_id, limit=1)
+        is_available = not frame.empty
+        availability_cache[category] = is_available
+        return is_available
+
+    for agent_name in agent_names:
+        requirements = AGENT_DATASET_REQUIREMENTS.get(str(agent_name or "").strip().lower(), [])
+        for requirement_group in requirements:
+            if any(_has_usable_dataset(category) for category in requirement_group):
+                continue
+            missing.extend(category for category in requirement_group if category not in missing)
+
+    return missing
+
+
+def build_missing_client_dataset_message(
+    client_id: str,
+    dataset_names: Iterable[str],
+) -> str:
+    normalized_client_id = _normalize_client_id(client_id)
+    dataset_list = [name for name in dataset_names if name]
+    if not dataset_list:
+        return "Required client datasets are missing. Upload them in Supervisor -> Train Model before running analysis."
+
+    pretty_names = ", ".join(sorted(dataset_list))
+    return (
+        f"Client dataset(s) missing for {normalized_client_id}: {pretty_names}. "
+        "Please upload the required file(s) in Supervisor -> Train Model using the matching dataset category, then run the analysis again."
+    )
+
+
 def _get_table_data(table_name: str, limit: int | None = None) -> list[dict[str, Any]]:
     return _safe_to_records(_get_table_dataframe(table_name, limit))
 
@@ -72,9 +207,15 @@ def get_dataset_dataframe(
     dataset_name: str,
     limit: int | None = None,
     prefer_remote: bool = False,
+    client_id: str | None = None,
 ) -> pd.DataFrame:
     if dataset_name not in SUPPORTED_DATASETS:
         return pd.DataFrame()
+
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        client_df, _ = get_client_dataset_dataframe_with_source(dataset_name, normalized_client_id, limit)
+        return client_df
 
     if prefer_remote:
         remote = _read_remote_table(dataset_name, limit)
@@ -87,9 +228,14 @@ def get_dataset_dataframe_with_source(
     dataset_name: str,
     limit: int | None = None,
     prefer_remote: bool = False,
+    client_id: str | None = None,
 ) -> tuple[pd.DataFrame, str]:
     if dataset_name not in SUPPORTED_DATASETS:
         return pd.DataFrame(), "unsupported"
+
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        return get_client_dataset_dataframe_with_source(dataset_name, normalized_client_id, limit)
 
     if prefer_remote:
         remote = _read_remote_table(dataset_name, limit)
@@ -113,6 +259,67 @@ def get_dataset_dataframe_with_source(
     return pd.DataFrame(), "empty"
 
 
+def _looks_like_datetime(series: pd.Series, sample_size: int = 100) -> bool:
+    if series.empty:
+        return False
+    if pd.api.types.is_datetime64_any_dtype(series):
+        return True
+    if pd.api.types.is_numeric_dtype(series):
+        return False
+    sample = series.dropna().astype(str).head(sample_size)
+    if sample.empty:
+        return False
+    parsed = pd.to_datetime(sample, errors="coerce")
+    return float(parsed.notna().mean()) >= 0.7
+
+
+def get_supported_dataset_schemas(client_id: str | None = None) -> dict[str, dict[str, Any]]:
+    normalized_client_id = _normalize_client_id(client_id)
+    schema_catalog: dict[str, dict[str, Any]] = {}
+
+    for dataset_name in sorted(SUPPORTED_DATASETS):
+        frame, source = get_dataset_dataframe_with_source(
+            dataset_name,
+            client_id=normalized_client_id or None,
+            prefer_remote=not bool(normalized_client_id),
+        )
+
+        columns = frame.columns.tolist() if not frame.empty else []
+        numeric_columns: list[str] = []
+        date_columns: list[str] = []
+        filterable_columns: list[str] = []
+        groupable_columns: list[str] = []
+
+        if not frame.empty:
+            for column in frame.columns:
+                series = frame[column]
+                filterable_columns.append(column)
+
+                if pd.api.types.is_numeric_dtype(series):
+                    numeric_columns.append(column)
+
+                lowered = str(column).strip().lower()
+                if _looks_like_datetime(series) or lowered.endswith("_date") or lowered.endswith("_at") or "timestamp" in lowered:
+                    date_columns.append(column)
+
+                # High-cardinality identifiers are still groupable for ranked answers.
+                groupable_columns.append(column)
+
+        schema_catalog[dataset_name] = {
+            "dataset": dataset_name,
+            "source": source,
+            "row_count": int(len(frame.index)),
+            "columns": columns,
+            "filterable": sorted(set(filterable_columns)),
+            "aggregatable": sorted(set(numeric_columns)),
+            "groupable": sorted(set(groupable_columns)),
+            "date_columns": sorted(set(date_columns)),
+            "numeric_columns": sorted(set(numeric_columns)),
+        }
+
+    return schema_catalog
+
+
 def _unique_non_empty_values(df: pd.DataFrame, column: str) -> list[str]:
     if df.empty or column not in df.columns:
         return []
@@ -127,18 +334,21 @@ def _unique_non_empty_values(df: pd.DataFrame, column: str) -> list[str]:
     return unique_values
 
 
-def get_funnel_filter_options(prefer_remote: bool = True) -> dict[str, Any]:
+def get_funnel_filter_options(prefer_remote: bool = True, client_id: str | None = None) -> dict[str, Any]:
     campaigns_df, campaigns_source = get_dataset_dataframe_with_source(
         "campaigns",
         prefer_remote=prefer_remote,
+        client_id=client_id,
     )
     events_df, events_source = get_dataset_dataframe_with_source(
         "events",
         prefer_remote=prefer_remote,
+        client_id=client_id,
     )
     customers_df, customers_source = get_dataset_dataframe_with_source(
         "customers",
         prefer_remote=prefer_remote,
+        client_id=client_id,
     )
 
     campaign_channels = _unique_non_empty_values(campaigns_df, "channel")
@@ -265,11 +475,15 @@ def _filter_eq(df: pd.DataFrame, column: str, value: Any) -> pd.DataFrame:
 # CAMPAIGN DATA
 # ---------------------------------------------------------
 
-def get_campaign_data(limit: int | None = None) -> list[dict[str, Any]]:
+def get_campaign_data(limit: int | None = None, client_id: str | None = None) -> list[dict[str, Any]]:
+    if _normalize_client_id(client_id):
+        return _safe_to_records(get_dataset_dataframe("campaigns", limit, client_id=client_id))
     return _get_table_data("campaigns", limit)
 
 
-def get_campaign_dataframe(limit: int | None = None) -> pd.DataFrame:
+def get_campaign_dataframe(limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
+    if _normalize_client_id(client_id):
+        return get_dataset_dataframe("campaigns", limit, client_id=client_id)
     return _get_table_dataframe("campaigns", limit)
 
 
@@ -282,13 +496,22 @@ def get_campaign_data_remote_only(limit: int | None = None) -> list[dict[str, An
     return _safe_to_records(get_campaign_dataframe_remote_only(limit))
 
 
-def get_attribution_filter_options() -> dict[str, Any]:
-    campaigns_df = get_campaign_dataframe_remote_only()
-    events_df = _read_remote_table("events")
-    transactions_df = _read_remote_table("transactions")
-
-    if campaigns_df.empty or events_df.empty or transactions_df.empty:
-        raise ValueError("Supabase attribution datasets are incomplete. campaigns, events, and transactions are required")
+def get_attribution_filter_options(client_id: str | None = None) -> dict[str, Any]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        campaigns_df, campaigns_source = get_dataset_dataframe_with_source("campaigns", client_id=normalized_client_id)
+        events_df, events_source = get_dataset_dataframe_with_source("events", client_id=normalized_client_id)
+        transactions_df, transactions_source = get_dataset_dataframe_with_source("transactions", client_id=normalized_client_id)
+        if campaigns_df.empty or events_df.empty or transactions_df.empty:
+            missing = get_missing_client_datasets_for_agents(normalized_client_id, ["attribution"])
+            raise ValueError(build_missing_client_dataset_message(normalized_client_id, missing))
+    else:
+        campaigns_df = get_campaign_dataframe_remote_only()
+        events_df = _read_remote_table("events")
+        transactions_df = _read_remote_table("transactions")
+        campaigns_source = events_source = transactions_source = "supabase"
+        if campaigns_df.empty or events_df.empty or transactions_df.empty:
+            raise ValueError("Supabase attribution datasets are incomplete. campaigns, events, and transactions are required")
 
     channels = sorted(
         set(_unique_non_empty_values(campaigns_df, "channel")).union(
@@ -335,9 +558,9 @@ def get_attribution_filter_options() -> dict[str, Any]:
             "date_range": bool(min_date and max_date),
         },
         "sources": {
-            "campaigns": "supabase",
-            "events": "supabase",
-            "transactions": "supabase",
+            "campaigns": campaigns_source,
+            "events": events_source,
+            "transactions": transactions_source,
         },
         "row_counts": {
             "campaigns": int(len(campaigns_df.index)),
@@ -351,24 +574,33 @@ def get_attribution_filter_options() -> dict[str, Any]:
         "schema_details": {
             "campaigns": {
                 "source": "supabase",
+                "source": campaigns_source,
                 "columns": campaigns_df.columns.tolist(),
             },
             "events": {
-                "source": "supabase",
+                "source": events_source,
                 "columns": events_df.columns.tolist(),
             },
             "transactions": {
-                "source": "supabase",
+                "source": transactions_source,
                 "columns": transactions_df.columns.tolist(),
             },
         },
     }
 
 
-def get_forecast_filter_options() -> dict[str, Any]:
-    campaigns_df = get_campaign_dataframe_remote_only()
-    if campaigns_df.empty:
-        raise ValueError("No campaigns data found in Supabase for forecast options")
+def get_forecast_filter_options(client_id: str | None = None) -> dict[str, Any]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        campaigns_df, campaigns_source = get_dataset_dataframe_with_source("campaigns", client_id=normalized_client_id)
+        if campaigns_df.empty:
+            missing = get_missing_client_datasets_for_agents(normalized_client_id, ["forecast"])
+            raise ValueError(build_missing_client_dataset_message(normalized_client_id, missing))
+    else:
+        campaigns_df = get_campaign_dataframe_remote_only()
+        campaigns_source = "supabase"
+        if campaigns_df.empty:
+            raise ValueError("No campaigns data found in Supabase for forecast options")
 
     channels = _unique_non_empty_values(campaigns_df, "channel")
     campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
@@ -399,7 +631,7 @@ def get_forecast_filter_options() -> dict[str, Any]:
             "campaign_id": bool(campaign_ids),
         },
         "sources": {
-            "campaigns": "supabase",
+            "campaigns": campaigns_source,
         },
         "row_counts": {
             "campaigns": int(len(campaigns_df.index)),
@@ -411,16 +643,25 @@ def get_forecast_filter_options() -> dict[str, Any]:
         "schema_details": {
             "campaigns": {
                 "source": "supabase",
+                "source": campaigns_source,
                 "columns": campaigns_df.columns.tolist(),
             }
         },
     }
 
 
-def get_scenario_filter_options() -> dict[str, Any]:
-    campaigns_df = get_campaign_dataframe_remote_only()
-    if campaigns_df.empty:
-        raise ValueError("No campaigns data found in Supabase for scenario options")
+def get_scenario_filter_options(client_id: str | None = None) -> dict[str, Any]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        campaigns_df, campaigns_source = get_dataset_dataframe_with_source("campaigns", client_id=normalized_client_id)
+        if campaigns_df.empty:
+            missing = get_missing_client_datasets_for_agents(normalized_client_id, ["scenario"])
+            raise ValueError(build_missing_client_dataset_message(normalized_client_id, missing))
+    else:
+        campaigns_df = get_campaign_dataframe_remote_only()
+        campaigns_source = "supabase"
+        if campaigns_df.empty:
+            raise ValueError("No campaigns data found in Supabase for scenario options")
 
     channels = _unique_non_empty_values(campaigns_df, "channel")
     campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
@@ -466,7 +707,7 @@ def get_scenario_filter_options() -> dict[str, Any]:
             "campaign_id": bool(campaign_ids),
         },
         "sources": {
-            "campaigns": "supabase",
+            "campaigns": campaigns_source,
         },
         "row_counts": {
             "campaigns": int(len(campaigns_df.index)),
@@ -478,16 +719,25 @@ def get_scenario_filter_options() -> dict[str, Any]:
         "schema_details": {
             "campaigns": {
                 "source": "supabase",
+                "source": campaigns_source,
                 "columns": campaigns_df.columns.tolist(),
             }
         },
     }
 
 
-def get_budget_allocator_options() -> dict[str, Any]:
-    campaigns_df = get_campaign_dataframe_remote_only()
-    if campaigns_df.empty:
-        raise ValueError("No campaigns data found in Supabase for budget allocator options")
+def get_budget_allocator_options(client_id: str | None = None) -> dict[str, Any]:
+    normalized_client_id = _normalize_client_id(client_id)
+    if normalized_client_id:
+        campaigns_df, campaigns_source = get_dataset_dataframe_with_source("campaigns", client_id=normalized_client_id)
+        if campaigns_df.empty:
+            missing = get_missing_client_datasets_for_agents(normalized_client_id, ["budget_allocator"])
+            raise ValueError(build_missing_client_dataset_message(normalized_client_id, missing))
+    else:
+        campaigns_df = get_campaign_dataframe_remote_only()
+        campaigns_source = "supabase"
+        if campaigns_df.empty:
+            raise ValueError("No campaigns data found in Supabase for budget allocator options")
 
     channels = _unique_non_empty_values(campaigns_df, "channel")
     campaign_types = _unique_non_empty_values(campaigns_df, "campaign_type")
@@ -520,7 +770,7 @@ def get_budget_allocator_options() -> dict[str, Any]:
             "campaign_id": bool(campaign_ids),
         },
         "sources": {
-            "campaigns": "supabase",
+            "campaigns": campaigns_source,
         },
         "row_counts": {
             "campaigns": int(len(campaigns_df.index)),
@@ -528,24 +778,24 @@ def get_budget_allocator_options() -> dict[str, Any]:
         "schema_details": {
             "campaigns": {
                 "source": "supabase",
+                "source": campaigns_source,
                 "columns": campaigns_df.columns.tolist(),
             }
         },
     }
 
 
-def get_cohort_filter_options() -> dict[str, Any]:
-    customers_df, customers_source = get_dataset_dataframe_with_source("customers", prefer_remote=True)
-    retention_df, retention_source = get_dataset_dataframe_with_source("retention", prefer_remote=True)
-    transactions_df, transactions_source = get_dataset_dataframe_with_source("transactions", prefer_remote=True)
+def get_cohort_filter_options(client_id: str | None = None) -> dict[str, Any]:
+    normalized_client_id = _normalize_client_id(client_id)
+    customers_df, customers_source = get_dataset_dataframe_with_source("customers", prefer_remote=not normalized_client_id, client_id=normalized_client_id or None)
+    retention_df, retention_source = get_dataset_dataframe_with_source("retention", prefer_remote=not normalized_client_id, client_id=normalized_client_id or None)
+    transactions_df, transactions_source = get_dataset_dataframe_with_source("transactions", prefer_remote=not normalized_client_id, client_id=normalized_client_id or None)
 
-    customers_df = customers_df if customers_source == "supabase" else pd.DataFrame()
-    retention_df = retention_df if retention_source == "supabase" else pd.DataFrame()
-    transactions_df = transactions_df if transactions_source == "supabase" else pd.DataFrame()
-
-    # Cohort workspace is intended to be Supabase-first; if remote is unavailable,
-    # return empty options so UI can fail gracefully.
-    if customers_df.empty:
+    if normalized_client_id:
+        if customers_df.empty or retention_df.empty or transactions_df.empty:
+            missing = get_missing_client_datasets_for_agents(normalized_client_id, ["cohort"])
+            raise ValueError(build_missing_client_dataset_message(normalized_client_id, missing))
+    elif customers_df.empty:
         raise ValueError("No customers data found in Supabase for cohort options")
 
     if "signup_date" in customers_df.columns:
@@ -608,16 +858,16 @@ def get_cohort_filter_options() -> dict[str, Any]:
     }
 
 
-def get_campaigns_by_channel(channel: str) -> list[dict[str, Any]]:
-    return _safe_to_records(_filter_eq(get_campaign_dataframe(), "channel", channel))
+def get_campaigns_by_channel(channel: str, client_id: str | None = None) -> list[dict[str, Any]]:
+    return _safe_to_records(_filter_eq(get_campaign_dataframe(client_id=client_id), "channel", channel))
 
 
-def get_campaigns_by_type(campaign_type: str) -> list[dict[str, Any]]:
-    return _safe_to_records(_filter_eq(get_campaign_dataframe(), "campaign_type", campaign_type))
+def get_campaigns_by_type(campaign_type: str, client_id: str | None = None) -> list[dict[str, Any]]:
+    return _safe_to_records(_filter_eq(get_campaign_dataframe(client_id=client_id), "campaign_type", campaign_type))
 
 
-def get_campaigns_between_dates(start_date: str, end_date: str) -> list[dict[str, Any]]:
-    df = get_campaign_dataframe()
+def get_campaigns_between_dates(start_date: str, end_date: str, client_id: str | None = None) -> list[dict[str, Any]]:
+    df = get_campaign_dataframe(client_id=client_id)
     if df.empty or "date" not in df.columns:
         return []
 
@@ -628,19 +878,23 @@ def get_campaigns_between_dates(start_date: str, end_date: str) -> list[dict[str
     return _safe_to_records(filtered)
 
 
-def get_campaign_dataframe_between_dates(start_date: str, end_date: str) -> pd.DataFrame:
-    return pd.DataFrame(get_campaigns_between_dates(start_date, end_date))
+def get_campaign_dataframe_between_dates(start_date: str, end_date: str, client_id: str | None = None) -> pd.DataFrame:
+    return pd.DataFrame(get_campaigns_between_dates(start_date, end_date, client_id=client_id))
 
 
 # ---------------------------------------------------------
 # EVENT DATA
 # ---------------------------------------------------------
 
-def get_events_data(limit: int | None = None) -> list[dict[str, Any]]:
+def get_events_data(limit: int | None = None, client_id: str | None = None) -> list[dict[str, Any]]:
+    if _normalize_client_id(client_id):
+        return _safe_to_records(get_dataset_dataframe("events", limit, client_id=client_id))
     return _get_table_data("events", limit)
 
 
-def get_events_dataframe(limit: int | None = None) -> pd.DataFrame:
+def get_events_dataframe(limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
+    if _normalize_client_id(client_id):
+        return get_dataset_dataframe("events", limit, client_id=client_id)
     return _get_table_dataframe("events", limit)
 
 
@@ -663,11 +917,15 @@ def get_events_by_channel(channel: str) -> list[dict[str, Any]]:
 # CUSTOMER DATA
 # ---------------------------------------------------------
 
-def get_customers_data(limit: int | None = None) -> list[dict[str, Any]]:
+def get_customers_data(limit: int | None = None, client_id: str | None = None) -> list[dict[str, Any]]:
+    if _normalize_client_id(client_id):
+        return _safe_to_records(get_dataset_dataframe("customers", limit, client_id=client_id))
     return _get_table_data("customers", limit)
 
 
-def get_customers_dataframe(limit: int | None = None) -> pd.DataFrame:
+def get_customers_dataframe(limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
+    if _normalize_client_id(client_id):
+        return get_dataset_dataframe("customers", limit, client_id=client_id)
     return _get_table_dataframe("customers", limit)
 
 
@@ -684,11 +942,15 @@ def get_customers_by_segment(segment: str) -> list[dict[str, Any]]:
 # RETENTION DATA
 # ---------------------------------------------------------
 
-def get_retention_data(limit: int | None = None) -> list[dict[str, Any]]:
+def get_retention_data(limit: int | None = None, client_id: str | None = None) -> list[dict[str, Any]]:
+    if _normalize_client_id(client_id):
+        return _safe_to_records(get_dataset_dataframe("retention", limit, client_id=client_id))
     return _get_table_data("retention", limit)
 
 
-def get_retention_dataframe(limit: int | None = None) -> pd.DataFrame:
+def get_retention_dataframe(limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
+    if _normalize_client_id(client_id):
+        return get_dataset_dataframe("retention", limit, client_id=client_id)
     return _get_table_dataframe("retention", limit)
 
 
@@ -704,11 +966,15 @@ def get_high_risk_customers(churn_threshold: float = 0.7) -> list[dict[str, Any]
 # TRANSACTION DATA
 # ---------------------------------------------------------
 
-def get_transactions_data(limit: int | None = None) -> list[dict[str, Any]]:
+def get_transactions_data(limit: int | None = None, client_id: str | None = None) -> list[dict[str, Any]]:
+    if _normalize_client_id(client_id):
+        return _safe_to_records(get_dataset_dataframe("transactions", limit, client_id=client_id))
     return _get_table_data("transactions", limit)
 
 
-def get_transactions_dataframe(limit: int | None = None) -> pd.DataFrame:
+def get_transactions_dataframe(limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
+    if _normalize_client_id(client_id):
+        return get_dataset_dataframe("transactions", limit, client_id=client_id)
     return _get_table_dataframe("transactions", limit)
 
 

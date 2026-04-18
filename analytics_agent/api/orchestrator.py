@@ -72,6 +72,7 @@ class AnalyticsSupervisor:
         message: str,
         thread_id: str | None = None,
         conversation_history: List[Dict[str, Any]] | None = None,
+        client_id: str | None = None,
     ) -> Dict[str, Any]:
         if not message or not message.strip():
             raise ValueError("Message cannot be empty")
@@ -205,6 +206,8 @@ class AnalyticsSupervisor:
         agents = self._map_agents(agent_ids)
 
         payload = self._build_base_payload()
+        if client_id:
+            payload["client_id"] = client_id
         payload = self._apply_payload_updates(payload, plan.get("payload_updates", {}))
 
         timeline: List[str] = [

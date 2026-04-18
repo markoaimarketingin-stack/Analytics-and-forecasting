@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
 import {
   AlertTriangle,
-  Bot,
+  BookOpen,
   CheckCircle2,
   Filter,
   LayoutDashboard,
@@ -10,9 +10,13 @@ import {
   Network,
   PieChart,
   Play,
+  Plus,
   TrendingUp,
   Users,
 } from 'lucide-react';
+import { useKnowledgeBase } from '../../context/KnowledgeBaseContext';
+import KnowledgeBaseModal from './KnowledgeBaseModal';
+import TrainModelModal from './TrainModelModal';
 
 type StageStatus = 'idle' | 'running' | 'done' | 'error';
 
@@ -20,6 +24,7 @@ interface SupervisorWorkspaceProps {
   onRunAnalysis: () => Promise<boolean>;
   onOpenDashboard: () => void;
   resetToken: number;
+  clientId?: string;
 }
 
 type AgentStage = 'parallel' | 'forecast' | 'scenario';
@@ -119,7 +124,10 @@ function StageCard({
   );
 }
 
-export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, resetToken }: SupervisorWorkspaceProps) {
+export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, resetToken, clientId }: SupervisorWorkspaceProps) {
+  const { setCurrentAgentId } = useKnowledgeBase();
+  const [isKnowledgeBaseModalOpen, setIsKnowledgeBaseModalOpen] = useState(false);
+  const [isTrainModelModalOpen, setIsTrainModelModalOpen] = useState(false);
   const [parallelStatus, setParallelStatus] = useState<StageStatus>('idle');
   const [forecastStatus, setForecastStatus] = useState<StageStatus>('idle');
   const [scenarioStatus, setScenarioStatus] = useState<StageStatus>('idle');
@@ -232,18 +240,38 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
   return (
     <div className="flex h-full flex-col bg-[#f3f4f6]">
       <div className="border-b border-gray-200 bg-white px-6 py-3">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-black text-white">
-              <Bot className="h-5 w-5" />
+        <div className="mx-auto flex w-full max-w-6xl flex-nowrap items-center justify-between gap-4">
+          <div className="flex min-w-0 shrink items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-black p-2">
+              <img src="/favicon.svg" alt="Marko AI" className="h-full w-full object-contain invert" />
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold tracking-tight text-black">Analytics Supervisor</h1>
+              <h1 className="text-2xl font-extrabold tracking-tight text-black">Supervisor</h1>
               <p className="mt-0.5 text-sm text-gray-600">Orchestrator</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentAgentId(1);
+                setIsKnowledgeBaseModalOpen(true);
+              }}
+              className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-solid border-[#7c3aed] bg-white px-4 text-sm font-semibold text-violet-600 transition hover:bg-violet-50"
+            >
+              <BookOpen className="h-4 w-4" /> Knowledge Base
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsTrainModelModalOpen(true)}
+              className="inline-flex h-11 items-center gap-3 rounded-full border-2 border-black bg-white px-4 text-sm font-semibold text-black shadow-[0_5px_14px_rgba(0,0,0,0.1)] transition hover:-translate-y-[1px] hover:bg-gray-50"
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-white">
+                <Plus className="h-3 w-3" strokeWidth={2.5} />
+              </span>
+              <span>Train Model</span>
+            </button>
             <button
               onClick={handleRun}
               disabled={runState === 'running'}
@@ -269,8 +297,8 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
         <div className="mx-auto w-full max-w-6xl space-y-6">
           {!hasStarted ? (
             <div className="flex min-h-[430px] flex-col items-center justify-center px-6 text-center">
-              <div className="flex h-36 w-36 items-center justify-center rounded-full border border-gray-200 bg-white shadow-[0_10px_28px_rgba(0,0,0,0.08)]">
-                <Bot className="h-11 w-11 text-black" />
+              <div className="flex h-36 w-36 items-center justify-center rounded-full bg-black shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
+                <img src="/favicon.svg" alt="Marko AI" className="h-14 w-14 object-contain invert" />
               </div>
 
               <h2 className="mt-7 text-3xl font-extrabold tracking-tight text-black">I am your Analytics Supervisor Agent</h2>
@@ -342,6 +370,17 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
           )}
         </div>
       </div>
+
+      <TrainModelModal
+        isOpen={isTrainModelModalOpen}
+        onClose={() => setIsTrainModelModalOpen(false)}
+        clientId={clientId}
+      />
+      <KnowledgeBaseModal
+        isOpen={isKnowledgeBaseModalOpen}
+        onClose={() => setIsKnowledgeBaseModalOpen(false)}
+        clientId={clientId}
+      />
     </div>
   );
 }

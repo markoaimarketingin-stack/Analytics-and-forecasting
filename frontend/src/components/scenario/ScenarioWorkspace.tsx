@@ -13,6 +13,12 @@ import {
   YAxis,
 } from 'recharts';
 import { getAgentResults, getScenarioOptions, orchestrateAgents } from '../../services/api';
+import {
+  getMissingRequiredDatasets,
+  hasRequiredClientDatasets,
+  toFriendlyDataRequirementError,
+} from '../../services/clientDataRequirements';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type { AgentOrchestrationResult, ScenarioAnalysis, ScenarioOptions } from '../../types';
 
 interface ScenarioWorkspaceProps {
@@ -80,7 +86,7 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
       setOptionsError(null);
 
       try {
-        const response = await getScenarioOptions();
+        const response = await getScenarioOptions(clientId);
         if (!response.success || !response.data) {
           throw new Error(response.detail || 'Unable to load scenario options from Supabase.');
         }
@@ -110,12 +116,25 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   const optionsSourceLabel = useMemo(() => {
     const source = options?.sources?.campaigns || '';
     return source.toLowerCase() === 'supabase' ? 'Supabase' : source || '-';
   }, [options]);
+  const hasRequiredClientData = useMemo(
+    () => hasRequiredClientDatasets('scenario', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const missingDatasets = useMemo(
+    () => getMissingRequiredDatasets('scenario', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const dataRequirementMessage = useMemo(
+    () => toFriendlyDataRequirementError('Scenario analysis', 'scenario', '', missingDatasets),
+    [missingDatasets],
+  );
+  const showMissingDataRequirementCard = !isLoadingOptions && Boolean(clientId) && Boolean(options?.sources) && !hasRequiredClientData && !error && !optionsError;
 
   const projectionCurve = result?.projection_curve ?? [];
   const sensitivityCurve = result?.sensitivity_curve ?? [];
@@ -123,6 +142,11 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
   const scenarioTable = result?.scenario_table ?? [];
 
   const runScenario = async () => {
+    if (!hasRequiredClientData) {
+      setError(dataRequirementMessage);
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
 
@@ -153,7 +177,8 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
 
       setResult(response.data.scenario_analysis ?? null);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Failed to run scenario analysis.');
+      const rawMessage = runError instanceof Error ? runError.message : 'Failed to run scenario analysis.';
+      setError(toFriendlyDataRequirementError('Scenario analysis', 'scenario', rawMessage, missingDatasets));
     } finally {
       setIsRunning(false);
     }
@@ -162,11 +187,14 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <GitBranch className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <GitBranch className="h-7 w-7" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Scenario Agent</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900">Scenario Agent</h1>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -268,7 +296,7 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
               >
                 <Settings2 className="h-4 w-4" /> {isAssumptionsOpen ? 'Hide Assumptions' : 'Advanced Assumptions'}
               </button>
-              <button onClick={runScenario} disabled={isRunning} className="workspace-action-btn bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+              <button onClick={runScenario} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                 {isRunning ? 'Running...' : 'Generate Scenarios'}
               </button>
             </div>
@@ -294,8 +322,26 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
               </div>
             ) : null}
 
-            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
-            {optionsError && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{optionsError}</p>}
+            {error && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Scenario Unavailable</p>
+                <p className="mt-1 text-sm text-amber-800">{error}</p>
+              </div>
+            )}
+            {optionsError && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">
+                  {toFriendlyDataRequirementError('Scenario analysis', 'scenario', optionsError, missingDatasets)}
+                </p>
+              </div>
+            )}
+            {showMissingDataRequirementCard && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{dataRequirementMessage}</p>
+              </div>
+            )}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">

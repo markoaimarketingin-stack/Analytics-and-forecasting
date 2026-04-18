@@ -12,6 +12,12 @@ import {
   YAxis,
 } from 'recharts';
 import { getAgentResults, getAttributionOptions, orchestrateAgents } from '../../services/api';
+import {
+  getMissingRequiredDatasets,
+  hasRequiredClientDatasets,
+  toFriendlyDataRequirementError,
+} from '../../services/clientDataRequirements';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type {
   AgentOrchestrationResult,
   AttributionAnalysis,
@@ -60,6 +66,7 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
   const [result, setResult] = useState<AttributionAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isLoadingOptions, setIsLoadingOptions] = useState(false);
+  const [optionsError, setOptionsError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<AttributionTab>('credit');
 
@@ -68,9 +75,13 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
 
     const loadOptions = async () => {
       setIsLoadingOptions(true);
+      setOptionsError(null);
       try {
-        const response = await getAttributionOptions();
-        if (cancelled || !response.success || !response.data) return;
+        const response = await getAttributionOptions(clientId);
+        if (!response.success || !response.data) {
+          throw new Error(response.detail || 'Unable to load attribution options.');
+        }
+        if (cancelled) return;
 
         const loaded = response.data;
         setOptions(loaded);
@@ -81,8 +92,10 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
         setShiftCap(Number(loaded.defaults.budget_shift_cap_percent || 20));
         setStartDate(loaded.defaults.start_date || loaded.date_range?.min || '');
         setEndDate(loaded.defaults.end_date || loaded.date_range?.max || '');
-      } catch {
-        // Keep defaults if options endpoint is unavailable.
+      } catch (loadError) {
+        if (cancelled) return;
+        const rawMessage = loadError instanceof Error ? loadError.message : 'Unable to load attribution options.';
+        setOptionsError(toFriendlyDataRequirementError('Attribution analysis', 'attribution', rawMessage));
       } finally {
         if (!cancelled) {
           setIsLoadingOptions(false);
@@ -94,7 +107,7 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   useEffect(() => {
     if (!clientId || result) return;
@@ -133,8 +146,26 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
   const budgetScenarioChart = result?.budget_scenario_chart ?? [];
   const efficiencyChart = result?.efficiency_chart ?? [];
   const qualityChart = result?.conversion_quality_chart ?? [];
+  const hasRequiredClientData = useMemo(
+    () => hasRequiredClientDatasets('attribution', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const missingDatasets = useMemo(
+    () => getMissingRequiredDatasets('attribution', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const dataRequirementMessage = useMemo(
+    () => toFriendlyDataRequirementError('Attribution analysis', 'attribution', '', missingDatasets),
+    [missingDatasets],
+  );
+  const showMissingDataRequirementCard = !isLoadingOptions && Boolean(clientId) && Boolean(options?.sources) && !hasRequiredClientData && !error && !optionsError;
 
   const runAttribution = async () => {
+    if (!hasRequiredClientData) {
+      setError(dataRequirementMessage);
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
 
@@ -161,7 +192,8 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
       onRunResult?.(response.data);
       setResult(response.data.attribution_analysis ?? null);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Failed to run attribution agent.');
+      const rawMessage = runError instanceof Error ? runError.message : 'Failed to run attribution agent.';
+      setError(toFriendlyDataRequirementError('Attribution analysis', 'attribution', rawMessage, missingDatasets));
     } finally {
       setIsRunning(false);
     }
@@ -170,11 +202,14 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <Network className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <Network className="h-7 w-7" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Attribution Agent</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900">Attribution Agent</h1>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -246,13 +281,30 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
               </label>
 
               <div className="flex items-end">
-                <button onClick={runAttribution} disabled={isRunning || isLoadingOptions} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runAttribution} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                    {isRunning ? 'Running...' : 'Analyze Attribution'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
+            {optionsError && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{optionsError}</p>
+              </div>
+            )}
+            {error && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Attribution Unavailable</p>
+                <p className="mt-1 text-sm text-amber-800">{error}</p>
+              </div>
+            )}
+            {showMissingDataRequirementCard && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{dataRequirementMessage}</p>
+              </div>
+            )}
             {result?.data_source && <p className="mt-3 text-xs text-gray-500">Data source: {result.data_source}</p>}
           </div>
 

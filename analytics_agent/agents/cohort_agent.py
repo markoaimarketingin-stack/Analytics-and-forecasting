@@ -33,7 +33,7 @@ class CohortAgent:
     ) -> AnalyticsState:
         request = self._build_request(state, request)
 
-        customers_df, transactions_df, retention_df, source_info = self._load_dataframes()
+        customers_df, transactions_df, retention_df, source_info = self._load_dataframes(state)
 
         if customers_df.empty or retention_df.empty:
             state.cohort_analysis = CohortAnalysis(
@@ -169,23 +169,27 @@ class CohortAgent:
 
     def _load_dataframes(
         self,
+        state: AnalyticsState,
     ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
+        client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
         customers_remote, customers_source = queries.get_dataset_dataframe_with_source(
             "customers",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         transactions_remote, transactions_source = queries.get_dataset_dataframe_with_source(
             "transactions",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         retention_remote, retention_source = queries.get_dataset_dataframe_with_source(
             "retention",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
-
-        customers_df = customers_remote if customers_source == "supabase" else pd.DataFrame()
-        transactions_df = transactions_remote if transactions_source == "supabase" else pd.DataFrame()
-        retention_df = retention_remote if retention_source == "supabase" else pd.DataFrame()
+        customers_df = customers_remote
+        transactions_df = transactions_remote
+        retention_df = retention_remote
 
         return customers_df, transactions_df, retention_df, {
             "customers": customers_source,

@@ -30,7 +30,7 @@ class AttributionAgent:
     ) -> AnalyticsState:
         request = self._build_request(state, request)
 
-        events_df, tx_df, campaign_df, source_info = self._load_dataframes()
+        events_df, tx_df, campaign_df, source_info = self._load_dataframes(state)
 
         if events_df.empty or tx_df.empty or campaign_df.empty:
             state.attribution_analysis = AttributionAnalysis(
@@ -132,15 +132,16 @@ class AttributionAgent:
             end_date=user_request.get("end_date"),
         )
 
-    def _load_dataframes(self) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
-        events_df, events_source = queries.get_dataset_dataframe_with_source("events", prefer_remote=True)
-        tx_df, tx_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=True)
-        campaign_df, campaign_source = queries.get_dataset_dataframe_with_source("campaigns", prefer_remote=True)
+    def _load_dataframes(self, state: AnalyticsState) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
+        client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
+        events_df, events_source = queries.get_dataset_dataframe_with_source("events", prefer_remote=not client_id, client_id=client_id)
+        tx_df, tx_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=not client_id, client_id=client_id)
+        campaign_df, campaign_source = queries.get_dataset_dataframe_with_source("campaigns", prefer_remote=not client_id, client_id=client_id)
 
         return (
-            events_df if events_source == "supabase" else pd.DataFrame(),
-            tx_df if tx_source == "supabase" else pd.DataFrame(),
-            campaign_df if campaign_source == "supabase" else pd.DataFrame(),
+            events_df,
+            tx_df,
+            campaign_df,
             {
                 "events": events_source,
                 "transactions": tx_source,

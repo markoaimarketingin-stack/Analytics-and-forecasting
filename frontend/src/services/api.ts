@@ -35,9 +35,10 @@ const DEFAULT_AGENT_ID = 1;
  * Fetches the list of available datasets from Supabase.
  * @returns A promise that resolves to the list of available datasets
  */
-export const getAvailableDatasets = async () => {
+export const getAvailableDatasets = async (clientId?: string) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/available-datasets`);
+    const query = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
+    const response = await fetch(`${API_BASE_URL}/available-datasets${query}`);
     if (!response.ok) {
       throw new Error(`Error fetching datasets: ${response.statusText}`);
     }
@@ -65,12 +66,25 @@ export const getAgentsDataMapping = async () => {
   }
 };
 
-export const getDatasetRows = async (dataset: string, limit: number = 50) => {
-  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}?limit=${limit}`);
+export const getDatasetRows = async (dataset: string, limit: number = 50, clientId?: string) => {
+  const query = new URLSearchParams({ limit: String(limit) });
+  if (clientId) query.set('client_id', clientId);
+  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}?${query.toString()}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch dataset rows: ${response.statusText}`);
   }
   return await response.json();
+};
+
+export const runDataQueryAgent = async (
+  payload: { prompt: string; client_id?: string; limit?: number },
+): Promise<Record<string, unknown>> => {
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  return postJsonWithFallback<Record<string, unknown>>([
+    `${API_ROOT_URL}/agents/data-query`,
+    `${baseWithoutApiSuffix}/agents/data-query`,
+    `${API_BASE_URL}/agents/data-query`,
+  ], payload);
 };
 
 export const uploadDatasetCsv = async (dataset: string, file: File) => {
@@ -114,10 +128,18 @@ export const getAgentFiles = async (agentId: number = DEFAULT_AGENT_ID) => {
  */
 export const uploadAgentFile = async (
   file: File,
-  agentId: number = DEFAULT_AGENT_ID
+  agentId: number = DEFAULT_AGENT_ID,
+  metadata?: {
+    clientId?: string;
+    category?: string;
+    instructions?: string;
+  },
 ) => {
   const formData = new FormData();
   formData.append("file", file);
+  if (metadata?.clientId) formData.append("client_id", metadata.clientId);
+  if (metadata?.category) formData.append("category", metadata.category);
+  if (metadata?.instructions) formData.append("instructions", metadata.instructions);
 
   try {
     const response = await fetch(`${API_BASE_URL}/agents/${agentId}/files`, {
@@ -152,6 +174,35 @@ export const deleteAgentFile = async (fileId: number) => {
     console.error("Failed to delete agent file:", error);
     throw error; // Re-throw the error to be handled by the caller
   }
+};
+
+export const listTrainingUploads = async (clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads?client_id=${encodeURIComponent(clientId)}`);
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `Failed to load training uploads: ${response.statusText}`);
+  }
+  return await response.json();
+};
+
+export const getTrainingUploadPreview = async (uploadId: number, clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}/preview?client_id=${encodeURIComponent(clientId)}`);
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `Failed to load training upload preview: ${response.statusText}`);
+  }
+  return await response.json();
+};
+
+export const deleteTrainingUpload = async (uploadId: number, clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}?client_id=${encodeURIComponent(clientId)}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `Failed to delete training upload: ${response.statusText}`);
+  }
+  return await response.json();
 };
 
 /**
@@ -192,8 +243,14 @@ const postJsonWithFallback = async <T>(
       });
 
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`${response.status} ${response.statusText} ${text}`.trim());
+        let detail = '';
+        try {
+          const parsed = await response.json();
+          detail = typeof parsed?.detail === 'string' ? parsed.detail : '';
+        } catch {
+          detail = await response.text();
+        }
+        throw new Error(detail || response.statusText || 'Request failed');
       }
 
       return (await response.json()) as T;
@@ -212,8 +269,14 @@ const getJsonWithFallback = async <T>(paths: string[]): Promise<T> => {
     try {
       const response = await fetch(path);
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`${response.status} ${response.statusText} ${text}`.trim());
+        let detail = '';
+        try {
+          const parsed = await response.json();
+          detail = typeof parsed?.detail === 'string' ? parsed.detail : '';
+        } catch {
+          detail = await response.text();
+        }
+        throw new Error(detail || response.statusText || 'Request failed');
       }
       return (await response.json()) as T;
     } catch (error) {
@@ -223,6 +286,9 @@ const getJsonWithFallback = async <T>(paths: string[]): Promise<T> => {
 
   throw lastError ?? new Error('All endpoint calls failed');
 };
+
+const buildClientQuery = (clientId?: string): string =>
+  clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
 
 const uniqueSortedValues = (rows: Array<Record<string, unknown>>, key: string): string[] => {
   const values = rows
@@ -259,16 +325,21 @@ export const orchestrateAgents = async (
   ], payload);
 };
 
-export const getFunnelOptions = async (): Promise<FunnelOptionsApiResponse> => {
+export const getFunnelOptions = async (clientId?: string): Promise<FunnelOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   try {
     return await getJsonWithFallback<FunnelOptionsApiResponse>([
-      `${API_BASE_URL}/agents/funnel/options`,
-      `${API_BASE_URL.replace(/\/api\/?$/, '/api')}/funnel/options`,
-      `${API_ROOT_URL}/agents/funnel/options`,
-      `${baseWithoutApiSuffix}/agents/funnel/options`,
+      `${API_BASE_URL}/agents/funnel/options${query}`,
+      `${API_BASE_URL.replace(/\/api\/?$/, '/api')}/funnel/options${query}`,
+      `${API_ROOT_URL}/agents/funnel/options${query}`,
+      `${baseWithoutApiSuffix}/agents/funnel/options${query}`,
     ]);
   } catch {
+    if (clientId) {
+      throw new Error('Client-specific funnel datasets are unavailable. Upload the required file in Supervisor -> Train Model first.');
+    }
+
     // Fallback path for older backends: compute valid options from live datasets.
     const [campaignsRes, eventsRes, customersRes] = await Promise.all([
       getDatasetRows('campaigns', 500),
@@ -361,48 +432,53 @@ export const getFunnelOptions = async (): Promise<FunnelOptionsApiResponse> => {
   }
 };
 
-export const getAttributionOptions = async (): Promise<AttributionOptionsApiResponse> => {
+export const getAttributionOptions = async (clientId?: string): Promise<AttributionOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   return getJsonWithFallback<AttributionOptionsApiResponse>([
-    `${API_BASE_URL}/agents/attribution/options`,
-    `${API_ROOT_URL}/agents/attribution/options`,
-    `${baseWithoutApiSuffix}/agents/attribution/options`,
+    `${API_BASE_URL}/agents/attribution/options${query}`,
+    `${API_ROOT_URL}/agents/attribution/options${query}`,
+    `${baseWithoutApiSuffix}/agents/attribution/options${query}`,
   ]);
 };
 
-export const getForecastOptions = async (): Promise<ForecastOptionsApiResponse> => {
+export const getForecastOptions = async (clientId?: string): Promise<ForecastOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   return getJsonWithFallback<ForecastOptionsApiResponse>([
-    `${API_BASE_URL}/agents/forecast/options`,
-    `${API_ROOT_URL}/agents/forecast/options`,
-    `${baseWithoutApiSuffix}/agents/forecast/options`,
+    `${API_BASE_URL}/agents/forecast/options${query}`,
+    `${API_ROOT_URL}/agents/forecast/options${query}`,
+    `${baseWithoutApiSuffix}/agents/forecast/options${query}`,
   ]);
 };
 
-export const getCohortOptions = async (): Promise<CohortOptionsApiResponse> => {
+export const getCohortOptions = async (clientId?: string): Promise<CohortOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   return getJsonWithFallback<CohortOptionsApiResponse>([
-    `${API_BASE_URL}/agents/cohort/options`,
-    `${API_ROOT_URL}/agents/cohort/options`,
-    `${baseWithoutApiSuffix}/agents/cohort/options`,
+    `${API_BASE_URL}/agents/cohort/options${query}`,
+    `${API_ROOT_URL}/agents/cohort/options${query}`,
+    `${baseWithoutApiSuffix}/agents/cohort/options${query}`,
   ]);
 };
 
-export const getScenarioOptions = async (): Promise<ScenarioOptionsApiResponse> => {
+export const getScenarioOptions = async (clientId?: string): Promise<ScenarioOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   return getJsonWithFallback<ScenarioOptionsApiResponse>([
-    `${API_BASE_URL}/agents/scenario/options`,
-    `${API_ROOT_URL}/agents/scenario/options`,
-    `${baseWithoutApiSuffix}/agents/scenario/options`,
+    `${API_BASE_URL}/agents/scenario/options${query}`,
+    `${API_ROOT_URL}/agents/scenario/options${query}`,
+    `${baseWithoutApiSuffix}/agents/scenario/options${query}`,
   ]);
 };
 
-export const getBudgetAllocatorOptions = async (): Promise<BudgetAllocatorOptionsApiResponse> => {
+export const getBudgetAllocatorOptions = async (clientId?: string): Promise<BudgetAllocatorOptionsApiResponse> => {
   const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const query = buildClientQuery(clientId);
   return getJsonWithFallback<BudgetAllocatorOptionsApiResponse>([
-    `${API_BASE_URL}/agents/budget/options`,
-    `${API_ROOT_URL}/agents/budget/options`,
-    `${baseWithoutApiSuffix}/agents/budget/options`,
+    `${API_BASE_URL}/agents/budget/options${query}`,
+    `${API_ROOT_URL}/agents/budget/options${query}`,
+    `${baseWithoutApiSuffix}/agents/budget/options${query}`,
   ]);
 };
 

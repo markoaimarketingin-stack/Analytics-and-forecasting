@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { Bot } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -15,6 +14,7 @@ import FunnelWorkspace from './components/funnel/FunnelWorkspace';
 import CohortWorkspace from './components/cohort/CohortWorkspace';
 import AttributionWorkspace from './components/attribution/AttributionWorkspace';
 import BudgetAllocatorWorkspace from './components/budget/BudgetAllocatorWorkspace';
+import DataQueryWorkspace from './components/dataquery/DataQueryWorkspace';
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
@@ -737,6 +737,7 @@ export default function App({
               onRunAnalysis={handleRunSupervisorPipeline}
               onOpenDashboard={() => setActiveSection('dashboard')}
               resetToken={supervisorResetToken}
+              clientId={clientId}
             />
           </div>
         );
@@ -775,6 +776,9 @@ export default function App({
       case 'budget':
         return <BudgetAllocatorWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Budget Allocator Agent', result)} />;
 
+      case 'data-query':
+        return <DataQueryWorkspace clientId={clientId} />;
+
       case 'report':
         return <ReportWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Report Generator', result)} />;
 
@@ -803,7 +807,6 @@ export default function App({
         onMobileClose={() => setIsSidebarOpen(false)}
         suggestions={suggestions}
         onExecuteSuggestion={handleExecuteSuggestion}
-        onUpdateSuggestion={handleUpdateSuggestion}
         onRemoveSuggestion={handleRemoveSuggestion}
         chatThreads={chatThreads}
         isHistoryLoading={isHistoryLoading}
@@ -811,12 +814,13 @@ export default function App({
         onOpenHistoryThread={handleOpenHistoryThread}
         accountName={accountName}
         accountEmail={accountEmail}
-        onLogout={onLogout}
       />
 
       <div className="ml-0 flex min-w-0 flex-1 overflow-hidden lg:ml-64">
         <div className="min-w-0 flex-1 overflow-hidden">
-          {renderWorkspace()}
+          <div key={activeSection} className="h-full page-enter">
+            {renderWorkspace()}
+          </div>
         </div>
 
         {!isChatPanelCollapsed ? (
@@ -839,9 +843,9 @@ export default function App({
           onClick={() => setIsChatPanelCollapsed(false)}
           aria-label="Open chat panel"
           title="Open chat panel"
-          className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border border-blue-200 bg-gradient-to-br from-blue-600 to-violet-600 text-white shadow-[0_16px_36px_rgba(79,70,229,0.35)] transition hover:scale-105 lg:flex"
+          className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border border-gray-900 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-[52%] hover:scale-105 lg:flex"
         >
-          <Bot className="h-7 w-7" />
+          <img src="/favicon.svg" alt="Marko AI" className="h-8 w-8 object-contain invert" />
         </button>
       ) : null}
 

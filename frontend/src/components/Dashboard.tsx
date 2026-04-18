@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  Activity,
+  AlertTriangle,
+  CheckCircle2,
   FileText,
-  Sparkles,
-  TrendingUp,
   Filter,
-  Users,
-  Network,
   GitBranch,
+  Network,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
 } from 'lucide-react';
 import {
   Bar,
@@ -222,22 +226,36 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
       timestamp: item.submittedAt || item.lastUpdatedAt || item.acceptedAt || '',
     }));
 
+  const agentsWithDataCount = [
+    Boolean(forecast),
+    Boolean(scenario),
+    Boolean(funnel),
+    Boolean(cohort),
+    Boolean(attribution),
+  ].filter(Boolean).length;
+  const coveragePercent = (agentsWithDataCount / 5) * 100;
+  const riskFlagsCount = [
+    (toNumber(funnel?.dropoff_percent) ?? 0) >= 35,
+    (toNumber(cohort?.churn_risk) ?? 0) >= 0.3,
+    (toNumber(forecast?.predicted_roi) ?? 0) < 0,
+    (toNumber(scenarioDownside) ?? 0) > 0,
+  ].filter(Boolean).length;
+
   return (
-    <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-3xl border border-indigo-100 bg-gradient-to-br from-white via-indigo-50/50 to-sky-50/60 p-6 shadow-sm">
-        <div className="absolute -right-12 -top-12 h-44 w-44 rounded-full bg-indigo-200/35 blur-3xl" />
-        <div className="absolute -bottom-14 left-16 h-40 w-40 rounded-full bg-cyan-200/30 blur-3xl" />
+    <div className="space-y-8">
+      <div className="relative overflow-hidden rounded-3xl border border-gray-900 bg-gradient-to-br from-gray-950 via-gray-900 to-black p-7 shadow-[0_22px_45px_-34px_rgba(0,0,0,0.85)]">
+        <div className="absolute -right-16 -top-14 h-52 w-52 rounded-full border border-white/10 bg-white/[0.04]" />
+        <div className="absolute -bottom-20 left-10 h-44 w-44 rounded-full border border-white/10 bg-white/[0.03]" />
         <div className="relative z-10">
-          <div className="mt-4 flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-600 text-white shadow-[0_10px_24px_rgba(79,70,229,0.32)]">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white">
               <FileText className="h-6 w-6" />
             </div>
             <div className="min-w-0">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">Analytics Dashboard</h2>
-              <p className="mt-1 text-sm text-gray-600">Unified overview of Forecast, Scenario, Funnel, Cohort, and Attribution outputs.</p>
+              <h1 className="text-4xl font-bold tracking-tight text-white">Dashboard</h1>
             </div>
           </div>
-          {loadError && <p className="mt-3 break-words text-sm text-red-600">{loadError}</p>}
+          {loadError && <p className="mt-3 break-words text-sm text-rose-300">{loadError}</p>}
         </div>
       </div>
 
@@ -248,13 +266,53 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Forecast Revenue" value={formatCurrency(forecast?.next_30_day_revenue)} />
         <StatCard label="Forecast ROI" value={formatPercent(forecast?.predicted_roi)} />
         <StatCard label="Forecast Confidence" value={formatConfidence(forecast?.confidence)} />
         <StatCard label="Scenario Base Revenue" value={formatCurrency(baseScenarioRevenue)} />
         <StatCard label="Funnel Uplift" value={formatPercent(funnel?.predicted_conversion_uplift_if_fixed)} />
         <StatCard label="Cohort 3M Retention" value={formatPercent(cohort?.three_month_retention)} />
+        <StatCard label="Blended ROAS" value={formatDecimal(attribution?.summary_metrics?.blended_roas)} />
+        <StatCard label="Churn Risk" value={formatPercent(cohort?.churn_risk)} />
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-3">
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <Activity className="h-4 w-4" /> Agent Coverage
+          </div>
+          <div className="mt-3 grid gap-2 text-sm">
+            <SimpleRow label="Agents with usable output" value={`${agentsWithDataCount}/5`} />
+            <SimpleRow label="Coverage percentage" value={`${coveragePercent.toFixed(0)}%`} />
+            <SimpleRow label="Signals in dashboard" value={formatCount(
+              forecastPoints.length + scenarioProjection.length + funnelPrimary.length + cohortRetention.length + attributionCredit.length,
+            )} />
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            <Target className="h-4 w-4" /> Cross-Agent Opportunity
+          </div>
+          <div className="mt-3 grid gap-2 text-sm">
+            <SimpleRow label="Scenario upside vs base" value={formatCurrency(scenarioUpside)} />
+            <SimpleRow label="Recoverable funnel uplift" value={formatPercent(funnel?.predicted_conversion_uplift_if_fixed)} />
+            <SimpleRow label="Top cohort value segment" value={cohort?.high_value_segment || '-'} />
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            {riskFlagsCount > 0 ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+            Risk Monitor
+          </div>
+          <div className="mt-3 grid gap-2 text-sm">
+            <SimpleRow label="Risk flags currently active" value={formatCount(riskFlagsCount)} />
+            <SimpleRow label="Largest dropoff stage" value={formatDropoffLabel(funnel?.largest_dropoff)} />
+            <SimpleRow label="Forecast ROI health" value={toNumber(forecast?.predicted_roi) !== null && (toNumber(forecast?.predicted_roi) ?? 0) >= 0 ? 'Positive' : 'Needs attention'} />
+          </div>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -384,10 +442,10 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
             )}
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <div className="rounded-xl bg-amber-50 p-3 text-sm text-amber-800 break-words">
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-3 text-sm text-gray-800 break-words">
               Largest dropoff: {formatDropoffLabel(funnel?.largest_dropoff)} ({funnel ? `${(toNumber(funnel.dropoff_percent) ?? 0).toFixed(1)}%` : '-'})
             </div>
-            <div className="rounded-xl bg-emerald-50 p-3 text-sm text-emerald-800 break-words">
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-3 text-sm text-gray-800 break-words">
               Potential uplift if fixed: {formatPercent(funnel?.predicted_conversion_uplift_if_fixed)}
             </div>
           </div>
@@ -396,6 +454,14 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
               <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Top Leakage Transitions</div>
               {funnelWaterfall.slice(0, 4).map((item) => (
                 <SimpleRow key={item.transition} label={item.transition_label} value={formatCount(item.lost_users_abs)} />
+              ))}
+            </div>
+          )}
+          {funnelStages.length > 0 && (
+            <div className="mt-4 space-y-2 text-sm">
+              <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Stage Conversion from Entry</div>
+              {funnelStages.slice(0, 5).map((stage) => (
+                <SimpleRow key={stage.label} label={stage.label} value={`${formatCount(stage.value)} | ${stage.conversionFromEntry.toFixed(1)}%`} />
               ))}
             </div>
           )}
@@ -412,7 +478,7 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
                 .filter(([, value]) => value !== undefined && value !== null && String(value).trim().length > 0)
                 .slice(0, 6)
                 .map(([key, value]) => (
-                  <span key={key} className="rounded-full bg-indigo-50 px-2.5 py-1 font-semibold text-indigo-700">
+                  <span key={key} className="rounded-full border border-gray-300 bg-gray-100 px-2.5 py-1 font-semibold text-gray-700">
                     {key.replace(/_/g, ' ')}: {String(value)}
                   </span>
                 ))}
@@ -577,8 +643,8 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
                   <span className="min-w-0 break-words font-semibold text-gray-800">{channel}</span>
                   <span className="text-gray-600">{formatPercent(weight)}</span>
                 </div>
-                <div className="h-2 rounded-full bg-gray-100">
-                  <div className="h-2 rounded-full bg-blue-600" style={{ width: `${Math.min(100, weight * 100)}%` }} />
+                  <div className="h-2 rounded-full bg-gray-200">
+                  <div className="h-2 rounded-full bg-gray-900" style={{ width: `${Math.min(100, weight * 100)}%` }} />
                 </div>
               </div>
             ))
@@ -698,25 +764,21 @@ export default function Dashboard({ result, isLoading, clientId, recommendationO
 }
 
 function ChartEmpty({ text }: { text: string }) {
-  return <div className="flex h-full items-center justify-center rounded-2xl border border-dashed border-gray-300 text-sm text-gray-500">{text}</div>;
+  return <div className="panel-enter flex h-full items-center justify-center rounded-2xl border border-dashed border-gray-300 text-sm text-gray-500">{text}</div>;
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0 overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="stat-card panel-enter">
       <div className="truncate text-xs font-semibold uppercase tracking-wide text-gray-500" title={label}>{label}</div>
       <div className="mt-2 truncate text-2xl font-bold text-gray-900" title={value}>{value}</div>
     </div>
   );
 }
 
-function FunnelRow({ label, value }: { label: string; value?: number }) {
-  return <SimpleRow label={label} value={formatCount(value)} />;
-}
-
 function SimpleRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex min-w-0 flex-col gap-1 rounded-xl bg-gray-50 px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+    <div className="flex min-w-0 flex-col gap-1 rounded-xl bg-gray-50 px-3 py-2 transition-colors duration-200 hover:bg-gray-100 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
       <span className="break-words text-gray-600">{label}</span>
       <span className="break-words font-semibold text-gray-900 sm:text-right">{value}</span>
     </div>

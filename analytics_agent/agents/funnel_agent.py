@@ -170,21 +170,26 @@ class FunnelAgent:
         self,
         state: AnalyticsState,
     ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
+        client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
         campaign_remote, campaign_source = queries.get_dataset_dataframe_with_source(
             "campaigns",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         events_remote, events_source = queries.get_dataset_dataframe_with_source(
             "events",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         customers_remote, customers_source = queries.get_dataset_dataframe_with_source(
             "customers",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
         transactions_remote, transactions_source = queries.get_dataset_dataframe_with_source(
             "transactions",
-            prefer_remote=True,
+            prefer_remote=not client_id,
+            client_id=client_id,
         )
 
         campaign_df = campaign_remote if not campaign_remote.empty else pd.DataFrame(state.campaign_data or [])

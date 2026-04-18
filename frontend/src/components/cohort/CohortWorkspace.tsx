@@ -13,6 +13,12 @@ import {
   YAxis,
 } from 'recharts';
 import { getAgentResults, getCohortOptions, orchestrateAgents } from '../../services/api';
+import {
+  getMissingRequiredDatasets,
+  hasRequiredClientDatasets,
+  toFriendlyDataRequirementError,
+} from '../../services/clientDataRequirements';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type { AgentOrchestrationResult, CohortAnalysis, CohortOptions } from '../../types';
 
 interface CohortWorkspaceProps {
@@ -35,6 +41,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
   const [result, setResult] = useState<CohortAnalysis | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isLoadingOptions, setIsLoadingOptions] = useState(false);
+  const [optionsError, setOptionsError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,9 +49,13 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
 
     const hydrateOptions = async () => {
       setIsLoadingOptions(true);
+      setOptionsError(null);
       try {
-        const response = await getCohortOptions();
-        if (cancelled || !response.success || !response.data) return;
+        const response = await getCohortOptions(clientId);
+        if (!response.success || !response.data) {
+          throw new Error(response.detail || 'Unable to load cohort options.');
+        }
+        if (cancelled) return;
         setOptions(response.data);
         setCohortPeriod(response.data.defaults?.cohort_period || 'month');
         setRetentionMonths(response.data.defaults?.retention_months || 3);
@@ -56,8 +67,10 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
         setMinTenureMonths(response.data.defaults?.min_tenure_months || 0);
         setChurnProbabilityMin(response.data.defaults?.churn_probability_min || 0);
         setTopN(response.data.defaults?.top_n || 8);
-      } catch {
-        // Keep local defaults if options endpoint is unavailable.
+      } catch (loadError) {
+        if (cancelled) return;
+        const rawMessage = loadError instanceof Error ? loadError.message : 'Unable to load cohort options.';
+        setOptionsError(toFriendlyDataRequirementError('Cohort analysis', 'cohort', rawMessage));
       } finally {
         if (!cancelled) setIsLoadingOptions(false);
       }
@@ -67,7 +80,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   useEffect(() => {
     if (!clientId || result) return;
@@ -105,6 +118,19 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
   const cohortCurves = result?.cohort_curves ?? [];
   const cohortTable = result?.cohort_table ?? [];
   const churnRiskActions = result?.churn_risk_actions ?? [];
+  const hasRequiredClientData = useMemo(
+    () => hasRequiredClientDatasets('cohort', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const missingDatasets = useMemo(
+    () => getMissingRequiredDatasets('cohort', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const dataRequirementMessage = useMemo(
+    () => toFriendlyDataRequirementError('Cohort analysis', 'cohort', '', missingDatasets),
+    [missingDatasets],
+  );
+  const showMissingDataRequirementCard = !isLoadingOptions && Boolean(clientId) && Boolean(options?.sources) && !hasRequiredClientData && !error && !optionsError;
 
   const topSegments = useMemo(
     () => [...segmentBreakdown].sort((a, b) => b.average_ltv - a.average_ltv).slice(0, 6),
@@ -112,6 +138,11 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
   );
 
   const runCohort = async () => {
+    if (!hasRequiredClientData) {
+      setError(dataRequirementMessage);
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
 
@@ -142,7 +173,8 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
 
       setResult(response.data.cohort_analysis ?? null);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Failed to run cohort analysis.');
+      const rawMessage = runError instanceof Error ? runError.message : 'Failed to run cohort analysis.';
+      setError(toFriendlyDataRequirementError('Cohort analysis', 'cohort', rawMessage, missingDatasets));
     } finally {
       setIsRunning(false);
     }
@@ -151,11 +183,14 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <Users className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <Users className="h-7 w-7" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Cohort Agent</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900">Cohort Agent</h1>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -173,7 +208,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
               </label>
 
               <label className="text-sm text-gray-600">
-                Retention Horizon (months)
+                 Horizon (months)
                 <input
                   type="number"
                   min={1}
@@ -256,13 +291,30 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
               </label>
 
               <div className="flex items-end">
-                <button onClick={runCohort} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runCohort} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                    {isRunning ? 'Running...' : 'Analyze Cohorts'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
+            {optionsError && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{optionsError}</p>
+              </div>
+            )}
+            {error && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Cohort Unavailable</p>
+                <p className="mt-1 text-sm text-amber-800">{error}</p>
+              </div>
+            )}
+            {showMissingDataRequirementCard && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{dataRequirementMessage}</p>
+              </div>
+            )}
             {isLoadingOptions && <p className="mt-3 text-xs text-gray-500">Loading Supabase cohort filters...</p>}
             {result?.data_source && <p className="mt-3 text-xs text-gray-500">Data source: {result.data_source}</p>}
           </div>

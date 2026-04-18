@@ -15,6 +15,12 @@ import {
   getBudgetAllocatorOptions,
   runBudgetAllocator,
 } from '../../services/api';
+import {
+  getMissingRequiredDatasets,
+  hasRequiredClientDatasets,
+  toFriendlyDataRequirementError,
+} from '../../services/clientDataRequirements';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type {
   AgentOrchestrationResult,
   BudgetAllocationAnalysis,
@@ -31,6 +37,7 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
   const [result, setResult] = useState<BudgetAllocationAnalysis | null>(null);
   const [isLoadingOptions, setIsLoadingOptions] = useState(true);
   const [isRunning, setIsRunning] = useState(false);
+  const [optionsError, setOptionsError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [objective, setObjective] = useState('profit');
@@ -48,8 +55,9 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
 
     const loadOptions = async () => {
       setIsLoadingOptions(true);
+      setOptionsError(null);
       try {
-        const response = await getBudgetAllocatorOptions();
+        const response = await getBudgetAllocatorOptions(clientId);
         if (!response.success || !response.data) {
           throw new Error(response.detail || 'Unable to load budget allocator options.');
         }
@@ -67,7 +75,8 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
         setCampaignId(response.data.defaults.campaign_id || 'all');
       } catch (loadError) {
         if (cancelled) return;
-        setError(loadError instanceof Error ? loadError.message : 'Unable to load options.');
+        const rawMessage = loadError instanceof Error ? loadError.message : 'Unable to load options.';
+        setOptionsError(toFriendlyDataRequirementError('Budget allocation', 'budget_allocator', rawMessage));
       } finally {
         if (!cancelled) {
           setIsLoadingOptions(false);
@@ -79,7 +88,7 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   useEffect(() => {
     if (!clientId || result) return;
@@ -111,12 +120,37 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
     };
   }, [clientId, result]);
 
+  const allocationRows = result?.channel_allocations ?? [];
+  const planOptions = useMemo(() => {
+    if (!result?.plans) return [];
+    return Object.keys(result.plans);
+  }, [result]);
+  const hasRequiredClientData = useMemo(
+    () => hasRequiredClientDatasets('budget_allocator', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const missingDatasets = useMemo(
+    () => getMissingRequiredDatasets('budget_allocator', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const dataRequirementMessage = useMemo(
+    () => toFriendlyDataRequirementError('Budget allocation', 'budget_allocator', '', missingDatasets),
+    [missingDatasets],
+  );
+  const showMissingDataRequirementCard = !isLoadingOptions && Boolean(clientId) && Boolean(options?.sources) && !hasRequiredClientData && !error && !optionsError;
+
   const runAllocation = async () => {
+    if (!hasRequiredClientData) {
+      setError(dataRequirementMessage);
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
 
     try {
       const response = await runBudgetAllocator({
+        client_id: clientId,
         objective,
         risk_tolerance: riskTolerance,
         total_budget: totalBudget,
@@ -135,26 +169,24 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
       onRunResult?.(response.data);
       setResult(response.data.budget_allocation_analysis ?? null);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Budget allocation failed.');
+      const rawMessage = runError instanceof Error ? runError.message : 'Budget allocation failed.';
+      setError(toFriendlyDataRequirementError('Budget allocation', 'budget_allocator', rawMessage, missingDatasets));
     } finally {
       setIsRunning(false);
     }
   };
 
-  const allocationRows = result?.channel_allocations ?? [];
-  const planOptions = useMemo(() => {
-    if (!result?.plans) return [];
-    return Object.keys(result.plans);
-  }, [result]);
-
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <DollarSign className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <DollarSign className="h-7 w-7" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Budget Allocator Agent</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900">Budget Allocator Agent</h1>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -262,13 +294,30 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
               </label>
 
               <div className="flex items-end xl:col-span-2">
-                <button onClick={runAllocation} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runAllocation} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                   {isRunning ? 'Allocating...' : 'Generate Budget Plan'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
+            {optionsError && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{optionsError}</p>
+              </div>
+            )}
+            {error && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Budget Allocator Unavailable</p>
+                <p className="mt-1 text-sm text-amber-800">{error}</p>
+              </div>
+            )}
+            {showMissingDataRequirementCard && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{dataRequirementMessage}</p>
+              </div>
+            )}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">

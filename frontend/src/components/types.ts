@@ -7,6 +7,37 @@ export interface File {
   file_size: number;
   storage_path: string;
   created_at: string; // Assuming ISO date string from backend
+  client_id?: string;
+  category?: string;
+  instructions?: string;
+  remote_storage_path?: string;
+}
+
+export interface TrainingUploadFile {
+  id: number;
+  client_id: string;
+  agent_id: number;
+  file_name: string;
+  file_type?: string;
+  file_size?: number;
+  local_storage_path?: string;
+  remote_storage_path: string;
+  category: string;
+  instructions?: string;
+  created_at: string;
+}
+
+export interface TrainingUploadListApiResponse {
+  success: boolean;
+  files: TrainingUploadFile[];
+  timestamp: string;
+}
+
+export interface TrainingUploadPreviewApiResponse {
+  success: boolean;
+  file: TrainingUploadFile;
+  preview: string;
+  timestamp: string;
 }
 // Analytics specific types
 export interface AnalyticsPayload {

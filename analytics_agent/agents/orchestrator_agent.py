@@ -41,6 +41,13 @@ class OrchestratorAgent:
 
         state.user_request = dict(request.user_request or {})
         ordered_agents = self._resolve_agent_order(request.run_agents)
+        client_id = str(state.user_request.get("client_id") or "").strip()
+        if client_id:
+            missing = queries.get_missing_client_datasets_for_agents(client_id, ordered_agents)
+            if missing:
+                raise ValueError(
+                    queries.build_missing_client_dataset_message(client_id, missing)
+                )
         self._load_data(state, ordered_agents)
         for agent_name in ordered_agents:
             state = self.run_agent(agent_name, state)
@@ -125,9 +132,12 @@ class OrchestratorAgent:
         forecast_only = ordered_agents == ["forecast"]
         scenario_only = ordered_agents == ["scenario"]
         budget_only = ordered_agents == ["budget_allocator"]
+        client_id = str(state.user_request.get("client_id") or "").strip() or None
 
         if state.campaign_data is None:
-            if forecast_only or scenario_only or budget_only:
+            if client_id:
+                state.campaign_data = queries.get_campaign_data(client_id=client_id)
+            elif forecast_only or scenario_only or budget_only:
                 state.campaign_data = queries.get_campaign_data_remote_only()
             else:
                 state.campaign_data = queries.get_campaign_data()
@@ -136,7 +146,7 @@ class OrchestratorAgent:
             return
 
         if state.customer_data is None and state.customers_data is None:
-            state.customer_data = queries.get_customers_data()
+            state.customer_data = queries.get_customers_data(client_id=client_id)
             state.customers_data = state.customer_data
         elif state.customer_data is None:
             state.customer_data = state.customers_data
@@ -144,11 +154,11 @@ class OrchestratorAgent:
             state.customers_data = state.customer_data
 
         if state.events_data is None:
-            state.events_data = queries.get_events_data()
+            state.events_data = queries.get_events_data(client_id=client_id)
         if state.transactions_data is None:
-            state.transactions_data = queries.get_transactions_data()
+            state.transactions_data = queries.get_transactions_data(client_id=client_id)
         if state.retention_data is None:
-            state.retention_data = queries.get_retention_data()
+            state.retention_data = queries.get_retention_data(client_id=client_id)
 
     def _resolve_agent_order(self, run_agents: list[str] | None) -> list[str]:
         if not run_agents:
@@ -192,7 +202,7 @@ class OrchestratorAgent:
 
     def _build_executive_summary(self, state: AnalyticsState) -> None:
         if not state.forecast_analysis:
-            state.executive_summary = "Forecast is unavailable because campaign data is missing."
+            state.executive_summary = "Run Analysis."
             return
 
         revenue = state.forecast_analysis.next_30_day_revenue

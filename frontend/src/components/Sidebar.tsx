@@ -6,6 +6,7 @@ import {
   Filter,
   Network,
   Users,
+  DatabaseZap,
   History,
   Settings,
   ChevronRight,
@@ -25,7 +26,6 @@ interface SidebarProps {
   onMobileClose: () => void;
   suggestions: UISuggestionItem[];
   onExecuteSuggestion: (suggestion: UISuggestionItem) => void;
-  onUpdateSuggestion: (suggestionId: string, updates: Partial<UISuggestionItem>) => void;
   onRemoveSuggestion: (suggestionId: string) => void;
   chatThreads: ChatThreadSummary[];
   isHistoryLoading: boolean;
@@ -33,7 +33,6 @@ interface SidebarProps {
   onOpenHistoryThread: (threadId: string) => void;
   accountName: string;
   accountEmail: string;
-  onLogout: () => void;
 }
 
 export default function Sidebar({
@@ -43,7 +42,6 @@ export default function Sidebar({
   onMobileClose,
   suggestions,
   onExecuteSuggestion,
-  onUpdateSuggestion,
   onRemoveSuggestion,
   chatThreads,
   isHistoryLoading,
@@ -51,7 +49,6 @@ export default function Sidebar({
   onOpenHistoryThread,
   accountName,
   accountEmail,
-  onLogout,
 }: SidebarProps) {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
@@ -86,6 +83,11 @@ export default function Sidebar({
       id: 'budget',
       name: 'Budget Allocator',
       icon: DollarSign,
+    },
+    {
+      id: 'data-query',
+      name: 'Data Query Agent',
+      icon: DatabaseZap,
     },
   ];
 
@@ -139,13 +141,13 @@ export default function Sidebar({
     <>
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 transition-opacity duration-300 lg:hidden"
           onClick={onMobileClose}
         />
       )}
 
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-white/10 bg-black text-white transition-transform duration-300 lg:translate-x-0 ${
+        className={`sidebar-shell fixed left-0 top-0 z-50 flex h-screen w-64 flex-col border-r border-white/10 text-white transition-transform duration-300 lg:translate-x-0 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -179,10 +181,10 @@ export default function Sidebar({
                 onSectionChange('supervisor');
                 onMobileClose();
               }}
-              className={`group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all duration-200 ${
+              className={`group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all duration-300 ${
                 activeSection === 'supervisor'
-                  ? 'border-white/20 bg-neutral-900 text-white'
-                  : 'border-transparent text-gray-300 hover:border-white/10 hover:bg-neutral-900 hover:text-white'
+                  ? 'border-white/20 bg-white/10 text-white shadow-[0_10px_22px_rgba(0,0,0,0.3)]'
+                  : 'border-transparent text-gray-300 hover:border-white/10 hover:bg-white/10 hover:text-white'
               }`}
             >
               <div
@@ -220,10 +222,10 @@ export default function Sidebar({
                       onSectionChange(agent.id);
                       onMobileClose();
                     }}
-                    className={`group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left transition-all duration-200 ${
+                    className={`group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left transition-all duration-300 ${
                       isActive
-                        ? 'bg-neutral-900 text-white'
-                        : 'text-gray-300 hover:bg-neutral-900 hover:text-white'
+                        ? 'bg-white/10 text-white shadow-[0_10px_20px_rgba(0,0,0,0.22)]'
+                        : 'text-gray-300 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     <div
@@ -258,7 +260,7 @@ export default function Sidebar({
                   onSectionChange('dashboard');
                   onMobileClose();
                 }}
-                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-200 hover:bg-neutral-900 hover:text-white"
+                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-400 transition-all group-hover:bg-white/10 group-hover:text-white">
                   <PanelsTopLeft className="h-4 w-4" />
@@ -273,7 +275,7 @@ export default function Sidebar({
                   onSectionChange('report');
                   onMobileClose();
                 }}
-                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-200 hover:bg-neutral-900 hover:text-white"
+                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-400 transition-all group-hover:bg-white/10 group-hover:text-white">
                   <FileBarChart2 className="h-4 w-4" />
@@ -297,7 +299,7 @@ export default function Sidebar({
                   setIsSuggestionsOpen(true);
                   onMobileClose();
                 }}
-                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-200 hover:bg-neutral-900 hover:text-white"
+                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-400 transition-all group-hover:bg-white/10 group-hover:text-white">
                   <Lightbulb className="h-4 w-4" />
@@ -313,7 +315,7 @@ export default function Sidebar({
                   setIsHistoryOpen(true);
                   onMobileClose();
                 }}
-                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-200 hover:bg-neutral-900 hover:text-white"
+                className="group flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left text-gray-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-400 transition-all group-hover:bg-white/10 group-hover:text-white">
                   <History className="h-4 w-4" />
@@ -361,7 +363,7 @@ export default function Sidebar({
       </aside>
 
       <div
-        className={`fixed inset-0 z-[60] bg-black/30 transition-all duration-300 ${
+        className={`drawer-backdrop fixed inset-0 z-[60] transition-all duration-300 ${
           isSuggestionsOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'
@@ -370,7 +372,7 @@ export default function Sidebar({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`absolute right-0 top-0 flex h-full w-[420px] flex-col border-l border-gray-200 bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
+          className={`drawer-panel absolute right-0 top-0 flex h-full w-[420px] flex-col border-l border-gray-200 bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
             isSuggestionsOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -405,7 +407,7 @@ export default function Sidebar({
                   return (
                   <div
                     key={item.id}
-                    className="w-full rounded-3xl border border-gray-200 bg-white p-5 text-left"
+                    className="w-full rounded-3xl border border-gray-200 bg-white p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-md"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="text-sm font-semibold text-gray-900">
@@ -468,7 +470,7 @@ export default function Sidebar({
       </div>
 
       <div
-        className={`fixed inset-0 z-[60] bg-black/30 transition-all duration-300 ${
+        className={`drawer-backdrop fixed inset-0 z-[60] transition-all duration-300 ${
           isHistoryOpen
             ? 'pointer-events-auto opacity-100'
             : 'pointer-events-none opacity-0'
@@ -477,13 +479,13 @@ export default function Sidebar({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`absolute right-0 top-0 flex h-full w-[420px] flex-col border-l border-gray-200 bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
+          className={`drawer-panel absolute right-0 top-0 flex h-full w-[420px] flex-col border-l border-gray-200 bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
             isHistoryOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-blue-600">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
                 Analytics Supervisor
               </div>
 
@@ -516,17 +518,17 @@ export default function Sidebar({
                         onOpenHistoryThread(thread.id);
                         setIsHistoryOpen(false);
                       }}
-                      className={`w-full rounded-3xl border p-4 text-left transition ${
+                      className={`w-full rounded-3xl border p-4 text-left transition duration-300 ${
                         isActiveThread
-                          ? 'border-blue-300 bg-blue-50'
-                          : 'border-gray-200 bg-white hover:border-blue-200 hover:bg-blue-50/40'
+                          ? 'border-gray-900 bg-gray-100 shadow-sm'
+                          : 'border-gray-200 bg-white hover:-translate-y-0.5 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md'
                       }`}
                     >
                       <div className="truncate text-sm font-semibold text-gray-900">{thread.title || 'New Chat'}</div>
                       <div className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">
                         {thread.last_message_preview || 'Open this thread to continue the conversation.'}
                       </div>
-                      <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
+                      <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-600">
                         {formatRelativeTime(thread.last_message_at || thread.updated_at || thread.created_at)}
                       </div>
                     </button>

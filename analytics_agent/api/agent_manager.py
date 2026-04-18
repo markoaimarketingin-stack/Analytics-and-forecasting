@@ -97,6 +97,7 @@ class AgentManager:
                     "max_shift_pct": payload.get("max_shift_pct", 20),
                     "min_channel_pct": payload.get("min_channel_pct", 5),
                     "max_channel_pct": payload.get("max_channel_pct", 60),
+                    "client_id": payload.get("client_id"),
                 },
                 run_agents=agents_to_run,
             )

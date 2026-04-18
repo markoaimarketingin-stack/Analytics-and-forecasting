@@ -22,6 +22,23 @@ CREATE TABLE IF NOT EXISTS files (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS training_uploads (
+    id BIGSERIAL PRIMARY KEY,
+    client_id TEXT NOT NULL,
+    agent_id INTEGER NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50),
+    file_size INTEGER,
+    local_storage_path TEXT,
+    remote_storage_path TEXT NOT NULL,
+    category TEXT NOT NULL DEFAULT 'general',
+    instructions TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc', now())
+);
+
+CREATE INDEX IF NOT EXISTS idx_training_uploads_client_created
+    ON training_uploads(client_id, created_at DESC);
+
 -- 3. Create AGENT_FILE_ASSOCIATION table (many-to-many relationship)
 CREATE TABLE IF NOT EXISTS agent_file_association (
     agent_id INTEGER REFERENCES agents(id) ON DELETE CASCADE,

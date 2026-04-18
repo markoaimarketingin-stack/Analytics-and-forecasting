@@ -14,6 +14,7 @@ import {
   YAxis,
 } from 'recharts';
 import { getAgentResults, getForecastOptions, orchestrateAgents } from '../../services/api';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type { AgentOrchestrationResult, ForecastAnalysis, ForecastOptions } from '../../types';
 
 interface ForecastFormState {
@@ -34,6 +35,23 @@ interface ForecastWorkspaceProps {
   clientId?: string;
   onRunResult?: (result: AgentOrchestrationResult) => void;
 }
+
+const toFriendlyForecastError = (raw: string): string => {
+  const text = (raw || '').trim();
+  if (!text) {
+    return 'Forecast data is not available for this account. Please upload a campaigns dataset from Supervisor > Train Model and try again.';
+  }
+
+  if (text.toLowerCase().includes('client dataset(s) missing')) {
+    return [
+      'Forecast cannot be generated because the required client dataset is missing.',
+      'Required dataset: Campaigns.',
+      'Please open Supervisor > Train Model, upload the campaigns file under the Campaigns category, and run Forecast again.',
+    ].join(' ');
+  }
+
+  return text;
+};
 
 export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWorkspaceProps) {
   const [form, setForm] = useState<ForecastFormState>({
@@ -103,7 +121,7 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
       setOptionsError(null);
 
       try {
-        const response = await getForecastOptions();
+        const response = await getForecastOptions(clientId);
         if (!response.success || !response.data) {
           throw new Error(response.detail || 'Unable to load forecast options from Supabase.');
         }
@@ -120,7 +138,8 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
         }));
       } catch (loadError) {
         if (cancelled) return;
-        setOptionsError(loadError instanceof Error ? loadError.message : 'Unable to load forecast filters.');
+        const message = loadError instanceof Error ? loadError.message : 'Unable to load forecast filters.';
+        setOptionsError(toFriendlyForecastError(message));
       } finally {
         if (!cancelled) {
           setIsLoadingOptions(false);
@@ -132,12 +151,16 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   const optionsSourceLabel = useMemo(() => {
     const source = options?.sources?.campaigns || '';
     return source.toLowerCase() === 'supabase' ? 'Supabase' : source || '-';
   }, [options]);
+  const hasClientCampaignDataset = useMemo(() => {
+    if (!clientId) return true;
+    return (options?.sources?.campaigns || '').toLowerCase() === 'client_uploads';
+  }, [clientId, options?.sources?.campaigns]);
 
   const forecastPoints = result?.forecast_points ?? [];
   const channelForecast = result?.channel_forecast ?? [];
@@ -169,8 +192,16 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
   }, [forecastPoints, form.kpi_metric, result?.predicted_ctr, result?.predicted_conversion_rate]);
 
   const runForecast = async () => {
+    if (!hasClientCampaignDataset) {
+      setError(
+        'Forecast is unavailable for this account because no campaigns dataset is linked. Upload the campaigns file in Supervisor > Train Model, then run Forecast again.'
+      );
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
+    setResult(null);
 
     try {
       const response = await orchestrateAgents({
@@ -201,7 +232,9 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
       setResult(response.data.forecast_analysis ?? null);
       setWarnings(response.data.warnings ?? []);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Failed to run forecast agent.');
+      setResult(null);
+      const message = runError instanceof Error ? runError.message : 'Failed to run forecast agent.';
+      setError(toFriendlyForecastError(message));
     } finally {
       setIsRunning(false);
     }
@@ -214,13 +247,16 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <TrendingUp className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <TrendingUp className="h-7 w-7" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-gray-900">Forecast Agent</h1>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-gray-900">Forecast Agent</h1>
-          </div>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -334,7 +370,7 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
               </div>
 
               <div className="flex items-end">
-                <button onClick={runForecast} disabled={isRunning} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runForecast} disabled={isRunning || !hasClientCampaignDataset} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
                   {isRunning ? 'Running...' : 'Run Forecast'}
                 </button>
               </div>
@@ -362,8 +398,18 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
               </div>
             ) : null}
 
-            {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
-            {optionsError && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{optionsError}</p>}
+            {error && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Forecast Unavailable</p>
+                <p className="mt-1 text-sm text-amber-800">{error}</p>
+              </div>
+            )}
+            {optionsError && (
+              <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                <p className="mt-1 text-sm text-amber-800">{optionsError}</p>
+              </div>
+            )}
             {warnings.length > 0 && <p className="mt-3 text-sm text-gray-700">{warnings.join(' | ')}</p>}
           </div>
 

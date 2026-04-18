@@ -12,6 +12,12 @@ import {
   YAxis,
 } from 'recharts';
 import { getAgentResults, getFunnelOptions, orchestrateAgents } from '../../services/api';
+import {
+  getMissingRequiredDatasets,
+  hasRequiredClientDatasets,
+  toFriendlyDataRequirementError,
+} from '../../services/clientDataRequirements';
+import AgentHeaderActions from '../shared/AgentHeaderActions';
 import type { AgentOrchestrationResult, FunnelAnalysis, FunnelOptions } from '../../types';
 
 interface FunnelWorkspaceProps {
@@ -71,7 +77,7 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
       setOptionsError(null);
 
       try {
-        const response = await getFunnelOptions();
+        const response = await getFunnelOptions(clientId);
         if (!response.success || !response.data) {
           throw new Error(response.detail || 'Unable to load funnel filter options.');
         }
@@ -98,7 +104,7 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [clientId]);
 
   const stageRows = useMemo(() => {
     const funnel = result?.funnel;
@@ -193,8 +199,26 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
     if (values.every((value) => value === 'local')) return 'Local CSV fallback';
     return 'Mixed source';
   }, [options]);
+  const hasRequiredClientData = useMemo(
+    () => hasRequiredClientDatasets('funnel', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const missingDatasets = useMemo(
+    () => getMissingRequiredDatasets('funnel', options?.sources, clientId),
+    [options?.sources, clientId],
+  );
+  const dataRequirementMessage = useMemo(
+    () => toFriendlyDataRequirementError('Funnel analysis', 'funnel', '', missingDatasets),
+    [missingDatasets],
+  );
+  const showMissingDataRequirementCard = !isLoadingOptions && Boolean(clientId) && Boolean(options?.sources) && !hasRequiredClientData && !error && !optionsError;
 
   const runFunnel = async () => {
+    if (!hasRequiredClientData) {
+      setError(dataRequirementMessage);
+      return;
+    }
+
     setIsRunning(true);
     setError(null);
 
@@ -221,7 +245,8 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
 
       setResult(response.data.funnel_analysis ?? null);
     } catch (runError) {
-      setError(runError instanceof Error ? runError.message : 'Failed to run funnel analysis.');
+      const rawMessage = runError instanceof Error ? runError.message : 'Failed to run funnel analysis.';
+      setError(toFriendlyDataRequirementError('Funnel analysis', 'funnel', rawMessage, missingDatasets));
     } finally {
       setIsRunning(false);
     }
@@ -230,11 +255,14 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
   return (
     <div className="workspace-surface workspace-modern">
       <div className="workspace-header-glass workspace-header-glass-modern px-8 py-4">
-        <div className="flex items-center gap-4">
-          <div className="workspace-agent-icon">
-            <Filter className="h-7 w-7" />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="workspace-agent-icon">
+              <Filter className="h-7 w-7" />
+            </div>
+            <h1 className="text-xl font-bold tracking-tight text-gray-900">Funnel Agent</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900">Funnel Agent</h1>
+          <AgentHeaderActions clientId={clientId} />
         </div>
       </div>
 
@@ -300,7 +328,7 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
                 <span className="block min-h-[1.75rem] pb-1.5 text-sm font-medium text-transparent select-none">Action</span>
                 <button
                   onClick={runFunnel}
-                  disabled={isRunning || isLoadingOptions}
+                  disabled={isRunning || isLoadingOptions || !hasRequiredClientData}
                   className="workspace-action-btn h-11 w-full whitespace-nowrap bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60"
                 >
 
@@ -311,8 +339,26 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
 
             <div className="mt-4">
               {isLoadingOptions && <p className="text-sm text-gray-500">Loading available funnel filters...</p>}
-              {optionsError && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{optionsError}</p>}
-              {error && <p className="mt-4 rounded-xl border border-gray-300 bg-gray-100 px-3 py-2 text-sm text-gray-700">{error}</p>}
+              {optionsError && (
+                <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                  <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                  <p className="mt-1 text-sm text-amber-800">
+                    {toFriendlyDataRequirementError('Funnel analysis', 'funnel', optionsError, missingDatasets)}
+                  </p>
+                </div>
+              )}
+              {error && (
+                <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                  <p className="text-sm font-semibold text-amber-900">Funnel Unavailable</p>
+                  <p className="mt-1 text-sm text-amber-800">{error}</p>
+                </div>
+              )}
+              {showMissingDataRequirementCard && (
+                <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3">
+                  <p className="text-sm font-semibold text-amber-900">Data Requirement</p>
+                  <p className="mt-1 text-sm text-amber-800">{dataRequirementMessage}</p>
+                </div>
+              )}
 
               {/* Intentionally hidden: technical mapping/event-stage notes for cleaner end-user UX. */}
             </div>

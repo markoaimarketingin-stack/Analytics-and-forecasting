@@ -9,7 +9,7 @@ import re
 import uuid
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Query, UploadFile, File as FastAPIFile
+from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token as google_id_token
@@ -42,6 +42,15 @@ from analytics_agent.db.recommendation_outcomes_repo import (
     upsert_recommendation_outcome,
 )
 from analytics_agent.api.file_handler import FileHandler
+from analytics_agent.agents.data_query_agent import DataQueryAgent, DataQueryRequest
+from analytics_agent.clients.supabase_client import (
+    delete_file_from_storage,
+    delete_training_upload_record,
+    get_training_upload_record,
+    insert_training_upload_record,
+    list_training_upload_records,
+    upload_file_to_storage,
+)
 from analytics_agent.api.models import (
     AnalyticsPayloadRequest,
     AnalyticsResponse,
@@ -141,10 +150,14 @@ class FileResponse(BaseModel):
     file_size: int
     storage_path: str
     created_at: datetime
+    client_id: Optional[str] = None
+    category: Optional[str] = None
+    instructions: Optional[str] = None
+    remote_storage_path: Optional[str] = None
 
     class Config:
         from_attributes = True
-    
+
     @field_serializer('created_at')
     def serialize_created_at(self, value: datetime) -> str:
         """Convert datetime to ISO format string"""
@@ -170,6 +183,43 @@ class FileDeleteResponse(BaseModel):
     success: bool = True
     message: str
     timestamp: str
+
+
+class TrainingUploadRecord(BaseModel):
+    id: int
+    client_id: str
+    agent_id: int
+    file_name: str
+    file_type: Optional[str] = None
+    file_size: Optional[int] = None
+    local_storage_path: Optional[str] = None
+    remote_storage_path: str
+    category: str
+    instructions: Optional[str] = None
+    created_at: str
+
+
+class TrainingUploadListResponse(BaseModel):
+    success: bool = True
+    files: list[TrainingUploadRecord] = Field(default_factory=list)
+    timestamp: str
+
+
+class TrainingUploadPreviewResponse(BaseModel):
+    success: bool = True
+    file: TrainingUploadRecord
+    preview: str
+    timestamp: str
+
+
+ALLOWED_TRAINING_CATEGORIES = {
+    "general",
+    "campaigns",
+    "events",
+    "transactions",
+    "customers",
+    "retention",
+}
 
 
 class RecommendationLifecycleRecord(BaseModel):
@@ -202,11 +252,13 @@ class RecommendationLifecycleUpsertResponse(BaseModel):
     data: RecommendationLifecycleRecord
     timestamp: str
 
+
 # -----------------------------------------------------------------------------
 # Global services
 # -----------------------------------------------------------------------------
 analytics_runner: Optional[AnalyticsRunner] = None
 marko_brain: Optional[AnalyticsSupervisor] = None
+data_query_agent: Optional[DataQueryAgent] = None
 
 
 # -----------------------------------------------------------------------------
@@ -214,7 +266,7 @@ marko_brain: Optional[AnalyticsSupervisor] = None
 # -----------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global analytics_runner, marko_brain
+    global analytics_runner, marko_brain, data_query_agent
 
     try:
         logger.info("Starting Analytics Agent API")
@@ -228,6 +280,7 @@ async def lifespan(app: FastAPI):
             analytics_runner=analytics_runner,
             gemini_client=analytics_runner.gemini,
         )
+        data_query_agent = DataQueryAgent(gemini_client=analytics_runner.gemini)
 
         logger.info(
             "Analytics services initialized successfully",
@@ -269,6 +322,25 @@ def _client_id_from_google_sub(google_sub: str) -> str:
     return f"google-{cleaned}"
 
 
+def _normalize_training_category(value: Optional[str]) -> str:
+    normalized = (value or "general").strip().lower() or "general"
+    return normalized if normalized in ALLOWED_TRAINING_CATEGORIES else "general"
+
+
+def _build_training_storage_path(
+        *,
+        client_id: str,
+        agent_id: int,
+        category: str,
+        original_file_name: str,
+) -> str:
+    safe_client = re.sub(r"[^a-zA-Z0-9_-]", "-", client_id.strip()) or "anonymous-client"
+    safe_category = re.sub(r"[^a-zA-Z0-9_-]", "-", category.strip()) or "general"
+    safe_name = re.sub(r"[^a-zA-Z0-9._-]", "_", original_file_name.strip()) or "uploaded_file"
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    return f"{safe_client}/agent_{agent_id}/{safe_category}/{timestamp}_{safe_name}"
+
+
 _AGENT_ANALYSIS_FIELDS = {
     "attribution": "attribution_analysis",
     "funnel": "funnel_analysis",
@@ -301,11 +373,11 @@ def _extract_agent_result_map(result_payload: dict) -> dict[str, object]:
 
 
 def _persist_client_results(
-    *,
-    client_id: str,
-    result_payload: dict,
-    thread_id: Optional[str] = None,
-    intent: Optional[str] = None,
+        *,
+        client_id: str,
+        result_payload: dict,
+        thread_id: Optional[str] = None,
+        intent: Optional[str] = None,
 ) -> None:
     if not client_id or not isinstance(result_payload, dict):
         return
@@ -409,8 +481,8 @@ async def authenticate_google(payload: GoogleAuthRequest):
         raise HTTPException(status_code=400, detail="Google credential is required")
 
     google_client_id = (
-        (getattr(settings, "GOOGLE_CLIENT_ID", None) or "").strip()
-        or (os.getenv("VITE_GOOGLE_CLIENT_ID") or "").strip()
+            (getattr(settings, "GOOGLE_CLIENT_ID", None) or "").strip()
+            or (os.getenv("VITE_GOOGLE_CLIENT_ID") or "").strip()
     )
     if not google_client_id:
         raise HTTPException(status_code=500, detail="Server Google auth is not configured")
@@ -539,11 +611,12 @@ async def orchestrate_request(payload: ChatRequest):
                 datasets=payload.selected_datasets,
                 message=payload.message,
             )
-        
+
         result = marko_brain.orchestrate(
             payload.message,
             thread_id=thread_id,
             conversation_history=prior_history,
+            client_id=client_id,
         )
 
         try:
@@ -564,7 +637,8 @@ async def orchestrate_request(payload: ChatRequest):
                 error=str(persist_error),
             )
 
-        assistant_message = result.get("reasoning") or result.get("result", {}).get("message") or "Analysis completed successfully."
+        assistant_message = result.get("reasoning") or result.get("result", {}).get(
+            "message") or "Analysis completed successfully."
         append_chat_message(
             client_id=client_id,
             thread_id=thread_id,
@@ -609,8 +683,8 @@ async def orchestrate_request(payload: ChatRequest):
 
 @app.get("/api/chat-history", response_model=ChatThreadListResponse)
 async def get_chat_history(
-    client_id: str = Query(..., description="Client/session identifier"),
-    limit: int = Query(50, ge=1, le=200),
+        client_id: str = Query(..., description="Client/session identifier"),
+        limit: int = Query(50, ge=1, le=200),
 ):
     try:
         threads = list_chat_threads(client_id=client_id, limit=limit)
@@ -626,8 +700,8 @@ async def get_chat_history(
 
 @app.get("/api/chat-history/{thread_id}", response_model=ChatThreadDetailResponse)
 async def get_chat_history_thread(
-    thread_id: str,
-    client_id: str = Query(..., description="Client/session identifier"),
+        thread_id: str,
+        client_id: str = Query(..., description="Client/session identifier"),
 ):
     try:
         thread = get_chat_thread(client_id=client_id, thread_id=thread_id)
@@ -667,8 +741,8 @@ async def get_chat_history_thread(
     response_model=RecommendationLifecycleListResponse,
 )
 async def get_recommendation_outcomes(
-    client_id: Optional[str] = Query(None, description="Client/session identifier"),
-    thread_id: Optional[str] = Query(None, description="Chat thread identifier"),
+        client_id: Optional[str] = Query(None, description="Client/session identifier"),
+        thread_id: Optional[str] = Query(None, description="Chat thread identifier"),
 ):
     try:
         resolved_client_id = _resolve_client_id(client_id)
@@ -721,8 +795,8 @@ async def save_recommendation_outcome(payload: RecommendationLifecycleRecord):
 # -----------------------------------------------------------------------------
 @app.post("/api/analyze", response_model=AnalyticsResponse)
 async def run_analysis(
-    payload: AnalyticsPayloadRequest,
-    background_tasks: BackgroundTasks,
+        payload: AnalyticsPayloadRequest,
+        background_tasks: BackgroundTasks,
 ):
     if not analytics_runner:
         raise HTTPException(status_code=503, detail="Analytics service not ready")
@@ -756,8 +830,8 @@ async def run_analysis(
 # -----------------------------------------------------------------------------
 @app.post("/api/budget-sensitivity", response_model=BudgetSensitivityResponse)
 async def budget_sensitivity(
-    payload: AnalyticsPayloadRequest,
-    budgets: list[float],
+        payload: AnalyticsPayloadRequest,
+        budgets: list[float],
 ):
     if not analytics_runner:
         raise HTTPException(status_code=503, detail="Analytics service not ready")
@@ -812,8 +886,8 @@ async def break_even(payload: AnalyticsPayloadRequest):
 # -----------------------------------------------------------------------------
 @app.post("/api/ltv-projection", response_model=LTVProjectionResponse)
 async def ltv_projection(
-    payload: AnalyticsPayloadRequest,
-    months: int = 12,
+        payload: AnalyticsPayloadRequest,
+        months: int = 12,
 ):
     if not analytics_runner:
         raise HTTPException(status_code=503, detail="Analytics service not ready")
@@ -881,15 +955,54 @@ async def get_capabilities():
 # File Management Endpoints
 # -----------------------------------------------------------------------------
 @app.post("/api/agents/{agent_id}/files", response_model=FileUploadResponse)
-async def upload_agent_file(agent_id: int, file: UploadFile = FastAPIFile(...)):
+async def upload_agent_file(
+        agent_id: int,
+        file: UploadFile = FastAPIFile(...),
+        client_id: Optional[str] = Form(default=None),
+        category: Optional[str] = Form(default=None),
+        instructions: Optional[str] = Form(default=None),
+):
     """Upload a file for an agent and store it in the database."""
     try:
         # Validate file
         FileHandler.validate_file(file)
-        
+
         # Save file to disk
         file_metadata = await FileHandler.save_file(file, agent_id)
-        
+        resolved_client_id = _resolve_client_id(client_id)
+        resolved_category = _normalize_training_category(category)
+        cleaned_instructions = (instructions or "").strip() or None
+
+        local_storage_path = str(file_metadata["storage_path"])
+        file_bytes = Path(local_storage_path).read_bytes()
+        remote_storage_path = _build_training_storage_path(
+            client_id=resolved_client_id,
+            agent_id=agent_id,
+            category=resolved_category,
+            original_file_name=file_metadata["file_name"],
+        )
+
+        upload_file_to_storage(
+            bucket_name=os.getenv("SUPABASE_TRAINING_BUCKET", "agent-training-assets"),
+            file_path=remote_storage_path,
+            file_body=file_bytes,
+        )
+
+        insert_training_upload_record(
+            {
+                "client_id": resolved_client_id,
+                "agent_id": agent_id,
+                "file_name": file_metadata["file_name"],
+                "file_type": file_metadata["file_type"],
+                "file_size": file_metadata["file_size"],
+                "local_storage_path": local_storage_path,
+                "remote_storage_path": remote_storage_path,
+                "category": resolved_category,
+                "instructions": cleaned_instructions,
+                "created_at": datetime.utcnow().isoformat(),
+            }
+        )
+
         # Get database session
         session = get_session()
         try:
@@ -899,7 +1012,7 @@ async def upload_agent_file(agent_id: int, file: UploadFile = FastAPIFile(...)):
                 agent = Agent(id=agent_id, name=f"Agent_{agent_id}")
                 session.add(agent)
                 session.commit()
-            
+
             # Create file record in database
             db_file = File(
                 file_name=file_metadata["file_name"],
@@ -909,27 +1022,40 @@ async def upload_agent_file(agent_id: int, file: UploadFile = FastAPIFile(...)):
             )
             session.add(db_file)
             session.commit()
-            
+
             # Associate file with agent
             agent.files.append(db_file)
             session.commit()
-            
+
             logger.info(
                 "File uploaded and associated with agent",
                 agent_id=agent_id,
                 file_id=db_file.id,
                 file_name=file.filename,
+                client_id=resolved_client_id,
+                category=resolved_category,
             )
-            
+
             return {
                 "success": True,
-                "file": FileResponse.from_orm(db_file),
+                "file": {
+                    "id": db_file.id,
+                    "file_name": db_file.file_name,
+                    "file_type": db_file.file_type,
+                    "file_size": db_file.file_size,
+                    "storage_path": db_file.storage_path,
+                    "created_at": db_file.created_at,
+                    "client_id": resolved_client_id,
+                    "category": resolved_category,
+                    "instructions": cleaned_instructions,
+                    "remote_storage_path": remote_storage_path,
+                },
                 "message": f"File '{file.filename}' uploaded successfully",
                 "timestamp": datetime.utcnow().isoformat(),
             }
         finally:
             session.close()
-    
+
     except HTTPException:
         raise
     except Exception as e:
@@ -952,10 +1078,10 @@ async def get_agent_files(agent_id: int):
                     "files": [],
                     "timestamp": datetime.utcnow().isoformat(),
                 }
-            
+
             files = [FileResponse.from_orm(f) for f in agent.files]
             logger.info("Retrieved agent files", agent_id=agent_id, count=len(files))
-            
+
             return {
                 "success": True,
                 "files": files,
@@ -963,10 +1089,106 @@ async def get_agent_files(agent_id: int):
             }
         finally:
             session.close()
-    
+
     except Exception as e:
         logger.error("Get files endpoint failed", error=str(e), agent_id=agent_id)
         raise HTTPException(status_code=500, detail=f"Failed to retrieve files: {str(e)}")
+
+
+@app.get("/api/training-uploads", response_model=TrainingUploadListResponse)
+async def list_training_uploads(
+        client_id: str = Query(..., description="Client/session identifier"),
+):
+    try:
+        resolved_client_id = _resolve_client_id(client_id)
+        response = list_training_upload_records(resolved_client_id)
+        records = response.data or []
+
+        return {
+            "success": True,
+            "files": records,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.error("Training upload listing failed", error=str(e), client_id=client_id)
+        raise HTTPException(status_code=500, detail=f"Failed to load training uploads: {str(e)}")
+
+
+@app.get("/api/training-uploads/{upload_id}/preview", response_model=TrainingUploadPreviewResponse)
+async def preview_training_upload(
+        upload_id: int,
+        client_id: str = Query(..., description="Client/session identifier"),
+):
+    try:
+        resolved_client_id = _resolve_client_id(client_id)
+        response = get_training_upload_record(upload_id, resolved_client_id)
+        records = response.data or []
+        if not records:
+            raise HTTPException(status_code=404, detail="Training upload not found")
+
+        record = records[0]
+        local_path = str(record.get("local_storage_path") or "").strip()
+        preview = FileHandler.extract_file_preview(local_path, lines=12) if local_path else ""
+
+        return {
+            "success": True,
+            "file": record,
+            "preview": preview,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Training upload preview failed", error=str(e), upload_id=upload_id)
+        raise HTTPException(status_code=500, detail=f"Failed to preview training upload: {str(e)}")
+
+
+@app.delete("/api/training-uploads/{upload_id}", response_model=FileDeleteResponse)
+async def delete_training_upload(
+        upload_id: int,
+        client_id: str = Query(..., description="Client/session identifier"),
+):
+    try:
+        resolved_client_id = _resolve_client_id(client_id)
+        response = get_training_upload_record(upload_id, resolved_client_id)
+        records = response.data or []
+        if not records:
+            raise HTTPException(status_code=404, detail="Training upload not found")
+
+        record = records[0]
+        local_path = str(record.get("local_storage_path") or "").strip()
+        remote_path = str(record.get("remote_storage_path") or "").strip()
+
+        if remote_path:
+            delete_file_from_storage(
+                bucket_name=os.getenv("SUPABASE_TRAINING_BUCKET", "agent-training-assets"),
+                file_path=remote_path,
+            )
+
+        if local_path:
+            FileHandler.delete_file(local_path)
+
+        session = get_session()
+        try:
+            db_file = session.query(File).filter(File.storage_path == local_path).first()
+            if db_file:
+                session.delete(db_file)
+                session.commit()
+        finally:
+            session.close()
+
+        delete_training_upload_record(upload_id, resolved_client_id)
+
+        return {
+            "success": True,
+            "message": "Training upload deleted successfully",
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Training upload delete failed", error=str(e), upload_id=upload_id)
+        raise HTTPException(status_code=500, detail=f"Failed to delete training upload: {str(e)}")
 
 
 @app.get("/api/files/{file_id}", response_model=FileResponse)
@@ -978,11 +1200,11 @@ async def get_file(file_id: int):
             db_file = session.query(File).filter(File.id == file_id).first()
             if not db_file:
                 raise HTTPException(status_code=404, detail="File not found")
-            
+
             return FileResponse.from_orm(db_file)
         finally:
             session.close()
-    
+
     except HTTPException:
         raise
     except Exception as e:
@@ -1000,16 +1222,16 @@ async def delete_file(file_id: int):
             db_file = session.query(File).filter(File.id == file_id).first()
             if not db_file:
                 raise HTTPException(status_code=404, detail="File not found")
-            
+
             # Delete from storage
             FileHandler.delete_file(db_file.storage_path)
-            
+
             # Delete from database
             session.delete(db_file)
             session.commit()
-            
+
             logger.info("File deleted", file_id=file_id, file_name=db_file.file_name)
-            
+
             return {
                 "success": True,
                 "message": f"File '{db_file.file_name}' deleted successfully",
@@ -1017,7 +1239,7 @@ async def delete_file(file_id: int):
             }
         finally:
             session.close()
-    
+
     except HTTPException:
         raise
     except Exception as e:
@@ -1068,6 +1290,18 @@ class DatasetRowsUpdateRequest(BaseModel):
     rows: list[dict] = Field(default_factory=list)
 
 
+class DataQueryAgentRequest(BaseModel):
+    prompt: str
+    client_id: Optional[str] = None
+    limit: int = Field(default=50, ge=1, le=200)
+
+
+class DataQueryAgentResponse(BaseModel):
+    success: bool = True
+    data: dict
+    timestamp: str
+
+
 class FunnelOptionsResponse(BaseModel):
     success: bool = True
     data: dict
@@ -1115,98 +1349,99 @@ def _validate_dataset_name(dataset_name: str) -> str:
 
 
 @app.get("/api/available-datasets", response_model=AvailableDatasetsResponse)
-async def get_available_datasets():
+async def get_available_datasets(client_id: Optional[str] = Query(default=None)):
     """
     Fetch all available datasets from Supabase.
     Returns metadata about each dataset including name, description, and which agents can use it.
     """
     try:
-        from analytics_agent.db.queries import (
-            get_campaign_dataframe,
-            get_events_dataframe,
-            get_customers_dataframe,
-            get_retention_dataframe,
-            get_transactions_dataframe,
-        )
-        
+        from analytics_agent.db.queries import get_dataset_dataframe_with_source
+
+        resolved_client_id = (client_id or "").strip() or None
+
         datasets = []
-        
+
         # Campaign Data
         try:
-            df = get_campaign_dataframe(limit=1)
+            df, _ = get_dataset_dataframe_with_source("campaigns", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
+            full_df, _ = get_dataset_dataframe_with_source("campaigns", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
             campaign_dataset = AvailableDataset(
                 name="campaigns",
                 description="Campaign performance data including spend, impressions, clicks, conversions, and revenue",
                 agent_types=["forecast", "scenario", "funnel", "roi_forecaster"],
-                row_count=len(get_campaign_dataframe()),
+                row_count=len(full_df),
                 columns=df.columns.tolist() if not df.empty else []
             )
             datasets.append(campaign_dataset)
         except Exception as e:
             logger.warning(f"Could not fetch campaign data: {e}")
-        
+
         # Events Data
         try:
-            df = get_events_dataframe(limit=1)
+            df, _ = get_dataset_dataframe_with_source("events", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
+            full_df, _ = get_dataset_dataframe_with_source("events", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
             events_dataset = AvailableDataset(
                 name="events",
                 description="Customer event data including page views, clicks, and interactions",
                 agent_types=["funnel", "attribution", "cohort"],
-                row_count=len(get_events_dataframe()),
+                row_count=len(full_df),
                 columns=df.columns.tolist() if not df.empty else []
             )
             datasets.append(events_dataset)
         except Exception as e:
             logger.warning(f"Could not fetch events data: {e}")
-        
+
         # Customers Data
         try:
-            df = get_customers_dataframe(limit=1)
+            df, _ = get_dataset_dataframe_with_source("customers", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
+            full_df, _ = get_dataset_dataframe_with_source("customers", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
             customers_dataset = AvailableDataset(
                 name="customers",
                 description="Customer demographic and profile information",
                 agent_types=["cohort", "attribution"],
-                row_count=len(get_customers_dataframe()),
+                row_count=len(full_df),
                 columns=df.columns.tolist() if not df.empty else []
             )
             datasets.append(customers_dataset)
         except Exception as e:
             logger.warning(f"Could not fetch customers data: {e}")
-        
+
         # Retention Data
         try:
-            df = get_retention_dataframe(limit=1)
+            df, _ = get_dataset_dataframe_with_source("retention", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
+            full_df, _ = get_dataset_dataframe_with_source("retention", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
             retention_dataset = AvailableDataset(
                 name="retention",
                 description="Customer retention and churn probability data",
                 agent_types=["cohort", "kpi_validator"],
-                row_count=len(get_retention_dataframe()),
+                row_count=len(full_df),
                 columns=df.columns.tolist() if not df.empty else []
             )
             datasets.append(retention_dataset)
         except Exception as e:
             logger.warning(f"Could not fetch retention data: {e}")
-        
+
         # Transactions Data
         try:
-            df = get_transactions_dataframe(limit=1)
+            df, _ = get_dataset_dataframe_with_source("transactions", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
+            full_df, _ = get_dataset_dataframe_with_source("transactions", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
             transactions_dataset = AvailableDataset(
                 name="transactions",
                 description="Transaction and purchase data including customer ID, amount, and date",
                 agent_types=["attribution", "cohort", "revenue_attribution"],
-                row_count=len(get_transactions_dataframe()),
+                row_count=len(full_df),
                 columns=df.columns.tolist() if not df.empty else []
             )
             datasets.append(transactions_dataset)
         except Exception as e:
             logger.warning(f"Could not fetch transactions data: {e}")
-        
+
         return {
             "success": True,
             "datasets": datasets,
             "timestamp": datetime.utcnow().isoformat(),
         }
-    
+
     except Exception as e:
         logger.error("Failed to fetch available datasets", error=str(e))
         raise HTTPException(
@@ -1216,20 +1451,26 @@ async def get_available_datasets():
 
 
 @app.get("/api/datasets/{dataset_name}", response_model=DatasetRowsResponse)
-async def get_dataset_rows(dataset_name: str, limit: int = 50):
+async def get_dataset_rows(dataset_name: str, limit: int = 50, client_id: Optional[str] = Query(default=None)):
     dataset = _validate_dataset_name(dataset_name)
     try:
-        from analytics_agent.db.queries import get_dataset_dataframe
+        from analytics_agent.db.queries import get_dataset_dataframe_with_source
 
         safe_limit = max(1, min(limit, 500))
-        dataframe = get_dataset_dataframe(dataset, limit=safe_limit, prefer_remote=True)
-        source = "supabase" if not dataframe.empty else "local_fallback"
+        resolved_client_id = (client_id or "").strip() or None
+        dataframe, source = get_dataset_dataframe_with_source(
+            dataset,
+            limit=safe_limit,
+            prefer_remote=not bool(resolved_client_id),
+            client_id=resolved_client_id,
+        )
 
         return {
             "success": True,
             "dataset": dataset,
             "columns": dataframe.columns.tolist() if not dataframe.empty else [],
-            "rows": dataframe.where(pd.notnull(dataframe), None).to_dict(orient="records") if not dataframe.empty else [],
+            "rows": dataframe.where(pd.notnull(dataframe), None).to_dict(
+                orient="records") if not dataframe.empty else [],
             "row_count": int(len(dataframe.index)),
             "source": source,
             "timestamp": datetime.utcnow().isoformat(),
@@ -1292,6 +1533,39 @@ async def upload_dataset_csv(dataset_name: str, file: UploadFile = FastAPIFile(.
         raise HTTPException(status_code=500, detail=f"Failed to upload dataset csv: {str(e)}")
 
 
+@app.post("/agents/data-query", response_model=DataQueryAgentResponse)
+@app.post("/api/agents/data-query", response_model=DataQueryAgentResponse)
+async def run_data_query_agent(request: DataQueryAgentRequest):
+    if not data_query_agent:
+        raise HTTPException(status_code=503, detail="Data Query agent is not initialized")
+
+    resolved_client_id = (request.client_id or "").strip()
+    if not resolved_client_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Client context is required. Please sign in and upload required datasets in Supervisor -> Train Model.",
+        )
+
+    try:
+        result = data_query_agent.run(
+            DataQueryRequest(
+                prompt=request.prompt,
+                client_id=resolved_client_id,
+                limit=request.limit,
+            )
+        )
+        return {
+            "success": True,
+            "data": result,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        logger.exception("Data query agent execution failed", error=str(exc))
+        raise HTTPException(status_code=500, detail=f"Data query agent failed: {str(exc)}")
+
+
 @app.get("/api/agents-data-mapping")
 async def get_agents_data_mapping():
     """
@@ -1336,8 +1610,14 @@ async def get_agents_data_mapping():
                 "compatible_datasets": ["campaigns", "transactions"],
                 "icon": "Wallet"
             },
+            "data_query": {
+                "name": "Data Query Agent",
+                "description": "Answers natural-language data questions with validated query plans",
+                "compatible_datasets": ["campaigns", "customers", "events", "retention", "transactions"],
+                "icon": "DatabaseZap"
+            },
         }
-        
+
         return {
             "success": True,
             "mapping": mapping,
@@ -1405,10 +1685,10 @@ def _clean_line(value: str) -> str:
 
 
 def _build_report_prompt(
-    *,
-    report_type: str,
-    selected_agents: list[str],
-    orchestration_result: dict[str, Any],
+        *,
+        report_type: str,
+        selected_agents: list[str],
+        orchestration_result: dict[str, Any],
 ) -> str:
     agent_results = orchestration_result.get("agent_results") if isinstance(orchestration_result, dict) else {}
     if not isinstance(agent_results, dict):
@@ -1442,10 +1722,10 @@ def _build_report_prompt(
 
 
 def _build_fallback_report_text(
-    *,
-    report_type: str,
-    selected_agents: list[str],
-    orchestration_result: dict[str, Any],
+        *,
+        report_type: str,
+        selected_agents: list[str],
+        orchestration_result: dict[str, Any],
 ) -> str:
     intent = orchestration_result.get("intent") if isinstance(orchestration_result, dict) else "report"
     recommendations = orchestration_result.get("recommendations") if isinstance(orchestration_result, dict) else []
@@ -1554,9 +1834,9 @@ def _build_minimal_pdf_bytes(text: str) -> bytes:
     for offset in offsets[1:]:
         xref_lines.append(f"{offset:010d} 00000 n \n")
     trailer = (
-        "".join(xref_lines)
-        + f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\n"
-        + f"startxref\n{xref_start}\n%%EOF"
+            "".join(xref_lines)
+            + f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\n"
+            + f"startxref\n{xref_start}\n%%EOF"
     )
     pdf_parts.append(trailer.encode("latin-1"))
 
@@ -1584,14 +1864,17 @@ def _build_doc_bytes(title: str, text: str) -> bytes:
 @app.get("/api/agents/funnel/options", response_model=FunnelOptionsResponse)
 @app.get("/funnel/options", response_model=FunnelOptionsResponse)
 @app.get("/api/funnel/options", response_model=FunnelOptionsResponse)
-async def get_funnel_options():
+async def get_funnel_options(client_id: Optional[str] = Query(default=None)):
     """Return only funnel filter options that actually exist in current datasets."""
     try:
         from analytics_agent.db.queries import get_funnel_filter_options
 
         return {
             "success": True,
-            "data": get_funnel_filter_options(prefer_remote=True),
+            "data": get_funnel_filter_options(
+                prefer_remote=not bool((client_id or "").strip()),
+                client_id=_resolve_client_id(client_id) if client_id else None,
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1604,14 +1887,16 @@ async def get_funnel_options():
 
 @app.get("/agents/forecast/options", response_model=ForecastOptionsResponse)
 @app.get("/api/agents/forecast/options", response_model=ForecastOptionsResponse)
-async def get_forecast_options():
+async def get_forecast_options(client_id: Optional[str] = Query(default=None)):
     """Return forecast filters from Supabase campaigns data only."""
     try:
         from analytics_agent.db.queries import get_forecast_filter_options
 
         return {
             "success": True,
-            "data": get_forecast_filter_options(),
+            "data": get_forecast_filter_options(
+                _resolve_client_id(client_id) if client_id else None
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1624,14 +1909,16 @@ async def get_forecast_options():
 
 @app.get("/agents/attribution/options", response_model=AttributionOptionsResponse)
 @app.get("/api/agents/attribution/options", response_model=AttributionOptionsResponse)
-async def get_attribution_options():
+async def get_attribution_options(client_id: Optional[str] = Query(default=None)):
     """Return attribution filters and toggles from Supabase campaigns/events/transactions only."""
     try:
         from analytics_agent.db.queries import get_attribution_filter_options
 
         return {
             "success": True,
-            "data": get_attribution_filter_options(),
+            "data": get_attribution_filter_options(
+                _resolve_client_id(client_id) if client_id else None
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1644,14 +1931,16 @@ async def get_attribution_options():
 
 @app.get("/agents/scenario/options", response_model=ScenarioOptionsResponse)
 @app.get("/api/agents/scenario/options", response_model=ScenarioOptionsResponse)
-async def get_scenario_options():
+async def get_scenario_options(client_id: Optional[str] = Query(default=None)):
     """Return scenario filters from Supabase campaigns data only."""
     try:
         from analytics_agent.db.queries import get_scenario_filter_options
 
         return {
             "success": True,
-            "data": get_scenario_filter_options(),
+            "data": get_scenario_filter_options(
+                _resolve_client_id(client_id) if client_id else None
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1666,14 +1955,16 @@ async def get_scenario_options():
 @app.get("/api/agents/cohort/options", response_model=CohortOptionsResponse)
 @app.get("/cohort/options", response_model=CohortOptionsResponse)
 @app.get("/api/cohort/options", response_model=CohortOptionsResponse)
-async def get_cohort_options():
+async def get_cohort_options(client_id: Optional[str] = Query(default=None)):
     """Return cohort filters and defaults from Supabase customers/retention/transactions."""
     try:
         from analytics_agent.db.queries import get_cohort_filter_options
 
         return {
             "success": True,
-            "data": get_cohort_filter_options(),
+            "data": get_cohort_filter_options(
+                _resolve_client_id(client_id) if client_id else None
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1686,14 +1977,16 @@ async def get_cohort_options():
 
 @app.get("/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
 @app.get("/api/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
-async def get_budget_allocator_options():
+async def get_budget_allocator_options(client_id: Optional[str] = Query(default=None)):
     """Return budget allocator filters and defaults from Supabase campaigns data."""
     try:
         from analytics_agent.db.queries import get_budget_allocator_options as _get_budget_allocator_options
 
         return {
             "success": True,
-            "data": _get_budget_allocator_options(),
+            "data": _get_budget_allocator_options(
+                _resolve_client_id(client_id) if client_id else None
+            ),
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
@@ -1708,10 +2001,10 @@ async def get_budget_allocator_options():
 async def orchestrate_agents(request: AgentOrchestrationRequest):
     """
     Orchestrate multiple agents for analysis.
-    
+
     Args:
         request: AgentOrchestrationRequest with intent, agents, and payload
-        
+
     Returns:
         Aggregated results from all agents
     """
@@ -1720,13 +2013,13 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
         client_id = _resolve_client_id(request.client_id)
         result = marko_brain.agent_manager.orchestrate(
             intent=request.intent,
             agents_to_run=request.agents,
-            payload=request.payload,
+            payload={**request.payload, "client_id": client_id},
         )
 
         try:
@@ -1742,7 +2035,7 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
                 client_id=client_id,
                 error=str(persist_error),
             )
-        
+
         return {
             "success": True,
             "data": result,
@@ -1772,7 +2065,7 @@ async def generate_agent_report(request: ReportGenerationRequest):
         orchestrated = marko_brain.agent_manager.orchestrate(
             intent="report",
             agents_to_run=selected_agents,
-            payload=request.payload,
+            payload={**request.payload, "client_id": client_id},
         )
 
         _persist_client_results(
@@ -1839,7 +2132,7 @@ async def get_agent_status():
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
         status = marko_brain.agent_manager.get_agent_status()
         return {
@@ -1859,10 +2152,10 @@ async def get_agent_status():
 async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[str] = Query(default=None)):
     """
     Get stored agent results.
-    
+
     Args:
         agent_id: Optional specific agent ID
-        
+
     Returns:
         Agent results for discussion/review
     """
@@ -1871,7 +2164,7 @@ async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
         resolved_client_id = (client_id or "").strip()
         recommendations: list[str] = []
@@ -1881,9 +2174,12 @@ async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[
             try:
                 results = get_client_agent_results(resolved_client_id, agent_id)
                 latest_snapshot = get_client_latest_snapshot(resolved_client_id)
-                recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot, dict) else []
-                recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw, list) else []
-                executive_summary_raw = latest_snapshot.get("executive_summary") if isinstance(latest_snapshot, dict) else None
+                recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot,
+                                                                                           dict) else []
+                recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw,
+                                                                                            list) else []
+                executive_summary_raw = latest_snapshot.get("executive_summary") if isinstance(latest_snapshot,
+                                                                                               dict) else None
                 executive_summary = executive_summary_raw if isinstance(executive_summary_raw, str) else None
             except Exception as fetch_error:
                 logger.warning(
@@ -1920,7 +2216,7 @@ async def get_execution_history(limit: int = 10):
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
         history = marko_brain.agent_manager.get_execution_history(limit)
         return {
@@ -1942,7 +2238,7 @@ async def get_execution_history(limit: int = 10):
 async def train_forecast_model():
     """
     Train the forecast agent ML model.
-    
+
     Returns:
         Training results with metrics
     """
@@ -1951,11 +2247,11 @@ async def train_forecast_model():
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
         logger.info("Training forecast model")
         result = marko_brain.agent_manager.train_forecast_agent()
-        
+
         return {
             "success": True,
             "data": result,
@@ -1975,10 +2271,10 @@ async def train_forecast_model():
 async def predict_forecast(payload: dict):
     """
     Make a forecast prediction using the trained model.
-    
+
     Args:
         payload: Campaign parameters for prediction
-        
+
     Returns:
         Forecast predictions and insights
     """
@@ -1987,16 +2283,18 @@ async def predict_forecast(payload: dict):
             status_code=503,
             detail="Agent services not initialized",
         )
-    
+
     try:
-        logger.info("Making forecast prediction", payload=payload)
-        
+        resolved_client_id = _resolve_client_id(payload.get("client_id"))
+        request_payload = {**payload, "client_id": resolved_client_id}
+        logger.info("Making forecast prediction", payload=request_payload, client_id=resolved_client_id)
+
         result = marko_brain.agent_manager.orchestrate(
             intent="forecast",
             agents_to_run=["forecast"],
-            payload=payload,
+            payload=request_payload,
         )
-        
+
         return {
             "success": True,
             "data": result,
@@ -2021,11 +2319,13 @@ async def run_budget_allocator(payload: dict):
         )
 
     try:
-        logger.info("Running budget allocator", payload=payload)
+        resolved_client_id = _resolve_client_id(payload.get("client_id"))
+        request_payload = {**payload, "client_id": resolved_client_id}
+        logger.info("Running budget allocator", payload=request_payload, client_id=resolved_client_id)
         result = marko_brain.agent_manager.orchestrate(
             intent="budget_allocation",
             agents_to_run=["budget_allocator"],
-            payload=payload,
+            payload=request_payload,
         )
 
         return {
@@ -2042,7 +2342,6 @@ async def run_budget_allocator(payload: dict):
 
 
 @app.get("/api")
-
 async def api_root():
     return {
         "name": "Analytics & Forecasting Agent API",
@@ -2070,6 +2369,7 @@ async def api_root():
                 "attribution_options": "GET /agents/attribution/options",
                 "scenario_options": "GET /agents/scenario/options",
                 "budget_options": "GET /agents/budget/options",
+                "data_query": "POST /agents/data-query",
                 "forecast_train": "POST /agents/forecast/train",
                 "forecast_predict": "POST /agents/forecast/predict",
                 "budget_allocate": "POST /agents/budget/allocate",
