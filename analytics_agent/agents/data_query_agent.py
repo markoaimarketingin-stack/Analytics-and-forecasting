@@ -34,6 +34,33 @@ class DataQueryAgent:
             raise ValueError("Client context is required for data query.")
 
         schema_catalog = queries.get_supported_dataset_schemas(client_id=client_id)
+        if not schema_catalog:
+            return {
+                "status": "success",
+                "message": (
+                    "No client-linked datasets are available for this account yet. "
+                    "Please upload at least one dataset in Supervisor -> Train Model, then run the query again."
+                ),
+                "chosen_datasets": [],
+                "columns": [],
+                "rows": [],
+                "row_count": 0,
+                "download_ready": False,
+                "insufficient_data": True,
+                "query_spec": {
+                    "datasets": [],
+                    "select": [],
+                    "filters": [],
+                    "group_by": [],
+                    "aggregations": [],
+                    "order_by": [],
+                    "limit": request.limit,
+                    "question_type": "lookup",
+                },
+                "missing_datasets": [],
+                "sources": {},
+            }
+
         planned_spec = self.planner.plan(prompt=prompt, schema_catalog=schema_catalog)
         if "limit" not in planned_spec and request.limit:
             planned_spec["limit"] = request.limit

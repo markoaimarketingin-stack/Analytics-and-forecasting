@@ -1359,82 +1359,69 @@ async def get_available_datasets(client_id: Optional[str] = Query(default=None))
 
         resolved_client_id = (client_id or "").strip() or None
 
-        datasets = []
+        datasets: list[AvailableDataset] = []
+        dataset_definitions = [
+            (
+                "campaigns",
+                "Campaign performance data including spend, impressions, clicks, conversions, and revenue",
+                ["forecast", "scenario", "funnel", "roi_forecaster"],
+            ),
+            (
+                "events",
+                "Customer event data including page views, clicks, and interactions",
+                ["funnel", "attribution", "cohort"],
+            ),
+            (
+                "customers",
+                "Customer demographic and profile information",
+                ["cohort", "attribution"],
+            ),
+            (
+                "retention",
+                "Customer retention and churn probability data",
+                ["cohort", "kpi_validator"],
+            ),
+            (
+                "transactions",
+                "Transaction and purchase data including customer ID, amount, and date",
+                ["attribution", "cohort", "revenue_attribution"],
+            ),
+        ]
 
-        # Campaign Data
-        try:
-            df, _ = get_dataset_dataframe_with_source("campaigns", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            full_df, _ = get_dataset_dataframe_with_source("campaigns", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            campaign_dataset = AvailableDataset(
-                name="campaigns",
-                description="Campaign performance data including spend, impressions, clicks, conversions, and revenue",
-                agent_types=["forecast", "scenario", "funnel", "roi_forecaster"],
-                row_count=len(full_df),
-                columns=df.columns.tolist() if not df.empty else []
-            )
-            datasets.append(campaign_dataset)
-        except Exception as e:
-            logger.warning(f"Could not fetch campaign data: {e}")
+        for dataset_name, description, agent_types in dataset_definitions:
+            try:
+                df_preview, source = get_dataset_dataframe_with_source(
+                    dataset_name,
+                    limit=1,
+                    prefer_remote=not bool(resolved_client_id),
+                    client_id=resolved_client_id,
+                )
+                full_df, full_source = get_dataset_dataframe_with_source(
+                    dataset_name,
+                    prefer_remote=not bool(resolved_client_id),
+                    client_id=resolved_client_id,
+                )
 
-        # Events Data
-        try:
-            df, _ = get_dataset_dataframe_with_source("events", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            full_df, _ = get_dataset_dataframe_with_source("events", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            events_dataset = AvailableDataset(
-                name="events",
-                description="Customer event data including page views, clicks, and interactions",
-                agent_types=["funnel", "attribution", "cohort"],
-                row_count=len(full_df),
-                columns=df.columns.tolist() if not df.empty else []
-            )
-            datasets.append(events_dataset)
-        except Exception as e:
-            logger.warning(f"Could not fetch events data: {e}")
+                # When client context exists, only expose datasets actually uploaded for that client.
+                if resolved_client_id:
+                    if full_source != "client_uploads" or full_df.empty:
+                        continue
 
-        # Customers Data
-        try:
-            df, _ = get_dataset_dataframe_with_source("customers", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            full_df, _ = get_dataset_dataframe_with_source("customers", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            customers_dataset = AvailableDataset(
-                name="customers",
-                description="Customer demographic and profile information",
-                agent_types=["cohort", "attribution"],
-                row_count=len(full_df),
-                columns=df.columns.tolist() if not df.empty else []
-            )
-            datasets.append(customers_dataset)
-        except Exception as e:
-            logger.warning(f"Could not fetch customers data: {e}")
+                # Without client context, keep previous behavior: show only datasets that have rows.
+                if full_df.empty:
+                    continue
 
-        # Retention Data
-        try:
-            df, _ = get_dataset_dataframe_with_source("retention", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            full_df, _ = get_dataset_dataframe_with_source("retention", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            retention_dataset = AvailableDataset(
-                name="retention",
-                description="Customer retention and churn probability data",
-                agent_types=["cohort", "kpi_validator"],
-                row_count=len(full_df),
-                columns=df.columns.tolist() if not df.empty else []
-            )
-            datasets.append(retention_dataset)
-        except Exception as e:
-            logger.warning(f"Could not fetch retention data: {e}")
-
-        # Transactions Data
-        try:
-            df, _ = get_dataset_dataframe_with_source("transactions", limit=1, prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            full_df, _ = get_dataset_dataframe_with_source("transactions", prefer_remote=not bool(resolved_client_id), client_id=resolved_client_id)
-            transactions_dataset = AvailableDataset(
-                name="transactions",
-                description="Transaction and purchase data including customer ID, amount, and date",
-                agent_types=["attribution", "cohort", "revenue_attribution"],
-                row_count=len(full_df),
-                columns=df.columns.tolist() if not df.empty else []
-            )
-            datasets.append(transactions_dataset)
-        except Exception as e:
-            logger.warning(f"Could not fetch transactions data: {e}")
+                datasets.append(
+                    AvailableDataset(
+                        name=dataset_name,
+                        description=description,
+                        agent_types=agent_types,
+                        row_count=len(full_df),
+                        columns=df_preview.columns.tolist() if not df_preview.empty else [],
+                    )
+                )
+            except Exception as e:
+                logger.warning("Could not fetch dataset metadata", dataset=dataset_name, error=str(e))
 
         return {
             "success": True,

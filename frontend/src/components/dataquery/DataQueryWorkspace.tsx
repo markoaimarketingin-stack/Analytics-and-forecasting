@@ -8,7 +8,7 @@ import {
   TableProperties,
 } from 'lucide-react';
 
-import { getAvailableDatasets, runDataQueryAgent } from '../../services/api';
+import { getAvailableDatasets, listTrainingUploads, runDataQueryAgent } from '../../services/api';
 import AgentHeaderActions from '../shared/AgentHeaderActions';
 
 interface DataQueryWorkspaceProps {
@@ -27,6 +27,7 @@ const EMPTY_INFO_MESSAGE =
   'Not enough information within the available data to answer this request confidently.';
 
 export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps) {
+  const normalizedClientId = (clientId || '').trim();
   const [prompt, setPrompt] = useState('');
   const [datasets, setDatasets] = useState<string[]>([]);
   const [isLoadingDatasets, setIsLoadingDatasets] = useState(true);
@@ -43,14 +44,27 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
   useEffect(() => {
     let cancelled = false;
 
+    if (!normalizedClientId) {
+      setDatasets([]);
+      setIsLoadingDatasets(false);
+      setError('Client context is missing. Please sign in with your client account, then retry.');
+      return () => {
+        cancelled = true;
+      };
+    }
+
     const loadDatasets = async () => {
       setIsLoadingDatasets(true);
       setError(null);
 
       try {
-        const response = await getAvailableDatasets(clientId);
-        const available = Array.isArray(response?.datasets)
-          ? response.datasets
+        const [catalogResponse, uploadsResponse] = await Promise.all([
+          getAvailableDatasets(normalizedClientId),
+          listTrainingUploads(normalizedClientId),
+        ]);
+
+        const available = Array.isArray(catalogResponse?.datasets)
+          ? catalogResponse.datasets
               .map((item) => {
                 if (typeof item === 'string') return item;
                 if (item && typeof item === 'object' && 'name' in item) return String((item as { name?: unknown }).name || '');
@@ -58,13 +72,25 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
               })
               .filter((value) => value.trim().length > 0)
           : [];
-        const fallback = ['campaigns', 'customers', 'events', 'retention', 'transactions'];
+
+        const files = Array.isArray(uploadsResponse?.files) ? uploadsResponse.files : [];
+        const uploadedDatasetCategories = new Set(
+          files
+            .map((file) => {
+              if (!file || typeof file !== 'object') return '';
+              const category = 'category' in file ? String((file as { category?: unknown }).category || '') : '';
+              return category.trim().toLowerCase();
+            })
+            .filter((category) => ['campaigns', 'customers', 'events', 'retention', 'transactions'].includes(category)),
+        );
+
+        const clientScopedDatasets = available.filter((name) => uploadedDatasetCategories.has(name.toLowerCase()));
 
         if (cancelled) return;
-        setDatasets(available.length > 0 ? available : fallback);
+        setDatasets(clientScopedDatasets);
       } catch (loadError) {
         if (cancelled) return;
-        setDatasets(['campaigns', 'customers', 'events', 'retention', 'transactions']);
+        setDatasets([]);
         setError(loadError instanceof Error ? loadError.message : 'Unable to load dataset catalog.');
       } finally {
         if (!cancelled) {
@@ -77,7 +103,7 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
     return () => {
       cancelled = true;
     };
-  }, [clientId]);
+  }, [normalizedClientId]);
 
   const resultRows = execution.rows;
   const resultColumns = execution.columns;
@@ -102,7 +128,7 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
     try {
       const response = await runDataQueryAgent({
         prompt: prompt.trim(),
-        client_id: clientId,
+        client_id: normalizedClientId,
         limit: 50,
       });
 
@@ -188,10 +214,10 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
               </span>
               <span className="workspace-option-pill">
                 <TableProperties className="h-3.5 w-3.5" />
-                Datasets connected: {formatCount(datasets.length)}
+                Datasets connected: {isLoadingDatasets ? '-' : formatCount(datasets.length)}
               </span>
               <span className="workspace-option-pill">
-                Client: {clientId ? 'Connected' : 'Session'}
+                Client: {normalizedClientId ? 'Connected' : 'Not Connected'}
               </span>
             </div>
 

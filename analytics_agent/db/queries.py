@@ -284,6 +284,12 @@ def get_supported_dataset_schemas(client_id: str | None = None) -> dict[str, dic
             prefer_remote=not bool(normalized_client_id),
         )
 
+        # For client-scoped querying, expose only datasets that are truly uploaded
+        # for that client and contain usable rows.
+        if normalized_client_id:
+            if source != "client_uploads" or frame.empty:
+                continue
+
         columns = frame.columns.tolist() if not frame.empty else []
         numeric_columns: list[str] = []
         date_columns: list[str] = []
