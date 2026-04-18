@@ -183,7 +183,17 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
   const revenueChart = result?.revenue_opportunity_chart ?? [];
   const upliftChart = result?.uplift_scenarios_chart ?? [];
 
-  const segmentOptions = useMemo(() => Array.from(new Set(segmentChart.map((item) => item.segment))), [segmentChart]);
+  const segmentOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          segmentChart
+            .map((item) => String(item.segment ?? '').trim())
+            .filter((value) => value.length > 0),
+        ),
+      ),
+    [segmentChart],
+  );
   const segmentLeft = segmentOptions[0] || '';
   const segmentRight = segmentOptions[1] || '';
 
