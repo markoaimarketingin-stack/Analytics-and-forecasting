@@ -2,24 +2,38 @@
 File handling module for managing file uploads and storage.
 Includes validation, storage management, and metadata extraction.
 """
-import os
-import json
+import re
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Dict, Any, List
+from typing import Dict, Any
 from fastapi import UploadFile, HTTPException
 from analytics_agent.logging_config import get_logger
 
 logger = get_logger(__name__)
 
 # Configuration
-UPLOAD_DIR = Path(__file__).parent.parent.parent / "uploads"
+UPLOAD_DIR = (Path(__file__).parent.parent.parent / "uploads").resolve()
 ALLOWED_EXTENSIONS = {".pdf", ".txt", ".md", ".csv", ".json"}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 
 class FileHandler:
     """Handles file uploads, validation, and storage."""
+
+    @staticmethod
+    def _sanitize_filename(raw_name: str) -> str:
+        base_name = Path(raw_name or "unknown_file").name
+        cleaned = re.sub(r"[^a-zA-Z0-9._-]", "_", base_name).strip("._")
+        return cleaned or "uploaded_file"
+
+    @staticmethod
+    def _resolve_upload_path(storage_path: str) -> Path:
+        candidate = Path(storage_path)
+        resolved = candidate.resolve() if candidate.is_absolute() else (UPLOAD_DIR / candidate).resolve()
+
+        if resolved != UPLOAD_DIR and UPLOAD_DIR not in resolved.parents:
+            raise HTTPException(status_code=400, detail="Invalid storage path")
+        return resolved
 
     @staticmethod
     def ensure_upload_directory():
@@ -46,7 +60,7 @@ class FileHandler:
             HTTPException: If file is invalid
         """
         # Check file extension
-        file_ext = Path(file.filename).suffix.lower()
+        file_ext = Path(file.filename or "").suffix.lower()
         if file_ext not in ALLOWED_EXTENSIONS:
             raise HTTPException(
                 status_code=400,
@@ -84,8 +98,10 @@ class FileHandler:
             
             # Generate unique filename to avoid conflicts
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S_")
-            filename = timestamp + (file.filename or "unknown_file")
-            file_path = agent_dir / filename
+            filename = timestamp + FileHandler._sanitize_filename(file.filename or "unknown_file")
+            file_path = (agent_dir / filename).resolve()
+            if file_path.parent != agent_dir.resolve():
+                raise HTTPException(status_code=400, detail="Invalid upload filename")
             
             # Read file content and check size
             content = await file.read()
@@ -108,8 +124,8 @@ class FileHandler:
             )
             
             return {
-                "file_name": file.filename,
-                "file_type": Path(file.filename).suffix.lower(),
+                "file_name": filename,
+                "file_type": Path(file.filename or "").suffix.lower(),
                 "file_size": len(content),
                 "storage_path": str(file_path),
                 "created_at": datetime.utcnow().isoformat(),
@@ -139,7 +155,7 @@ class FileHandler:
             HTTPException: If deletion fails
         """
         try:
-            path = Path(storage_path)
+            path = FileHandler._resolve_upload_path(storage_path)
             if path.exists():
                 path.unlink()
                 logger.info("File deleted successfully", path=storage_path)
@@ -169,7 +185,7 @@ class FileHandler:
             HTTPException: If file cannot be read
         """
         try:
-            path = Path(storage_path)
+            path = FileHandler._resolve_upload_path(storage_path)
             if not path.exists():
                 raise HTTPException(status_code=404, detail="File not found")
             
@@ -200,7 +216,7 @@ class FileHandler:
             str: Preview of file content
         """
         try:
-            path = Path(storage_path)
+            path = FileHandler._resolve_upload_path(storage_path)
             if not path.exists():
                 return ""
             

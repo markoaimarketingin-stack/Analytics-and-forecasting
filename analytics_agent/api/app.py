@@ -3,14 +3,17 @@ from datetime import datetime
 from io import StringIO
 from typing import Any, Literal, Optional
 import base64
+import hashlib
+import hmac
 import json
 import os
 import re
 import uuid
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, UploadFile, File as FastAPIFile
+from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, Request, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token as google_id_token
 from pydantic import BaseModel, Field, field_serializer
@@ -98,6 +101,9 @@ class GoogleAuthResponse(BaseModel):
     success: bool = True
     client_id: str
     user: AuthenticatedUser
+    access_token: str
+    token_type: str = "Bearer"
+    expires_in: int
     timestamp: str
 
 
@@ -221,6 +227,12 @@ ALLOWED_TRAINING_CATEGORIES = {
     "retention",
 }
 
+ACCESS_TOKEN_COOKIE_NAME = "marko_access_token"
+MAX_DATASET_UPLOAD_BYTES = int(os.getenv("MAX_DATASET_UPLOAD_BYTES", str(2 * 1024 * 1024)))
+MAX_DATASET_UPLOAD_ROWS = int(os.getenv("MAX_DATASET_UPLOAD_ROWS", "50000"))
+MAX_DATASET_UPLOAD_COLUMNS = int(os.getenv("MAX_DATASET_UPLOAD_COLUMNS", "200"))
+MAX_DATASET_UPLOAD_CELLS = int(os.getenv("MAX_DATASET_UPLOAD_CELLS", str(2_000_000)))
+
 
 class RecommendationLifecycleRecord(BaseModel):
     suggestion_id: str
@@ -270,6 +282,7 @@ async def lifespan(app: FastAPI):
 
     try:
         logger.info("Starting Analytics Agent API")
+        settings.validate_security()
 
         # Ensure local metadata tables (agents/files/etc.) exist before serving requests.
         init_db()
@@ -313,6 +326,79 @@ app = FastAPI(
 def _resolve_client_id(client_id: Optional[str]) -> str:
     value = (client_id or "").strip()
     return value or "anonymous-client"
+
+
+def _b64url_encode(raw: bytes) -> str:
+    return base64.urlsafe_b64encode(raw).decode("ascii").rstrip("=")
+
+
+def _b64url_decode(raw: str) -> bytes:
+    padded = raw + "=" * (-len(raw) % 4)
+    return base64.urlsafe_b64decode(padded.encode("ascii"))
+
+
+def _get_auth_secret() -> bytes:
+    secret = (
+        (getattr(settings, "JWT_SECRET_KEY", None) or "").strip()
+        or (getattr(settings, "SECRET_KEY", None) or "").strip()
+    )
+    if not secret:
+        raise ValueError("JWT secret key is missing")
+    return secret.encode("utf-8")
+
+
+def _create_access_token(*, google_sub: str, email: str, client_id: str, name: str) -> tuple[str, int]:
+    now = int(datetime.utcnow().timestamp())
+    ttl_seconds = max(300, int(os.getenv("ACCESS_TOKEN_TTL_SECONDS", "43200")))
+    payload = {
+        "sub": google_sub,
+        "email": email,
+        "name": name,
+        "client_id": client_id,
+        "iat": now,
+        "exp": now + ttl_seconds,
+    }
+
+    payload_json = json.dumps(payload, separators=(",", ":"), sort_keys=True).encode("utf-8")
+    payload_part = _b64url_encode(payload_json)
+    signature = hmac.new(_get_auth_secret(), payload_part.encode("ascii"), hashlib.sha256).digest()
+    token = f"{payload_part}.{_b64url_encode(signature)}"
+    return token, ttl_seconds
+
+
+def _verify_access_token(token: str) -> dict[str, Any]:
+    if not token or "." not in token:
+        raise HTTPException(status_code=401, detail="Missing or invalid access token")
+
+    payload_part, signature_part = token.split(".", 1)
+    expected_signature = hmac.new(_get_auth_secret(), payload_part.encode("ascii"), hashlib.sha256).digest()
+    provided_signature = _b64url_decode(signature_part)
+    if not hmac.compare_digest(expected_signature, provided_signature):
+        raise HTTPException(status_code=401, detail="Invalid access token signature")
+
+    try:
+        payload = json.loads(_b64url_decode(payload_part).decode("utf-8"))
+    except Exception as exc:
+        raise HTTPException(status_code=401, detail="Invalid access token payload") from exc
+
+    exp = int(payload.get("exp", 0) or 0)
+    now = int(datetime.utcnow().timestamp())
+    if exp <= now:
+        raise HTTPException(status_code=401, detail="Access token has expired")
+
+    client_id = str(payload.get("client_id") or "").strip()
+    if not client_id:
+        raise HTTPException(status_code=401, detail="Access token missing client context")
+
+    return payload
+
+
+def _resolve_authenticated_client_id(request: Request) -> str:
+    token_payload = getattr(request.state, "token_payload", None) or {}
+    client_id = str(token_payload.get("client_id") or "").strip()
+    if not client_id:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    return client_id
 
 
 def _client_id_from_google_sub(google_sub: str) -> str:
@@ -451,11 +537,54 @@ Latest user message:
 # -----------------------------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=settings.get_cors_origins(),
+    allow_credentials=settings.CORS_ALLOW_CREDENTIALS,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
+
+
+@app.middleware("http")
+async def _auth_middleware(request: Request, call_next):
+    path = request.url.path
+    request.state.token_payload = None
+
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
+    public_paths = {
+        "/api/health",
+        "/api/auth/google",
+        "/api/auth/session",
+        "/api/auth/logout",
+        "/api",
+        "/docs",
+        "/openapi.json",
+        "/redoc",
+    }
+
+    requires_auth = (
+        path.startswith("/api/")
+        or path.startswith("/agents/")
+        or path.startswith("/funnel/")
+        or path.startswith("/cohort/")
+    )
+
+    if requires_auth and path not in public_paths:
+        auth_header = (request.headers.get("Authorization") or "").strip()
+        token = ""
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:].strip()
+        else:
+            token = (request.cookies.get(ACCESS_TOKEN_COOKIE_NAME) or "").strip()
+        if not token:
+            return JSONResponse(status_code=401, content={"detail": "Missing authentication token"})
+        try:
+            request.state.token_payload = _verify_access_token(token)
+        except HTTPException as exc:
+            return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+    return await call_next(request)
 
 
 # -----------------------------------------------------------------------------
@@ -510,8 +639,14 @@ async def authenticate_google(payload: GoogleAuthRequest):
         raise HTTPException(status_code=401, detail="Google token missing required identity fields")
 
     client_id = _client_id_from_google_sub(google_sub)
+    access_token, expires_in = _create_access_token(
+        google_sub=google_sub,
+        email=email,
+        client_id=client_id,
+        name=name,
+    )
 
-    return {
+    response_payload = {
         "success": True,
         "client_id": client_id,
         "user": {
@@ -521,20 +656,65 @@ async def authenticate_google(payload: GoogleAuthRequest):
             "picture": picture,
             "email_verified": email_verified,
         },
+        "access_token": access_token,
+        "token_type": "Bearer",
+        "expires_in": expires_in,
         "timestamp": datetime.utcnow().isoformat(),
     }
+    response = JSONResponse(content=response_payload)
+    secure_cookie = (settings.APP_ENV or "").strip().lower() in {"production", "prod", "staging"}
+    same_site = "none" if secure_cookie else "lax"
+    response.set_cookie(
+        key=ACCESS_TOKEN_COOKIE_NAME,
+        value=access_token,
+        httponly=True,
+        secure=secure_cookie,
+        samesite=same_site,
+        max_age=expires_in,
+    )
+    return response
+
+
+@app.get("/api/auth/session", response_model=GoogleAuthResponse)
+async def auth_session(request: Request):
+    payload = _verify_access_token((request.cookies.get(ACCESS_TOKEN_COOKIE_NAME) or "").strip())
+    remaining = max(0, int(payload.get("exp", 0)) - int(datetime.utcnow().timestamp()))
+    return {
+        "success": True,
+        "client_id": str(payload.get("client_id") or ""),
+        "user": {
+            "google_sub": str(payload.get("sub") or ""),
+            "email": str(payload.get("email") or ""),
+            "name": str(payload.get("name") or ""),
+            "picture": None,
+            "email_verified": True,
+        },
+        "access_token": "",
+        "token_type": "Bearer",
+        "expires_in": remaining,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+
+@app.post("/api/auth/logout")
+async def auth_logout():
+    response = JSONResponse(content={"success": True, "timestamp": datetime.utcnow().isoformat()})
+    secure_cookie = (settings.APP_ENV or "").strip().lower() in {"production", "prod", "staging"}
+    same_site = "none" if secure_cookie else "lax"
+    response.delete_cookie(ACCESS_TOKEN_COOKIE_NAME, samesite=same_site, secure=secure_cookie)
+    return response
 
 
 # -----------------------------------------------------------------------------
 # Simple Gemini Chat
 # -----------------------------------------------------------------------------
 @app.post("/api/chat", response_model=ChatResponse)
-async def chat_with_marko_brain(payload: ChatRequest):
+async def chat_with_marko_brain(payload: ChatRequest, request: Request):
     if not analytics_runner:
         raise HTTPException(status_code=503, detail="Analytics service not ready")
 
     try:
-        client_id = _resolve_client_id(payload.client_id)
+        client_id = _resolve_authenticated_client_id(request)
         thread = ensure_chat_thread(client_id, payload.thread_id, payload.message)
         thread_id = str(thread["id"])
 
@@ -581,12 +761,12 @@ async def chat_with_marko_brain(payload: ChatRequest):
 # Main Orchestrator Endpoint
 # -----------------------------------------------------------------------------
 @app.post("/api/orchestrate", response_model=OrchestrateResponse)
-async def orchestrate_request(payload: ChatRequest):
+async def orchestrate_request(payload: ChatRequest, request: Request):
     if not marko_brain:
         raise HTTPException(status_code=503, detail="Analytics Agent not ready")
 
     try:
-        client_id = _resolve_client_id(payload.client_id)
+        client_id = _resolve_authenticated_client_id(request)
         thread = ensure_chat_thread(client_id, payload.thread_id, payload.message)
         thread_id = str(thread["id"])
         context_pairs = max(1, int(getattr(settings, "CONTEXT_SIZE", 3) or 3))
@@ -683,10 +863,12 @@ async def orchestrate_request(payload: ChatRequest):
 
 @app.get("/api/chat-history", response_model=ChatThreadListResponse)
 async def get_chat_history(
-        client_id: str = Query(..., description="Client/session identifier"),
+        request: Request,
         limit: int = Query(50, ge=1, le=200),
 ):
+    client_id = "unknown"
     try:
+        client_id = _resolve_authenticated_client_id(request)
         threads = list_chat_threads(client_id=client_id, limit=limit)
         return {
             "success": True,
@@ -701,9 +883,10 @@ async def get_chat_history(
 @app.get("/api/chat-history/{thread_id}", response_model=ChatThreadDetailResponse)
 async def get_chat_history_thread(
         thread_id: str,
-        client_id: str = Query(..., description="Client/session identifier"),
+        request: Request,
 ):
     try:
+        client_id = _resolve_authenticated_client_id(request)
         thread = get_chat_thread(client_id=client_id, thread_id=thread_id)
         if not thread:
             raise HTTPException(status_code=404, detail="Chat thread not found")
@@ -741,11 +924,12 @@ async def get_chat_history_thread(
     response_model=RecommendationLifecycleListResponse,
 )
 async def get_recommendation_outcomes(
-        client_id: Optional[str] = Query(None, description="Client/session identifier"),
+        request: Request,
         thread_id: Optional[str] = Query(None, description="Chat thread identifier"),
 ):
+    resolved_client_id = "unknown"
     try:
-        resolved_client_id = _resolve_client_id(client_id)
+        resolved_client_id = _resolve_authenticated_client_id(request)
         records = list_recommendation_outcomes(
             client_id=resolved_client_id,
             thread_id=thread_id,
@@ -759,7 +943,7 @@ async def get_recommendation_outcomes(
         logger.error(
             "Recommendation outcomes fetch failed",
             error=str(e),
-            client_id=client_id,
+            client_id=resolved_client_id,
             thread_id=thread_id,
         )
         raise HTTPException(status_code=500, detail=f"Failed to fetch recommendation outcomes: {str(e)}")
@@ -773,10 +957,10 @@ async def get_recommendation_outcomes(
     "/agents/recommendations/outcomes",
     response_model=RecommendationLifecycleUpsertResponse,
 )
-async def save_recommendation_outcome(payload: RecommendationLifecycleRecord):
+async def save_recommendation_outcome(payload: RecommendationLifecycleRecord, request: Request):
     try:
         record_data = payload.model_dump()
-        record_data["client_id"] = _resolve_client_id(record_data.get("client_id"))
+        record_data["client_id"] = _resolve_authenticated_client_id(request)
         saved = upsert_recommendation_outcome(record_data)
         return {
             "success": True,
@@ -957,8 +1141,8 @@ async def get_capabilities():
 @app.post("/api/agents/{agent_id}/files", response_model=FileUploadResponse)
 async def upload_agent_file(
         agent_id: int,
+        request: Request,
         file: UploadFile = FastAPIFile(...),
-        client_id: Optional[str] = Form(default=None),
         category: Optional[str] = Form(default=None),
         instructions: Optional[str] = Form(default=None),
 ):
@@ -969,7 +1153,7 @@ async def upload_agent_file(
 
         # Save file to disk
         file_metadata = await FileHandler.save_file(file, agent_id)
-        resolved_client_id = _resolve_client_id(client_id)
+        resolved_client_id = _resolve_authenticated_client_id(request)
         resolved_category = _normalize_training_category(category)
         cleaned_instructions = (instructions or "").strip() or None
 
@@ -1097,10 +1281,11 @@ async def get_agent_files(agent_id: int):
 
 @app.get("/api/training-uploads", response_model=TrainingUploadListResponse)
 async def list_training_uploads(
-        client_id: str = Query(..., description="Client/session identifier"),
+        request: Request,
 ):
+    resolved_client_id = "unknown"
     try:
-        resolved_client_id = _resolve_client_id(client_id)
+        resolved_client_id = _resolve_authenticated_client_id(request)
         response = list_training_upload_records(resolved_client_id)
         records = response.data or []
 
@@ -1110,17 +1295,18 @@ async def list_training_uploads(
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
-        logger.error("Training upload listing failed", error=str(e), client_id=client_id)
+        logger.error("Training upload listing failed", error=str(e), client_id=resolved_client_id)
         raise HTTPException(status_code=500, detail=f"Failed to load training uploads: {str(e)}")
 
 
 @app.get("/api/training-uploads/{upload_id}/preview", response_model=TrainingUploadPreviewResponse)
 async def preview_training_upload(
         upload_id: int,
-        client_id: str = Query(..., description="Client/session identifier"),
+        request: Request,
 ):
+    resolved_client_id = "unknown"
     try:
-        resolved_client_id = _resolve_client_id(client_id)
+        resolved_client_id = _resolve_authenticated_client_id(request)
         response = get_training_upload_record(upload_id, resolved_client_id)
         records = response.data or []
         if not records:
@@ -1146,10 +1332,11 @@ async def preview_training_upload(
 @app.delete("/api/training-uploads/{upload_id}", response_model=FileDeleteResponse)
 async def delete_training_upload(
         upload_id: int,
-        client_id: str = Query(..., description="Client/session identifier"),
+        request: Request,
 ):
+    resolved_client_id = "unknown"
     try:
-        resolved_client_id = _resolve_client_id(client_id)
+        resolved_client_id = _resolve_authenticated_client_id(request)
         response = get_training_upload_record(upload_id, resolved_client_id)
         records = response.data or []
         if not records:
@@ -1349,7 +1536,7 @@ def _validate_dataset_name(dataset_name: str) -> str:
 
 
 @app.get("/api/available-datasets", response_model=AvailableDatasetsResponse)
-async def get_available_datasets(client_id: Optional[str] = Query(default=None)):
+async def get_available_datasets(request: Request):
     """
     Fetch all available datasets from Supabase.
     Returns metadata about each dataset including name, description, and which agents can use it.
@@ -1357,7 +1544,7 @@ async def get_available_datasets(client_id: Optional[str] = Query(default=None))
     try:
         from analytics_agent.db.queries import get_dataset_dataframe_with_source
 
-        resolved_client_id = (client_id or "").strip() or None
+        resolved_client_id = _resolve_authenticated_client_id(request)
 
         datasets: list[AvailableDataset] = []
         dataset_definitions = [
@@ -1438,13 +1625,13 @@ async def get_available_datasets(client_id: Optional[str] = Query(default=None))
 
 
 @app.get("/api/datasets/{dataset_name}", response_model=DatasetRowsResponse)
-async def get_dataset_rows(dataset_name: str, limit: int = 50, client_id: Optional[str] = Query(default=None)):
+async def get_dataset_rows(dataset_name: str, request: Request, limit: int = 50):
     dataset = _validate_dataset_name(dataset_name)
     try:
         from analytics_agent.db.queries import get_dataset_dataframe_with_source
 
         safe_limit = max(1, min(limit, 500))
-        resolved_client_id = (client_id or "").strip() or None
+        resolved_client_id = _resolve_authenticated_client_id(request)
         dataframe, source = get_dataset_dataframe_with_source(
             dataset,
             limit=safe_limit,
@@ -1470,11 +1657,12 @@ async def get_dataset_rows(dataset_name: str, limit: int = 50, client_id: Option
 
 
 @app.post("/api/datasets/{dataset_name}/rows", response_model=DatasetUpdateResponse)
-async def upsert_dataset_rows(dataset_name: str, payload: DatasetRowsUpdateRequest):
+async def upsert_dataset_rows(dataset_name: str, payload: DatasetRowsUpdateRequest, request: Request):
     dataset = _validate_dataset_name(dataset_name)
     try:
         from analytics_agent.db.queries import upsert_dataset_rows as _upsert_dataset_rows
 
+        _ = _resolve_authenticated_client_id(request)
         updated_rows = _upsert_dataset_rows(dataset, payload.rows)
         return {
             "success": True,
@@ -1491,18 +1679,31 @@ async def upsert_dataset_rows(dataset_name: str, payload: DatasetRowsUpdateReque
 
 
 @app.post("/api/datasets/{dataset_name}/upload-csv", response_model=DatasetUpdateResponse)
-async def upload_dataset_csv(dataset_name: str, file: UploadFile = FastAPIFile(...)):
+async def upload_dataset_csv(dataset_name: str, request: Request, file: UploadFile = FastAPIFile(...)):
     dataset = _validate_dataset_name(dataset_name)
+    _ = _resolve_authenticated_client_id(request)
 
-    if not file.filename.lower().endswith(".csv"):
+    if not (file.filename or "").lower().endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV uploads are supported for dataset update")
 
     try:
         from analytics_agent.db.queries import upsert_dataset_rows as _upsert_dataset_rows
 
         payload = await file.read()
+        if len(payload) > MAX_DATASET_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=f"CSV payload exceeds {MAX_DATASET_UPLOAD_BYTES // (1024 * 1024)}MB limit",
+            )
         text = payload.decode("utf-8")
-        dataframe = pd.read_csv(StringIO(text))
+        dataframe = pd.read_csv(StringIO(text), nrows=MAX_DATASET_UPLOAD_ROWS + 1)
+        if len(dataframe.index) > MAX_DATASET_UPLOAD_ROWS:
+            raise HTTPException(status_code=413, detail=f"CSV row limit exceeded ({MAX_DATASET_UPLOAD_ROWS})")
+        if len(dataframe.columns) > MAX_DATASET_UPLOAD_COLUMNS:
+            raise HTTPException(status_code=413, detail=f"CSV column limit exceeded ({MAX_DATASET_UPLOAD_COLUMNS})")
+        total_cells = int(len(dataframe.index) * len(dataframe.columns))
+        if total_cells > MAX_DATASET_UPLOAD_CELLS:
+            raise HTTPException(status_code=413, detail="CSV cell limit exceeded")
         rows = dataframe.where(pd.notnull(dataframe), None).to_dict(orient="records")
         updated_rows = _upsert_dataset_rows(dataset, rows)
 
@@ -1522,16 +1723,11 @@ async def upload_dataset_csv(dataset_name: str, file: UploadFile = FastAPIFile(.
 
 @app.post("/agents/data-query", response_model=DataQueryAgentResponse)
 @app.post("/api/agents/data-query", response_model=DataQueryAgentResponse)
-async def run_data_query_agent(request: DataQueryAgentRequest):
+async def run_data_query_agent(request: DataQueryAgentRequest, http_request: Request):
     if not data_query_agent:
         raise HTTPException(status_code=503, detail="Data Query agent is not initialized")
 
-    resolved_client_id = (request.client_id or "").strip()
-    if not resolved_client_id:
-        raise HTTPException(
-            status_code=400,
-            detail="Client context is required. Please sign in and upload required datasets in Supervisor -> Train Model.",
-        )
+    resolved_client_id = _resolve_authenticated_client_id(http_request)
 
     try:
         result = data_query_agent.run(
@@ -1851,7 +2047,7 @@ def _build_doc_bytes(title: str, text: str) -> bytes:
 @app.get("/api/agents/funnel/options", response_model=FunnelOptionsResponse)
 @app.get("/funnel/options", response_model=FunnelOptionsResponse)
 @app.get("/api/funnel/options", response_model=FunnelOptionsResponse)
-async def get_funnel_options(client_id: Optional[str] = Query(default=None)):
+async def get_funnel_options(request: Request):
     """Return only funnel filter options that actually exist in current datasets."""
     try:
         from analytics_agent.db.queries import get_funnel_filter_options
@@ -1859,8 +2055,8 @@ async def get_funnel_options(client_id: Optional[str] = Query(default=None)):
         return {
             "success": True,
             "data": get_funnel_filter_options(
-                prefer_remote=not bool((client_id or "").strip()),
-                client_id=_resolve_client_id(client_id) if client_id else None,
+                prefer_remote=False,
+                client_id=_resolve_authenticated_client_id(request),
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1874,7 +2070,7 @@ async def get_funnel_options(client_id: Optional[str] = Query(default=None)):
 
 @app.get("/agents/forecast/options", response_model=ForecastOptionsResponse)
 @app.get("/api/agents/forecast/options", response_model=ForecastOptionsResponse)
-async def get_forecast_options(client_id: Optional[str] = Query(default=None)):
+async def get_forecast_options(request: Request):
     """Return forecast filters from Supabase campaigns data only."""
     try:
         from analytics_agent.db.queries import get_forecast_filter_options
@@ -1882,7 +2078,7 @@ async def get_forecast_options(client_id: Optional[str] = Query(default=None)):
         return {
             "success": True,
             "data": get_forecast_filter_options(
-                _resolve_client_id(client_id) if client_id else None
+                _resolve_authenticated_client_id(request)
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1896,7 +2092,7 @@ async def get_forecast_options(client_id: Optional[str] = Query(default=None)):
 
 @app.get("/agents/attribution/options", response_model=AttributionOptionsResponse)
 @app.get("/api/agents/attribution/options", response_model=AttributionOptionsResponse)
-async def get_attribution_options(client_id: Optional[str] = Query(default=None)):
+async def get_attribution_options(request: Request):
     """Return attribution filters and toggles from Supabase campaigns/events/transactions only."""
     try:
         from analytics_agent.db.queries import get_attribution_filter_options
@@ -1904,7 +2100,7 @@ async def get_attribution_options(client_id: Optional[str] = Query(default=None)
         return {
             "success": True,
             "data": get_attribution_filter_options(
-                _resolve_client_id(client_id) if client_id else None
+                _resolve_authenticated_client_id(request)
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1918,7 +2114,7 @@ async def get_attribution_options(client_id: Optional[str] = Query(default=None)
 
 @app.get("/agents/scenario/options", response_model=ScenarioOptionsResponse)
 @app.get("/api/agents/scenario/options", response_model=ScenarioOptionsResponse)
-async def get_scenario_options(client_id: Optional[str] = Query(default=None)):
+async def get_scenario_options(request: Request):
     """Return scenario filters from Supabase campaigns data only."""
     try:
         from analytics_agent.db.queries import get_scenario_filter_options
@@ -1926,7 +2122,7 @@ async def get_scenario_options(client_id: Optional[str] = Query(default=None)):
         return {
             "success": True,
             "data": get_scenario_filter_options(
-                _resolve_client_id(client_id) if client_id else None
+                _resolve_authenticated_client_id(request)
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1942,7 +2138,7 @@ async def get_scenario_options(client_id: Optional[str] = Query(default=None)):
 @app.get("/api/agents/cohort/options", response_model=CohortOptionsResponse)
 @app.get("/cohort/options", response_model=CohortOptionsResponse)
 @app.get("/api/cohort/options", response_model=CohortOptionsResponse)
-async def get_cohort_options(client_id: Optional[str] = Query(default=None)):
+async def get_cohort_options(request: Request):
     """Return cohort filters and defaults from Supabase customers/retention/transactions."""
     try:
         from analytics_agent.db.queries import get_cohort_filter_options
@@ -1950,7 +2146,7 @@ async def get_cohort_options(client_id: Optional[str] = Query(default=None)):
         return {
             "success": True,
             "data": get_cohort_filter_options(
-                _resolve_client_id(client_id) if client_id else None
+                _resolve_authenticated_client_id(request)
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1964,7 +2160,7 @@ async def get_cohort_options(client_id: Optional[str] = Query(default=None)):
 
 @app.get("/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
 @app.get("/api/agents/budget/options", response_model=BudgetAllocatorOptionsResponse)
-async def get_budget_allocator_options(client_id: Optional[str] = Query(default=None)):
+async def get_budget_allocator_options(request: Request):
     """Return budget allocator filters and defaults from Supabase campaigns data."""
     try:
         from analytics_agent.db.queries import get_budget_allocator_options as _get_budget_allocator_options
@@ -1972,7 +2168,7 @@ async def get_budget_allocator_options(client_id: Optional[str] = Query(default=
         return {
             "success": True,
             "data": _get_budget_allocator_options(
-                _resolve_client_id(client_id) if client_id else None
+                _resolve_authenticated_client_id(request)
             ),
             "timestamp": datetime.utcnow().isoformat(),
         }
@@ -1985,7 +2181,7 @@ async def get_budget_allocator_options(client_id: Optional[str] = Query(default=
 
 
 @app.post("/agents/orchestrate")
-async def orchestrate_agents(request: AgentOrchestrationRequest):
+async def orchestrate_agents(request: AgentOrchestrationRequest, http_request: Request):
     """
     Orchestrate multiple agents for analysis.
 
@@ -2002,7 +2198,7 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
         )
 
     try:
-        client_id = _resolve_client_id(request.client_id)
+        client_id = _resolve_authenticated_client_id(http_request)
         result = marko_brain.agent_manager.orchestrate(
             intent=request.intent,
             agents_to_run=request.agents,
@@ -2038,7 +2234,7 @@ async def orchestrate_agents(request: AgentOrchestrationRequest):
 
 @app.post("/agents/report/generate")
 @app.post("/api/agents/report/generate")
-async def generate_agent_report(request: ReportGenerationRequest):
+async def generate_agent_report(request: ReportGenerationRequest, http_request: Request):
     """Generate a downloadable report for selected agents using Gemini when available."""
     if not marko_brain:
         raise HTTPException(status_code=503, detail="Agent services not initialized")
@@ -2048,7 +2244,7 @@ async def generate_agent_report(request: ReportGenerationRequest):
         raise HTTPException(status_code=400, detail="Select at least one agent for report generation")
 
     try:
-        client_id = _resolve_client_id(request.client_id)
+        client_id = _resolve_authenticated_client_id(http_request)
         orchestrated = marko_brain.agent_manager.orchestrate(
             intent="report",
             agents_to_run=selected_agents,
@@ -2136,7 +2332,7 @@ async def get_agent_status():
 
 
 @app.get("/agents/results")
-async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[str] = Query(default=None)):
+async def get_agent_results(request: Request, agent_id: Optional[str] = None):
     """
     Get stored agent results.
 
@@ -2153,29 +2349,26 @@ async def get_agent_results(agent_id: Optional[str] = None, client_id: Optional[
         )
 
     try:
-        resolved_client_id = (client_id or "").strip()
+        resolved_client_id = _resolve_authenticated_client_id(request)
         recommendations: list[str] = []
         executive_summary: Optional[str] = None
 
-        if resolved_client_id:
-            try:
-                results = get_client_agent_results(resolved_client_id, agent_id)
-                latest_snapshot = get_client_latest_snapshot(resolved_client_id)
-                recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot,
-                                                                                           dict) else []
-                recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw,
-                                                                                            list) else []
-                executive_summary_raw = latest_snapshot.get("executive_summary") if isinstance(latest_snapshot,
-                                                                                               dict) else None
-                executive_summary = executive_summary_raw if isinstance(executive_summary_raw, str) else None
-            except Exception as fetch_error:
-                logger.warning(
-                    "Failed to fetch client-specific results from Supabase, using in-memory fallback",
-                    client_id=resolved_client_id,
-                    error=str(fetch_error),
-                )
-                results = marko_brain.agent_manager.get_agent_results(agent_id)
-        else:
+        try:
+            results = get_client_agent_results(resolved_client_id, agent_id)
+            latest_snapshot = get_client_latest_snapshot(resolved_client_id)
+            recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot,
+                                                                                       dict) else []
+            recommendations = [str(item) for item in recommendations_raw] if isinstance(recommendations_raw,
+                                                                                        list) else []
+            executive_summary_raw = latest_snapshot.get("executive_summary") if isinstance(latest_snapshot,
+                                                                                           dict) else None
+            executive_summary = executive_summary_raw if isinstance(executive_summary_raw, str) else None
+        except Exception as fetch_error:
+            logger.warning(
+                "Failed to fetch client-specific results from Supabase, using in-memory fallback",
+                client_id=resolved_client_id,
+                error=str(fetch_error),
+            )
             results = marko_brain.agent_manager.get_agent_results(agent_id)
 
         return {
@@ -2255,7 +2448,7 @@ async def train_forecast_model():
 
 @app.post("/agents/forecast/predict")
 @app.post("/api/agents/forecast/predict")
-async def predict_forecast(payload: dict):
+async def predict_forecast(payload: dict, request: Request):
     """
     Make a forecast prediction using the trained model.
 
@@ -2272,9 +2465,13 @@ async def predict_forecast(payload: dict):
         )
 
     try:
-        resolved_client_id = _resolve_client_id(payload.get("client_id"))
+        resolved_client_id = _resolve_authenticated_client_id(request)
         request_payload = {**payload, "client_id": resolved_client_id}
-        logger.info("Making forecast prediction", payload=request_payload, client_id=resolved_client_id)
+        logger.info(
+            "Making forecast prediction",
+            client_id=resolved_client_id,
+            payload_keys=sorted(str(key) for key in request_payload.keys()),
+        )
 
         result = marko_brain.agent_manager.orchestrate(
             intent="forecast",
@@ -2297,7 +2494,7 @@ async def predict_forecast(payload: dict):
 
 @app.post("/agents/budget/allocate")
 @app.post("/api/agents/budget/allocate")
-async def run_budget_allocator(payload: dict):
+async def run_budget_allocator(payload: dict, request: Request):
     """Run budget allocator agent with constraints and risk profile."""
     if not marko_brain:
         raise HTTPException(
@@ -2306,9 +2503,13 @@ async def run_budget_allocator(payload: dict):
         )
 
     try:
-        resolved_client_id = _resolve_client_id(payload.get("client_id"))
+        resolved_client_id = _resolve_authenticated_client_id(request)
         request_payload = {**payload, "client_id": resolved_client_id}
-        logger.info("Running budget allocator", payload=request_payload, client_id=resolved_client_id)
+        logger.info(
+            "Running budget allocator",
+            client_id=resolved_client_id,
+            payload_keys=sorted(str(key) for key in request_payload.keys()),
+        )
         result = marko_brain.agent_manager.orchestrate(
             intent="budget_allocation",
             agents_to_run=["budget_allocator"],

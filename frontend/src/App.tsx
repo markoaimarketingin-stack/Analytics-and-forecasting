@@ -219,8 +219,8 @@ export default function App({
 
     try {
       const response = await axios.get(`${API_BASE}/chat-history`, {
+        withCredentials: true,
         params: {
-          client_id: resolvedClientId,
           limit: 100,
         },
       });
@@ -252,7 +252,7 @@ export default function App({
 
     try {
       const response = await axios.get(`${API_BASE}/chat-history/${threadId}`, {
-        params: { client_id: clientId },
+        withCredentials: true,
       });
 
       const restoredMessages: Message[] = (response.data.messages || []).map((item: any) => ({
@@ -493,7 +493,8 @@ export default function App({
         const response = await axios.post(`${API_BASE}/chat`, {
           message,
           thread_id: currentThreadId,
-          client_id: clientId,
+        }, {
+          withCredentials: true,
         });
 
         if (response.data.thread_id) {
@@ -526,7 +527,8 @@ export default function App({
       const response = await axios.post(`${API_BASE}/orchestrate`, {
         message,
         thread_id: currentThreadId,
-        client_id: clientId,
+      }, {
+        withCredentials: true,
       });
 
       const data = response.data;

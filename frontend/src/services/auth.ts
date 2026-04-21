@@ -15,6 +15,9 @@ export interface GoogleAuthResponse {
   success: boolean;
   client_id: string;
   user: GoogleUserProfile;
+  access_token: string;
+  token_type: string;
+  expires_in: number;
   timestamp: string;
 }
 
@@ -23,6 +26,7 @@ export const authenticateWithGoogle = async (
 ): Promise<GoogleAuthResponse> => {
   const response = await fetch(`${API_BASE_URL}/auth/google`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -36,5 +40,27 @@ export const authenticateWithGoogle = async (
   }
 
   return (await response.json()) as GoogleAuthResponse;
+};
+
+export const getAuthenticatedSession = async (): Promise<GoogleAuthResponse> => {
+  const response = await fetch(`${API_BASE_URL}/auth/session`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const detail = body?.detail || 'Session not found';
+    throw new Error(detail);
+  }
+
+  return (await response.json()) as GoogleAuthResponse;
+};
+
+export const logoutSession = async (): Promise<void> => {
+  await fetch(`${API_BASE_URL}/auth/logout`, {
+    method: 'POST',
+    credentials: 'include',
+  });
 };
 

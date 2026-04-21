@@ -4,10 +4,11 @@ import { Bot } from 'lucide-react';
 import App from '../../App';
 import {
   authenticateWithGoogle,
+  getAuthenticatedSession,
+  logoutSession,
   type GoogleAuthResponse,
 } from '../../services/auth';
 
-const STORAGE_KEY = 'marko_google_session';
 const GOOGLE_CLIENT_ID = (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim();
 
 interface AuthSession {
@@ -50,32 +51,6 @@ declare global {
     };
   }
 }
-
-const restoreSession = (): AuthSession | null => {
-  if (typeof window === 'undefined') return null;
-
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-
-    const parsed = JSON.parse(raw) as AuthSession;
-    if (!parsed?.clientId || !parsed?.email) return null;
-    return parsed;
-  } catch {
-    return null;
-  }
-};
-
-const persistSession = (session: AuthSession | null) => {
-  if (typeof window === 'undefined') return;
-
-  if (!session) {
-    window.localStorage.removeItem(STORAGE_KEY);
-    return;
-  }
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-};
 
 const toSession = (payload: GoogleAuthResponse): AuthSession => ({
   clientId: payload.client_id,
@@ -195,9 +170,36 @@ function MarkoAuthPage({
 }
 
 export default function AuthGateway() {
-  const [session, setSession] = useState<AuthSession | null>(() => restoreSession());
+  const [session, setSession] = useState<AuthSession | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isRestoringSession, setIsRestoringSession] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    const restore = async () => {
+      try {
+        const response = await getAuthenticatedSession();
+        if (active) {
+          setSession(toSession(response));
+        }
+      } catch {
+        if (active) {
+          setSession(null);
+        }
+      } finally {
+        if (active) {
+          setIsRestoringSession(false);
+        }
+      }
+    };
+
+    restore();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const handleGoogleCredential = useCallback(async (credential: string) => {
     setError(null);
@@ -207,7 +209,6 @@ export default function AuthGateway() {
       const response = await authenticateWithGoogle(credential);
       const nextSession = toSession(response);
       setSession(nextSession);
-      persistSession(nextSession);
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : 'Authentication failed. Please try again.');
     } finally {
@@ -222,9 +223,13 @@ export default function AuthGateway() {
       // Non-blocking: logout should still continue if GIS API is unavailable.
     }
 
+    void logoutSession();
     setSession(null);
-    persistSession(null);
   }, []);
+
+  if (isRestoringSession) {
+    return null;
+  }
 
   if (!session) {
     return (

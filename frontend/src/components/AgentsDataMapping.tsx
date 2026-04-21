@@ -13,7 +13,10 @@ interface AgentsMappingProps {
   selectedDatasets?: string[];
 }
 
-const API_BASE = 'http://localhost:8001/api';
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:8001/api';
 
 export default function AgentsDataMapping({
   selectedDatasets = [],
@@ -26,7 +29,9 @@ export default function AgentsDataMapping({
     const fetchMapping = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_BASE}/agents-data-mapping`);
+        const response = await axios.get(`${API_BASE}/agents-data-mapping`, {
+          withCredentials: true,
+        });
         if (response.data.success) {
           setMapping(response.data.mapping);
           setError(null);

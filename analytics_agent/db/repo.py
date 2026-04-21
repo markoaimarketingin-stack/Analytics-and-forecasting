@@ -33,7 +33,7 @@ def get_engine(url: Optional[str] = None):
             database_url = "sqlite:///analytics_agent.db"
             echo = True
 
-        logger.debug("Creating database engine", url=database_url, echo=echo)
+        logger.debug("Creating database engine", echo=echo)
         engine = create_engine(database_url, echo=echo, future=True)
         logger.info("Database engine created successfully")
         return engine

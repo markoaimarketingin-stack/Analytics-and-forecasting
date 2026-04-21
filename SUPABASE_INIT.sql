@@ -270,6 +270,76 @@ CREATE TABLE IF NOT EXISTS recommendation_outcomes (
 CREATE INDEX IF NOT EXISTS idx_recommendation_outcomes_client_updated
     ON recommendation_outcomes(client_id, last_updated_at DESC);
 
+-- 17. Row Level Security hardening for multi-tenant tables
+CREATE OR REPLACE FUNCTION current_app_client_id()
+RETURNS TEXT
+LANGUAGE sql
+STABLE
+AS $$
+    SELECT COALESCE(
+        NULLIF(current_setting('request.jwt.claim.client_id', true), ''),
+        NULLIF(current_setting('request.jwt.claim.sub', true), ''),
+        ''
+    );
+$$;
+
+ALTER TABLE training_uploads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_threads ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE client_agent_latest_results ENABLE ROW LEVEL SECURITY;
+ALTER TABLE client_latest_analysis_snapshots ENABLE ROW LEVEL SECURITY;
+ALTER TABLE recommendation_outcomes ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS training_uploads_tenant_isolation ON training_uploads;
+CREATE POLICY training_uploads_tenant_isolation ON training_uploads
+FOR ALL
+USING (client_id = current_app_client_id())
+WITH CHECK (client_id = current_app_client_id());
+
+DROP POLICY IF EXISTS chat_threads_tenant_isolation ON chat_threads;
+CREATE POLICY chat_threads_tenant_isolation ON chat_threads
+FOR ALL
+USING (client_id = current_app_client_id())
+WITH CHECK (client_id = current_app_client_id());
+
+DROP POLICY IF EXISTS chat_messages_tenant_isolation ON chat_messages;
+CREATE POLICY chat_messages_tenant_isolation ON chat_messages
+FOR ALL
+USING (
+    EXISTS (
+        SELECT 1
+        FROM chat_threads t
+        WHERE t.id = chat_messages.thread_id
+          AND t.client_id = current_app_client_id()
+    )
+)
+WITH CHECK (
+    EXISTS (
+        SELECT 1
+        FROM chat_threads t
+        WHERE t.id = chat_messages.thread_id
+          AND t.client_id = current_app_client_id()
+    )
+);
+
+DROP POLICY IF EXISTS client_agent_latest_results_tenant_isolation ON client_agent_latest_results;
+CREATE POLICY client_agent_latest_results_tenant_isolation ON client_agent_latest_results
+FOR ALL
+USING (client_id = current_app_client_id())
+WITH CHECK (client_id = current_app_client_id());
+
+DROP POLICY IF EXISTS client_latest_analysis_snapshots_tenant_isolation ON client_latest_analysis_snapshots;
+CREATE POLICY client_latest_analysis_snapshots_tenant_isolation ON client_latest_analysis_snapshots
+FOR ALL
+USING (client_id = current_app_client_id())
+WITH CHECK (client_id = current_app_client_id());
+
+DROP POLICY IF EXISTS recommendation_outcomes_tenant_isolation ON recommendation_outcomes;
+CREATE POLICY recommendation_outcomes_tenant_isolation ON recommendation_outcomes
+FOR ALL
+USING (client_id = current_app_client_id())
+WITH CHECK (client_id = current_app_client_id());
+
 -- ============================================================================
 -- Insert a default agent for the application
 -- ============================================================================

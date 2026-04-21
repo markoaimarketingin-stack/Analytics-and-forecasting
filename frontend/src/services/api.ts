@@ -27,6 +27,11 @@ const API_BASE_URL =
 const API_ROOT_URL =
   import.meta.env.VITE_API_ROOT_URL || "http://localhost:8001";
 
+const withRequestInit = (init?: RequestInit): RequestInit => ({
+  ...(init || {}),
+  credentials: 'include',
+});
+
 // A default agent ID to use for now.
 // In a real application, you would likely have a way for the user to select an agent.
 const DEFAULT_AGENT_ID = 1;
@@ -38,7 +43,7 @@ const DEFAULT_AGENT_ID = 1;
 export const getAvailableDatasets = async (clientId?: string) => {
   try {
     const query = clientId ? `?client_id=${encodeURIComponent(clientId)}` : '';
-    const response = await fetch(`${API_BASE_URL}/available-datasets${query}`);
+    const response = await fetch(`${API_BASE_URL}/available-datasets${query}`, withRequestInit());
     if (!response.ok) {
       throw new Error(`Error fetching datasets: ${response.statusText}`);
     }
@@ -55,7 +60,7 @@ export const getAvailableDatasets = async (clientId?: string) => {
  */
 export const getAgentsDataMapping = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/agents-data-mapping`);
+    const response = await fetch(`${API_BASE_URL}/agents-data-mapping`, withRequestInit());
     if (!response.ok) {
       throw new Error(`Error fetching agents mapping: ${response.statusText}`);
     }
@@ -69,7 +74,7 @@ export const getAgentsDataMapping = async () => {
 export const getDatasetRows = async (dataset: string, limit: number = 50, clientId?: string) => {
   const query = new URLSearchParams({ limit: String(limit) });
   if (clientId) query.set('client_id', clientId);
-  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}?${query.toString()}`);
+  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}?${query.toString()}`, withRequestInit());
   if (!response.ok) {
     throw new Error(`Failed to fetch dataset rows: ${response.statusText}`);
   }
@@ -91,10 +96,10 @@ export const uploadDatasetCsv = async (dataset: string, file: File) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}/upload-csv`, {
+  const response = await fetch(`${API_BASE_URL}/datasets/${dataset}/upload-csv`, withRequestInit({
     method: 'POST',
     body: formData,
-  });
+  }));
   if (!response.ok) {
     const text = await response.text();
     throw new Error(text || `Failed to upload dataset CSV: ${response.statusText}`);
@@ -109,7 +114,7 @@ export const uploadDatasetCsv = async (dataset: string, file: File) => {
  */
 export const getAgentFiles = async (agentId: number = DEFAULT_AGENT_ID) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/files`);
+    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/files`, withRequestInit());
     if (!response.ok) {
       throw new Error(`Error fetching files: ${response.statusText}`);
     }
@@ -142,10 +147,10 @@ export const uploadAgentFile = async (
   if (metadata?.instructions) formData.append("instructions", metadata.instructions);
 
   try {
-    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/files`, {
+    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/files`, withRequestInit({
       method: "POST",
       body: formData,
-    });
+    }));
     if (!response.ok) {
       throw new Error(`Error uploading file: ${response.statusText}`);
     }
@@ -163,9 +168,9 @@ export const uploadAgentFile = async (
  */
 export const deleteAgentFile = async (fileId: number) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/files/${fileId}`, {
+    const response = await fetch(`${API_BASE_URL}/files/${fileId}`, withRequestInit({
       method: "DELETE",
-    });
+    }));
     if (!response.ok) {
       throw new Error(`Error deleting file: ${response.statusText}`);
     }
@@ -176,8 +181,8 @@ export const deleteAgentFile = async (fileId: number) => {
   }
 };
 
-export const listTrainingUploads = async (clientId: string) => {
-  const response = await fetch(`${API_BASE_URL}/training-uploads?client_id=${encodeURIComponent(clientId)}`);
+export const listTrainingUploads = async (_clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads`, withRequestInit());
   if (!response.ok) {
     const text = await response.text();
     throw new Error(text || `Failed to load training uploads: ${response.statusText}`);
@@ -185,8 +190,8 @@ export const listTrainingUploads = async (clientId: string) => {
   return await response.json();
 };
 
-export const getTrainingUploadPreview = async (uploadId: number, clientId: string) => {
-  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}/preview?client_id=${encodeURIComponent(clientId)}`);
+export const getTrainingUploadPreview = async (uploadId: number, _clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}/preview`, withRequestInit());
   if (!response.ok) {
     const text = await response.text();
     throw new Error(text || `Failed to load training upload preview: ${response.statusText}`);
@@ -194,10 +199,10 @@ export const getTrainingUploadPreview = async (uploadId: number, clientId: strin
   return await response.json();
 };
 
-export const deleteTrainingUpload = async (uploadId: number, clientId: string) => {
-  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}?client_id=${encodeURIComponent(clientId)}`, {
+export const deleteTrainingUpload = async (uploadId: number, _clientId: string) => {
+  const response = await fetch(`${API_BASE_URL}/training-uploads/${uploadId}`, withRequestInit({
     method: 'DELETE',
-  });
+  }));
   if (!response.ok) {
     const text = await response.text();
     throw new Error(text || `Failed to delete training upload: ${response.statusText}`);
@@ -213,13 +218,13 @@ export const ensureDefaultAgent = async () => {
     // In a real app, you might want to fetch and check first,
     // but for this example, we'll just try to create it.
     // The backend should handle cases where the agent already exists gracefully.
-    await fetch(`${API_BASE_URL}/agents`, {
+    await fetch(`${API_BASE_URL}/agents`, withRequestInit({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name: 'Default Agent' }),
-    });
+    }));
   } catch (error) {
     // It might fail if the agent already exists, which is fine for this purpose.
     console.log("Could not create default agent, it might already exist.");
@@ -234,13 +239,13 @@ const postJsonWithFallback = async <T>(
 
   for (const path of paths) {
     try {
-      const response = await fetch(path, {
+      const response = await fetch(path, withRequestInit({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: body ? JSON.stringify(body) : undefined,
-      });
+      }));
 
       if (!response.ok) {
         let detail = '';
@@ -267,7 +272,7 @@ const getJsonWithFallback = async <T>(paths: string[]): Promise<T> => {
 
   for (const path of paths) {
     try {
-      const response = await fetch(path);
+      const response = await fetch(path, withRequestInit());
       if (!response.ok) {
         let detail = '';
         try {

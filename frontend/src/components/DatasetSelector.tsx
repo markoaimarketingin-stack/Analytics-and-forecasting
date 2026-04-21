@@ -16,7 +16,10 @@ interface DatasetSelectorProps {
   isLoading?: boolean;
 }
 
-const API_BASE = 'http://localhost:8001/api';
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  import.meta.env.VITE_API_URL ||
+  'http://localhost:8001/api';
 
 export default function DatasetSelector({
   onDatasetsSelected,
@@ -33,7 +36,9 @@ export default function DatasetSelector({
     const fetchDatasets = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_BASE}/available-datasets`);
+        const response = await axios.get(`${API_BASE}/available-datasets`, {
+          withCredentials: true,
+        });
         if (response.data.success) {
           setDatasets(response.data.datasets);
           setError(null);
