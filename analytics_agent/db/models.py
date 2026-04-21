@@ -1,7 +1,21 @@
 from __future__ import annotations
 from datetime import datetime
-from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship
+from typing import Any
 from sqlalchemy import String, Integer, Float, JSON, DateTime, Text, Table, Column, ForeignKey
+try:
+    from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship
+except ImportError:
+    # SQLAlchemy 1.4 compatibility fallback.
+    from sqlalchemy.orm import declarative_base, relationship
+
+    class _MappedCompat:
+        def __class_getitem__(cls, _item):
+            return Any
+
+    Mapped = _MappedCompat  # type: ignore[assignment]
+
+    def mapped_column(*args, **kwargs):  # type: ignore[no-redef]
+        return Column(*args, **kwargs)
 
 Base = declarative_base()
 
