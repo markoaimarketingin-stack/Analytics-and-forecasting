@@ -24,24 +24,24 @@ export default function ChatInput({ onSend, isLoading }: ChatInputProps) {
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="chat-input-shell flex items-center gap-2">
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="Ask about forecasts, scenarios, budget allocation..."
-        className="flex-1 resize-none input-field min-h-12 max-h-32 p-3"
+        className="flex-1 resize-none input-field min-h-[84px] max-h-40 px-5 py-4"
         disabled={isLoading}
       />
       <button
         onClick={handleSend}
         disabled={isLoading || !input.trim()}
-        className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="chat-send-btn self-center"
       >
         {isLoading ? (
-          <Loader size={20} className="animate-spin" />
+          <Loader size={24} className="animate-spin" />
         ) : (
-          <Send size={20} />
+          <Send size={26} />
         )}
       </button>
     </div>

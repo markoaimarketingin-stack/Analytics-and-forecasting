@@ -1,4 +1,4 @@
-import { Database, GitBranch, Settings2, Sparkles } from 'lucide-react';
+import { Database, GitBranch, Settings2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import {
   Bar,
@@ -63,9 +63,9 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
           ? (persisted as Record<string, unknown>)
           : null;
 
-        const maybeScenario = persistedRecord?.scenario_analysis ?? persistedRecord;
-        if (maybeScenario && typeof maybeScenario === 'object' && Object.keys(maybeScenario as Record<string, unknown>).length > 0) {
-          setResult(maybeScenario as ScenarioAnalysis);
+        const maybeScenario = extractScenarioAnalysis(persistedRecord ?? response.results);
+        if (maybeScenario) {
+          setResult(maybeScenario);
         }
       } catch {
         // Ignore hydrate failures and keep manual run flow available.
@@ -175,7 +175,11 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
 
       onRunResult?.(response.data);
 
-      setResult(response.data.scenario_analysis ?? null);
+      const analysis = extractScenarioAnalysis(response.data);
+      if (!analysis) {
+        throw new Error('Scenario run completed but no scenario output was returned.');
+      }
+      setResult(analysis);
     } catch (runError) {
       const rawMessage = runError instanceof Error ? runError.message : 'Failed to run scenario analysis.';
       setError(toFriendlyDataRequirementError('Scenario analysis', 'scenario', rawMessage, missingDatasets));
@@ -296,7 +300,7 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
               >
                 <Settings2 className="h-4 w-4" /> {isAssumptionsOpen ? 'Hide Assumptions' : 'Advanced Assumptions'}
               </button>
-              <button onClick={runScenario} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+              <button onClick={runScenario} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn disabled:opacity-60">
                 {isRunning ? 'Running...' : 'Generate Scenarios'}
               </button>
             </div>
@@ -345,9 +349,27 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            <ScenarioCard title="Best Case" revenue={result?.best_case?.revenue} roi={result?.best_case?.roi} tone="green" />
-            <ScenarioCard title="Base Case" revenue={result?.base_case?.revenue} roi={result?.base_case?.roi} tone="violet" />
-            <ScenarioCard title="Worst Case" revenue={result?.worst_case?.revenue} roi={result?.worst_case?.roi} tone="red" />
+            <ScenarioCard
+              title="Best Case"
+              metricLabel={prettyLabel(kpiMetric)}
+              metric={getScenarioCaseMetric(result?.best_case, kpiMetric)}
+              metricKey={kpiMetric}
+              tone="green"
+            />
+            <ScenarioCard
+              title="Base Case"
+              metricLabel={prettyLabel(kpiMetric)}
+              metric={getScenarioCaseMetric(result?.base_case, kpiMetric)}
+              metricKey={kpiMetric}
+              tone="violet"
+            />
+            <ScenarioCard
+              title="Worst Case"
+              metricLabel={prettyLabel(kpiMetric)}
+              metric={getScenarioCaseMetric(result?.worst_case, kpiMetric)}
+              metricKey={kpiMetric}
+              tone="red"
+            />
           </div>
 
           <div className="workspace-panel">
@@ -362,7 +384,7 @@ export default function ScenarioWorkspace({ clientId, onRunResult }: ScenarioWor
             </div>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
+          <div className="grid gap-6">
             <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Scenario Projection Curve</h3>
               <p className="mt-1 text-sm text-gray-500">Cumulative projection by scenario across horizon.</p>
@@ -549,13 +571,15 @@ function clampToRange(value: number, min: number, max: number): number {
 
 function ScenarioCard({
   title,
-  revenue,
-  roi,
+  metricLabel,
+  metric,
+  metricKey,
   tone,
 }: {
   title: string;
-  revenue?: number;
-  roi?: number;
+  metricLabel: string;
+  metric?: number;
+  metricKey: string;
   tone: 'green' | 'violet' | 'red';
 }) {
   const toneClass: Record<'green' | 'violet' | 'red', string> = {
@@ -567,8 +591,10 @@ function ScenarioCard({
   return (
     <div className={`workspace-metric-card border ${toneClass[tone]}`}>
       <div className="text-xs font-semibold uppercase tracking-wide text-gray-600">{title}</div>
-      <div className="mt-2 break-words text-2xl font-bold leading-tight text-gray-900">{formatCurrencyCompact(revenue)}</div>
-      <div className="mt-2 text-sm text-gray-700">ROI: {formatPercentCompact(roi)}</div>
+      <div className="mt-2 text-xs font-semibold uppercase tracking-wide text-gray-500">{metricLabel}</div>
+      <div className="mt-1 break-words text-2xl font-bold leading-tight text-gray-900">
+        {formatScenarioMetricValue(metricKey, metric)}
+      </div>
     </div>
   );
 }
@@ -634,5 +660,62 @@ function prettyLabel(value: string): string {
 
 function EmptyChart({ text }: { text: string }) {
   return <div className="flex h-full items-center justify-center rounded-2xl border border-dashed border-gray-300 text-sm text-gray-500">{text}</div>;
+}
+
+function getScenarioCaseMetric(
+  row: { revenue?: number; roi?: number; profit?: number; spend?: number; clicks?: number; purchases?: number } | undefined,
+  metric: string,
+): number | undefined {
+  if (!row) return undefined;
+  const key = (metric || 'revenue').trim().toLowerCase();
+  const map: Record<string, number | undefined> = {
+    revenue: row.revenue,
+    profit: row.profit,
+    roi: row.roi,
+    spend: row.spend,
+    clicks: row.clicks,
+    purchases: row.purchases,
+  };
+  return map[key] ?? row.revenue;
+}
+
+function formatScenarioMetricValue(metric: string, value?: number): string {
+  if (value === undefined || value === null) return '-';
+  const key = (metric || 'revenue').trim().toLowerCase();
+  if (key === 'roi' || key === 'ctr' || key === 'conversion_rate') {
+    return formatPercentCompact(value);
+  }
+  if (key === 'revenue' || key === 'profit' || key === 'spend') {
+    return formatCurrencyCompact(value);
+  }
+  return formatCount(value);
+}
+
+function extractScenarioAnalysis(payload: unknown): ScenarioAnalysis | null {
+  if (!payload || typeof payload !== 'object') return null;
+  const obj = payload as Record<string, unknown>;
+
+  const candidates: unknown[] = [
+    obj.scenario_analysis,
+    (obj.agent_results as Record<string, unknown> | undefined)?.scenario,
+    (obj.result as Record<string, unknown> | undefined)?.scenario_analysis,
+    (obj.data as Record<string, unknown> | undefined)?.scenario_analysis,
+    ((obj.data as Record<string, unknown> | undefined)?.agent_results as Record<string, unknown> | undefined)?.scenario,
+    obj,
+  ];
+
+  for (const item of candidates) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) continue;
+    const rec = item as Record<string, unknown>;
+    if (Object.keys(rec).length === 0) continue;
+    if (
+      rec.best_case !== undefined ||
+      rec.scenario_table !== undefined ||
+      rec.projection_curve !== undefined
+    ) {
+      return rec as unknown as ScenarioAnalysis;
+    }
+  }
+  return null;
 }
 

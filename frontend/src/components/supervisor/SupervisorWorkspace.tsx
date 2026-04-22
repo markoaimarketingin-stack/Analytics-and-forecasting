@@ -44,6 +44,27 @@ const AGENT_SEQUENCE: AgentStep[] = [
   { label: 'Scenario Agent', hint: 'What-if planning outcomes', icon: PieChart, stage: 'scenario' },
 ];
 
+function MarkoBarsIcon({ size = 'sm' }: { size?: 'sm' | 'lg' }) {
+  const wrapperClass = size === 'lg' ? 'h-36 w-36' : 'h-11 w-11';
+  const iconClass = size === 'lg' ? 'h-12 w-12' : 'h-5 w-5';
+
+  return (
+    <div className={`flex items-center justify-center rounded-full bg-black shadow-[0_10px_24px_rgba(0,0,0,0.2)] ${wrapperClass}`}>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={iconClass}
+        aria-hidden="true"
+      >
+        <rect x="5" y="12" width="3" height="7" rx="1.5" fill="#ffffff" />
+        <rect x="10.5" y="7" width="3" height="12" rx="1.5" fill="#ffffff" />
+        <rect x="16" y="10" width="3" height="9" rx="1.5" fill="#ffffff" />
+      </svg>
+    </div>
+  );
+}
+
 function StageCard({
   label,
   hint,
@@ -242,9 +263,7 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
       <div className="border-b border-gray-200 bg-white px-6 py-3">
         <div className="mx-auto flex w-full max-w-6xl flex-nowrap items-center justify-between gap-4">
           <div className="flex min-w-0 shrink items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-black p-2">
-              <img src="/favicon.svg" alt="Marko AI" className="h-full w-full object-contain invert" />
-            </div>
+            <MarkoBarsIcon size="sm" />
             <div>
               <h1 className="text-2xl font-extrabold tracking-tight text-black">Supervisor</h1>
               <p className="mt-0.5 text-sm text-gray-600">Orchestrator</p>
@@ -258,7 +277,7 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
                 setCurrentAgentId(1);
                 setIsKnowledgeBaseModalOpen(true);
               }}
-              className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-solid border-[#7c3aed] bg-white px-4 text-sm font-semibold text-violet-600 transition hover:bg-violet-50"
+              className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-black bg-white px-4 text-sm font-semibold text-black ring-1 ring-black/80 transition hover:bg-gray-100"
             >
               <BookOpen className="h-4 w-4" /> Knowledge Base
             </button>
@@ -275,7 +294,7 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
             <button
               onClick={handleRun}
               disabled={runState === 'running'}
-              className="inline-flex h-10 items-center gap-2 rounded-[999px] bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(59,130,246,0.28)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex h-10 items-center gap-2 rounded-[999px] border border-black bg-black px-4 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-70"
             >
               {runState === 'running' ? (
                 <>
@@ -297,9 +316,7 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
         <div className="mx-auto w-full max-w-6xl space-y-6">
           {!hasStarted ? (
             <div className="flex min-h-[430px] flex-col items-center justify-center px-6 text-center">
-              <div className="flex h-36 w-36 items-center justify-center rounded-full bg-black shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
-                <img src="/favicon.svg" alt="Marko AI" className="h-14 w-14 object-contain invert" />
-              </div>
+              <MarkoBarsIcon size="lg" />
 
               <h2 className="mt-7 text-3xl font-extrabold tracking-tight text-black">I am your Analytics Supervisor Agent</h2>
               <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-600">

@@ -27,12 +27,31 @@ class FileHandler:
         return cleaned or "uploaded_file"
 
     @staticmethod
+    def _is_within_upload_dir(path: Path) -> bool:
+        root = UPLOAD_DIR
+        return path == root or root in path.parents
+
+    @staticmethod
     def _resolve_upload_path(storage_path: str) -> Path:
         candidate = Path(storage_path)
         resolved = candidate.resolve() if candidate.is_absolute() else (UPLOAD_DIR / candidate).resolve()
 
-        if resolved != UPLOAD_DIR and UPLOAD_DIR not in resolved.parents:
-            raise HTTPException(status_code=400, detail="Invalid storage path")
+        if FileHandler._is_within_upload_dir(resolved):
+            return resolved
+
+        # Backward-compatibility for older absolute paths from previous deploy roots:
+        # if a stored path contains an "uploads" segment, rebase the relative tail
+        # onto the current UPLOAD_DIR.
+        lowered_parts = [part.lower() for part in resolved.parts]
+        if "uploads" in lowered_parts:
+            uploads_index = lowered_parts.index("uploads")
+            tail_parts = resolved.parts[uploads_index + 1:]
+            if tail_parts:
+                rebased = (UPLOAD_DIR / Path(*tail_parts)).resolve()
+                if FileHandler._is_within_upload_dir(rebased):
+                    return rebased
+
+        raise HTTPException(status_code=400, detail="Invalid storage path")
         return resolved
 
     @staticmethod
@@ -163,6 +182,8 @@ class FileHandler:
             else:
                 logger.warning("File not found for deletion", path=storage_path)
                 return False
+        except HTTPException:
+            raise
         except Exception as e:
             logger.error("Failed to delete file", error=str(e), path=storage_path)
             raise HTTPException(

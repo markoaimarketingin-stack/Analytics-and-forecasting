@@ -1,4 +1,4 @@
-import { Calendar, Database, Settings2, Sparkles, Target, TrendingUp } from 'lucide-react';
+import { Calendar, Database, Settings2, TrendingUp } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import {
@@ -91,9 +91,9 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
           ? (persisted as Record<string, unknown>)
           : null;
 
-        const maybeForecast = persistedRecord?.forecast_analysis ?? persistedRecord;
-        if (maybeForecast && typeof maybeForecast === 'object' && Object.keys(maybeForecast as Record<string, unknown>).length > 0) {
-          setResult(maybeForecast as ForecastAnalysis);
+        const maybeForecast = extractForecastAnalysis(persistedRecord ?? response.results);
+        if (maybeForecast) {
+          setResult(maybeForecast);
         }
       } catch {
         // Non-blocking fallback: workspace still supports fresh runs.
@@ -191,6 +191,11 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
     }));
   }, [forecastPoints, form.kpi_metric, result?.predicted_ctr, result?.predicted_conversion_rate]);
 
+  const selectedKpiProjection = useMemo(
+    () => getSelectedKpiProjection(result, form.kpi_metric),
+    [result, form.kpi_metric],
+  );
+
   const runForecast = async () => {
     if (!hasClientCampaignDataset) {
       setError(
@@ -229,7 +234,11 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
 
       onRunResult?.(response.data);
 
-      setResult(response.data.forecast_analysis ?? null);
+      const analysis = extractForecastAnalysis(response.data);
+      if (!analysis) {
+        throw new Error('Forecast run completed but no forecast output was returned.');
+      }
+      setResult(analysis);
       setWarnings(response.data.warnings ?? []);
     } catch (runError) {
       setResult(null);
@@ -370,7 +379,7 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
               </div>
 
               <div className="flex items-end">
-                <button onClick={runForecast} disabled={isRunning || !hasClientCampaignDataset} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runForecast} disabled={isRunning || !hasClientCampaignDataset} className="workspace-action-btn w-full disabled:opacity-60">
                   {isRunning ? 'Running...' : 'Run Forecast'}
                 </button>
               </div>
@@ -413,15 +422,17 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
             {warnings.length > 0 && <p className="mt-3 text-sm text-gray-700">{warnings.join(' | ')}</p>}
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <MetricCard title="Forecast Horizon" value={horizonLabel} icon={<Calendar className="h-4 w-4" />} />
-            <MetricCard title="Next 30 Day Revenue" value={formatCurrencyCompact(result?.next_30_day_revenue)} icon={<TrendingUp className="h-4 w-4" />} />
-            <MetricCard title="Predicted ROI" value={formatPercentCompact(result?.predicted_roi)} icon={<Target className="h-4 w-4" />} />
-            <MetricCard title="Predicted Profit" value={formatCurrencyCompact(result?.predicted_profit)} icon={<Sparkles className="h-4 w-4" />} />
+            <MetricCard
+              title={`${prettyKpiLabel(form.kpi_metric)} Forecast`}
+              value={formatKpiValue(form.kpi_metric, selectedKpiProjection)}
+              icon={<TrendingUp className="h-4 w-4" />}
+            />
             <MetricCard title="Forecast Confidence" value={formatConfidenceCompact(result?.confidence)} icon={<Settings2 className="h-4 w-4" />} />
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
+          <div className="grid gap-6">
             <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">KPI Trajectory</h3>
               <p className="mt-1 text-sm text-gray-500">Forecasted {prettyKpiLabel(form.kpi_metric)} over the selected horizon.</p>
@@ -467,7 +478,7 @@ export default function ForecastWorkspace({ clientId, onRunResult }: ForecastWor
             </div>
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
+          <div className="grid gap-6">
             <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Channel Forecast Contribution</h3>
               <p className="mt-1 text-sm text-gray-500">Projected revenue and spend split by channel.</p>
@@ -676,4 +687,73 @@ function formatConfidenceCompact(value: number | undefined): string {
   if (value === undefined || value === null || Number.isNaN(value)) return '-';
   const normalized = value <= 1 ? value * 100 : value;
   return `${normalized.toFixed(1)}%`;
+}
+
+function extractForecastAnalysis(payload: unknown): ForecastAnalysis | null {
+  if (!payload || typeof payload !== 'object') return null;
+  const obj = payload as Record<string, unknown>;
+
+  const candidates: unknown[] = [
+    obj.forecast_analysis,
+    (obj.agent_results as Record<string, unknown> | undefined)?.forecast,
+    (obj.result as Record<string, unknown> | undefined)?.forecast_analysis,
+    (obj.data as Record<string, unknown> | undefined)?.forecast_analysis,
+    ((obj.data as Record<string, unknown> | undefined)?.agent_results as Record<string, unknown> | undefined)?.forecast,
+    obj,
+  ];
+
+  for (const item of candidates) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) continue;
+    const rec = item as Record<string, unknown>;
+    if (Object.keys(rec).length === 0) continue;
+    if (
+      rec.next_30_day_revenue !== undefined ||
+      rec.forecast_points !== undefined ||
+      rec.kpi_projection !== undefined
+    ) {
+      return rec as unknown as ForecastAnalysis;
+    }
+  }
+  return null;
+}
+
+function getSelectedKpiProjection(
+  analysis: ForecastAnalysis | null,
+  metric: string,
+): number | undefined {
+  if (!analysis) return undefined;
+  const key = (metric || 'revenue').trim().toLowerCase();
+  const analysisKpi = (analysis.kpi_metric || '').trim().toLowerCase();
+
+  if (analysisKpi === key && analysis.kpi_projection !== undefined && analysis.kpi_projection !== null) {
+    return Number(analysis.kpi_projection);
+  }
+
+  const fromSummaryMap: Record<string, number | undefined> = {
+    revenue: analysis.next_30_day_revenue,
+    profit: analysis.predicted_profit,
+    roi: analysis.predicted_roi,
+    clicks: analysis.predicted_clicks,
+    purchases: analysis.predicted_purchases,
+    impressions: analysis.predicted_impressions,
+    ctr: analysis.predicted_ctr,
+    conversion_rate: analysis.predicted_conversion_rate,
+    spend: analysis.baseline_metrics?.spend,
+  };
+  const summaryValue = fromSummaryMap[key];
+  if (summaryValue !== undefined && summaryValue !== null) return Number(summaryValue);
+
+  const lastPoint = (analysis.forecast_points || [])[Math.max(0, (analysis.forecast_points || []).length - 1)];
+  if (!lastPoint) return undefined;
+
+  const fromPointMap: Record<string, number | undefined> = {
+    spend: lastPoint.spend,
+    revenue: lastPoint.revenue,
+    profit: lastPoint.profit,
+    roi: lastPoint.roi,
+    clicks: lastPoint.clicks,
+    purchases: lastPoint.purchases,
+  };
+  const pointValue = fromPointMap[key];
+  return pointValue !== undefined && pointValue !== null ? Number(pointValue) : undefined;
 }

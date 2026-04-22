@@ -116,3 +116,21 @@ def delete_file_from_storage(bucket_name: str, file_path: str):
         return supabase.storage.from_(bucket_name).remove([file_path])
     except Exception as e:
         raise RuntimeError(f"Failed to delete file from Supabase Storage: {e}")
+
+
+def download_file_from_storage(bucket_name: str, file_path: str) -> bytes:
+    supabase = get_supabase_client()
+
+    try:
+        payload = supabase.storage.from_(bucket_name).download(file_path)
+    except Exception as e:
+        raise RuntimeError(f"Failed to download file from Supabase Storage: {e}")
+
+    if isinstance(payload, bytes):
+        return payload
+    if isinstance(payload, bytearray):
+        return bytes(payload)
+    if isinstance(payload, str):
+        return payload.encode("utf-8")
+
+    raise RuntimeError("Supabase Storage returned an unsupported payload type")

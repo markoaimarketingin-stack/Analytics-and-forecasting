@@ -57,11 +57,12 @@
   button {
     border: 0;
     background: none;
+    color: inherit;
     cursor: pointer;
     transition:
       transform 180ms ease,
       box-shadow 220ms ease,
-      filter 220ms ease,
+      border-color 220ms ease,
       background-color 220ms ease,
       color 220ms ease;
   }
@@ -78,6 +79,32 @@
 }
 
 @layer components {
+  .chat-send-btn {
+    @apply inline-flex h-14 w-14 items-center justify-center rounded-xl border-0 bg-transparent text-gray-400;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .chat-send-btn:hover {
+    @apply bg-transparent text-gray-600;
+    transform: translateY(-1px);
+  }
+
+  .chat-send-btn:disabled {
+    @apply bg-transparent text-gray-300;
+    transform: none;
+  }
+
+  .chat-input-shell .input-field {
+    border-radius: 28px;
+    border-color: #c5cad3;
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .chat-input-shell .input-field::placeholder {
+    color: #9ca3af;
+  }
+
   .app-shell {
     position: relative;
     isolation: isolate;
@@ -224,13 +251,13 @@
   }
 
   .message-user {
-    @apply ml-auto max-w-[85%] rounded-3xl rounded-br-xl bg-blue-600 px-5 py-4 text-sm leading-7 text-white;
-    box-shadow: 0 10px 26px rgba(37, 99, 235, 0.28);
+    @apply ml-auto max-w-[85%] rounded-3xl rounded-br-xl border border-gray-200 bg-white px-5 py-4 text-sm leading-7 text-gray-900;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
     animation: fade-slide-up 220ms ease-out;
   }
 
   .message-assistant {
-    @apply max-w-[90%] rounded-3xl rounded-bl-xl border border-gray-200 bg-white px-5 py-4 text-sm leading-7 text-gray-700 shadow-sm;
+    @apply max-w-[90%] rounded-3xl rounded-bl-xl border border-gray-200 bg-white px-5 py-4 text-sm leading-7 text-gray-800 shadow-sm;
     animation: fade-slide-up 220ms ease-out;
   }
 
@@ -311,8 +338,9 @@
 
   .workspace-action-btn {
     @apply inline-flex h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold text-white;
-    background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.34);
+    background: #000;
+    border: 1px solid #000;
+    box-shadow: none;
     transition:
       transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 240ms ease,
@@ -322,8 +350,10 @@
   }
 
   .workspace-action-btn:hover {
-    transform: translateY(-2px);
-    filter: saturate(1.03);
+    transform: translateY(-1px);
+    background: #111;
+    border-color: #111;
+    filter: none;
   }
 
   .workspace-action-btn:active {
@@ -404,9 +434,9 @@
   }
 
   .workspace-toggle-switch-on {
-    @apply border-blue-500/70;
-    background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
-    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+    @apply border-black;
+    background: #000;
+    box-shadow: none;
   }
 
   .workspace-toggle-switch-off {
@@ -568,33 +598,33 @@
 html.dark-mode,
 html.dark-mode body,
 html.dark-mode #root {
-  background: #0b1020;
-  color: #e5e7eb;
+  background: #000;
+  color: #fff;
 }
 
 html.dark-mode .app-theme-root,
 html.dark-mode .workspace-section-shell {
-  background: #0b1020 !important;
-  color: #e5e7eb;
+  background: #000 !important;
+  color: #fff;
 }
 
 html.dark-mode .workspace-surface {
-  background: linear-gradient(180deg, #0f172a 0%, #0b1224 45%, #080d1c 100%);
+  background: #000 !important;
 }
 
 html.dark-mode .workspace-header-glass,
 html.dark-mode .workspace-header-glass-modern {
-  border-color: rgba(148, 163, 184, 0.2);
-  background: rgba(15, 23, 42, 0.72);
+  border-color: #262626;
+  background: #000;
 }
 
 html.dark-mode .workspace-panel,
 html.dark-mode .workspace-metric-card,
 html.dark-mode .surface-card,
 html.dark-mode .panel-card {
-  border-color: rgba(100, 116, 139, 0.35);
-  background: rgba(15, 23, 42, 0.7);
-  color: #e5e7eb;
+  border-color: #262626;
+  background: #000;
+  color: #fff;
 }
 
 html.dark-mode .workspace-option-pill {
@@ -634,30 +664,30 @@ html.dark-mode .settings-row-icon {
 }
 
 html.dark-mode .chat-panel-glass {
-  border-color: rgba(148, 163, 184, 0.2);
-  background: rgba(2, 6, 23, 0.85);
+  border-color: #262626;
+  background: #000;
 }
 
 html.dark-mode .chat-panel-glass > .border-b,
 html.dark-mode .chat-panel-glass .border-t {
-  border-color: rgba(148, 163, 184, 0.2);
-  background: rgba(15, 23, 42, 0.75);
+  border-color: #262626;
+  background: #000;
 }
 
 html.dark-mode .message-assistant {
-  border-color: rgba(100, 116, 139, 0.5);
-  background: #111827;
-  color: #e5e7eb;
+  border-color: #262626;
+  background: #000;
+  color: #fff;
 }
 
 html.dark-mode .input-field {
-  border-color: rgba(100, 116, 139, 0.65);
-  background: #111827;
-  color: #e5e7eb;
+  border-color: #404040;
+  background: #000;
+  color: #fff;
 }
 
 html.dark-mode .input-field::placeholder {
-  color: #94a3b8;
+  color: #a3a3a3;
 }
 
 /* Workspace-wide readability overrides for dark mode. */
@@ -667,19 +697,19 @@ html.dark-mode .chat-panel-glass .text-gray-900,
 html.dark-mode .workspace-surface .text-black,
 html.dark-mode .workspace-section-shell .text-black,
 html.dark-mode .chat-panel-glass .text-black {
-  color: #f3f4f6 !important;
+  color: #fff !important;
 }
 
 html.dark-mode .workspace-surface .text-gray-800,
 html.dark-mode .workspace-section-shell .text-gray-800,
 html.dark-mode .chat-panel-glass .text-gray-800 {
-  color: #e5e7eb !important;
+  color: #fff !important;
 }
 
 html.dark-mode .workspace-surface .text-gray-700,
 html.dark-mode .workspace-section-shell .text-gray-700,
 html.dark-mode .chat-panel-glass .text-gray-700 {
-  color: #d1d5db !important;
+  color: #e5e5e5 !important;
 }
 
 html.dark-mode .workspace-surface .text-gray-600,
@@ -691,13 +721,13 @@ html.dark-mode .chat-panel-glass .text-gray-500,
 html.dark-mode .workspace-surface .text-gray-400,
 html.dark-mode .workspace-section-shell .text-gray-400,
 html.dark-mode .chat-panel-glass .text-gray-400 {
-  color: #94a3b8 !important;
+  color: #a3a3a3 !important;
 }
 
 html.dark-mode .workspace-surface [class*='bg-white'],
 html.dark-mode .workspace-section-shell [class*='bg-white'],
 html.dark-mode .chat-panel-glass [class*='bg-white'] {
-  background-color: rgba(15, 23, 42, 0.78) !important;
+  background-color: #000 !important;
 }
 
 html.dark-mode .workspace-surface [class*='bg-gray-50'],
@@ -706,7 +736,7 @@ html.dark-mode .chat-panel-glass [class*='bg-gray-50'],
 html.dark-mode .workspace-surface [class*='bg-gray-100'],
 html.dark-mode .workspace-section-shell [class*='bg-gray-100'],
 html.dark-mode .chat-panel-glass [class*='bg-gray-100'] {
-  background-color: rgba(30, 41, 59, 0.72) !important;
+  background-color: #0a0a0a !important;
 }
 
 html.dark-mode .workspace-surface [class*='border-gray-100'],
@@ -718,16 +748,116 @@ html.dark-mode .chat-panel-glass [class*='border-gray-200'],
 html.dark-mode .workspace-surface [class*='border-gray-300'],
 html.dark-mode .workspace-section-shell [class*='border-gray-300'],
 html.dark-mode .chat-panel-glass [class*='border-gray-300'] {
-  border-color: rgba(100, 116, 139, 0.45) !important;
+  border-color: #2a2a2a !important;
 }
 
 html.dark-mode .chat-panel-header,
 html.dark-mode .chat-panel-footer {
-  background: rgba(15, 23, 42, 0.86) !important;
+  background: #000 !important;
 }
 
 html.dark-mode .chat-panel-body {
-  background: linear-gradient(180deg, #0f172a 0%, #111827 100%) !important;
+  background: #000 !important;
+}
+
+html.dark-mode .app-shell::before,
+html.dark-mode .app-shell::after {
+  display: none;
+}
+
+html.dark-mode .workspace-action-btn,
+html.dark-mode .workspace-toggle-switch-on,
+html.dark-mode .message-user {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Harden dark mode coverage for screens using explicit light utility classes. */
+html.dark-mode .app-shell,
+html.dark-mode .app-theme-root,
+html.dark-mode .workspace-section-shell,
+html.dark-mode .workspace-surface {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+html.dark-mode .app-theme-root [class*='bg-[#'],
+html.dark-mode .app-theme-root [class*='bg-white'],
+html.dark-mode .app-theme-root [class*='bg-gray-50'],
+html.dark-mode .app-theme-root [class*='bg-gray-100'],
+html.dark-mode .app-theme-root [class*='bg-gray-200'] {
+  background-color: #090909 !important;
+}
+
+html.dark-mode .app-theme-root [class*='border-gray-'],
+html.dark-mode .app-theme-root [class*='border-slate-'] {
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .app-theme-root [class*='text-black'],
+html.dark-mode .app-theme-root [class*='text-gray-900'],
+html.dark-mode .app-theme-root [class*='text-gray-800'],
+html.dark-mode .app-theme-root [class*='text-gray-700'] {
+  color: #f5f5f5 !important;
+}
+
+html.dark-mode .app-theme-root [class*='text-gray-600'],
+html.dark-mode .app-theme-root [class*='text-gray-500'],
+html.dark-mode .app-theme-root [class*='text-gray-400'] {
+  color: #b5b5b5 !important;
+}
+
+html.dark-mode .app-theme-root input,
+html.dark-mode .app-theme-root select,
+html.dark-mode .app-theme-root textarea {
+  background: #0d0d0d !important;
+  color: #f5f5f5 !important;
+  border-color: #363636 !important;
+}
+
+html.dark-mode .app-theme-root input::placeholder,
+html.dark-mode .app-theme-root textarea::placeholder {
+  color: #8a8a8a !important;
+}
+
+html.dark-mode .app-theme-root table thead th {
+  color: #c9c9c9 !important;
+}
+
+html.dark-mode .app-theme-root table tbody td {
+  color: #e8e8e8 !important;
+}
+
+/* Recharts readability in dark mode */
+html.dark-mode .app-theme-root .recharts-cartesian-axis-tick-value,
+html.dark-mode .app-theme-root .recharts-legend-item-text {
+  fill: #d4d4d4 !important;
+  color: #d4d4d4 !important;
+}
+
+html.dark-mode .app-theme-root .recharts-cartesian-grid line {
+  stroke: #2a2a2a !important;
+}
+
+html.dark-mode .app-theme-root .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: #111 !important;
+  border: 1px solid #303030 !important;
+}
+
+html.dark-mode .app-theme-root .recharts-tooltip-label,
+html.dark-mode .app-theme-root .recharts-tooltip-item {
+  color: #f0f0f0 !important;
+}
+
+button.chat-panel-close-btn,
+button.chat-panel-close-btn:hover,
+button.chat-panel-close-btn:active,
+button.chat-panel-close-btn:focus-visible {
+  transition: none !important;
+  transform: translate(0, -50%) !important;
+  box-shadow: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

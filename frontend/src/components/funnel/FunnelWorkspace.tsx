@@ -339,7 +339,7 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
                 <button
                   onClick={runFunnel}
                   disabled={isRunning || isLoadingOptions || !hasRequiredClientData}
-                  className="workspace-action-btn h-11 w-full whitespace-nowrap bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60"
+                  className="workspace-action-btn h-11 w-full whitespace-nowrap disabled:opacity-60"
                 >
 
                   <span>{isRunning ? 'Running...' : 'Analyze Funnel'}</span>
@@ -489,7 +489,7 @@ export default function FunnelWorkspace({ clientId, onRunResult }: FunnelWorkspa
               <div className="mt-4">
                 <h3 className="text-lg font-semibold text-gray-900">Segment Comparison Dual Funnel</h3>
                 <p className="mt-1 text-sm text-gray-500">Side-by-side funnels show which segment moves through stages better.</p>
-                <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                <div className="mt-4 grid gap-4">
                   <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
                     <p className="mb-2 text-sm font-semibold text-gray-800">{segmentLeft || 'Segment A'}</p>
                     <div className="h-[280px]">

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { Bot } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -845,9 +846,11 @@ export default function App({
           onClick={() => setIsChatPanelCollapsed(false)}
           aria-label="Open chat panel"
           title="Open chat panel"
-          className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border border-gray-900 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-[52%] hover:scale-105 lg:flex"
+          className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-transparent shadow-none transition duration-200 lg:flex"
         >
-          <img src="/favicon.svg" alt="Marko AI" className="h-8 w-8 object-contain invert" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black p-2 shadow-[0_10px_20px_rgba(0,0,0,0.24)]">
+            <Bot className="h-5 w-5 text-white" />
+          </div>
         </button>
       ) : null}
 

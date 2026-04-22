@@ -1353,7 +1353,15 @@ async def delete_training_upload(
             )
 
         if local_path:
-            FileHandler.delete_file(local_path)
+            try:
+                FileHandler.delete_file(local_path)
+            except HTTPException as local_delete_error:
+                logger.warning(
+                    "Skipping local file delete due to path validation or missing file",
+                    upload_id=upload_id,
+                    local_path=local_path,
+                    detail=str(local_delete_error.detail),
+                )
 
         session = get_session()
         try:

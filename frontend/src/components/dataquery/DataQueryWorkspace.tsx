@@ -240,7 +240,7 @@ export default function DataQueryWorkspace({ clientId }: DataQueryWorkspaceProps
                   type="button"
                   onClick={handleRunQuery}
                   disabled={isRunning || isLoadingDatasets}
-                  className="workspace-action-btn h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 disabled:opacity-60"
+                  className="workspace-action-btn h-11 rounded-xl px-5 disabled:opacity-60"
                 >
                   {isRunning ? (
                     <>

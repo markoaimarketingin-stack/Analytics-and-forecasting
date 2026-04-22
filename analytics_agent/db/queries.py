@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import json
+import os
+from io import StringIO
 from pathlib import Path
 from typing import Any, Iterable
 
 import pandas as pd
 
 from analytics_agent.clients.supabase_client import (
+    download_file_from_storage,
     get_supabase_client,
     list_training_upload_records,
 )
@@ -116,6 +119,28 @@ def _parse_uploaded_dataset_file(path: Path) -> pd.DataFrame:
     raise ValueError(f"Unsupported dataset file format: {path.suffix or 'unknown'}")
 
 
+def _parse_uploaded_dataset_bytes(file_name: str, payload: bytes) -> pd.DataFrame:
+    suffix = Path(file_name).suffix.lower()
+    if suffix == ".csv":
+        text = payload.decode("utf-8-sig", errors="replace")
+        return pd.read_csv(StringIO(text))
+
+    if suffix == ".json":
+        text = payload.decode("utf-8", errors="replace")
+        raw = json.loads(text)
+        if isinstance(raw, list):
+            return pd.DataFrame(raw)
+        if isinstance(raw, dict):
+            for key in ("rows", "data", "records", "items"):
+                value = raw.get(key)
+                if isinstance(value, list):
+                    return pd.DataFrame(value)
+            return pd.DataFrame([raw])
+        return pd.DataFrame()
+
+    raise ValueError(f"Unsupported dataset file format: {suffix or 'unknown'}")
+
+
 def get_client_dataset_dataframe_with_source(
     dataset_name: str,
     client_id: str,
@@ -134,15 +159,26 @@ def get_client_dataset_dataframe_with_source(
         return pd.DataFrame(), "missing_client_upload"
 
     parsed_frames: list[pd.DataFrame] = []
+    training_bucket = os.getenv("SUPABASE_TRAINING_BUCKET", "agent-training-assets")
     for row in records:
         local_path = Path(str(row.get("local_storage_path") or "").strip())
-        if not local_path.exists():
-            continue
+        frame = pd.DataFrame()
 
-        try:
-            frame = _parse_uploaded_dataset_file(local_path)
-        except Exception:
-            continue
+        if local_path.exists():
+            try:
+                frame = _parse_uploaded_dataset_file(local_path)
+            except Exception:
+                frame = pd.DataFrame()
+
+        if frame.empty:
+            remote_path = str(row.get("remote_storage_path") or "").strip()
+            file_name = str(row.get("file_name") or "").strip() or remote_path
+            if remote_path and file_name:
+                try:
+                    payload = download_file_from_storage(training_bucket, remote_path)
+                    frame = _parse_uploaded_dataset_bytes(file_name, payload)
+                except Exception:
+                    frame = pd.DataFrame()
 
         if frame.empty:
             continue

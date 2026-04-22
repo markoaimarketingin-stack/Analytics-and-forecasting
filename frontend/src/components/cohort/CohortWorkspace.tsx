@@ -291,7 +291,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
               </label>
 
               <div className="flex items-end">
-                <button onClick={runCohort} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runCohort} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full disabled:opacity-60">
                    {isRunning ? 'Running...' : 'Analyze Cohorts'}
                 </button>
               </div>
@@ -328,7 +328,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
             <MetricCard title="High Churn Segment" value={result?.high_churn_segment || '-'} />
           </div>
 
-          <div className="grid gap-6 xl:grid-cols-2">
+          <div className="grid gap-6">
             <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Retention Curve</h3>
               <p className="mt-1 text-sm text-gray-500">Track retention and churn by customer tenure month.</p>
@@ -371,7 +371,7 @@ export default function CohortWorkspace({ clientId, onRunResult }: CohortWorkspa
               </div>
             </div>
 
-            <div className="workspace-panel xl:col-span-2">
+            <div className="workspace-panel">
               <h3 className="text-lg font-semibold text-gray-900">Signup Cohort Curve</h3>
               <p className="mt-1 text-sm text-gray-500">Compare retention by signup cohort period.</p>
               <div className="mt-4 h-[320px] w-full">

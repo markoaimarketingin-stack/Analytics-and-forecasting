@@ -281,7 +281,7 @@ export default function AttributionWorkspace({ clientId, onRunResult }: Attribut
               </label>
 
               <div className="flex items-end">
-                <button onClick={runAttribution} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runAttribution} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full disabled:opacity-60">
                    {isRunning ? 'Running...' : 'Analyze Attribution'}
                 </button>
               </div>

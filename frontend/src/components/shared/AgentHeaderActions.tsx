@@ -28,7 +28,7 @@ export default function AgentHeaderActions({ clientId }: AgentHeaderActionsProps
             setCurrentAgentId(1);
             setIsKnowledgeBaseModalOpen(true);
           }}
-          className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-solid border-[#7c3aed] bg-white px-4 text-sm font-semibold text-violet-600 transition hover:bg-violet-50"
+          className="inline-flex h-10 items-center gap-2 rounded-full border-2 border-black bg-white px-4 text-sm font-semibold text-black ring-1 ring-black/80 transition hover:bg-gray-100"
         >
           <BookOpen className="h-4 w-4" /> Knowledge Base
         </button>

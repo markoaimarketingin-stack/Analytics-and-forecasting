@@ -58,7 +58,7 @@ export default function ChatPanel({
         <div className="mr-12 flex items-center gap-2">
           <button
             onClick={onNewChat}
-            className="interactive-soft inline-flex h-10 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-xs font-semibold text-white shadow-[0_8px_20px_rgba(59,130,246,0.3)] hover:brightness-105"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-black bg-black px-4 text-xs font-semibold text-white"
           >
             <Plus className="h-3.5 w-3.5" /> New Chat
           </button>
@@ -68,7 +68,7 @@ export default function ChatPanel({
           onClick={onCollapse}
           aria-label="Close chat panel"
           title="Close chat panel"
-          className="interactive-soft absolute right-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          className="chat-panel-close-btn absolute right-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         >
           <X className="h-4 w-4" />
         </button>

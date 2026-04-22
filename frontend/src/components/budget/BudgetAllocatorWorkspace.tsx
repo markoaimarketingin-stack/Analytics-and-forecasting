@@ -294,7 +294,7 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
               </label>
 
               <div className="flex items-end xl:col-span-2">
-                <button onClick={runAllocation} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-60">
+                <button onClick={runAllocation} disabled={isRunning || isLoadingOptions || !hasRequiredClientData} className="workspace-action-btn w-full disabled:opacity-60">
                   {isRunning ? 'Allocating...' : 'Generate Budget Plan'}
                 </button>
               </div>
@@ -388,7 +388,7 @@ export default function BudgetAllocatorWorkspace({ clientId, onRunResult }: Budg
             </div>
           </div>
 
-          <div className="workspace-panel grid gap-6 lg:grid-cols-2">
+          <div className="workspace-panel grid gap-6">
             <div>
               <h3 className="text-base font-semibold text-gray-900">Constraint Log</h3>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-gray-600">

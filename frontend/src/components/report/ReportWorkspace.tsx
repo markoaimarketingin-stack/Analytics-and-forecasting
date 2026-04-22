@@ -286,7 +286,7 @@ export default function ReportWorkspace({ clientId, onRunResult }: ReportWorkspa
                   type="button"
                   onClick={handleGenerateReport}
                   disabled={isGenerating}
-                  className="workspace-action-btn h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                  className="workspace-action-btn h-11 rounded-xl px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Sparkles className="h-4 w-4" />
                   {isGenerating ? 'Generating...' : 'Generate Report'}
