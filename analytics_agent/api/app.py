@@ -291,6 +291,12 @@ def _resolve_self_ping_interval_seconds() -> int:
 
 def _resolve_self_ping_url() -> Optional[str]:
     explicit_url = str(os.getenv("SELF_PING_URL", "")).strip()
+    if explicit_url and "your-app.onrender.com" in explicit_url:
+        logger.warning(
+            "SELF_PING_URL uses placeholder value and will be ignored. Set it to your real Render URL.",
+            configured_value=explicit_url,
+        )
+        explicit_url = ""
     if explicit_url:
         return explicit_url
 
@@ -711,14 +717,28 @@ async def _auth_middleware(request: Request, call_next):
 # -----------------------------------------------------------------------------
 # Health
 # -----------------------------------------------------------------------------
-@app.get("/api/health", response_model=HealthCheckResponse)
-async def health_check():
+def _build_health_payload() -> dict[str, Any]:
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "version": settings.APP_VERSION,
         "analytics_ready": analytics_runner is not None,
     }
+
+
+@app.get("/", response_model=HealthCheckResponse)
+async def root_health():
+    return _build_health_payload()
+
+
+@app.get("/health", response_model=HealthCheckResponse)
+async def health_check_root():
+    return _build_health_payload()
+
+
+@app.get("/api/health", response_model=HealthCheckResponse)
+async def health_check():
+    return _build_health_payload()
 
 
 # -----------------------------------------------------------------------------
