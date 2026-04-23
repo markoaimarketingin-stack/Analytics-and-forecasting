@@ -16,7 +16,7 @@ from urllib import request as urllib_request
 
 from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, Request, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from google.auth.transport import requests as google_requests
 from google.oauth2 import id_token as google_id_token
 from pydantic import BaseModel, Field, field_serializer
@@ -731,14 +731,29 @@ async def root_health():
     return _build_health_payload()
 
 
+@app.head("/", include_in_schema=False)
+async def root_health_head():
+    return Response(status_code=200)
+
+
 @app.get("/health", response_model=HealthCheckResponse)
 async def health_check_root():
     return _build_health_payload()
 
 
+@app.head("/health", include_in_schema=False)
+async def health_check_root_head():
+    return Response(status_code=200)
+
+
 @app.get("/api/health", response_model=HealthCheckResponse)
 async def health_check():
     return _build_health_payload()
+
+
+@app.head("/api/health", include_in_schema=False)
+async def health_check_head():
+    return Response(status_code=200)
 
 
 # -----------------------------------------------------------------------------
