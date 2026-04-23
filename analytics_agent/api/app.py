@@ -328,6 +328,24 @@ def _resolve_client_id(client_id: Optional[str]) -> str:
     return value or "anonymous-client"
 
 
+def _is_auth_bypass_enabled() -> bool:
+    return str(os.getenv("AUTH_BYPASS_ENABLED", "false")).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _get_bypass_identity() -> dict[str, Any]:
+    client_id = str(os.getenv("AUTH_BYPASS_CLIENT_ID", "local-client")).strip() or "local-client"
+    email = str(os.getenv("AUTH_BYPASS_EMAIL", "local@marko.ai")).strip() or "local@marko.ai"
+    name = str(os.getenv("AUTH_BYPASS_NAME", "Local Client")).strip() or "Local Client"
+    return {
+        "sub": f"bypass-{client_id}",
+        "email": email,
+        "name": name,
+        "client_id": client_id,
+        "iat": int(datetime.utcnow().timestamp()),
+        "exp": int(datetime.utcnow().timestamp()) + (60 * 60 * 24 * 365),
+    }
+
+
 def _b64url_encode(raw: bytes) -> str:
     return base64.urlsafe_b64encode(raw).decode("ascii").rstrip("=")
 
@@ -570,6 +588,10 @@ async def _auth_middleware(request: Request, call_next):
         or path.startswith("/cohort/")
     )
 
+    if requires_auth and _is_auth_bypass_enabled():
+        request.state.token_payload = _get_bypass_identity()
+        return await call_next(request)
+
     if requires_auth and path not in public_paths:
         auth_header = (request.headers.get("Authorization") or "").strip()
         token = ""
@@ -605,6 +627,24 @@ async def health_check():
 # -----------------------------------------------------------------------------
 @app.post("/api/auth/google", response_model=GoogleAuthResponse)
 async def authenticate_google(payload: GoogleAuthRequest):
+    if _is_auth_bypass_enabled():
+        bypass = _get_bypass_identity()
+        return {
+            "success": True,
+            "client_id": str(bypass.get("client_id") or ""),
+            "user": {
+                "google_sub": str(bypass.get("sub") or ""),
+                "email": str(bypass.get("email") or ""),
+                "name": str(bypass.get("name") or ""),
+                "picture": None,
+                "email_verified": True,
+            },
+            "access_token": "",
+            "token_type": "Bearer",
+            "expires_in": 60 * 60 * 24 * 365,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+
     credential = (payload.credential or "").strip()
     if not credential:
         raise HTTPException(status_code=400, detail="Google credential is required")
@@ -677,6 +717,24 @@ async def authenticate_google(payload: GoogleAuthRequest):
 
 @app.get("/api/auth/session", response_model=GoogleAuthResponse)
 async def auth_session(request: Request):
+    if _is_auth_bypass_enabled():
+        bypass = _get_bypass_identity()
+        return {
+            "success": True,
+            "client_id": str(bypass.get("client_id") or ""),
+            "user": {
+                "google_sub": str(bypass.get("sub") or ""),
+                "email": str(bypass.get("email") or ""),
+                "name": str(bypass.get("name") or ""),
+                "picture": None,
+                "email_verified": True,
+            },
+            "access_token": "",
+            "token_type": "Bearer",
+            "expires_in": 60 * 60 * 24 * 365,
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+
     payload = _verify_access_token((request.cookies.get(ACCESS_TOKEN_COOKIE_NAME) or "").strip())
     remaining = max(0, int(payload.get("exp", 0)) - int(datetime.utcnow().timestamp()))
     return {
@@ -698,6 +756,9 @@ async def auth_session(request: Request):
 
 @app.post("/api/auth/logout")
 async def auth_logout():
+    if _is_auth_bypass_enabled():
+        return {"success": True, "timestamp": datetime.utcnow().isoformat()}
+
     response = JSONResponse(content={"success": True, "timestamp": datetime.utcnow().isoformat()})
     secure_cookie = (settings.APP_ENV or "").strip().lower() in {"production", "prod", "staging"}
     same_site = "none" if secure_cookie else "lax"

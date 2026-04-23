@@ -10,6 +10,12 @@ import {
 } from '../../services/auth';
 
 const GOOGLE_CLIENT_ID = (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim();
+const AUTH_BYPASS_ENABLED = ['1', 'true', 'yes', 'on'].includes(
+  String(import.meta.env.VITE_AUTH_BYPASS_ENABLED || 'false').trim().toLowerCase(),
+);
+const FIXED_CLIENT_ID = String(import.meta.env.VITE_FIXED_CLIENT_ID || 'local-client').trim() || 'local-client';
+const FIXED_CLIENT_NAME = String(import.meta.env.VITE_FIXED_CLIENT_NAME || 'Local Client').trim() || 'Local Client';
+const FIXED_CLIENT_EMAIL = String(import.meta.env.VITE_FIXED_CLIENT_EMAIL || 'local@marko.ai').trim() || 'local@marko.ai';
 
 interface AuthSession {
   clientId: string;
@@ -57,6 +63,13 @@ const toSession = (payload: GoogleAuthResponse): AuthSession => ({
   name: payload.user.name,
   email: payload.user.email,
   picture: payload.user.picture,
+});
+
+const buildBypassSession = (): AuthSession => ({
+  clientId: FIXED_CLIENT_ID,
+  name: FIXED_CLIENT_NAME,
+  email: FIXED_CLIENT_EMAIL,
+  picture: null,
 });
 
 function MarkoAuthPage({
@@ -179,6 +192,14 @@ export default function AuthGateway() {
     let active = true;
 
     const restore = async () => {
+      if (AUTH_BYPASS_ENABLED) {
+        if (active) {
+          setSession(buildBypassSession());
+          setIsRestoringSession(false);
+        }
+        return;
+      }
+
       try {
         const response = await getAuthenticatedSession();
         if (active) {
@@ -217,6 +238,11 @@ export default function AuthGateway() {
   }, []);
 
   const handleLogout = useCallback(() => {
+    if (AUTH_BYPASS_ENABLED) {
+      setSession(buildBypassSession());
+      return;
+    }
+
     try {
       window.google?.accounts?.id?.disableAutoSelect?.();
     } catch {
@@ -232,6 +258,17 @@ export default function AuthGateway() {
   }
 
   if (!session) {
+    if (AUTH_BYPASS_ENABLED) {
+      return (
+        <App
+          clientId={FIXED_CLIENT_ID}
+          accountName={FIXED_CLIENT_NAME}
+          accountEmail={FIXED_CLIENT_EMAIL}
+          onLogout={handleLogout}
+        />
+      );
+    }
+
     return (
       <MarkoAuthPage
         error={error}
