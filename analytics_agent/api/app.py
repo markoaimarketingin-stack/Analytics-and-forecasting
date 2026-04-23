@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from io import StringIO
 from typing import Any, Literal, Optional
+import asyncio
 import base64
 import hashlib
 import hmac
@@ -10,6 +11,8 @@ import os
 import re
 import uuid
 from pathlib import Path
+from urllib import error as urllib_error
+from urllib import request as urllib_request
 
 from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, Request, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -273,12 +276,87 @@ marko_brain: Optional[AnalyticsSupervisor] = None
 data_query_agent: Optional[DataQueryAgent] = None
 
 
+def _is_self_ping_enabled() -> bool:
+    return str(os.getenv("SELF_PING_ENABLED", "false")).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _resolve_self_ping_interval_seconds() -> int:
+    raw_value = str(os.getenv("SELF_PING_INTERVAL_SECONDS", "600")).strip()
+    try:
+        parsed = int(raw_value)
+    except ValueError:
+        parsed = 600
+    return max(60, parsed)
+
+
+def _resolve_self_ping_url() -> Optional[str]:
+    explicit_url = str(os.getenv("SELF_PING_URL", "")).strip()
+    if explicit_url:
+        return explicit_url
+
+    render_external_url = str(os.getenv("RENDER_EXTERNAL_URL", "")).strip().rstrip("/")
+    if render_external_url:
+        return f"{render_external_url}/api/health"
+
+    return None
+
+
+def _send_health_ping(url: str, timeout_seconds: int = 5) -> int:
+    request = urllib_request.Request(
+        url=url,
+        method="GET",
+        headers={"User-Agent": "analytics-agent-self-ping/1.0"},
+    )
+    with urllib_request.urlopen(request, timeout=timeout_seconds) as response:
+        return int(getattr(response, "status", 200))
+
+
+async def _self_ping_loop(stop_event: asyncio.Event) -> None:
+    url = _resolve_self_ping_url()
+    if not url:
+        logger.warning(
+            "Self-ping is enabled but no URL was resolved. Set SELF_PING_URL or RENDER_EXTERNAL_URL.",
+        )
+        return
+
+    interval_seconds = _resolve_self_ping_interval_seconds()
+    logger.info(
+        "Self-ping loop started",
+        url=url,
+        interval_seconds=interval_seconds,
+    )
+
+    # Add a small deterministic offset so repeated restarts avoid pinging at the exact same second.
+    initial_delay_seconds = 5 + (os.getpid() % 11)
+    try:
+        await asyncio.wait_for(stop_event.wait(), timeout=initial_delay_seconds)
+        return
+    except asyncio.TimeoutError:
+        pass
+
+    while not stop_event.is_set():
+        try:
+            status_code = await asyncio.to_thread(_send_health_ping, url, 5)
+            logger.info("Self-ping succeeded", url=url, status_code=status_code)
+        except urllib_error.URLError as exc:
+            logger.warning("Self-ping failed", url=url, error=str(exc))
+        except Exception as exc:
+            logger.warning("Self-ping failed unexpectedly", url=url, error=str(exc))
+
+        try:
+            await asyncio.wait_for(stop_event.wait(), timeout=interval_seconds)
+        except asyncio.TimeoutError:
+            continue
+
+
 # -----------------------------------------------------------------------------
 # Application lifespan
 # -----------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global analytics_runner, marko_brain, data_query_agent
+    self_ping_task: Optional[asyncio.Task] = None
+    self_ping_stop_event: Optional[asyncio.Event] = None
 
     try:
         logger.info("Starting Analytics Agent API")
@@ -300,6 +378,17 @@ async def lifespan(app: FastAPI):
             gemini_enabled=getattr(analytics_runner.gemini, "enabled", False),
         )
 
+        if _is_self_ping_enabled():
+            self_ping_stop_event = asyncio.Event()
+            self_ping_task = asyncio.create_task(_self_ping_loop(self_ping_stop_event))
+            logger.info(
+                "Self-ping backup enabled",
+                url=_resolve_self_ping_url(),
+                interval_seconds=_resolve_self_ping_interval_seconds(),
+            )
+        else:
+            logger.info("Self-ping backup disabled")
+
     except Exception as e:
         logger.error(
             "Failed to initialize services",
@@ -308,6 +397,16 @@ async def lifespan(app: FastAPI):
         raise
 
     yield
+
+    if self_ping_stop_event is not None:
+        self_ping_stop_event.set()
+    if self_ping_task is not None:
+        try:
+            await self_ping_task
+        except asyncio.CancelledError:
+            pass
+        except Exception as exc:
+            logger.warning("Self-ping task shutdown failed", error=str(exc))
 
     logger.info("Shutting down Analytics Agent API")
 
