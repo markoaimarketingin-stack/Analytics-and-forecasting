@@ -10,12 +10,24 @@ import {
 } from '../../services/auth';
 
 const GOOGLE_CLIENT_ID = (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim();
-const AUTH_BYPASS_ENABLED = ['1', 'true', 'yes', 'on'].includes(
-  String(import.meta.env.VITE_AUTH_BYPASS_ENABLED || 'false').trim().toLowerCase(),
-);
-const FIXED_CLIENT_ID = String(import.meta.env.VITE_FIXED_CLIENT_ID || 'local-client').trim() || 'local-client';
-const FIXED_CLIENT_NAME = String(import.meta.env.VITE_FIXED_CLIENT_NAME || 'Local Client').trim() || 'Local Client';
-const FIXED_CLIENT_EMAIL = String(import.meta.env.VITE_FIXED_CLIENT_EMAIL || 'local@marko.ai').trim() || 'local@marko.ai';
+
+const isTruthy = (value: unknown): boolean =>
+  ['1', 'true', 'yes', 'on'].includes(String(value ?? '').trim().toLowerCase());
+
+const RAW_FIXED_CLIENT_ID = import.meta.env.VITE_FIXED_CLIENT_ID;
+const RAW_FIXED_CLIENT_NAME = import.meta.env.VITE_FIXED_CLIENT_NAME;
+const RAW_FIXED_CLIENT_EMAIL = import.meta.env.VITE_FIXED_CLIENT_EMAIL;
+const HAS_EXPLICIT_FIXED_SESSION =
+  [RAW_FIXED_CLIENT_ID, RAW_FIXED_CLIENT_NAME, RAW_FIXED_CLIENT_EMAIL].every(
+    (value) => String(value ?? '').trim().length > 0,
+  );
+
+const AUTH_BYPASS_ENABLED =
+  isTruthy(import.meta.env.VITE_AUTH_BYPASS_ENABLED) || HAS_EXPLICIT_FIXED_SESSION;
+
+const FIXED_CLIENT_ID = String(RAW_FIXED_CLIENT_ID || 'local-client').trim() || 'local-client';
+const FIXED_CLIENT_NAME = String(RAW_FIXED_CLIENT_NAME || 'Local Client').trim() || 'Local Client';
+const FIXED_CLIENT_EMAIL = String(RAW_FIXED_CLIENT_EMAIL || 'local@marko.ai').trim() || 'local@marko.ai';
 
 interface AuthSession {
   clientId: string;
