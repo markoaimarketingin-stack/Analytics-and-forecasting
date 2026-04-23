@@ -165,12 +165,15 @@ class AttributionAgent:
 
         if channel and channel.lower() != "all":
             if "channel" in filtered_campaign.columns:
-                filtered_campaign = filtered_campaign[filtered_campaign["channel"].astype(str) == channel]
+                campaign_series = filtered_campaign["channel"].astype(str).str.strip().str.casefold()
+                filtered_campaign = filtered_campaign[campaign_series == channel.casefold()]
             if "channel" in filtered_events.columns:
-                filtered_events = filtered_events[filtered_events["channel"].astype(str) == channel]
+                events_series = filtered_events["channel"].astype(str).str.strip().str.casefold()
+                filtered_events = filtered_events[events_series == channel.casefold()]
 
         if campaign_type and campaign_type.lower() != "all" and "campaign_type" in filtered_campaign.columns:
-            filtered_campaign = filtered_campaign[filtered_campaign["campaign_type"].astype(str) == campaign_type]
+            campaign_type_series = filtered_campaign["campaign_type"].astype(str).str.strip().str.casefold()
+            filtered_campaign = filtered_campaign[campaign_type_series == campaign_type.casefold()]
 
         start_dt = pd.to_datetime(request.start_date, errors="coerce") if request.start_date else pd.NaT
         end_dt = pd.to_datetime(request.end_date, errors="coerce") if request.end_date else pd.NaT

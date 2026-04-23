@@ -157,13 +157,19 @@ class BudgetAllocatorAgent:
         out = df.copy()
 
         if request.channel.lower() != "all" and "channel" in out.columns:
-            out = out[out["channel"].astype(str) == request.channel]
+            target = str(request.channel).strip().casefold()
+            series = out["channel"].astype(str).str.strip().str.casefold()
+            out = out[series == target]
 
         if request.campaign_type.lower() != "all" and "campaign_type" in out.columns:
-            out = out[out["campaign_type"].astype(str) == request.campaign_type]
+            target = str(request.campaign_type).strip().casefold()
+            series = out["campaign_type"].astype(str).str.strip().str.casefold()
+            out = out[series == target]
 
         if request.campaign_id.lower() != "all" and "campaign_id" in out.columns:
-            out = out[out["campaign_id"].astype(str) == request.campaign_id]
+            target = str(request.campaign_id).strip().casefold()
+            series = out["campaign_id"].astype(str).str.strip().str.casefold()
+            out = out[series == target]
 
         return out
 

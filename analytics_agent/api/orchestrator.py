@@ -691,7 +691,7 @@ Recent conversation context:
             if "payload_updates" not in parsed:
                 parsed["payload_updates"] = {}
 
-            return parsed
+            return self._enrich_plan_from_message(parsed, message)
 
         except Exception as exc:
             logger.warning(
@@ -725,66 +725,233 @@ Recent conversation context:
                 "mode": "conversation",
                 "response": "Hello. I am Analytics Supervisor. I can help with forecasting, funnels, attribution, cohort analysis, budgets, and executive summaries.",
             }
-
-        if any(word in msg for word in ["dashboard", "overview"]):
-            return {
-                "mode": "analysis",
-                "intent": "dashboard",
-                "agents": [
-                    "forecast",
-                    "scenario",
-                    "funnel",
-                    "attribution",
-                    "cohort",
-                    "dashboard",
-                ],
-                "payload_updates": {},
-            }
-
-        if any(word in msg for word in ["budget allocator", "allocate budget", "budget allocation", "reallocate budget"]):
-            return {
-                "mode": "analysis",
-                "intent": "budget_allocation",
-                "agents": ["budget_allocator"],
-                "payload_updates": {},
-            }
-
-        if any(word in msg for word in ["report", "pdf", "ppt"]):
-            return {
-                "mode": "analysis",
-                "intent": "report_generation",
-                "agents": [
-                    "forecast",
-                    "scenario",
-                    "attribution",
-                    "cohort",
-                    "report",
-                ],
-                "payload_updates": {},
-            }
-
-        if any(word in msg for word in ["funnel", "conversion", "dropoff"]):
-            return {
-                "mode": "analysis",
-                "intent": "funnel_analysis",
-                "agents": ["funnel", "suggestion"],
-                "payload_updates": {},
-            }
-
-        if any(word in msg for word in ["cohort", "retention", "ltv"]):
-            return {
-                "mode": "analysis",
-                "intent": "ltv_projection",
-                "agents": ["cohort"],
-                "payload_updates": {},
-            }
-
-        return {
+        plan: Dict[str, Any] = {
             "mode": "analysis",
             "intent": "forecast",
             "agents": ["forecast"],
             "payload_updates": {},
         }
+
+        if any(word in msg for word in ["dashboard", "overview"]):
+            plan["intent"] = "dashboard"
+            plan["agents"] = ["forecast", "scenario", "funnel", "attribution", "cohort"]
+        elif any(word in msg for word in ["budget allocator", "allocate budget", "budget allocation", "reallocate budget"]):
+            plan["intent"] = "budget_allocation"
+            plan["agents"] = ["budget_allocator"]
+        elif any(word in msg for word in ["report", "pdf", "ppt"]):
+            plan["intent"] = "report_generation"
+            plan["agents"] = ["forecast", "scenario", "attribution", "cohort"]
+        elif any(word in msg for word in ["funnel", "conversion", "dropoff"]):
+            plan["intent"] = "funnel_analysis"
+            plan["agents"] = ["funnel"]
+        elif any(word in msg for word in ["cohort", "retention", "ltv"]):
+            plan["intent"] = "ltv_projection"
+            plan["agents"] = ["cohort"]
+        elif any(word in msg for word in ["scenario", "what if", "best case", "worst case", "base case"]):
+            plan["intent"] = "scenario_forecast"
+            plan["agents"] = ["scenario", "forecast"]
+
+        return self._enrich_plan_from_message(plan, message)
+
+    def _infer_intent_from_message(self, message: str) -> str:
+        msg = message.lower()
+        if any(word in msg for word in ["budget allocator", "allocate budget", "budget allocation", "reallocate budget"]):
+            return "budget_allocation"
+        if any(word in msg for word in ["break even", "breakeven"]):
+            return "break_even"
+        if any(word in msg for word in ["report", "pdf", "ppt", "deck"]):
+            return "report_generation"
+        if any(word in msg for word in ["dashboard", "overview"]):
+            return "dashboard"
+        if any(word in msg for word in ["attribution", "roas", "multi-touch", "channel contribution"]):
+            return "attribution_analysis"
+        if any(word in msg for word in ["funnel", "dropoff"]):
+            return "funnel_analysis"
+        if any(word in msg for word in ["cohort", "retention", "ltv"]):
+            return "ltv_projection"
+        if any(word in msg for word in ["scenario", "what if", "best case", "worst case", "base case"]):
+            return "scenario_forecast"
+        return "forecast"
+
+    def _extract_horizon_days(self, message: str) -> int | None:
+        msg = message.lower()
+
+        fixed_map = {
+            "next week": 7,
+            "next month": 30,
+            "next quarter": 90,
+            "next year": 365,
+            "this week": 7,
+            "this month": 30,
+            "this quarter": 90,
+            "this year": 365,
+        }
+        for key, value in fixed_map.items():
+            if key in msg:
+                return value
+
+        match = re.search(r"next\s+(\d+)\s*(day|days|week|weeks|month|months|quarter|quarters|year|years)", msg)
+        if not match:
+            return None
+
+        amount = int(match.group(1))
+        unit = match.group(2)
+        if unit.startswith("day"):
+            return amount
+        if unit.startswith("week"):
+            return amount * 7
+        if unit.startswith("month"):
+            return amount * 30
+        if unit.startswith("quarter"):
+            return amount * 90
+        if unit.startswith("year"):
+            return amount * 365
+        return None
+
+    def _extract_kpi_metric(self, message: str) -> str | None:
+        msg = message.lower()
+        metric_map = [
+            ("revenue", "revenue"),
+            ("profit", "profit"),
+            ("roi", "roi"),
+            ("impression", "impressions"),
+            ("click", "clicks"),
+            ("purchase", "purchases"),
+            ("conversion rate", "conversion_rate"),
+            ("conversion", "conversion_rate"),
+            ("ctr", "ctr"),
+        ]
+        for token, metric in metric_map:
+            if token in msg:
+                return metric
+        return None
+
+    def _canonical_channel_name(self, value: str) -> str:
+        normalized = str(value or "").strip().casefold()
+        channel_map = {
+            "google ads": "Google Ads",
+            "google": "Google Ads",
+            "facebook": "Facebook",
+            "linkedin": "LinkedIn",
+            "email": "Email",
+            "tiktok": "TikTok",
+            "tik tok": "TikTok",
+            "twitter": "Twitter",
+            "x": "Twitter",
+            "instagram": "Instagram",
+            "youtube": "YouTube",
+            "you tube": "YouTube",
+        }
+        return channel_map.get(normalized, str(value).strip())
+
+    def _extract_percent_change(self, message: str, keywords: list[str]) -> float | None:
+        msg = message.lower()
+        key_regex = "|".join(re.escape(keyword) for keyword in keywords)
+        pattern = rf"(increase|decrease|reduce|boost|cut)\s+(?:{key_regex})(?:\s+by)?\s+(\d+(?:\.\d+)?)\s*%"
+        match = re.search(pattern, msg)
+        if not match:
+            return None
+
+        direction = match.group(1)
+        value = float(match.group(2))
+        if direction in {"decrease", "reduce", "cut"}:
+            value *= -1.0
+        return value
+
+    def _extract_money_amount(self, message: str) -> float | None:
+        msg = message.lower()
+        match = re.search(r"\$?\s*(\d+(?:[.,]\d+)?)\s*([kKmM]?)", msg)
+        if not match:
+            return None
+        try:
+            value = float(match.group(1).replace(",", ""))
+            suffix = match.group(2).lower()
+            if suffix == "k":
+                value *= 1000.0
+            elif suffix == "m":
+                value *= 1_000_000.0
+            return value
+        except Exception:
+            return None
+
+    def _infer_payload_updates_from_message(self, message: str, intent: str) -> Dict[str, Any]:
+        msg = message.lower()
+        updates: Dict[str, Any] = {}
+
+        horizon_days = self._extract_horizon_days(message)
+        if horizon_days is not None:
+            updates["horizon_days"] = horizon_days
+
+        kpi_metric = self._extract_kpi_metric(message)
+        if kpi_metric:
+            updates["kpi_metric"] = kpi_metric
+
+        channels = ["google ads", "facebook", "linkedin", "email", "tiktok", "twitter", "instagram", "youtube", "you tube"]
+        for channel in channels:
+            if channel in msg:
+                updates["channel"] = self._canonical_channel_name(channel)
+                break
+
+        campaign_types = ["conversion", "awareness", "engagement", "retention", "traffic", "lead generation", "lead"]
+        for ctype in campaign_types:
+            if ctype in msg:
+                updates["campaign_type"] = "Lead Generation" if ctype.startswith("lead") else ctype.title()
+                break
+
+        spend_change = self._extract_percent_change(message, ["spend", "budget"])
+        ctr_lift = self._extract_percent_change(message, ["ctr", "click-through rate", "click through rate"])
+        cvr_lift = self._extract_percent_change(message, ["conversion rate", "conversions", "conversion"])
+
+        if intent == "scenario_forecast":
+            if spend_change is not None:
+                updates["base_spend_change_pct"] = spend_change
+            if ctr_lift is not None:
+                updates["base_ctr_lift_pct"] = ctr_lift
+            if cvr_lift is not None:
+                updates["base_conversion_lift_pct"] = cvr_lift
+        else:
+            if spend_change is not None:
+                updates["spend_change_pct"] = spend_change
+            if ctr_lift is not None:
+                updates["ctr_lift_pct"] = ctr_lift
+            if cvr_lift is not None:
+                updates["conversion_lift_pct"] = cvr_lift
+
+        if intent == "budget_allocation":
+            budget = self._extract_money_amount(message)
+            if budget is not None:
+                updates["total_budget"] = budget
+            if "profit" in msg:
+                updates["objective"] = "profit"
+            elif "revenue" in msg:
+                updates["objective"] = "revenue"
+            elif "roi" in msg:
+                updates["objective"] = "roi"
+
+        return updates
+
+    def _enrich_plan_from_message(self, plan: Dict[str, Any], message: str) -> Dict[str, Any]:
+        enriched = dict(plan or {})
+        intent = str(enriched.get("intent") or "").strip() or self._infer_intent_from_message(message)
+        enriched["intent"] = intent
+
+        mode = str(enriched.get("mode") or "").strip().lower()
+        if mode not in {"conversation", "analysis"}:
+            mode = "analysis"
+        enriched["mode"] = mode
+
+        agents = enriched.get("agents")
+        if not isinstance(agents, list) or not agents:
+            enriched["agents"] = list(INTENT_DEFAULT_AGENTS.get(intent, ["forecast"]))
+
+        payload_updates = enriched.get("payload_updates")
+        if not isinstance(payload_updates, dict):
+            payload_updates = {}
+        inferred_updates = self._infer_payload_updates_from_message(message, intent)
+        payload_updates = {**payload_updates, **inferred_updates}
+        enriched["payload_updates"] = payload_updates
+
+        return enriched
 
     # ============================================================
     # Base Payload
@@ -867,6 +1034,33 @@ Recent conversation context:
             payload["channel_performance"]["facebook"]["spend"] *= (
                 1 + updates["increase_facebook"]
             )
+
+        passthrough_keys = [
+            "horizon_days",
+            "kpi_metric",
+            "channel",
+            "campaign_type",
+            "campaign_id",
+            "spend_change_pct",
+            "ctr_lift_pct",
+            "conversion_lift_pct",
+            "cpc_change_pct",
+            "aov_change_pct",
+            "seasonality_factor",
+            "base_spend_change_pct",
+            "base_ctr_lift_pct",
+            "base_conversion_lift_pct",
+            "base_aov_change_pct",
+            "total_budget",
+            "objective",
+            "risk_tolerance",
+            "max_shift_pct",
+            "min_channel_pct",
+            "max_channel_pct",
+        ]
+        for key in passthrough_keys:
+            if key in updates and updates.get(key) is not None:
+                payload[key] = updates[key]
 
         return payload
 
@@ -971,9 +1165,12 @@ Recent conversation context:
 
     def _required_params_for_intent(self, intent: str) -> List[str]:
         if intent == "forecast":
-            return ["channel", "campaign_type", "spend", "impressions", "ctr", "conversion_rate"]
+            # Forecast agent supports sane defaults (channel/campaign_type="all", horizon defaults, etc.)
+            # so we should not block execution waiting for marketing-input forms.
+            return []
         if intent == "scenario_forecast":
-            return ["base_spend", "adjustments"]
+            # Scenario agent also has default assumptions and can run directly on available campaign data.
+            return []
         if intent == "budget_allocation":
             return ["total_budget", "objective"]
         return []
@@ -1010,28 +1207,22 @@ Recent conversation context:
         return payload
     
     def _detect_forecast_clarification(self, message: str) -> Dict[str, Any]:
-        """Detect missing parameters for forecast agent"""
-        required_params = ["channel", "campaign_type", "spend", "impressions", "ctr", "conversion_rate"]
+        """Forecast requests should execute directly; extract optional params only."""
         extracted = self._extract_forecast_parameters(message)
-        
-        missing = [p for p in required_params if p not in extracted or extracted[p] is None]
-        
+
         return {
-            "needed": len(missing) > 0,
-            "missing_params": missing,
+            "needed": False,
+            "missing_params": [],
             "extracted_params": extracted,
         }
     
     def _detect_scenario_clarification(self, message: str) -> Dict[str, Any]:
-        """Detect missing parameters for scenario analysis"""
-        required_params = ["base_spend", "adjustments"]
+        """Scenario requests should execute directly; extract optional params only."""
         extracted = self._extract_scenario_parameters(message)
-        
-        missing = [p for p in required_params if p not in extracted or extracted[p] is None]
-        
+
         return {
-            "needed": len(missing) > 0,
-            "missing_params": missing,
+            "needed": False,
+            "missing_params": [],
             "extracted_params": extracted,
         }
     
@@ -1039,12 +1230,20 @@ Recent conversation context:
         """Extract forecast parameters from user message"""
         msg_lower = message.lower()
         params = {}
+
+        horizon_days = self._extract_horizon_days(message)
+        if horizon_days is not None:
+            params["horizon_days"] = horizon_days
+
+        kpi_metric = self._extract_kpi_metric(message)
+        if kpi_metric:
+            params["kpi_metric"] = kpi_metric
         
         # Channel detection
-        channels = ["google ads", "facebook", "linkedin", "email", "tiktok", "twitter", "instagram"]
+        channels = ["google ads", "facebook", "linkedin", "email", "tiktok", "twitter", "instagram", "youtube", "you tube"]
         for channel in channels:
             if channel in msg_lower:
-                params["channel"] = channel.title()
+                params["channel"] = self._canonical_channel_name(channel)
                 break
         
         # Campaign type detection
@@ -1093,6 +1292,18 @@ Recent conversation context:
                     params["conversion_rate"] = conv_val / 100 if conv_val > 1 else conv_val
                 except:
                     pass
+
+        spend_change = self._extract_percent_change(message, ["spend", "budget"])
+        if spend_change is not None:
+            params["spend_change_pct"] = spend_change
+
+        ctr_lift = self._extract_percent_change(message, ["ctr", "click-through rate", "click through rate"])
+        if ctr_lift is not None:
+            params["ctr_lift_pct"] = ctr_lift
+
+        cvr_lift = self._extract_percent_change(message, ["conversion rate", "conversions", "conversion"])
+        if cvr_lift is not None:
+            params["conversion_lift_pct"] = cvr_lift
         
         return params
     
@@ -1100,6 +1311,26 @@ Recent conversation context:
         """Extract scenario parameters from user message"""
         msg_lower = message.lower()
         params = {}
+
+        horizon_days = self._extract_horizon_days(message)
+        if horizon_days is not None:
+            params["horizon_days"] = horizon_days
+
+        kpi_metric = self._extract_kpi_metric(message)
+        if kpi_metric:
+            params["kpi_metric"] = kpi_metric
+
+        channels = ["google ads", "facebook", "linkedin", "email", "tiktok", "twitter", "instagram", "youtube", "you tube"]
+        for channel in channels:
+            if channel in msg_lower:
+                params["channel"] = self._canonical_channel_name(channel)
+                break
+
+        campaign_types = ["conversion", "awareness", "engagement", "retention", "traffic", "lead generation", "lead"]
+        for ctype in campaign_types:
+            if ctype in msg_lower:
+                params["campaign_type"] = "Lead Generation" if ctype.startswith("lead") else ctype.title()
+                break
 
         # Base spend: only capture if explicitly tied to spend/budget semantics.
         import re
@@ -1125,6 +1356,18 @@ Recent conversation context:
             adj_matches = re.findall(adj_pattern, msg_lower)
             if adj_matches:
                 params["adjustments"] = {"spend_change": float(adj_matches[0]) / 100}
+
+        spend_change = self._extract_percent_change(message, ["spend", "budget"])
+        if spend_change is not None:
+            params["base_spend_change_pct"] = spend_change
+
+        ctr_lift = self._extract_percent_change(message, ["ctr", "click-through rate", "click through rate"])
+        if ctr_lift is not None:
+            params["base_ctr_lift_pct"] = ctr_lift
+
+        cvr_lift = self._extract_percent_change(message, ["conversion rate", "conversions", "conversion"])
+        if cvr_lift is not None:
+            params["base_conversion_lift_pct"] = cvr_lift
         
         return params
     

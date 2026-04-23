@@ -246,13 +246,19 @@ class CohortAgent:
         filtered = customers_df.copy()
 
         if request.segment and request.segment.lower() != "all" and "segment" in filtered.columns:
-            filtered = filtered[filtered["segment"].astype(str) == request.segment]
+            target = str(request.segment).strip().casefold()
+            series = filtered["segment"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         if request.signup_channel and request.signup_channel.lower() != "all" and "signup_channel" in filtered.columns:
-            filtered = filtered[filtered["signup_channel"].astype(str) == request.signup_channel]
+            target = str(request.signup_channel).strip().casefold()
+            series = filtered["signup_channel"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         if request.contract_type and request.contract_type.lower() != "all" and "contract_type" in filtered.columns:
-            filtered = filtered[filtered["contract_type"].astype(str) == request.contract_type]
+            target = str(request.contract_type).strip().casefold()
+            series = filtered["contract_type"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         if request.signup_start_date and "signup_date" in filtered.columns:
             start_dt = pd.to_datetime(request.signup_start_date, errors="coerce")

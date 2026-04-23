@@ -119,13 +119,19 @@ class ScenarioAgent:
         filtered = campaign_df.copy()
 
         if request.channel and request.channel.lower() != "all" and "channel" in filtered.columns:
-            filtered = filtered[filtered["channel"].astype(str) == request.channel]
+            target = str(request.channel).strip().casefold()
+            series = filtered["channel"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         if request.campaign_type and request.campaign_type.lower() != "all" and "campaign_type" in filtered.columns:
-            filtered = filtered[filtered["campaign_type"].astype(str) == request.campaign_type]
+            target = str(request.campaign_type).strip().casefold()
+            series = filtered["campaign_type"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         if request.campaign_id and request.campaign_id.lower() != "all" and "campaign_id" in filtered.columns:
-            filtered = filtered[filtered["campaign_id"].astype(str) == request.campaign_id]
+            target = str(request.campaign_id).strip().casefold()
+            series = filtered["campaign_id"].astype(str).str.strip().str.casefold()
+            filtered = filtered[series == target]
 
         return filtered
 
