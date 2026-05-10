@@ -66,6 +66,7 @@ from analytics_agent.api.models import (
     CFOReportResponse,
     HealthCheckResponse,
     LTVProjectionResponse,
+    StandardizedRecommendationsResponse,
 )
 
 logger = get_logger(__name__)
@@ -614,6 +615,57 @@ def _persist_client_results(
         thread_id=thread_id,
         intent=intent,
     )
+
+
+def _build_standardized_recommendations_payload(
+        *,
+        recommendations: list[str],
+        client_id: Optional[str] = None,
+        thread_id: Optional[str] = None,
+) -> dict[str, Any]:
+    timestamp_tag = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    clean_client = re.sub(r"[^a-zA-Z0-9_-]", "-", (client_id or "unknown").strip()) or "unknown"
+
+    items = []
+    for idx, raw in enumerate(recommendations, start=1):
+        action = (raw or "").strip() or "Review analytics recommendations"
+        source_key = f"analytics_{clean_client}_{timestamp_tag}_{idx:03d}"
+        agent_specific: dict[str, Any] = {}
+        if client_id:
+            agent_specific["client_id"] = client_id
+        if thread_id:
+            agent_specific["thread_id"] = thread_id
+
+        items.append(
+            {
+                "source_recommendation_key": source_key,
+                "recommendation_type": "other",
+                "platform": "unknown",
+                "action": action,
+                "reasoning": {
+                    "triggered_by": "analytics_recommendations",
+                    "metric_name": "CTR",
+                    "metric_change": "0%",
+                    "supporting_data": "No metric context available; defaults applied.",
+                },
+                "confidence": 0.5,
+                "priority": "medium",
+                "context": {
+                    "ctr": 0.0,
+                    "cpa": 0.0,
+                    "roas": 0.0,
+                    "cvr": 0.0,
+                    "trend": "stable",
+                },
+                "version": 1,
+                "agent_specific": agent_specific,
+            }
+        )
+
+    return {
+        "agent_name": "Analytics Agent",
+        "recommendations": items,
+    }
 
 
 def _build_chat_prompt(message: str, history: list[dict]) -> str:
@@ -1792,9 +1844,10 @@ async def get_available_datasets(request: Request):
                     client_id=resolved_client_id,
                 )
 
-                # When client context exists, only expose datasets actually uploaded for that client.
+                # When client context exists, expose datasets available through Supabase
+                # for that client context.
                 if resolved_client_id:
-                    if full_source != "client_uploads" or full_df.empty:
+                    if full_source not in {"client_uploads", "supabase"} or full_df.empty:
                         continue
 
                 # Without client context, keep previous behavior: show only datasets that have rows.
@@ -2534,6 +2587,36 @@ async def get_agent_status():
         )
 
 
+@app.get("/agents/analytics/recommendations", response_model=StandardizedRecommendationsResponse)
+@app.get("/api/agents/analytics/recommendations", response_model=StandardizedRecommendationsResponse)
+async def get_standardized_recommendations(
+        request: Request,
+        thread_id: Optional[str] = Query(None, description="Optional chat thread identifier"),
+):
+    """Return standardized recommendation payload for external agent integration."""
+    resolved_client_id = _resolve_authenticated_client_id(request)
+    recommendations: list[str] = []
+
+    try:
+        latest_snapshot = get_client_latest_snapshot(resolved_client_id)
+        recommendations_raw = latest_snapshot.get("recommendations") if isinstance(latest_snapshot, dict) else []
+        recommendations = [
+            str(item) for item in recommendations_raw
+        ] if isinstance(recommendations_raw, list) else []
+    except Exception as fetch_error:
+        logger.warning(
+            "Failed to fetch client snapshot for standardized recommendations",
+            client_id=resolved_client_id,
+            error=str(fetch_error),
+        )
+
+    return _build_standardized_recommendations_payload(
+        recommendations=recommendations,
+        client_id=resolved_client_id,
+        thread_id=thread_id,
+    )
+
+
 @app.get("/agents/results")
 async def get_agent_results(request: Request, agent_id: Optional[str] = None):
     """
@@ -2755,6 +2838,7 @@ async def api_root():
                 "orchestrate_agents": "POST /agents/orchestrate",
                 "agent_status": "GET /agents/status",
                 "agent_results": "GET /agents/results",
+                "standardized_recommendations": "GET /agents/analytics/recommendations",
                 "execution_history": "GET /agents/history",
                 "forecast_options": "GET /agents/forecast/options",
                 "attribution_options": "GET /agents/attribution/options",
@@ -2782,6 +2866,5 @@ if __name__ == "__main__":
         reload=settings.DEBUG,
         workers=settings.API_WORKERS,
     )
-
 
 

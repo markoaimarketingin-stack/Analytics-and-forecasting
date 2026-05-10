@@ -13,7 +13,7 @@ class Config:
     APP_ENV: str = config('APP_ENV', default='development')
 
     # Database Configuration
-    DATABASE_URL: str = config('DATABASE_URL', default='sqlite:///./analytics.db')
+    DATABASE_URL: str = config('DATABASE_URL', default='')
     DATABASE_ECHO: bool = config('DATABASE_ECHO', default=False, cast=bool)
 
     # AI Service Configuration

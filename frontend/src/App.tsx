@@ -16,6 +16,7 @@ import CohortWorkspace from './components/cohort/CohortWorkspace';
 import AttributionWorkspace from './components/attribution/AttributionWorkspace';
 import BudgetAllocatorWorkspace from './components/budget/BudgetAllocatorWorkspace';
 import DataQueryWorkspace from './components/dataquery/DataQueryWorkspace';
+import PreprocessingWorkspace from './components/preprocessing/PreprocessingWorkspace';
 import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
@@ -781,6 +782,9 @@ export default function App({
 
       case 'data-query':
         return <DataQueryWorkspace clientId={clientId} />;
+
+      case 'preprocessing':
+        return <PreprocessingWorkspace clientId={clientId} />;
 
       case 'report':
         return <ReportWorkspace clientId={clientId} onRunResult={(result) => handleWorkspaceRunResult('Report Generator', result)} />;

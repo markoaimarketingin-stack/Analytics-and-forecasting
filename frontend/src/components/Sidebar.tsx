@@ -16,6 +16,7 @@ import {
   DollarSign,
   Lightbulb,
   Play,
+  Layers,
 } from 'lucide-react';
 import type { ChatThreadSummary, UISuggestionItem } from '../types';
 
@@ -54,6 +55,11 @@ export default function Sidebar({
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
 
   const specialistAgents = [
+    {
+      id: 'preprocessing',
+      name: 'Preprocessing Agent',
+      icon: Layers,
+    },
     {
       id: 'forecast',
       name: 'Forecast Agent',

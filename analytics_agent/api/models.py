@@ -1,7 +1,7 @@
 from __future__ import annotations
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Literal
 
 from analytics_agent.state import ForecastResults, FunnelModel, AttributionModel, Suggestion, ScenarioRow, BudgetSensitivityResult, BreakEvenResult, LTVProjection
 
@@ -95,3 +95,37 @@ class CFOReportResponse(BaseModel):
     success: bool = True
     timestamp: str
     data: Dict[str, str] = Field(..., description="Executive summary and board explanation")
+
+
+# --- Standardized recommendation schema (Agent Integration Guide V1) ---
+class StandardizedRecommendationReasoning(BaseModel):
+    triggered_by: str
+    metric_name: Literal["CTR", "CPA", "ROAS", "CVR"]
+    metric_change: str
+    supporting_data: str
+
+
+class StandardizedRecommendationContext(BaseModel):
+    ctr: float = 0.0
+    cpa: float = 0.0
+    roas: float = 0.0
+    cvr: float = 0.0
+    trend: Literal["increasing", "decreasing", "stable"] = "stable"
+
+
+class StandardizedRecommendation(BaseModel):
+    source_recommendation_key: str
+    recommendation_type: Literal["audience", "budget", "creative", "timing", "seo", "funnel", "other"]
+    platform: Literal["meta", "google", "tiktok", "unknown"]
+    action: str
+    reasoning: StandardizedRecommendationReasoning
+    confidence: float
+    priority: Literal["high", "medium", "low"]
+    context: StandardizedRecommendationContext
+    version: int = 1
+    agent_specific: Dict[str, Any] = Field(default_factory=dict)
+
+
+class StandardizedRecommendationsResponse(BaseModel):
+    agent_name: str
+    recommendations: List[StandardizedRecommendation] = Field(default_factory=list)

@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from analytics_agent.logging_config import get_logger
+from analytics_agent.config import settings
 from .models import Base
 
 load_dotenv()
@@ -17,7 +18,10 @@ def get_engine(url: Optional[str] = None):
     """Create and return a SQLAlchemy engine with configuration."""
     try:
         if url:
+            if str(url).startswith("sqlite"):
+                raise ValueError("SQLite is not supported. Configure Supabase Postgres instead.")
             database_url = url
+            echo = False
         elif os.getenv("USE_SUPABASE", "false").lower() == "true":
             db_user = os.getenv("DB_USER")
             raw_password = os.getenv("DB_PASSWORD", "")
@@ -28,10 +32,15 @@ def get_engine(url: Optional[str] = None):
             db_name = os.getenv("DB_NAME")
             database_url = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
             echo = False
+        elif str(getattr(settings, "DATABASE_URL", "") or "").strip() and not settings.DATABASE_URL.startswith("sqlite"):
+            database_url = settings.DATABASE_URL
+            echo = bool(getattr(settings, "DATABASE_ECHO", False))
         else:
-            # Default to local SQLite database
-            database_url = "sqlite:///analytics_agent.db"
-            echo = True
+            raise ValueError(
+                "Supabase Postgres configuration is required. "
+                "Set USE_SUPABASE=true with DB_USER/DB_PASSWORD/DB_HOST/DB_PORT/DB_NAME "
+                "or provide a non-sqlite DATABASE_URL."
+            )
 
         logger.debug("Creating database engine", echo=echo)
         engine = create_engine(database_url, echo=echo, future=True)

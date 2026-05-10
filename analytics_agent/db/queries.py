@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import os
 from io import StringIO
-from pathlib import Path
 from typing import Any, Iterable
 
 import pandas as pd
@@ -14,7 +13,6 @@ from analytics_agent.clients.supabase_client import (
     list_training_upload_records,
 )
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 SUPPORTED_DATASETS = {"campaigns", "customers", "events", "retention", "transactions"}
 
 UPSERT_CONFLICT_COLUMNS: dict[str, str] = {
@@ -51,13 +49,6 @@ def _safe_to_records(df: pd.DataFrame) -> list[dict[str, Any]]:
     return df.where(pd.notnull(df), None).to_dict(orient="records")
 
 
-def _read_local_csv(table_name: str) -> pd.DataFrame:
-    file_path = DATA_DIR / f"{table_name}.csv"
-    if not file_path.exists():
-        return pd.DataFrame()
-    return pd.read_csv(file_path)
-
-
 def _read_remote_table(table_name: str, limit: int | None = None) -> pd.DataFrame:
     try:
         query = _get_supabase().table(table_name).select("*")
@@ -70,13 +61,6 @@ def _read_remote_table(table_name: str, limit: int | None = None) -> pd.DataFram
 
 
 def _get_table_dataframe(table_name: str, limit: int | None = None) -> pd.DataFrame:
-    # For now, local bundled data is the source of truth.
-    local_df = _read_local_csv(table_name)
-    if not local_df.empty:
-        if limit is None:
-            return local_df
-        return local_df.head(limit)
-
     remote_df = _read_remote_table(table_name, limit)
     return remote_df.head(limit) if limit is not None and not remote_df.empty else remote_df
 
@@ -97,30 +81,9 @@ def _list_client_training_uploads(client_id: str) -> list[dict[str, Any]]:
         return []
 
 
-def _parse_uploaded_dataset_file(path: Path) -> pd.DataFrame:
-    suffix = path.suffix.lower()
-    if suffix == ".csv":
-        return pd.read_csv(path)
-
-    if suffix == ".json":
-        with path.open("r", encoding="utf-8") as handle:
-            payload = json.load(handle)
-
-        if isinstance(payload, list):
-            return pd.DataFrame(payload)
-
-        if isinstance(payload, dict):
-            for key in ("rows", "data", "records", "items"):
-                value = payload.get(key)
-                if isinstance(value, list):
-                    return pd.DataFrame(value)
-            return pd.DataFrame([payload])
-
-    raise ValueError(f"Unsupported dataset file format: {path.suffix or 'unknown'}")
-
-
 def _parse_uploaded_dataset_bytes(file_name: str, payload: bytes) -> pd.DataFrame:
-    suffix = Path(file_name).suffix.lower()
+    suffix = file_name.rsplit(".", 1)[-1].lower() if "." in file_name else ""
+    suffix = f".{suffix}" if suffix else ""
     if suffix == ".csv":
         text = payload.decode("utf-8-sig", errors="replace")
         return pd.read_csv(StringIO(text))
@@ -156,35 +119,33 @@ def get_client_dataset_dataframe_with_source(
         if str(row.get("category") or "").strip().lower() == dataset_name
     ]
     if not records:
+        remote_df = _read_remote_table(dataset_name, limit)
+        if not remote_df.empty:
+            return remote_df.head(limit) if limit is not None else remote_df, "supabase"
         return pd.DataFrame(), "missing_client_upload"
 
     parsed_frames: list[pd.DataFrame] = []
     training_bucket = os.getenv("SUPABASE_TRAINING_BUCKET", "agent-training-assets")
     for row in records:
-        local_path = Path(str(row.get("local_storage_path") or "").strip())
         frame = pd.DataFrame()
 
-        if local_path.exists():
+        remote_path = str(row.get("remote_storage_path") or "").strip()
+        file_name = str(row.get("file_name") or "").strip() or remote_path
+        if remote_path and file_name:
             try:
-                frame = _parse_uploaded_dataset_file(local_path)
+                payload = download_file_from_storage(training_bucket, remote_path)
+                frame = _parse_uploaded_dataset_bytes(file_name, payload)
             except Exception:
                 frame = pd.DataFrame()
-
-        if frame.empty:
-            remote_path = str(row.get("remote_storage_path") or "").strip()
-            file_name = str(row.get("file_name") or "").strip() or remote_path
-            if remote_path and file_name:
-                try:
-                    payload = download_file_from_storage(training_bucket, remote_path)
-                    frame = _parse_uploaded_dataset_bytes(file_name, payload)
-                except Exception:
-                    frame = pd.DataFrame()
 
         if frame.empty:
             continue
         parsed_frames.append(frame)
 
     if not parsed_frames:
+        remote_df = _read_remote_table(dataset_name, limit)
+        if not remote_df.empty:
+            return remote_df.head(limit) if limit is not None else remote_df, "supabase"
         return pd.DataFrame(), "missing_client_upload"
 
     combined = pd.concat(parsed_frames, ignore_index=True, sort=False)
@@ -253,10 +214,6 @@ def get_dataset_dataframe(
         client_df, _ = get_client_dataset_dataframe_with_source(dataset_name, normalized_client_id, limit)
         return client_df
 
-    if prefer_remote:
-        remote = _read_remote_table(dataset_name, limit)
-        if not remote.empty:
-            return remote
     return _get_table_dataframe(dataset_name, limit)
 
 
@@ -272,21 +229,6 @@ def get_dataset_dataframe_with_source(
     normalized_client_id = _normalize_client_id(client_id)
     if normalized_client_id:
         return get_client_dataset_dataframe_with_source(dataset_name, normalized_client_id, limit)
-
-    if prefer_remote:
-        remote = _read_remote_table(dataset_name, limit)
-        if not remote.empty:
-            return remote.head(limit) if limit is not None else remote, "supabase"
-
-        local = _read_local_csv(dataset_name)
-        if not local.empty:
-            return local.head(limit) if limit is not None else local, "local"
-
-        return pd.DataFrame(), "empty"
-
-    local = _read_local_csv(dataset_name)
-    if not local.empty:
-        return local.head(limit) if limit is not None else local, "local"
 
     remote = _read_remote_table(dataset_name, limit)
     if not remote.empty:
@@ -320,10 +262,10 @@ def get_supported_dataset_schemas(client_id: str | None = None) -> dict[str, dic
             prefer_remote=not bool(normalized_client_id),
         )
 
-        # For client-scoped querying, expose only datasets that are truly uploaded
-        # for that client and contain usable rows.
+        # For client-scoped querying, expose only datasets available through Supabase
+        # for that client context.
         if normalized_client_id:
-            if source != "client_uploads" or frame.empty:
+            if source not in {"client_uploads", "supabase"} or frame.empty:
                 continue
 
         columns = frame.columns.tolist() if not frame.empty else []
