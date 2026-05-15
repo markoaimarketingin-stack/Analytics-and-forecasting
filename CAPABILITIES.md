@@ -1,4 +1,4 @@
-# Agent Capabilities (Current State)
+c# Agent Capabilities (Current State)
 
 Last verified: 2026-04-15
 Repository: `Analytics-and-forecasting`

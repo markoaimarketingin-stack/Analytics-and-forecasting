@@ -1,1 +1,1 @@
-from .graph import build_graph, CAPABILITIES  # noqa: F401
+from analytics_agent.graph import CAPABILITIES, build_graph  # noqa: F401

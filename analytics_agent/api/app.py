@@ -27,6 +27,7 @@ from analytics_agent.analytics_runner import AnalyticsRunner
 from analytics_agent.config import settings
 from analytics_agent.logging_config import get_logger
 from analytics_agent.api.orchestrator import AnalyticsSupervisor
+from analytics_agent.api.strategic_summary import build_strategic_summary_payload
 from analytics_agent.db.repo import get_session, init_db
 from analytics_agent.db.models import File, Agent
 from analytics_agent.db.chat_history_repo import (
@@ -66,10 +67,42 @@ from analytics_agent.api.models import (
     CFOReportResponse,
     HealthCheckResponse,
     LTVProjectionResponse,
+    StrategicAnalyticsPayload,
     StandardizedRecommendationsResponse,
 )
 
 logger = get_logger(__name__)
+
+
+def _should_suppress_connection_reset(context: dict) -> bool:
+    exc = context.get("exception")
+    if isinstance(exc, ConnectionResetError):
+        if getattr(exc, "winerror", None) == 10054:
+            return True
+    message = str(context.get("message") or "")
+    return "_ProactorBasePipeTransport._call_connection_lost" in message
+
+
+def _install_asyncio_exception_handler() -> None:
+    if os.name != "nt":
+        return
+    loop = asyncio.get_running_loop()
+    previous_handler = loop.get_exception_handler()
+
+    def _handler(loop: asyncio.AbstractEventLoop, context: dict) -> None:
+        if _should_suppress_connection_reset(context):
+            logger.debug(
+                "Suppressed Windows connection reset noise",
+                message=str(context.get("message") or ""),
+                error=str(context.get("exception") or ""),
+            )
+            return
+        if previous_handler:
+            previous_handler(loop, context)
+        else:
+            loop.default_exception_handler(context)
+
+    loop.set_exception_handler(_handler)
 
 
 # -----------------------------------------------------------------------------
@@ -366,6 +399,7 @@ async def lifespan(app: FastAPI):
     self_ping_stop_event: Optional[asyncio.Event] = None
 
     try:
+        _install_asyncio_exception_handler()
         logger.info("Starting Analytics Agent API")
         settings.validate_security()
 
@@ -523,6 +557,21 @@ def _resolve_authenticated_client_id(request: Request) -> str:
     if not client_id:
         raise HTTPException(status_code=401, detail="Authentication required")
     return client_id
+
+
+def _resolve_company_access(request: Request, company_id: str) -> str:
+    requested_company_id = (company_id or "").strip()
+    if not requested_company_id:
+        raise HTTPException(status_code=400, detail="company_id is required")
+
+    authenticated_client_id = _resolve_authenticated_client_id(request)
+    if _is_auth_bypass_enabled():
+        return requested_company_id
+
+    if authenticated_client_id != requested_company_id:
+        raise HTTPException(status_code=403, detail="Authenticated client does not match requested company_id")
+
+    return requested_company_id
 
 
 def _client_id_from_google_sub(google_sub: str) -> str:
@@ -741,6 +790,7 @@ async def _auth_middleware(request: Request, call_next):
     requires_auth = (
         path.startswith("/api/")
         or path.startswith("/agents/")
+        or path.startswith("/analytics/")
         or path.startswith("/funnel/")
         or path.startswith("/cohort/")
     )
@@ -2587,6 +2637,44 @@ async def get_agent_status():
         )
 
 
+@app.get("/analytics/company/{company_id}/strategic-summary", response_model=StrategicAnalyticsPayload)
+@app.get("/api/analytics/company/{company_id}/strategic-summary", response_model=StrategicAnalyticsPayload)
+async def get_company_strategic_summary(
+        company_id: str,
+        request: Request,
+        date_from: Optional[str] = Query(None, description="Optional inclusive ISO start date, e.g. 2026-01-01"),
+        date_to: Optional[str] = Query(None, description="Optional inclusive ISO end date, e.g. 2026-05-12"),
+        granularity: Literal["daily", "weekly", "monthly", "quarterly"] = Query("daily"),
+        currency: Optional[str] = Query(None, description="Optional ISO currency override for response metadata"),
+        timezone: str = Query("UTC", description="IANA timezone label to echo in response metadata"),
+        attribution_model: str = Query("first_touch", description="Attribution model label to echo in response metadata"),
+):
+    """Return a strict strategic analytics summary payload for external agents."""
+    try:
+        resolved_company_id = _resolve_company_access(request, company_id)
+        return build_strategic_summary_payload(
+            company_id=resolved_company_id,
+            date_from=date_from,
+            date_to=date_to,
+            granularity=granularity,
+            currency=currency,
+            timezone_name=timezone,
+            attribution_model=attribution_model,
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception(
+            "Failed to build strategic analytics summary",
+            company_id=company_id,
+            error=str(e),
+        )
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to build strategic analytics summary: {str(e)}",
+        )
+
+
 @app.get("/agents/analytics/recommendations", response_model=StandardizedRecommendationsResponse)
 @app.get("/api/agents/analytics/recommendations", response_model=StandardizedRecommendationsResponse)
 async def get_standardized_recommendations(
@@ -2692,10 +2780,10 @@ async def get_execution_history(limit: int = 10):
             "timestamp": datetime.utcnow().isoformat(),
         }
     except Exception as e:
-        logger.exception("Failed to get execution history", error=str(e))
+        logger.exception("Failed to get agent status", error=str(e))
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to get execution history: {str(e)}",
+            detail=f"Failed to get agent status: {str(e)}",
         )
 
 
@@ -2838,6 +2926,7 @@ async def api_root():
                 "orchestrate_agents": "POST /agents/orchestrate",
                 "agent_status": "GET /agents/status",
                 "agent_results": "GET /agents/results",
+                "strategic_summary": "GET /api/analytics/company/{company_id}/strategic-summary",
                 "standardized_recommendations": "GET /agents/analytics/recommendations",
                 "execution_history": "GET /agents/history",
                 "forecast_options": "GET /agents/forecast/options",
@@ -2866,5 +2955,4 @@ if __name__ == "__main__":
         reload=settings.DEBUG,
         workers=settings.API_WORKERS,
     )
-
 

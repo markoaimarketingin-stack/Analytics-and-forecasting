@@ -9,6 +9,48 @@ from analytics_agent.db import queries
 from analytics_agent.state import AnalyticsState, BudgetAllocationAnalysis
 
 
+CHANNEL_ALIASES: dict[str, str] = {
+    "google": "google_search",
+    "google_ads": "google_search",
+    "google ads": "google_search",
+    "google_search": "google_search",
+    "linkedin": "linkedin_ads",
+    "linkedin_ads": "linkedin_ads",
+    "linkedin ads": "linkedin_ads",
+    "meta": "paid_social",
+    "meta_ads": "paid_social",
+    "meta ads": "paid_social",
+    "facebook": "paid_social",
+    "facebook_ads": "paid_social",
+    "instagram": "paid_social",
+    "instagram_ads": "paid_social",
+    "paid_social": "paid_social",
+    "tiktok": "tiktok_ads",
+    "tiktok_ads": "tiktok_ads",
+    "tiktok ads": "tiktok_ads",
+    "email": "email",
+    "organic": "organic_search",
+    "organic_search": "organic_search",
+    "referral": "referral",
+    "direct": "direct",
+}
+
+INVALID_CHANNEL_TOKENS = {
+    "",
+    "unknown",
+    "undefined",
+    "null",
+    "none",
+    "nan",
+    "n_a",
+    "na",
+    "not_set",
+    "not provided",
+    "unattributed",
+    "(not set)",
+}
+
+
 @dataclass
 class BudgetAllocatorRequest:
     total_budget: float = 0.0
@@ -59,13 +101,39 @@ class BudgetAllocatorAgent:
             )
             return state
 
-        baseline_by_channel = self._baseline_by_channel(filtered)
+        normalized, normalization_diagnostics = self._normalize_channels(filtered)
+        if normalized.empty:
+            assumptions = ["Campaign data exists, but every row had a missing or unsupported channel value after normalization."]
+            constraint_log = []
+            if normalization_diagnostics["dropped_rows"] > 0:
+                constraint_log.append(
+                    f"Dropped {normalization_diagnostics['dropped_rows']} campaign row(s) with missing or placeholder channel values."
+                )
+            state.budget_allocation_analysis = BudgetAllocationAnalysis(
+                objective=request.objective,
+                risk_tolerance=request.risk_tolerance,
+                assumptions=assumptions,
+                constraint_log=constraint_log,
+                diagnostics={
+                    "source": source,
+                    "reason": "no_valid_channels_after_normalization",
+                    "channel_normalization": normalization_diagnostics,
+                },
+                data_source=source,
+            )
+            return state
+
+        baseline_by_channel = self._baseline_by_channel(normalized)
         if not baseline_by_channel:
             state.budget_allocation_analysis = BudgetAllocationAnalysis(
                 objective=request.objective,
                 risk_tolerance=request.risk_tolerance,
                 assumptions=["No channel spend data was available for allocation."],
-                diagnostics={"source": source, "reason": "no_channel_spend"},
+                diagnostics={
+                    "source": source,
+                    "reason": "no_channel_spend",
+                    "channel_normalization": normalization_diagnostics,
+                },
                 data_source=source,
             )
             return state
@@ -75,7 +143,7 @@ class BudgetAllocatorAgent:
         total_budget = max(total_budget, 1.0)
 
         score_by_channel = self._score_channels(
-            filtered,
+            normalized,
             objective=request.objective,
             risk_tolerance=request.risk_tolerance,
         )
@@ -112,6 +180,10 @@ class BudgetAllocatorAgent:
             f"Max shift cap per channel: {request.max_shift_pct:.1f}%",
             f"Channel min/max bounds: {request.min_channel_pct:.1f}% / {request.max_channel_pct:.1f}%",
         ]
+        if normalization_diagnostics["dropped_rows"] > 0:
+            assumptions.append(
+                f"Excluded {normalization_diagnostics['dropped_rows']} campaign row(s) with unknown or invalid channel values before allocation."
+            )
 
         state.budget_allocation_analysis = BudgetAllocationAnalysis(
             objective=request.objective,
@@ -126,9 +198,10 @@ class BudgetAllocatorAgent:
             constraint_log=selected_plan["constraint_log"],
             assumptions=assumptions,
             diagnostics={
-                "campaign_rows": int(len(filtered.index)),
+                "campaign_rows": int(len(normalized.index)),
                 "channels": len(baseline_by_channel),
                 "source": source,
+                "channel_normalization": normalization_diagnostics,
                 "filters": {
                     "channel": request.channel,
                     "campaign_type": request.campaign_type,
@@ -157,8 +230,8 @@ class BudgetAllocatorAgent:
         out = df.copy()
 
         if request.channel.lower() != "all" and "channel" in out.columns:
-            target = str(request.channel).strip().casefold()
-            series = out["channel"].astype(str).str.strip().str.casefold()
+            target = self._normalize_channel_value(request.channel)
+            series = out["channel"].map(self._normalize_channel_value)
             out = out[series == target]
 
         if request.campaign_type.lower() != "all" and "campaign_type" in out.columns:
@@ -172,6 +245,48 @@ class BudgetAllocatorAgent:
             out = out[series == target]
 
         return out
+
+    def _normalize_channels(self, df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
+        if "channel" not in df.columns:
+            return pd.DataFrame(), {
+                "input_rows": int(len(df.index)),
+                "normalized_rows": 0,
+                "dropped_rows": int(len(df.index)),
+                "dropped_values": [],
+                "available_channels": [],
+            }
+
+        out = df.copy()
+        raw_channel_series = out["channel"].astype(str)
+        out["_raw_channel"] = raw_channel_series
+        out["channel"] = out["channel"].map(self._normalize_channel_value)
+
+        invalid_mask = out["channel"].isin(INVALID_CHANNEL_TOKENS)
+        dropped_values = sorted({
+            value.strip()
+            for value in raw_channel_series[invalid_mask].tolist()
+            if isinstance(value, str) and value.strip()
+        })
+        normalized = out[~invalid_mask].copy()
+        normalized = normalized.drop(columns=["_raw_channel"], errors="ignore")
+
+        diagnostics = {
+            "input_rows": int(len(df.index)),
+            "normalized_rows": int(len(normalized.index)),
+            "dropped_rows": int(invalid_mask.sum()),
+            "dropped_values": dropped_values,
+            "available_channels": sorted(normalized["channel"].astype(str).unique().tolist()) if not normalized.empty else [],
+        }
+        return normalized, diagnostics
+
+    def _normalize_channel_value(self, value: Any) -> str:
+        text = str(value or "").strip().lower()
+        if not text:
+            return "unknown"
+        token = "_".join(text.replace("-", " ").split())
+        if token in INVALID_CHANNEL_TOKENS:
+            return "unknown"
+        return CHANNEL_ALIASES.get(token, token)
 
     def _baseline_by_channel(self, df: pd.DataFrame) -> dict[str, dict[str, float]]:
         if "channel" not in df.columns or "spend" not in df.columns:

@@ -10,6 +10,9 @@ from analytics_agent.logging_config import get_logger
 
 logger = get_logger(__name__)
 
+_CHAT_SCHEMA: dict[str, bool] | None = None
+_CHAT_SESSIONS_SCHEMA: dict[str, bool] | None = None
+
 
 def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -126,82 +129,148 @@ def list_chat_threads(client_id: str, limit: int = 50) -> list[dict[str, Any]]:
     return result.data or []
 
 
+def _detect_chat_messages_schema() -> dict[str, bool]:
+    global _CHAT_SCHEMA
+    if _CHAT_SCHEMA is not None:
+        return _CHAT_SCHEMA
+
+    supabase = get_supabase_client()
+    schema = {
+        "thread_id": True,
+        "session_id": True,
+        "metadata": True,
+    }
+
+    for column in ("thread_id", "session_id", "metadata"):
+        try:
+            (
+                supabase.table("chat_messages")
+                .select(column)
+                .limit(1)
+                .execute()
+            )
+        except Exception as exc:
+            if _is_missing_column_error(exc, column):
+                schema[column] = False
+            else:
+                logger.warning(
+                    "Chat schema detection failed",
+                    column=column,
+                    error=str(exc),
+                )
+
+    _CHAT_SCHEMA = schema
+    return schema
+
+
+def _detect_chat_sessions_schema() -> dict[str, bool]:
+    global _CHAT_SESSIONS_SCHEMA
+    if _CHAT_SESSIONS_SCHEMA is not None:
+        return _CHAT_SESSIONS_SCHEMA
+
+    supabase = get_supabase_client()
+    schema = {
+        "client_id": True,
+        "title": True,
+        "owner": True,
+        "created_at": True,
+        "updated_at": True,
+    }
+
+    for column in schema:
+        try:
+            (
+                supabase.table("chat_sessions")
+                .select(column)
+                .limit(1)
+                .execute()
+            )
+        except Exception as exc:
+            error_text = str(exc).lower()
+            if "chat_sessions" in error_text and ("schema cache" in error_text or "does not exist" in error_text):
+                schema[column] = False
+            else:
+                logger.warning(
+                    "Chat sessions schema detection failed",
+                    column=column,
+                    error=str(exc),
+                )
+
+    _CHAT_SESSIONS_SCHEMA = schema
+    return schema
+
+
+def _ensure_chat_session_row(client_id: str, session_id: str) -> bool:
+    supabase = get_supabase_client()
+    now = _utc_now_iso()
+    schema = _detect_chat_sessions_schema()
+
+    payload: dict[str, Any] = {"id": session_id}
+    if schema.get("client_id", False):
+        payload["client_id"] = client_id
+    if schema.get("title", False):
+        payload.setdefault("title", "New Chat")
+    if schema.get("owner", False):
+        payload.setdefault("owner", None)
+    if schema.get("created_at", False):
+        payload.setdefault("created_at", now)
+    if schema.get("updated_at", False):
+        payload.setdefault("updated_at", now)
+
+    try:
+        supabase.table("chat_sessions").upsert(payload).execute()
+        return True
+    except Exception as exc:
+        logger.warning(
+            "Unable to ensure chat_sessions row",
+            session_id=session_id,
+            error=str(exc),
+        )
+        return False
+
+
 def list_chat_messages(client_id: str, thread_id: str, limit: int = 200) -> list[dict[str, Any]]:
     if not get_chat_thread(client_id, thread_id):
         return []
 
     supabase = get_supabase_client()
-    try:
+    schema = _detect_chat_messages_schema()
+    select_fields = ["id", "role", "content", "created_at"]
+    if schema.get("metadata", True):
+        select_fields.append("metadata")
+
+    if schema.get("thread_id", True):
+        select_fields.insert(1, "thread_id")
         result = (
             supabase.table("chat_messages")
-            .select("id,thread_id,role,content,metadata,created_at")
+            .select(",".join(select_fields))
             .eq("thread_id", thread_id)
             .order("created_at", desc=False)
             .limit(limit)
             .execute()
         )
-        return [
-            _normalize_message_metadata(item)
-            for item in (result.data or [])
-        ]
-    except Exception as exc:
-        if _is_missing_column_error(exc, "metadata"):
-            logger.warning(
-                "Falling back to chat history query without metadata column",
-                thread_id=thread_id,
-            )
-            try:
-                result = (
-                    supabase.table("chat_messages")
-                    .select("id,thread_id,role,content,created_at")
-                    .eq("thread_id", thread_id)
-                    .order("created_at", desc=False)
-                    .limit(limit)
-                    .execute()
-                )
-                return [
-                    _normalize_message_metadata(item)
-                    for item in (result.data or [])
-                ]
-            except Exception as nested_exc:
-                if not _is_missing_column_error(nested_exc, "thread_id"):
-                    raise
-                exc = nested_exc
-        elif not _is_missing_column_error(exc, "thread_id"):
-            raise
+        items = result.data or []
+        if items:
+            return [_normalize_message_metadata(item) for item in items]
 
-        logger.warning(
-            "Falling back to legacy session_id chat history query",
-            thread_id=thread_id,
+    if schema.get("session_id", False):
+        session_fields = ["id", "session_id", "role", "content", "created_at"]
+        if schema.get("metadata", True):
+            session_fields.append("metadata")
+        result = (
+            supabase.table("chat_messages")
+            .select(",".join(session_fields))
+            .eq("session_id", thread_id)
+            .order("created_at", desc=False)
+            .limit(limit)
+            .execute()
         )
-        try:
-            legacy_result = (
-                supabase.table("chat_messages")
-                .select("id,session_id,role,content,metadata,created_at")
-                .eq("session_id", thread_id)
-                .order("created_at", desc=False)
-                .limit(limit)
-                .execute()
-            )
-        except Exception as legacy_exc:
-            if not _is_missing_column_error(legacy_exc, "metadata"):
-                raise
-            logger.warning(
-                "Falling back to legacy session_id chat history query without metadata column",
-                thread_id=thread_id,
-            )
-            legacy_result = (
-                supabase.table("chat_messages")
-                .select("id,session_id,role,content,created_at")
-                .eq("session_id", thread_id)
-                .order("created_at", desc=False)
-                .limit(limit)
-                .execute()
-            )
         return [
             _normalize_message_metadata(_normalize_message_thread_id(item, thread_id))
-            for item in (legacy_result.data or [])
+            for item in (result.data or [])
         ]
+
+    return []
 
 
 def list_recent_messages(client_id: str, thread_id: str, limit: int = 10) -> list[dict[str, Any]]:
@@ -209,7 +278,10 @@ def list_recent_messages(client_id: str, thread_id: str, limit: int = 10) -> lis
         return []
 
     supabase = get_supabase_client()
-    try:
+    schema = _detect_chat_messages_schema()
+
+    items: list[dict[str, Any]] = []
+    if schema.get("thread_id", True):
         result = (
             supabase.table("chat_messages")
             .select("role,content,created_at")
@@ -219,15 +291,9 @@ def list_recent_messages(client_id: str, thread_id: str, limit: int = 10) -> lis
             .execute()
         )
         items = result.data or []
-    except Exception as exc:
-        if not _is_missing_column_error(exc, "thread_id"):
-            raise
 
-        logger.warning(
-            "Falling back to legacy session_id recent history query",
-            thread_id=thread_id,
-        )
-        legacy_result = (
+    if not items and schema.get("session_id", False):
+        result = (
             supabase.table("chat_messages")
             .select("role,content,created_at")
             .eq("session_id", thread_id)
@@ -235,7 +301,8 @@ def list_recent_messages(client_id: str, thread_id: str, limit: int = 10) -> lis
             .limit(limit)
             .execute()
         )
-        items = legacy_result.data or []
+        items = result.data or []
+
     items.reverse()
     return items
 
@@ -256,14 +323,34 @@ def append_chat_message(
 
     supabase = get_supabase_client()
     now = _utc_now_iso()
+    schema = _detect_chat_messages_schema()
 
-    insert_payload = {
-        "thread_id": thread_id,
+    insert_payload: dict[str, Any] = {
         "role": role,
         "content": content,
-        "metadata": metadata or {},
         "created_at": now,
     }
+    if schema.get("metadata", True):
+        insert_payload["metadata"] = metadata or {}
+
+    if schema.get("thread_id", True):
+        insert_payload["thread_id"] = thread_id
+    if schema.get("session_id", False):
+        insert_payload["session_id"] = thread_id
+
+    if not schema.get("thread_id", True) and not schema.get("session_id", False):
+        logger.warning(
+            "Skipping chat_messages insert due to missing thread/session columns",
+            thread_id=thread_id,
+        )
+        insert_payload = {
+            "thread_id": thread_id,
+            "role": role,
+            "content": content,
+            "created_at": now,
+        }
+        return insert_payload
+
     try:
         inserted = (
             supabase.table("chat_messages")
@@ -273,7 +360,6 @@ def append_chat_message(
     except Exception as exc:
         error_text = str(exc).lower()
 
-        # Backward-compatible retry for legacy schemas where id is NOT NULL with no default.
         if "column \"id\"" in error_text and "not-null" in error_text:
             retry_payload = {
                 **insert_payload,
@@ -288,105 +374,34 @@ def append_chat_message(
                 .insert(retry_payload)
                 .execute()
             )
-        elif _is_missing_column_error(exc, "thread_id"):
-            retry_payload = {
-                "session_id": thread_id,
-                "role": role,
-                "content": content,
-                "metadata": metadata or {},
-                "created_at": now,
-            }
+        elif _is_session_fk_error(exc) and schema.get("session_id", False):
             logger.warning(
-                "Retrying chat_messages insert with session_id legacy schema",
+                "Retrying chat_messages insert after ensuring chat_sessions row",
                 thread_id=thread_id,
             )
-            try:
+            if _ensure_chat_session_row(client_id, thread_id):
                 inserted = (
                     supabase.table("chat_messages")
-                    .insert(retry_payload)
+                    .insert(insert_payload)
                     .execute()
                 )
-            except Exception as nested_exc:
-                if not _is_session_fk_error(nested_exc):
-                    raise
-                logger.warning(
-                    "Skipping chat_messages legacy session_id persistence due to missing chat_sessions row",
-                    thread_id=thread_id,
-                )
+            else:
                 inserted = None
-        elif _is_session_fk_error(exc):
-            logger.warning(
-                "Skipping chat_messages legacy session_id persistence due to missing chat_sessions row",
-                thread_id=thread_id,
-            )
-            inserted = None
-        elif _is_missing_column_error(exc, "metadata"):
-            retry_payload = {
-                "thread_id": thread_id,
-                "role": role,
-                "content": content,
-                "created_at": now,
+        elif _is_missing_column_error(exc, "metadata") and schema.get("metadata", True):
+            fallback_payload = {
+                key: value
+                for key, value in insert_payload.items()
+                if key != "metadata"
             }
             logger.warning(
                 "Retrying chat_messages insert without metadata column",
                 thread_id=thread_id,
             )
-            try:
-                inserted = (
-                    supabase.table("chat_messages")
-                    .insert(retry_payload)
-                    .execute()
-                )
-            except Exception as nested_exc:
-                if not _is_missing_column_error(nested_exc, "thread_id"):
-                    raise
-                legacy_retry_payload = {
-                    "session_id": thread_id,
-                    "role": role,
-                    "content": content,
-                    "created_at": now,
-                }
-                logger.warning(
-                    "Retrying chat_messages insert with session_id and without metadata column",
-                    thread_id=thread_id,
-                )
-                try:
-                    inserted = (
-                        supabase.table("chat_messages")
-                        .insert(legacy_retry_payload)
-                        .execute()
-                    )
-                except Exception as legacy_nested_exc:
-                    if not _is_session_fk_error(legacy_nested_exc):
-                        raise
-                    logger.warning(
-                        "Skipping chat_messages legacy session_id persistence without metadata due to missing chat_sessions row",
-                        thread_id=thread_id,
-                    )
-                    inserted = None
-        elif "column \"session_id\"" in error_text and "not-null" in error_text:
-            retry_payload = {
-                **insert_payload,
-                "session_id": thread_id,
-            }
-            logger.warning(
-                "Retrying chat_messages insert with session_id compatibility",
-                thread_id=thread_id,
+            inserted = (
+                supabase.table("chat_messages")
+                .insert(fallback_payload)
+                .execute()
             )
-            try:
-                inserted = (
-                    supabase.table("chat_messages")
-                    .insert(retry_payload)
-                    .execute()
-                )
-            except Exception as nested_exc:
-                if not _is_session_fk_error(nested_exc):
-                    raise
-                logger.warning(
-                    "Skipping chat_messages session_id compatibility persistence due to missing chat_sessions row",
-                    thread_id=thread_id,
-                )
-                inserted = None
         else:
             raise
 

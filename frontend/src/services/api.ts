@@ -23,9 +23,9 @@ import type {
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   import.meta.env.VITE_API_URL ||
-  "http://localhost:8001/api";
+  "http://localhost:8000/api";
 const API_ROOT_URL =
-  import.meta.env.VITE_API_ROOT_URL || "http://localhost:8001";
+  import.meta.env.VITE_API_ROOT_URL || "http://localhost:8000";
 
 const withRequestInit = (init?: RequestInit): RequestInit => ({
   ...(init || {}),
