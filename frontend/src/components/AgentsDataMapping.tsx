@@ -45,7 +45,7 @@ export default function AgentsDataMapping({
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="h-6 w-6 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+        <div className="h-6 w-6 animate-spin rounded-full border-4 border-zinc-700 border-t-zinc-500" />
       </div>
     );
   }
@@ -61,13 +61,13 @@ export default function AgentsDataMapping({
   const agents = Object.entries(mapping);
 
   return (
-    <div className="space-y-3 rounded-lg border border-gray-200 bg-white p-6">
+    <div className="space-y-3 rounded-lg border border-zinc-800 bg-zinc-950 p-6">
       <div className="flex items-center gap-3">
-        <Network className="h-5 w-5 text-purple-600" />
-        <h3 className="text-lg font-semibold text-gray-900">Agent Data Compatibility</h3>
+        <Network className="h-5 w-5 text-zinc-300" />
+        <h3 className="text-lg font-semibold text-white">Agent Data Compatibility</h3>
       </div>
 
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-zinc-400">
         Selected datasets will activate compatible agents for your analysis.
       </p>
 
@@ -82,16 +82,16 @@ export default function AgentsDataMapping({
               key={agentId}
               className={`rounded-lg border p-3 transition-all ${
                 isCompatible
-                  ? 'border-blue-200 bg-blue-50'
-                  : 'border-gray-200 bg-gray-50 opacity-60'
+                  ? 'border-zinc-700 bg-zinc-900'
+                  : 'border-zinc-800 bg-zinc-950 opacity-60'
               }`}
             >
               <div className="flex items-start gap-2">
                 <div
                   className={`flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0 ${
                     isCompatible
-                      ? 'bg-blue-200 text-blue-700'
-                      : 'bg-gray-200 text-gray-600'
+                      ? 'bg-zinc-700 text-white'
+                      : 'bg-zinc-800 text-zinc-400'
                   }`}
                 >
                   <span className="text-xs font-bold">
@@ -101,12 +101,12 @@ export default function AgentsDataMapping({
                 <div className="flex-1 min-w-0">
                   <h4
                     className={`font-medium text-sm ${
-                      isCompatible ? 'text-gray-900' : 'text-gray-700'
+                      isCompatible ? 'text-white' : 'text-zinc-300'
                     }`}
                   >
                     {agent.name}
                   </h4>
-                  <p className="text-xs text-gray-600 mt-0.5">
+                  <p className="text-xs text-zinc-400 mt-0.5">
                     {agent.description}
                   </p>
 
@@ -116,15 +116,15 @@ export default function AgentsDataMapping({
                         const isSelected = selectedDatasets.includes(dataset);
                         return (
                           <span
-                            key={dataset}
-                            className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                              isSelected
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-gray-100 text-gray-700'
-                            }`}
-                          >
-                            {dataset}
-                          </span>
+                              key={dataset}
+                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                                isSelected
+                                  ? 'bg-zinc-700 text-white'
+                                  : 'bg-zinc-800 text-zinc-300'
+                              }`}
+                            >
+                              {dataset}
+                            </span>
                         );
                       })}
                     </div>
@@ -133,7 +133,7 @@ export default function AgentsDataMapping({
               </div>
 
               {!isCompatible && selectedDatasets.length > 0 && (
-                <div className="mt-2 flex items-center gap-1 text-xs text-gray-500">
+                <div className="mt-2 flex items-center gap-1 text-xs text-zinc-400">
                   <Info className="h-3 w-3" />
                   <span>
                     Requires{' '}
@@ -143,7 +143,7 @@ export default function AgentsDataMapping({
               )}
 
               {isCompatible && selectedDatasets.length > 0 && (
-                <div className="mt-2 flex items-center gap-1 text-xs font-medium text-green-700">
+                <div className="mt-2 flex items-center gap-1 text-xs font-medium text-zinc-300">
                   <span>✓ Ready to use</span>
                 </div>
               )}

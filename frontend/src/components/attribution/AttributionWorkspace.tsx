@@ -48,20 +48,20 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
     <div className="workspace-surface">
       <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-rose-600 text-white">
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-zinc-800 text-white">
             <Network className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Attribution Agent</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Attribution Agent</h1>
         </div>
       </div>
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
             <div className="grid gap-4 md:grid-cols-3">
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Attribution Model
-                <select value={attributionModel} onChange={(event) => setAttributionModel(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={attributionModel} onChange={(event) => setAttributionModel(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="linear">Linear</option>
                   <option value="first_click">First Click</option>
                   <option value="last_click">Last Click</option>
@@ -69,9 +69,9 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
                 </select>
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Optimization Metric
-                <select value={metric} onChange={(event) => setMetric(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={metric} onChange={(event) => setMetric(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="revenue">Revenue</option>
                   <option value="conversions">Conversions</option>
                   <option value="engagement">Engagement</option>
@@ -79,13 +79,12 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
               </label>
 
               <div className="flex items-end">
-                <button onClick={runAttribution} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={runAttribution} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 px-4 text-sm font-semibold text-white disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Analyze Attribution'}
                 </button>
               </div>
             </div>
-
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && <p className="mt-4 rounded-xl border border-red-600 bg-red-900/40 px-3 py-2 text-sm text-red-300">{error}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -102,11 +101,11 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
             />
           </div>
 
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-900">Channel Attribution Breakdown</h3>
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-white">Channel Attribution Breakdown</h3>
             <div className="mt-4 overflow-x-auto">
               <table className="min-w-full text-left text-sm">
-                <thead className="text-gray-500">
+                <thead className="text-zinc-400">
                   <tr>
                     <th className="px-3 py-2">Channel</th>
                     <th className="px-3 py-2">First Touch</th>
@@ -119,8 +118,8 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
                 <tbody>
                   {channels.length > 0 ? (
                     channels.map((row) => (
-                      <tr key={row.channel} className="border-t border-gray-100">
-                        <td className="px-3 py-2 font-semibold text-gray-900">{row.channel}</td>
+                      <tr key={row.channel} className="border-t border-zinc-800">
+                        <td className="px-3 py-2 font-semibold text-white">{row.channel}</td>
                         <td className="px-3 py-2">{formatCurrency(row.first_touch_revenue)}</td>
                         <td className="px-3 py-2">{formatCurrency(row.last_touch_revenue)}</td>
                         <td className="px-3 py-2">{formatCurrency(row.linear_revenue)}</td>
@@ -130,7 +129,7 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
                     ))
                   ) : (
                     <tr>
-                      <td className="px-3 py-4 text-gray-500" colSpan={6}>No attribution output yet. Run analysis to populate this table.</td>
+                      <td className="px-3 py-4 text-zinc-400" colSpan={6}>No attribution output yet. Run analysis to populate this table.</td>
                     </tr>
                   )}
                 </tbody>
@@ -145,10 +144,10 @@ export default function AttributionWorkspace({ onRunResult }: AttributionWorkspa
 
 function InfoCard({ title, value, helper }: { title: string; value: string; helper?: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</div>
-      <div className="mt-2 text-xl font-bold text-gray-900">{value}</div>
-      {helper && <div className="mt-2 text-xs text-gray-500">{helper}</div>}
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
+      <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{title}</div>
+      <div className="mt-2 text-xl font-bold text-white">{value}</div>
+      {helper && <div className="mt-2 text-xs text-zinc-400">{helper}</div>}
     </div>
   );
 }

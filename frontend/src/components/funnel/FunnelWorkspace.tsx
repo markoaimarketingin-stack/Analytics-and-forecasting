@@ -70,38 +70,38 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
     <div className="workspace-surface">
       <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-emerald-600 text-white">
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-zinc-800 text-white">
             <Filter className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Funnel Agent</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Funnel Agent</h1>
         </div>
       </div>
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
             <div className="grid gap-4 md:grid-cols-4">
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Funnel Type
-                <select value={funnelType} onChange={(event) => setFunnelType(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={funnelType} onChange={(event) => setFunnelType(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="ecommerce">E-commerce</option>
                   <option value="lead_gen">Lead Generation</option>
                   <option value="saas">SaaS Trial</option>
                 </select>
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Segment
-                <select value={segment} onChange={(event) => setSegment(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={segment} onChange={(event) => setSegment(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="all_users">All Users</option>
                   <option value="paid_traffic">Paid Traffic</option>
                   <option value="returning_users">Returning Users</option>
                 </select>
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Time Period
-                <select value={timePeriod} onChange={(event) => setTimePeriod(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={timePeriod} onChange={(event) => setTimePeriod(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="week">Weekly</option>
                   <option value="month">Monthly</option>
                   <option value="quarter">Quarterly</option>
@@ -109,13 +109,13 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
               </label>
 
               <div className="flex items-end">
-                <button onClick={runFunnel} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={runFunnel} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 px-4 text-sm font-semibold text-white disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Analyze Funnel'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && <p className="mt-4 rounded-xl border border-zinc-800 bg-zinc-900/40 px-3 py-2 text-sm text-zinc-300">{error}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -124,23 +124,23 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
             <MetricCard title="Potential Uplift" value={result ? `${(result.predicted_conversion_uplift_if_fixed * 100).toFixed(1)}%` : '-'} />
           </div>
 
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-gray-900">Funnel Stages</h3>
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-white">Funnel Stages</h3>
             <div className="mt-4 space-y-3">
               {stageRows.length > 0 ? (
                 stageRows.map((stage) => (
-                  <div key={stage.key} className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+                  <div key={stage.key} className="rounded-xl border border-zinc-800 bg-zinc-950 p-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="font-semibold text-gray-900">{stage.label}</span>
-                      <span className="font-semibold text-gray-700">{formatCount(stage.value)}</span>
+                      <span className="font-semibold text-white">{stage.label}</span>
+                      <span className="font-semibold text-zinc-300">{formatCount(stage.value)}</span>
                     </div>
-                    <div className="mt-1 text-xs text-gray-500">
+                    <div className="mt-1 text-xs text-zinc-400">
                       {stage.dropoff > 0 ? `Dropoff from previous stage: ${stage.dropoff.toFixed(1)}%` : 'Entry stage'}
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-gray-500">Run funnel analysis to visualize stages and leakage.</p>
+                <p className="text-sm text-zinc-400">Run funnel analysis to visualize stages and leakage.</p>
               )}
             </div>
           </div>
@@ -152,9 +152,9 @@ export default function FunnelWorkspace({ onRunResult }: FunnelWorkspaceProps) {
 
 function MetricCard({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</div>
-      <div className="mt-2 text-xl font-bold text-gray-900">{value}</div>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
+      <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{title}</div>
+      <div className="mt-2 text-xl font-bold text-white">{value}</div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function SuggestionsPanel({ suggestions, onSuggestionClick }: Sug
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Suggested Actions</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Suggested Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {suggestions.map((suggestion, idx) => (
             <SuggestionCard

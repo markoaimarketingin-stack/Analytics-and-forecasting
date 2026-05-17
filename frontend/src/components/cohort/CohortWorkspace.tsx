@@ -46,27 +46,27 @@ export default function CohortWorkspace({ onRunResult }: CohortWorkspaceProps) {
     <div className="workspace-surface">
       <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-indigo-600 text-white">
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-zinc-800 text-white">
             <Users className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Cohort Agent</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Cohort Agent</h1>
         </div>
       </div>
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
             <div className="grid gap-4 md:grid-cols-3">
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Cohort Period
-                <select value={cohortPeriod} onChange={(event) => setCohortPeriod(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3">
+                <select value={cohortPeriod} onChange={(event) => setCohortPeriod(event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white">
                   <option value="week">Weekly</option>
                   <option value="month">Monthly</option>
                   <option value="quarter">Quarterly</option>
                 </select>
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Retention Horizon (months)
                 <input
                   type="number"
@@ -74,18 +74,17 @@ export default function CohortWorkspace({ onRunResult }: CohortWorkspaceProps) {
                   max={24}
                   value={retentionMonths}
                   onChange={(event) => setRetentionMonths(Number(event.target.value))}
-                  className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3"
+                  className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white"
                 />
               </label>
 
               <div className="flex items-end">
-                <button onClick={runCohort} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={runCohort} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 px-4 text-sm font-semibold text-white disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Analyze Cohorts'}
                 </button>
               </div>
             </div>
-
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && <p className="mt-4 rounded-xl border border-red-600 bg-red-900/40 px-3 py-2 text-sm text-red-300">{error}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -104,9 +103,9 @@ export default function CohortWorkspace({ onRunResult }: CohortWorkspaceProps) {
 
 function MetricCard({ title, value }: { title: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</div>
-      <div className="mt-2 text-xl font-bold text-gray-900">{value}</div>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
+      <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{title}</div>
+      <div className="mt-2 text-xl font-bold text-white">{value}</div>
     </div>
   );
 }

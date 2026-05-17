@@ -41,19 +41,19 @@ export default function SettingsWorkspace() {
     <div className="workspace-surface">
       <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-slate-900 text-white shadow-[0_12px_32px_rgba(15,23,42,0.28)]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-zinc-800 text-white shadow-[0_12px_32px_rgba(0,0,0,0.6)]">
             <Settings className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">Workspace Settings</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Workspace Settings</h1>
           </div>
         </div>
       </div>
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-4xl space-y-6">
-          <div className="rounded-[30px] border border-gray-200 bg-white p-8 shadow-sm card-hover-lift">
-            <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.28em] text-gray-400">
+          <div className="rounded-[30px] border border-zinc-800 bg-zinc-950 p-8 shadow-sm card-hover-lift">
+            <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.28em] text-zinc-400">
               <SlidersHorizontal className="h-4 w-4" />
               Interface
             </div>
@@ -100,21 +100,21 @@ type SettingRowProps = {
 
 function SettingRow({ icon, title, description, checked, onChange }: SettingRowProps) {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4">
+    <div className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-950 px-4 py-4">
       <div className="flex items-start gap-3">
-        <div className="mt-1 text-gray-600">{icon}</div>
+        <div className="mt-1 text-zinc-300">{icon}</div>
         <div>
-          <div className="text-sm font-semibold text-gray-900">{title}</div>
-          <div className="mt-1 text-sm text-gray-500">{description}</div>
+          <div className="text-sm font-semibold text-white">{title}</div>
+          <div className="mt-1 text-sm text-zinc-400">{description}</div>
         </div>
       </div>
 
       <button
         onClick={() => onChange(!checked)}
-        className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-blue-600' : 'bg-gray-300'}`}
+        className={`relative h-7 w-12 rounded-full transition ${checked ? 'bg-zinc-700' : 'bg-zinc-800'}`}
       >
         <span
-          className={`absolute top-1 h-5 w-5 rounded-full bg-white transition ${checked ? 'left-6' : 'left-1'}`}
+          className={`absolute top-1 h-5 w-5 rounded-full bg-zinc-100 transition ${checked ? 'left-6' : 'left-1'}`}
         />
       </button>
     </div>

@@ -33,8 +33,8 @@ export default function MessageList({
           key={message.id}
           className={
             message.role === 'user'
-              ? 'message-in ml-auto max-w-[85%] rounded-[24px] rounded-br-md bg-blue-600 px-5 py-4 text-sm leading-7 text-white shadow-sm'
-              : 'message-in max-w-[90%] rounded-[24px] rounded-bl-md border border-gray-200 bg-white px-5 py-4 text-sm leading-7 text-gray-800 shadow-sm'
+              ? 'message-in ml-auto max-w-[85%] rounded-[24px] rounded-br-md bg-zinc-800 px-5 py-4 text-sm leading-7 text-white shadow-sm'
+              : 'message-in max-w-[90%] rounded-[24px] rounded-bl-md border border-zinc-800 bg-zinc-900 px-5 py-4 text-sm leading-7 text-zinc-300 shadow-sm'
           }
         >
           {visibleContent}
@@ -44,7 +44,7 @@ export default function MessageList({
       ))}
 
       {isLoading && (
-        <div className="max-w-[90%] rounded-[24px] rounded-bl-md border border-gray-200 bg-white px-5 py-4 text-sm text-gray-500 shadow-sm">
+        <div className="max-w-[90%] rounded-[24px] rounded-bl-md border border-zinc-800 bg-zinc-900 px-5 py-4 text-sm text-zinc-400 shadow-sm">
           Analytics Supervisor is analyzing...
         </div>
       )}

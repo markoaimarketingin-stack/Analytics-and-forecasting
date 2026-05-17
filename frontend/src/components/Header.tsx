@@ -1,5 +1,5 @@
 
-import { Menu, Plus, BookOpen, Brain } from 'lucide-react';
+import { Menu, BookOpen, Play, Plus, BarChart3 } from 'lucide-react';
 import { useKnowledgeBase } from '../context/KnowledgeBaseContext';
 
 interface HeaderProps {
@@ -12,52 +12,55 @@ export default function Header({
   onNewChat,
 }: HeaderProps) {
   const { openDatasetSelectionModal } = useKnowledgeBase();
-
   return (
-    <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6 lg:px-9">
-      <div className="flex items-center gap-3">
+    <header className="flex h-[82px] items-center justify-between border-b border-zinc-800 bg-black pl-[48px] pr-[40px]">
+      {/* Left Title Area */}
+      <div className="flex items-center gap-4">
         <button
           onClick={onMenuClick}
-          className="flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-200 bg-white text-gray-600 transition hover:bg-gray-50 lg:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-[rgba(255,255,255,0.12)] bg-[#050505] text-white transition hover:bg-zinc-900 lg:hidden"
         >
           <Menu className="h-5 w-5" />
         </button>
+
+        <div className="flex items-center gap-[18px]">
+          <img src="/symboll.png" alt="Analytics Supervisor" className="w-[24px] h-[24px] mix-blend-screen" />
+          <div className="flex flex-col">
+            <h1 className="text-[22px] font-[800] leading-[26px] text-white whitespace-nowrap">Analytics Supervisor</h1>
+            <span className="text-[15px] font-[400] leading-[20px] text-zinc-400">Orchestrator</span>
+          </div>
+        </div>
       </div>
 
-      <div className="ml-auto flex w-full max-w-[760px] items-center justify-between pl-6">
-        <button
-          onClick={onNewChat}
-          className="group flex h-[54px] min-w-[170px] items-center gap-3 rounded-full border border-blue-300 bg-blue-50 px-4 transition-all duration-200 hover:bg-blue-100 hover:shadow-sm"
-        >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white transition-transform duration-200 group-hover:scale-105">
-            <Plus className="h-5 w-5" />
-          </div>
-
-          <span className="text-base font-semibold text-blue-700">
-            New Chat
-          </span>
-        </button>
+      {/* Right Action Buttons Area */}
+      <div className="flex items-center gap-[24px]">
+        {/* Actions: Knowledge Base, Train Model, Run Analysis */}
 
         <button
           onClick={openDatasetSelectionModal}
-          className="group flex h-[54px] min-w-[205px] items-center gap-3 rounded-full border border-violet-300 bg-violet-50 px-4 transition-all duration-200 hover:bg-violet-100 hover:shadow-sm"
+          className="group flex h-[34px] items-center gap-2 rounded-full border border-[rgba(255,255,255,0.28)] bg-[#030303] px-4 transition-all duration-200 hover:bg-[#151515] hover:border-[rgba(255,255,255,0.42)]"
         >
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white transition-transform duration-200 group-hover:scale-105">
-            <BookOpen className="h-5 w-5" />
-          </div>
-
-          <span className="text-base font-semibold text-violet-700">
+          <BookOpen className="text-white" size={16} />
+          <span className="text-[14px] font-[600] text-white whitespace-nowrap">
             Knowledge Base
           </span>
         </button>
 
-        <button className="group flex h-[54px] min-w-[185px] items-center gap-3 rounded-full border border-emerald-300 bg-emerald-50 px-4 transition-all duration-200 hover:bg-emerald-100 hover:shadow-sm">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white transition-transform duration-200 group-hover:scale-105">
-            <Brain className="h-5 w-5" />
-          </div>
-
-          <span className="text-base font-semibold text-emerald-700">
+        <button 
+          className="group flex h-[34px] items-center gap-2 rounded-full border border-[rgba(255,255,255,0.28)] bg-[#030303] px-4 transition-all duration-200 hover:bg-[#151515] hover:border-[rgba(255,255,255,0.42)]"
+        >
+          <Plus className="text-white" size={16} />
+          <span className="text-[14px] font-[600] text-white whitespace-nowrap">
             Train Model
+          </span>
+        </button>
+
+        <button 
+          className="group flex h-[34px] items-center gap-2 rounded-full border border-[rgba(255,255,255,0.28)] bg-[#030303] px-4 transition-all duration-200 hover:bg-[#151515] hover:border-[rgba(255,255,255,0.42)]"
+        >
+          <Play className="text-white" size={16} />
+          <span className="text-[14px] font-[600] text-white whitespace-nowrap">
+            Run Analysis
           </span>
         </button>
       </div>
