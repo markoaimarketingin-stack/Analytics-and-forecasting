@@ -77,25 +77,25 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
     <div className="workspace-surface">
       <div className="workspace-header-glass px-8 py-3">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-blue-600 text-white">
+          <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-zinc-800 text-white">
             <TrendingUp className="h-7 w-7" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">Forecast Agent</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Forecast Agent</h1>
           </div>
         </div>
       </div>
 
       <div className="workspace-content">
         <div className="mx-auto w-full max-w-6xl space-y-6">
-          <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Horizon
                 <select
                   value={form.horizon_days}
                   onChange={(event) => updateField('horizon_days', Number(event.target.value))}
-                  className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3"
+                  className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white"
                 >
                   <option value={30}>30 days</option>
                   <option value={90}>90 days</option>
@@ -104,45 +104,45 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
                 </select>
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Channel
-                <input value={form.channel} onChange={(event) => updateField('channel', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input value={form.channel} onChange={(event) => updateField('channel', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Campaign Type
-                <input value={form.campaign_type} onChange={(event) => updateField('campaign_type', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input value={form.campaign_type} onChange={(event) => updateField('campaign_type', event.target.value)} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Spend
-                <input type="number" value={form.spend} onChange={(event) => updateField('spend', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" value={form.spend} onChange={(event) => updateField('spend', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Impressions
-                <input type="number" value={form.impressions} onChange={(event) => updateField('impressions', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" value={form.impressions} onChange={(event) => updateField('impressions', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 CTR
-                <input type="number" step="0.001" value={form.ctr} onChange={(event) => updateField('ctr', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" step="0.001" value={form.ctr} onChange={(event) => updateField('ctr', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
-              <label className="text-sm text-gray-600">
+              <label className="text-sm text-zinc-400">
                 Conversion Rate
-                <input type="number" step="0.001" value={form.conversion_rate} onChange={(event) => updateField('conversion_rate', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-gray-200 px-3" />
+                <input type="number" step="0.001" value={form.conversion_rate} onChange={(event) => updateField('conversion_rate', Number(event.target.value))} className="mt-1 h-11 w-full rounded-xl border border-zinc-800 bg-zinc-900 px-3 text-white" />
               </label>
 
               <div className="flex items-end">
-                <button onClick={runForecast} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={runForecast} disabled={isRunning} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 px-4 text-sm font-semibold text-white disabled:opacity-60">
                   <Sparkles className="h-4 w-4" /> {isRunning ? 'Running...' : 'Run Forecast'}
                 </button>
               </div>
             </div>
 
-            {error && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-            {warnings.length > 0 && <p className="mt-3 text-sm text-amber-700">{warnings.join(' | ')}</p>}
+            {error && <p className="mt-4 rounded-xl border border-red-600 bg-red-900/40 px-3 py-2 text-sm text-red-300">{error}</p>}
+            {warnings.length > 0 && <p className="mt-3 text-sm text-zinc-400">{warnings.join(' | ')}</p>}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -153,28 +153,28 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900">Top Drivers</h3>
-              <ul className="mt-4 space-y-2 text-sm text-gray-700">
+            <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-white">Top Drivers</h3>
+              <ul className="mt-4 space-y-2 text-sm text-zinc-300">
                 {(result?.key_drivers ?? []).length > 0 ? (
                   (result?.key_drivers ?? []).map((driver) => (
-                    <li key={driver} className="rounded-xl bg-gray-50 px-3 py-2">{driver}</li>
+                    <li key={driver} className="rounded-xl bg-zinc-900 px-3 py-2">{driver}</li>
                   ))
                 ) : (
-                  <li className="text-gray-500">Run a forecast to view model drivers.</li>
+                  <li className="text-zinc-400">Run a forecast to view model drivers.</li>
                 )}
               </ul>
             </div>
 
-            <div className="rounded-[28px] border border-gray-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900">Assumptions</h3>
-              <ul className="mt-4 space-y-2 text-sm text-gray-700">
+            <div className="rounded-[28px] border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-white">Assumptions</h3>
+              <ul className="mt-4 space-y-2 text-sm text-zinc-300">
                 {(result?.assumptions ?? []).length > 0 ? (
                   (result?.assumptions ?? []).map((assumption) => (
-                    <li key={assumption} className="rounded-xl bg-gray-50 px-3 py-2">{assumption}</li>
+                    <li key={assumption} className="rounded-xl bg-zinc-900 px-3 py-2">{assumption}</li>
                   ))
                 ) : (
-                  <li className="text-gray-500">Assumptions will appear after execution.</li>
+                  <li className="text-zinc-400">Assumptions will appear after execution.</li>
                 )}
               </ul>
             </div>
@@ -187,9 +187,9 @@ export default function ForecastWorkspace({ onRunResult }: ForecastWorkspaceProp
 
 function MetricCard({ title, value, icon }: { title: string; value: string; icon: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gray-500">{icon}{title}</div>
-      <div className="text-xl font-bold text-gray-900">{value}</div>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
+      <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">{icon}{title}</div>
+      <div className="text-xl font-bold text-white">{value}</div>
     </div>
   );
 }

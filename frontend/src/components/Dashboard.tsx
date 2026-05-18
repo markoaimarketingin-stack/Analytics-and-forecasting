@@ -86,7 +86,7 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
     return (
       <div className="grid gap-6 lg:grid-cols-2">
         {[1, 2, 3, 4].map((item) => (
-          <div key={item} className="h-64 animate-pulse rounded-3xl border border-gray-200 bg-white shadow-sm" />
+          <div key={item} className="h-64 animate-pulse rounded-3xl border border-zinc-800 bg-zinc-950 shadow-sm" />
         ))}
       </div>
     );
@@ -94,11 +94,11 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
 
   if (!hasData) {
     return (
-      <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-gray-200 bg-white px-10 py-16 text-center shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900">Dashboard is ready</h2>
-          <p className="mt-3 text-gray-600">Run any agent workspace once to populate all dashboard insights.</p>
-          {loadError && <p className="mt-4 text-sm text-red-600">{loadError}</p>}
-      </div>
+      <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-zinc-800 bg-zinc-950 px-10 py-16 text-center shadow-sm">
+            <h2 className="text-2xl font-bold text-white">Dashboard is ready</h2>
+            <p className="mt-3 text-zinc-400">Run any agent workspace once to populate all dashboard insights.</p>
+            {loadError && <p className="mt-4 text-sm text-zinc-500">{loadError}</p>}
+        </div>
     );
   }
 
@@ -122,38 +122,38 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
       </div>
 
       {snapshot?.executive_summary && (
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Executive Summary</div>
-          <p className="mt-3 text-sm leading-7 text-gray-700">{snapshot.executive_summary}</p>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Executive Summary</div>
+          <p className="mt-3 text-sm leading-7 text-zinc-300">{snapshot.executive_summary}</p>
         </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Attribution Weights</div>
-          <h3 className="mt-2 text-lg font-bold text-gray-900">Channel Credit Distribution</h3>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Attribution Weights</div>
+          <h3 className="mt-2 text-lg font-bold text-white">Channel Credit Distribution</h3>
           <div className="mt-4 space-y-3">
             {attributionWeights.length > 0 ? (
               attributionWeights.map(([channel, weight]) => (
                 <div key={channel}>
                   <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-semibold text-gray-800">{channel}</span>
-                    <span className="text-gray-600">{formatPercent(weight)}</span>
+                    <span className="font-semibold text-white">{channel}</span>
+                    <span className="text-zinc-400">{formatPercent(weight)}</span>
                   </div>
-                  <div className="h-2 rounded-full bg-gray-100">
-                    <div className="h-2 rounded-full bg-blue-600" style={{ width: `${Math.min(100, weight * 100)}%` }} />
+                  <div className="h-2 rounded-full bg-zinc-800">
+                    <div className="h-2 rounded-full bg-zinc-600" style={{ width: `${Math.min(100, weight * 100)}%` }} />
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">No attribution weights available.</p>
+              <p className="text-sm text-zinc-400">No attribution weights available.</p>
             )}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Funnel Analysis</div>
-          <h3 className="mt-2 text-lg font-bold text-gray-900">Stage Performance</h3>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Funnel Analysis</div>
+          <h3 className="mt-2 text-lg font-bold text-white">Stage Performance</h3>
           <div className="mt-4 grid gap-3 text-sm">
             <FunnelRow label="Impressions" value={funnel?.funnel?.impressions} />
             <FunnelRow label="Clicks" value={funnel?.funnel?.clicks} />
@@ -161,16 +161,16 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
             <FunnelRow label="Add To Cart" value={funnel?.funnel?.add_to_cart} />
             <FunnelRow label="Purchases" value={funnel?.funnel?.purchases} />
           </div>
-          <div className="mt-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-800">
+          <div className="mt-4 rounded-xl bg-zinc-900 p-3 text-sm text-zinc-300">
             Largest dropoff: {formatDropoffLabel(funnel?.largest_dropoff)} ({funnel ? `${(toNumber(funnel.dropoff_percent) ?? 0).toFixed(1)}%` : '-'})
           </div>
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Cohort Insights</div>
-          <h3 className="mt-2 text-lg font-bold text-gray-900">Retention and Segment Quality</h3>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Cohort Insights</div>
+          <h3 className="mt-2 text-lg font-bold text-white">Retention and Segment Quality</h3>
           <div className="mt-4 grid gap-3 text-sm">
             <SimpleRow label="Average LTV" value={formatCurrency(cohort?.average_ltv)} />
             <SimpleRow label="3-Month Retention" value={formatPercent(cohort?.three_month_retention)} />
@@ -180,9 +180,9 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Scenario Outlook</div>
-          <h3 className="mt-2 text-lg font-bold text-gray-900">Best / Base / Worst Case</h3>
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Scenario Outlook</div>
+          <h3 className="mt-2 text-lg font-bold text-white">Best / Base / Worst Case</h3>
           <div className="mt-4 grid gap-3 md:grid-cols-3 text-sm">
             <ScenarioMini title="Best" revenue={scenario?.best_case?.revenue} roi={scenario?.best_case?.roi} />
             <ScenarioMini title="Base" revenue={scenario?.base_case?.revenue} roi={scenario?.base_case?.roi} />
@@ -191,15 +191,15 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-        <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">Recommended Actions</div>
-        <ul className="mt-3 space-y-2 text-sm text-gray-700">
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-sm">
+        <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Recommended Actions</div>
+        <ul className="mt-3 space-y-2 text-sm text-zinc-300">
           {(snapshot?.recommendations || []).length > 0 ? (
             (snapshot?.recommendations || []).map((item) => (
-              <li key={item} className="rounded-xl bg-gray-50 px-3 py-2">{item}</li>
+              <li key={item} className="rounded-xl bg-zinc-900 px-3 py-2">{item}</li>
             ))
           ) : (
-            <li className="text-gray-500">No recommendations yet.</li>
+            <li className="text-zinc-400">No recommendations yet.</li>
           )}
         </ul>
       </div>
@@ -209,9 +209,9 @@ export default function Dashboard({ result, isLoading }: DashboardProps) {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</div>
-      <div className="mt-2 text-2xl font-bold text-gray-900">{value}</div>
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-sm">
+      <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{label}</div>
+      <div className="mt-2 text-2xl font-bold text-white">{value}</div>
     </div>
   );
 }
@@ -222,19 +222,19 @@ function FunnelRow({ label, value }: { label: string; value?: number }) {
 
 function SimpleRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between rounded-xl bg-gray-50 px-3 py-2">
-      <span className="text-gray-600">{label}</span>
-      <span className="font-semibold text-gray-900">{value}</span>
+    <div className="flex items-center justify-between rounded-xl bg-zinc-900 px-3 py-2">
+      <span className="text-zinc-400">{label}</span>
+      <span className="font-semibold text-white">{value}</span>
     </div>
   );
 }
 
 function ScenarioMini({ title, revenue, roi }: { title: string; revenue?: number; roi?: number }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-gray-50 p-3">
-      <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">{title}</div>
-      <div className="mt-1 text-lg font-bold text-gray-900">{formatCurrency(revenue)}</div>
-      <div className="text-xs text-gray-600">ROI {formatPercent(roi)}</div>
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-3">
+      <div className="text-xs font-semibold uppercase tracking-wide text-zinc-400">{title}</div>
+      <div className="mt-1 text-lg font-bold text-white">{formatCurrency(revenue)}</div>
+      <div className="text-xs text-zinc-400">ROI {formatPercent(roi)}</div>
     </div>
   );
 }
@@ -320,4 +320,3 @@ function normalizeSnapshot(raw: any): DashboardSnapshot | null {
 
   return null;
 }
-

@@ -57,12 +57,12 @@ export default function UploadFileModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-8 shadow-2xl">
+      <div className="w-full max-w-lg rounded-2xl border border-zinc-800 bg-zinc-950 p-8 shadow-2xl">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Upload File</h2>
+          <h2 className="text-2xl font-bold text-white">Upload File</h2>
           <button
             onClick={closeUploadModal}
-            className="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-800"
+            className="rounded-full p-2 text-zinc-400 transition hover:bg-zinc-900 hover:text-white"
           >
             <svg
               width="24"
@@ -89,17 +89,17 @@ export default function UploadFileModal() {
           </button>
         </div>
 
-        <p className="mt-2 text-base text-gray-600">
+        <p className="mt-2 text-base text-zinc-400">
           Add a new file to the agent's knowledge base.
         </p>
 
         <div
           className={`mt-6 flex h-48 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed transition ${
             dragActive
-              ? 'border-blue-500 bg-blue-50'
+              ? 'border-zinc-700 bg-zinc-900'
               : selectedFile
-              ? 'border-green-300 bg-green-50'
-              : 'border-gray-300 bg-gray-50 hover:border-blue-500 hover:bg-blue-50'
+              ? 'border-zinc-700 bg-zinc-900'
+              : 'border-zinc-800 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900'
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -115,23 +115,23 @@ export default function UploadFileModal() {
             accept=".pdf,.txt,.md,.csv,.json"
           />
           {selectedFile ? (
-            <div className="text-center">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-600 mx-auto">
+            <div className="text-center text-white">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-zinc-200 mx-auto">
                 <FileIcon size={24} />
               </div>
-              <div className="font-semibold text-green-600">File Selected:</div>
-              <div className="text-gray-800 mt-1 truncate max-w-xs">{selectedFile.name}</div>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="font-semibold text-zinc-200">File Selected:</div>
+              <div className="text-white mt-1 truncate max-w-xs">{selectedFile.name}</div>
+              <div className="text-xs text-zinc-400 mt-1">
                 {(selectedFile.size / 1024).toFixed(2)} KB
               </div>
             </div>
           ) : (
-            <div className="text-center text-gray-500">
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-400 mx-auto">
+            <div className="text-center text-zinc-400">
+              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-zinc-400 mx-auto">
                 <Upload size={24} />
               </div>
-              <div className="font-semibold text-gray-700">Click to browse or drag & drop</div>
-              <div className="text-xs text-gray-500 mt-2">PDF, TXT, MD, CSV, JSON (Max 5MB)</div>
+              <div className="font-semibold text-zinc-200">Click to browse or drag & drop</div>
+              <div className="text-xs text-zinc-400 mt-2">PDF, TXT, MD, CSV, JSON (Max 5MB)</div>
             </div>
           )}
         </div>
@@ -140,14 +140,14 @@ export default function UploadFileModal() {
           <button
             onClick={closeUploadModal}
             disabled={isLoading}
-            className="rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 disabled:opacity-50"
+            className="rounded-xl border border-zinc-800 bg-zinc-950 px-6 py-3 text-sm font-semibold text-zinc-200 transition hover:bg-zinc-900 disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             onClick={handleUpload}
             disabled={!selectedFile || isLoading}
-            className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+            className="rounded-xl bg-zinc-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-zinc-700 disabled:bg-zinc-700 disabled:cursor-not-allowed"
           >
             {isLoading ? 'Uploading...' : 'Upload File'}
           </button>

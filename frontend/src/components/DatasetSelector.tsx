@@ -74,8 +74,8 @@ export default function DatasetSelector({
     return (
       <div className="flex items-center justify-center p-8">
         <div className="flex flex-col items-center gap-2">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
-          <p className="text-sm text-gray-600">Loading available datasets...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-700 border-t-zinc-500" />
+          <p className="text-sm text-zinc-400">Loading available datasets...</p>
         </div>
       </div>
     );
@@ -90,23 +90,23 @@ export default function DatasetSelector({
   }
 
   return (
-    <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-6">
+    <div className="space-y-4 rounded-lg border border-zinc-800 bg-zinc-950 p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Database className="h-5 w-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Available Datasets</h3>
-          <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+          <Database className="h-5 w-5 text-zinc-300" />
+          <h3 className="text-lg font-semibold text-white">Available Datasets</h3>
+          <span className="rounded-full bg-zinc-800 px-2.5 py-0.5 text-xs font-medium text-white">
             {datasets.length}
           </span>
         </div>
         {selected.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-zinc-400">
               {selected.length} selected
             </span>
             <button
               onClick={handleClearAll}
-              className="text-xs text-gray-500 hover:text-gray-700"
+              className="text-xs text-zinc-400 hover:text-zinc-200"
             >
               Clear all
             </button>
@@ -117,7 +117,7 @@ export default function DatasetSelector({
       {selected.length === 0 && datasets.length > 0 && (
         <button
           onClick={handleSelectAll}
-          className="text-xs text-blue-600 hover:text-blue-700"
+          className="text-xs text-zinc-300 hover:text-zinc-100"
         >
           Select all datasets
         </button>
@@ -131,10 +131,10 @@ export default function DatasetSelector({
           return (
             <div
               key={dataset.name}
-              className="border border-gray-200 rounded-lg overflow-hidden transition-all hover:border-blue-300"
+              className="border border-zinc-800 rounded-lg overflow-hidden transition-all hover:border-zinc-700"
             >
               <div
-                className="flex items-start gap-3 p-3 cursor-pointer bg-gray-50 hover:bg-blue-50"
+                className="flex items-start gap-3 p-3 cursor-pointer bg-zinc-950 hover:bg-zinc-900"
                 onClick={() => handleToggleDataset(dataset.name)}
               >
                 <div className="flex-shrink-0 pt-0.5">
@@ -145,28 +145,28 @@ export default function DatasetSelector({
                       e.stopPropagation();
                       handleToggleDataset(dataset.name);
                     }}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="h-4 w-4 rounded border-zinc-700 text-zinc-300 focus:ring-zinc-600"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-medium text-gray-900 capitalize">
+                    <h4 className="font-medium text-white capitalize">
                       {dataset.name}
                     </h4>
                     {dataset.row_count > 0 && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-zinc-400">
                         {dataset.row_count.toLocaleString()} rows
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">{dataset.description}</p>
+                  <p className="text-sm text-zinc-400 mt-1">{dataset.description}</p>
 
                   {dataset.agent_types.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">
                       {dataset.agent_types.map((agent) => (
                         <span
                           key={agent}
-                          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                          className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-zinc-800 text-zinc-200"
                         >
                           {agent}
                         </span>
@@ -180,7 +180,7 @@ export default function DatasetSelector({
                     e.stopPropagation();
                     setExpandedDataset(isExpanded ? null : dataset.name);
                   }}
-                  className="text-gray-400 hover:text-gray-600 flex-shrink-0"
+                  className="text-zinc-400 hover:text-zinc-200 flex-shrink-0"
                 >
                   <svg
                     className={`h-4 w-4 transition-transform ${
@@ -201,17 +201,17 @@ export default function DatasetSelector({
               </div>
 
               {isExpanded && dataset.columns.length > 0 && (
-                <div className="border-t border-gray-200 bg-white p-3">
-                  <h5 className="text-xs font-semibold text-gray-700 mb-2">
+                <div className="border-t border-zinc-800 bg-zinc-950 p-3">
+                  <h5 className="text-xs font-semibold text-zinc-300 mb-2">
                     Available Columns:
                   </h5>
                   <div className="grid grid-cols-2 gap-2">
                     {dataset.columns.map((column) => (
                       <div
                         key={column}
-                        className="flex items-center gap-1 text-xs text-gray-600"
+                        className="flex items-center gap-1 text-xs text-zinc-400"
                       >
-                        <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-zinc-700" />
                         {column}
                       </div>
                     ))}
@@ -220,11 +220,11 @@ export default function DatasetSelector({
               )}
 
               {isSelected && (
-                <div className="flex items-center justify-between bg-green-50 border-t border-green-200 p-2 px-3">
-                  <span className="text-xs font-medium text-green-700">
+                <div className="flex items-center justify-between bg-zinc-900 border-t border-zinc-800 p-2 px-3">
+                  <span className="text-xs font-medium text-zinc-300">
                     Selected for analysis
                   </span>
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-zinc-300" />
                 </div>
               )}
             </div>
@@ -233,8 +233,8 @@ export default function DatasetSelector({
       </div>
 
       {datasets.length === 0 && !loading && (
-        <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-center">
-          <p className="text-sm text-yellow-800">
+        <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 text-center">
+          <p className="text-sm text-zinc-400">
             No datasets available. Please check your Supabase connection.
           </p>
         </div>

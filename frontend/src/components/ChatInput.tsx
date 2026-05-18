@@ -24,27 +24,32 @@ export default function ChatInput({ onSend, isLoading }: ChatInputProps) {
   };
 
   return (
-    <div className="flex gap-2">
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Ask about forecasts, scenarios, budget allocation..."
-        className="flex-1 resize-none input-field min-h-12 max-h-32 p-3"
-        disabled={isLoading}
-      />
+    <div className="flex items-center gap-[20px] w-full">
+      {/* Input Pill */}
+      <div className="flex-1 flex items-center h-[64px] rounded-[28px] border border-[rgba(255,255,255,0.14)] bg-[#050505] pl-[24px] pr-[24px]">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="Ask about forecasts, scenarios, budget allocation..."
+          className="w-full bg-transparent text-sm text-white placeholder-zinc-500 outline-none"
+          disabled={isLoading}
+        />
+      </div>
+
+      {/* Send Icon */}
       <button
         onClick={handleSend}
         disabled={isLoading || !input.trim()}
-        className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex-shrink-0 text-[rgba(255,255,255,0.45)] hover:text-white transition-colors disabled:opacity-30"
       >
         {isLoading ? (
-          <Loader size={20} className="animate-spin" />
+          <Loader size={28} className="animate-spin" />
         ) : (
-          <Send size={20} />
+          <Send size={28} />
         )}
       </button>
     </div>
   );
 }
-
