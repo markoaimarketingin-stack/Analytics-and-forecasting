@@ -1,7 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { BarChart3 } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -35,20 +34,21 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('supervisor');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(326);
-  const [chatPanelWidth, setChatPanelWidth] = useState(420);
+  const [sidebarWidth, setSidebarWidth] = useState(300);
+  const [chatPanelWidth, setChatPanelWidth] = useState(380);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentAnalysis, setCurrentAnalysis] = useState<AnalysisRun | null>(null);
   const [activatedAgents, setActivatedAgents] = useState<ActivatedAgent[]>([]);
   const [executionTimeline, setExecutionTimeline] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<UISuggestionItem[]>([]);
+  const [isAiPanelOpen, setIsAiPanelOpen] = useState(true); // State for AI panel open/close
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const minSidebarWidth = 260;
   const maxSidebarWidth = 360;
-  const minChatPanelWidth = 320;
-  const maxChatPanelWidth = 560;
+  const minChatPanelWidth = 340;
+  const maxChatPanelWidth = 500;
   const minMiddlePanelWidth = 500; // As requested
 
   useEffect(() => {
@@ -159,10 +159,7 @@ export default function App() {
     document.body.style.cursor = 'col-resize';
     const handleMouseMove = (moveEvent: MouseEvent) => {
       const rawNewWidth = moveEvent.clientX;
-      const effectiveMaxSidebarWidth = window.innerWidth - chatPanelWidth - minMiddlePanelWidth;
       let newWidth = Math.min(maxSidebarWidth, rawNewWidth);
-      newWidth = Math.max(minSidebarWidth, newWidth);
-      newWidth = Math.min(newWidth, effectiveMaxSidebarWidth);
       newWidth = Math.max(minSidebarWidth, newWidth);
       setSidebarWidth(newWidth);
     };
@@ -178,15 +175,20 @@ export default function App() {
 
   const startResizingChatPanel = (e: React.MouseEvent) => {
     e.preventDefault();
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'col-resize';
     const handleMouseMove = (moveEvent: MouseEvent) => {
-      const newWidth = window.innerWidth - moveEvent.clientX;
-      if (newWidth >= minChatPanelWidth && newWidth <= maxChatPanelWidth) {
-        setChatPanelWidth(newWidth);
-      }
+      const windowWidth = window.innerWidth;
+      const rawNewWidth = windowWidth - moveEvent.clientX;
+      let newWidth = Math.min(maxChatPanelWidth, rawNewWidth);
+      newWidth = Math.max(minChatPanelWidth, newWidth);
+      setChatPanelWidth(newWidth);
     };
     const handleMouseUp = () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
     };
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
@@ -221,22 +223,37 @@ export default function App() {
         {renderWorkspace()}
       </div>
 
-      {/* ChatPanel Resizer: sits directly between Main content and Chat panel */}
-      <div
-        onMouseDown={startResizingChatPanel}
-        className="hidden lg:block h-full w-1 cursor-col-resize bg-[rgba(255,255,255,0.08)] transition-colors hover:bg-[rgba(255,255,255,0.22)] z-10"
-      />
-
-      <ChatPanel
-        messages={messages}
-        isLoading={isLoading}
-        currentAnalysis={currentAnalysis}
-        executionTimeline={executionTimeline}
-        activatedAgents={activatedAgents}
-        handleSendMessage={handleSendMessage}
-        onNewChat={handleNewChat}
-        width={chatPanelWidth}
-      />
+      {isAiPanelOpen ? (
+        <>
+          <div
+            onMouseDown={startResizingChatPanel}
+            className="hidden lg:block h-full cursor-col-resize bg-[rgba(255,255,255,0.08)] transition-colors hover:bg-[rgba(255,255,255,0.22)] z-10"
+            style={{ width: '4px' }}
+          />
+          <ChatPanel
+            messages={messages}
+            isLoading={isLoading}
+            currentAnalysis={currentAnalysis}
+            executionTimeline={executionTimeline}
+            activatedAgents={activatedAgents}
+            handleSendMessage={handleSendMessage}
+            suggestions={suggestions}
+            onExecuteSuggestion={handleExecuteSuggestion}
+            onNewChat={handleNewChat}
+            onClosePanel={() => setIsAiPanelOpen(false)}
+            width={chatPanelWidth}
+          />
+        </>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setIsAiPanelOpen(true)}
+          className="fixed right-[24px] top-1/2 z-50 flex h-[56px] w-[56px] -translate-y-1/2 items-center justify-center rounded-full border border-[rgba(255,255,255,0.18)] bg-black shadow-lg cursor-pointer"
+          aria-label="Open AI Assistant"
+        >
+          <img src="/idk.png" alt="Open AI Assistant" className="h-[26px] w-[26px] object-contain opacity-100" />
+        </button>
+      )}
 
       {/* Knowledge Base Modals */}
       <ExistingFilesModal />
