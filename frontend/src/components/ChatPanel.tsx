@@ -178,7 +178,7 @@ export default function ChatPanel({
       </div>
 
       {/* Tab Selector */}
-      <div className="px-6 py-3 bg-black border-b border-zinc-900/60">
+      <div className="px-6 py-3 bg-black">
         <div className="chat-tab-pill-container">
           <button
             onClick={() => setActiveTab('chatbot')}
