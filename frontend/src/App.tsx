@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { Bot } from 'lucide-react';
+import { Bot, History, X } from 'lucide-react';
 
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -197,6 +197,7 @@ export default function App({
   const [currentThreadId, setCurrentThreadId] = useState<string | null>(null);
   const [chatThreads, setChatThreads] = useState<ChatThreadSummary[]>([]);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isChatPanelCollapsed, setIsChatPanelCollapsed] = useState(false);
   const [supervisorResetToken, setSupervisorResetToken] = useState(0);
 
@@ -214,6 +215,25 @@ export default function App({
     });
   }, [messages, isLoading, currentAnalysis]);
 
+
+  const formatRelativeTime = (value?: string) => {
+    if (!value) return 'Just now';
+
+    const when = new Date(value).getTime();
+    if (Number.isNaN(when)) return 'Just now';
+
+    const deltaMs = Date.now() - when;
+    const minutes = Math.max(1, Math.floor(deltaMs / (1000 * 60)));
+    if (minutes < 60) return `${minutes}m ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+
+    return new Date(value).toLocaleDateString();
+  };
 
   const loadChatThreads = async (resolvedClientId: string) => {
     if (!resolvedClientId) return;
@@ -812,13 +832,6 @@ export default function App({
         onSectionChange={setActiveSection}
         isMobileOpen={isSidebarOpen}
         onMobileClose={() => setIsSidebarOpen(false)}
-        suggestions={suggestions}
-        onExecuteSuggestion={handleExecuteSuggestion}
-        onRemoveSuggestion={handleRemoveSuggestion}
-        chatThreads={chatThreads}
-        isHistoryLoading={isHistoryLoading}
-        activeThreadId={currentThreadId}
-        onOpenHistoryThread={handleOpenHistoryThread}
         accountName={accountName}
         accountEmail={accountEmail}
       />
@@ -840,6 +853,11 @@ export default function App({
             onNewChat={handleNewChat}
             onCollapse={() => setIsChatPanelCollapsed(true)}
             handleSendMessage={handleSendMessage}
+            suggestions={suggestions}
+            onExecuteSuggestion={handleExecuteSuggestion}
+            onRemoveSuggestion={handleRemoveSuggestion}
+            onOpenHistory={() => setIsHistoryOpen(true)}
+            onManageModels={() => setActiveSection('settings')}
           />
         ) : null}
       </div>
@@ -857,6 +875,82 @@ export default function App({
           </div>
         </button>
       ) : null}
+
+      {/* Execution History Drawer */}
+      <div
+        className={`drawer-backdrop fixed inset-0 z-[60] transition-all duration-300 ${
+          isHistoryOpen
+            ? 'pointer-events-auto opacity-100'
+            : 'pointer-events-none opacity-0'
+        }`}
+        onClick={() => setIsHistoryOpen(false)}
+      >
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`drawer-panel absolute right-0 top-0 flex h-full w-[420px] flex-col border-l border-gray-200 bg-white text-gray-900 shadow-2xl transition-transform duration-300 ${
+            isHistoryOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-500">
+                Analytics Supervisor
+              </div>
+
+              <h2 className="mt-1 text-2xl font-bold text-gray-900">
+                Execution History
+              </h2>
+            </div>
+
+            <button
+              onClick={() => setIsHistoryOpen(false)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="space-y-3">
+              {isHistoryLoading ? (
+                <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5 text-sm text-gray-600">
+                  Loading chat history...
+                </div>
+              ) : chatThreads.length > 0 ? (
+                chatThreads.map((thread) => {
+                  const isActiveThread = currentThreadId === thread.id;
+                  return (
+                    <button
+                      key={thread.id}
+                      onClick={() => {
+                        handleOpenHistoryThread(thread.id);
+                        setIsHistoryOpen(false);
+                      }}
+                      className={`w-full rounded-3xl border p-4 text-left transition duration-300 ${
+                        isActiveThread
+                          ? 'border-gray-900 bg-gray-100 shadow-sm'
+                          : 'border-gray-200 bg-white hover:-translate-y-0.5 hover:border-gray-300 hover:bg-gray-50 hover:shadow-md'
+                      }`}
+                    >
+                      <div className="truncate text-sm font-semibold text-gray-900">{thread.title || 'New Chat'}</div>
+                      <div className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">
+                        {thread.last_message_preview || 'Open this thread to continue the conversation.'}
+                      </div>
+                      <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-gray-600">
+                        {formatRelativeTime(thread.last_message_at || thread.updated_at || thread.created_at)}
+                      </div>
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="rounded-3xl border border-gray-200 bg-gray-50 p-5 text-sm leading-6 text-gray-600">
+                  No chat history yet. Start a new chat and it will appear here automatically.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Knowledge Base Modals */}
       <ExistingFilesModal />

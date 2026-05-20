@@ -628,30 +628,31 @@ html.dark-mode .panel-card {
 }
 
 html.dark-mode .workspace-option-pill {
-  border-color: rgba(100, 116, 139, 0.45);
-  background: rgba(30, 41, 59, 0.75);
+  border-color: #2a2a2a;
+  background: #000000 !important;
   color: #cbd5e1;
 }
 
 html.dark-mode .workspace-choice-card-idle {
-  border-color: rgba(100, 116, 139, 0.45);
-  background: rgba(30, 41, 59, 0.75);
+  border-color: #2a2a2a;
+  background: #000000 !important;
   color: #cbd5e1;
 }
 
 html.dark-mode .workspace-choice-card-idle:hover {
-  border-color: rgba(148, 163, 184, 0.65);
-  background: rgba(51, 65, 85, 0.78);
+  border-color: #404040;
+  background: #000000 !important;
 }
 
 html.dark-mode .workspace-choice-card-active {
-  border-color: rgba(148, 163, 184, 0.55);
-  background: rgba(15, 23, 42, 0.92);
+  border-color: #ffffff !important;
+  background: #000000 !important;
+  color: #ffffff !important;
 }
 
 html.dark-mode .workspace-toggle-switch-off {
-  border-color: rgba(100, 116, 139, 0.6);
-  background: rgba(71, 85, 105, 0.65);
+  border-color: #2a2a2a;
+  background: #000000 !important;
 }
 
 html.dark-mode .settings-row-title {
@@ -696,19 +697,46 @@ html.dark-mode .workspace-section-shell .text-gray-900,
 html.dark-mode .chat-panel-glass .text-gray-900,
 html.dark-mode .workspace-surface .text-black,
 html.dark-mode .workspace-section-shell .text-black,
-html.dark-mode .chat-panel-glass .text-black {
-  color: #fff !important;
+html.dark-mode .chat-panel-glass .text-black,
+html.dark-mode .workspace-surface .text-slate-900,
+html.dark-mode .workspace-section-shell .text-slate-900,
+html.dark-mode .chat-panel-glass .text-slate-900,
+html.dark-mode .workspace-surface .text-zinc-900,
+html.dark-mode .workspace-section-shell .text-zinc-900,
+html.dark-mode .chat-panel-glass .text-zinc-900,
+html.dark-mode .workspace-surface .text-neutral-900,
+html.dark-mode .workspace-section-shell .text-neutral-900,
+html.dark-mode .chat-panel-glass .text-neutral-900 {
+  color: #ffffff !important;
 }
 
 html.dark-mode .workspace-surface .text-gray-800,
 html.dark-mode .workspace-section-shell .text-gray-800,
-html.dark-mode .chat-panel-glass .text-gray-800 {
-  color: #fff !important;
+html.dark-mode .chat-panel-glass .text-gray-800,
+html.dark-mode .workspace-surface .text-slate-800,
+html.dark-mode .workspace-section-shell .text-slate-800,
+html.dark-mode .chat-panel-glass .text-slate-800,
+html.dark-mode .workspace-surface .text-zinc-800,
+html.dark-mode .workspace-section-shell .text-zinc-800,
+html.dark-mode .chat-panel-glass .text-zinc-800,
+html.dark-mode .workspace-surface .text-neutral-800,
+html.dark-mode .workspace-section-shell .text-neutral-800,
+html.dark-mode .chat-panel-glass .text-neutral-800 {
+  color: #ffffff !important;
 }
 
 html.dark-mode .workspace-surface .text-gray-700,
 html.dark-mode .workspace-section-shell .text-gray-700,
-html.dark-mode .chat-panel-glass .text-gray-700 {
+html.dark-mode .chat-panel-glass .text-gray-700,
+html.dark-mode .workspace-surface .text-slate-700,
+html.dark-mode .workspace-section-shell .text-slate-700,
+html.dark-mode .chat-panel-glass .text-slate-700,
+html.dark-mode .workspace-surface .text-zinc-700,
+html.dark-mode .workspace-section-shell .text-zinc-700,
+html.dark-mode .chat-panel-glass .text-zinc-700,
+html.dark-mode .workspace-surface .text-neutral-700,
+html.dark-mode .workspace-section-shell .text-neutral-700,
+html.dark-mode .chat-panel-glass .text-neutral-700 {
   color: #e5e5e5 !important;
 }
 
@@ -720,35 +748,71 @@ html.dark-mode .workspace-section-shell .text-gray-500,
 html.dark-mode .chat-panel-glass .text-gray-500,
 html.dark-mode .workspace-surface .text-gray-400,
 html.dark-mode .workspace-section-shell .text-gray-400,
-html.dark-mode .chat-panel-glass .text-gray-400 {
+html.dark-mode .chat-panel-glass .text-gray-400,
+html.dark-mode .workspace-surface .text-slate-600,
+html.dark-mode .workspace-section-shell .text-slate-600,
+html.dark-mode .chat-panel-glass .text-slate-600,
+html.dark-mode .workspace-surface .text-slate-500,
+html.dark-mode .workspace-section-shell .text-slate-500,
+html.dark-mode .chat-panel-glass .text-slate-500,
+html.dark-mode .workspace-surface .text-slate-400,
+html.dark-mode .workspace-section-shell .text-slate-400,
+html.dark-mode .chat-panel-glass .text-slate-400,
+html.dark-mode .workspace-surface .text-zinc-600,
+html.dark-mode .workspace-section-shell .text-zinc-600,
+html.dark-mode .chat-panel-glass .text-zinc-600,
+html.dark-mode .workspace-surface .text-zinc-500,
+html.dark-mode .workspace-section-shell .text-zinc-500,
+html.dark-mode .chat-panel-glass .text-zinc-500,
+html.dark-mode .workspace-surface .text-zinc-400,
+html.dark-mode .workspace-section-shell .text-zinc-400,
+html.dark-mode .chat-panel-glass .text-zinc-400,
+html.dark-mode .workspace-surface .text-neutral-600,
+html.dark-mode .workspace-section-shell .text-neutral-600,
+html.dark-mode .chat-panel-glass .text-neutral-600,
+html.dark-mode .workspace-surface .text-neutral-500,
+html.dark-mode .workspace-section-shell .text-neutral-500,
+html.dark-mode .chat-panel-glass .text-neutral-500,
+html.dark-mode .workspace-surface .text-neutral-400,
+html.dark-mode .workspace-section-shell .text-neutral-400,
+html.dark-mode .chat-panel-glass .text-neutral-400 {
   color: #a3a3a3 !important;
 }
 
 html.dark-mode .workspace-surface [class*='bg-white'],
 html.dark-mode .workspace-section-shell [class*='bg-white'],
-html.dark-mode .chat-panel-glass [class*='bg-white'] {
-  background-color: #000 !important;
+html.dark-mode .chat-panel-glass [class*='bg-white'],
+html.dark-mode .workspace-surface [class*='bg-gray-'],
+html.dark-mode .workspace-section-shell [class*='bg-gray-'],
+html.dark-mode .chat-panel-glass [class*='bg-gray-'],
+html.dark-mode .workspace-surface [class*='bg-slate-'],
+html.dark-mode .workspace-section-shell [class*='bg-slate-'],
+html.dark-mode .chat-panel-glass [class*='bg-slate-'],
+html.dark-mode .workspace-surface [class*='bg-zinc-'],
+html.dark-mode .workspace-section-shell [class*='bg-zinc-'],
+html.dark-mode .chat-panel-glass [class*='bg-zinc-'],
+html.dark-mode .workspace-surface [class*='bg-neutral-'],
+html.dark-mode .workspace-section-shell [class*='bg-neutral-'],
+html.dark-mode .chat-panel-glass [class*='bg-neutral-'],
+html.dark-mode .workspace-surface [class*='bg-[#'],
+html.dark-mode .workspace-section-shell [class*='bg-[#'],
+html.dark-mode .chat-panel-glass [class*='bg-[#'] {
+  background-color: #000000 !important;
 }
 
-html.dark-mode .workspace-surface [class*='bg-gray-50'],
-html.dark-mode .workspace-section-shell [class*='bg-gray-50'],
-html.dark-mode .chat-panel-glass [class*='bg-gray-50'],
-html.dark-mode .workspace-surface [class*='bg-gray-100'],
-html.dark-mode .workspace-section-shell [class*='bg-gray-100'],
-html.dark-mode .chat-panel-glass [class*='bg-gray-100'] {
-  background-color: #0a0a0a !important;
-}
-
-html.dark-mode .workspace-surface [class*='border-gray-100'],
-html.dark-mode .workspace-section-shell [class*='border-gray-100'],
-html.dark-mode .chat-panel-glass [class*='border-gray-100'],
-html.dark-mode .workspace-surface [class*='border-gray-200'],
-html.dark-mode .workspace-section-shell [class*='border-gray-200'],
-html.dark-mode .chat-panel-glass [class*='border-gray-200'],
-html.dark-mode .workspace-surface [class*='border-gray-300'],
-html.dark-mode .workspace-section-shell [class*='border-gray-300'],
-html.dark-mode .chat-panel-glass [class*='border-gray-300'] {
-  border-color: #2a2a2a !important;
+html.dark-mode .workspace-surface [class*='border-gray-'],
+html.dark-mode .workspace-section-shell [class*='border-gray-'],
+html.dark-mode .chat-panel-glass [class*='border-gray-'],
+html.dark-mode .workspace-surface [class*='border-slate-'],
+html.dark-mode .workspace-section-shell [class*='border-slate-'],
+html.dark-mode .chat-panel-glass [class*='border-slate-'],
+html.dark-mode .workspace-surface [class*='border-zinc-'],
+html.dark-mode .workspace-section-shell [class*='border-zinc-'],
+html.dark-mode .chat-panel-glass [class*='border-zinc-'],
+html.dark-mode .workspace-surface [class*='border-neutral-'],
+html.dark-mode .workspace-section-shell [class*='border-neutral-'],
+html.dark-mode .chat-panel-glass [class*='border-neutral-'] {
+  border-color: #262626 !important;
 }
 
 html.dark-mode .chat-panel-header,
@@ -779,47 +843,69 @@ html.dark-mode .app-shell,
 html.dark-mode .app-theme-root,
 html.dark-mode .workspace-section-shell,
 html.dark-mode .workspace-surface {
-  background: #000 !important;
-  color: #fff !important;
+  background: #000000 !important;
+  color: #ffffff !important;
 }
 
 html.dark-mode .app-theme-root [class*='bg-[#'],
 html.dark-mode .app-theme-root [class*='bg-white'],
-html.dark-mode .app-theme-root [class*='bg-gray-50'],
-html.dark-mode .app-theme-root [class*='bg-gray-100'],
-html.dark-mode .app-theme-root [class*='bg-gray-200'] {
-  background-color: #090909 !important;
+html.dark-mode .app-theme-root [class*='bg-gray-'],
+html.dark-mode .app-theme-root [class*='bg-slate-'],
+html.dark-mode .app-theme-root [class*='bg-zinc-'],
+html.dark-mode .app-theme-root [class*='bg-neutral-'] {
+  background-color: #000000 !important;
 }
 
 html.dark-mode .app-theme-root [class*='border-gray-'],
-html.dark-mode .app-theme-root [class*='border-slate-'] {
-  border-color: #2a2a2a !important;
+html.dark-mode .app-theme-root [class*='border-slate-'],
+html.dark-mode .app-theme-root [class*='border-zinc-'],
+html.dark-mode .app-theme-root [class*='border-neutral-'] {
+  border-color: #262626 !important;
 }
 
 html.dark-mode .app-theme-root [class*='text-black'],
 html.dark-mode .app-theme-root [class*='text-gray-900'],
 html.dark-mode .app-theme-root [class*='text-gray-800'],
-html.dark-mode .app-theme-root [class*='text-gray-700'] {
-  color: #f5f5f5 !important;
+html.dark-mode .app-theme-root [class*='text-gray-700'],
+html.dark-mode .app-theme-root [class*='text-slate-900'],
+html.dark-mode .app-theme-root [class*='text-slate-800'],
+html.dark-mode .app-theme-root [class*='text-slate-700'],
+html.dark-mode .app-theme-root [class*='text-zinc-900'],
+html.dark-mode .app-theme-root [class*='text-zinc-800'],
+html.dark-mode .app-theme-root [class*='text-zinc-700'],
+html.dark-mode .app-theme-root [class*='text-neutral-900'],
+html.dark-mode .app-theme-root [class*='text-neutral-800'],
+html.dark-mode .app-theme-root [class*='text-neutral-700'] {
+  color: #ffffff !important;
 }
 
 html.dark-mode .app-theme-root [class*='text-gray-600'],
 html.dark-mode .app-theme-root [class*='text-gray-500'],
-html.dark-mode .app-theme-root [class*='text-gray-400'] {
-  color: #b5b5b5 !important;
+html.dark-mode .app-theme-root [class*='text-gray-400'],
+html.dark-mode .app-theme-root [class*='text-slate-600'],
+html.dark-mode .app-theme-root [class*='text-slate-500'],
+html.dark-mode .app-theme-root [class*='text-slate-400'],
+html.dark-mode .app-theme-root [class*='text-zinc-600'],
+html.dark-mode .app-theme-root [class*='text-zinc-500'],
+html.dark-mode .app-theme-root [class*='text-zinc-400'],
+html.dark-mode .app-theme-root [class*='text-neutral-600'],
+html.dark-mode .app-theme-root [class*='text-neutral-500'],
+html.dark-mode .app-theme-root [class*='text-neutral-400'] {
+  color: #a3a3a3 !important;
 }
 
 html.dark-mode .app-theme-root input,
 html.dark-mode .app-theme-root select,
-html.dark-mode .app-theme-root textarea {
-  background: #0d0d0d !important;
-  color: #f5f5f5 !important;
-  border-color: #363636 !important;
+html.dark-mode .app-theme-root textarea,
+html.dark-mode .workspace-control {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #262626 !important;
 }
 
 html.dark-mode .app-theme-root input::placeholder,
 html.dark-mode .app-theme-root textarea::placeholder {
-  color: #8a8a8a !important;
+  color: #71717a !important;
 }
 
 html.dark-mode .app-theme-root table thead th {
@@ -842,8 +928,8 @@ html.dark-mode .app-theme-root .recharts-cartesian-grid line {
 }
 
 html.dark-mode .app-theme-root .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: #111 !important;
-  border: 1px solid #303030 !important;
+  background: #000000 !important;
+  border: 1px solid #262626 !important;
 }
 
 html.dark-mode .app-theme-root .recharts-tooltip-label,
@@ -868,3 +954,265 @@ button.chat-panel-close-btn:focus-visible {
     transition-duration: 1ms !important;
   }
 }
+
+/* Always Dark Chat Panel styles, matching the provided mockup image */
+.chat-panel-dark {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-left: 1px solid #262626 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Chat Panel Resizer handle */
+.chat-panel-resizer {
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+  z-index: 50;
+  background-color: transparent;
+  transition: background-color 150ms ease;
+}
+
+.chat-panel-resizer:hover,
+.chat-panel-resizer.is-resizing {
+  background-color: rgba(59, 130, 246, 0.6); /* subtle blue line on drag/hover */
+}
+
+/* Header style overrides */
+.chat-panel-header-dark {
+  border-bottom: 1px solid #262626 !important;
+  background-color: #000000 !important;
+}
+
+/* Pill selector container matching mockup image */
+.chat-tab-pill-container {
+  display: flex;
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  border-radius: 9999px;
+  padding: 4px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.chat-tab-pill {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #71717a;
+  transition: all 200ms ease;
+}
+
+.chat-tab-pill:hover {
+  color: #ffffff;
+}
+
+.chat-tab-pill-active {
+  background-color: #000000 !important;
+  border: 1px solid #ffffff !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Chat input dark style */
+.chat-input-shell-dark {
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  border-radius: 20px !important;
+  padding: 12px 16px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-input-paperclip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #52525b;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.chat-input-paperclip-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  color: #a1a1aa;
+  transition: all 150ms ease;
+}
+
+.chat-input-paperclip-btn:hover {
+  background-color: #121215 !important;
+  color: #ffffff;
+}
+
+.chat-textarea-dark {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #ffffff !important;
+  font-size: 0.875rem;
+  resize: none;
+  min-height: 48px;
+  width: 100%;
+}
+
+.chat-textarea-dark::placeholder {
+  color: #3f3f46 !important;
+}
+
+.chat-input-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+/* Select overrides for rectangular dropdown style, matching the mockup image exactly */
+.chat-dropdown-rect {
+  appearance: none;
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 8px 32px 8px 14px !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a1a1aa' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 14px !important;
+  outline: none !important;
+  transition: all 150ms ease;
+}
+
+.chat-dropdown-rect:hover {
+  background-color: #121215 !important;
+  border-color: #3f3f46 !important;
+}
+
+.chat-send-btn-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  color: #a1a1aa;
+  transition: all 150ms ease;
+}
+
+.chat-send-btn-circle:hover:not(:disabled) {
+  background-color: #121215 !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.chat-send-btn-circle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Dark mode suggestions card design override */
+.suggestion-card-dark {
+  background-color: #000000 !important;
+  border: 1px solid #262626 !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  text-align: left;
+  transition: all 200ms ease;
+}
+
+.suggestion-card-dark:hover {
+  border-color: #1f1f23 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Custom overrides for Drawer and Modal visibility in Dark Mode */
+html.dark-mode .drawer-panel {
+  background-color: #000000 !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .drawer-panel button {
+  background-color: #000000 !important;
+}
+
+html.dark-mode .drawer-panel button.border-gray-900 {
+  border-color: #ffffff !important;
+}
+
+html.dark-mode .drawer-panel button.border-gray-200 {
+  border-color: #262626 !important;
+}
+
+html.dark-mode .fixed.inset-0.z-50 > div {
+  background-color: #000000 !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-white'],
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-gray-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-slate-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-zinc-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-neutral-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='bg-[#'],
+html.dark-mode .fixed.inset-0.z-50 li {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-900'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-800'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-700'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-900'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-800'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-700'] {
+  color: #f5f5f5 !important;
+}
+
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-600'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-500'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-gray-400'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-600'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-500'],
+html.dark-mode .fixed.inset-0.z-50 [class*='text-slate-400'] {
+  color: #b5b5b5 !important;
+}
+
+html.dark-mode .fixed.inset-0.z-50 [class*='border-gray-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='border-slate-'],
+html.dark-mode .fixed.inset-0.z-50 [class*='border-zinc-'] {
+  border-color: #2a2a2a !important;
+}
+
+html.dark-mode .border-dashed {
+  background-color: #000000 !important;
+  border-color: #404040 !important;
+}
+
