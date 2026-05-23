@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0024",
+  "company_name": "Pulse Market",
+  "industry": "subscription",
+  "region": "UK",
+  "generated_at": "2026-04-23T20:56:31.976040Z",
+  "counts": {
+    "contacts": 174,
+    "deals": 93,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 7,
+    "uploads": 14,
+    "marketing_rows": 300,
+    "email_campaigns": 31,
+    "posts": 62,
+    "comments": 124,
+    "tickets": 80,
+    "transcripts": 73,
+    "sessions": 29360,
+    "events": 147256,
+    "orders": 92,
+    "refunds": 13,
+    "invoices": 49,
+    "payments": 39,
+    "feedback": 109,
+    "feature_requests": 46,
+    "meeting_notes": 22,
+    "raw_observations": 48
+  }
+}

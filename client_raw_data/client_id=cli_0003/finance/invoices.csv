@@ -1,0 +1,56 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0003_inv_0001,2026-03-20,2026-06-05,AUD,11774.87,paid,Sara Bhatia,setup fee; creative work
+cli_0003_inv_0002,2026-01-22,2026-04-25,AUD,9856.33,paid,Arjun Joshi,setup fee
+cli_0003_inv_0003,2025-11-24,2026-04-15,AUD,10199.55,open,Arjun Singh,support
+cli_0003_inv_0004,2026-03-09,2026-05-07,AUD,5499.75,paid,Arjun Nair,consulting; setup fee; support
+cli_0003_inv_0005,2026-03-02,2026-04-26,AUD,6716.14,paid,Kabir Patel,consulting
+cli_0003_inv_0006,2026-01-04,2026-04-11,AUD,10484.02,open,Maya Gupta,creative work; media spend; strategy work
+cli_0003_inv_0007,2025-10-26,2026-04-26,AUD,7507.95,open,Sara Khan,media spend; support; consulting
+cli_0003_inv_0008,2025-10-28,2026-05-04,AUD,5153.92,open,Anika Joshi,media spend; support
+cli_0003_inv_0009,2026-01-19,2026-04-28,AUD,10334.57,paid,Mia Gupta,strategy work
+cli_0003_inv_0010,2025-11-02,2026-05-08,AUD,11075.31,paid,Ava Reddy,consulting; creative work
+cli_0003_inv_0011,2026-03-17,2026-05-31,AUD,8808.75,paid,Anika Sharma,consulting; setup fee
+cli_0003_inv_0012,2025-11-11,2026-06-04,AUD,5348.44,paid,Zara Khan,consulting
+cli_0003_inv_0013,2025-12-24,2026-05-18,AUD,9681.26,paid,Arjun Mehta,media spend; strategy work; consulting
+cli_0003_inv_0014,2026-01-15,2026-06-04,AUD,6709.55,paid,Maya Verma,creative work
+cli_0003_inv_0015,2026-02-28,2026-05-30,AUD,6018.59,overdue,Sara Nair,setup fee; support; creative work
+cli_0003_inv_0016,2026-01-29,2026-05-01,AUD,7793.11,paid,Ishaan Singh,setup fee
+cli_0003_inv_0017,2025-12-03,2026-05-02,AUD,8050.07,open,Mia Mehta,consulting
+cli_0003_inv_0018,2026-01-04,2026-03-29,AUD,11906.26,paid,Sara Patel,creative work
+cli_0003_inv_0019,2026-03-28,2026-04-04,AUD,4810.47,paid,Leo Reddy,creative work
+cli_0003_inv_0020,2025-10-27,2026-04-20,AUD,3675.86,open,Liam Reddy,creative work
+cli_0003_inv_0021,2025-12-12,2026-05-09,AUD,10050.03,paid,Liam Verma,creative work; strategy work
+cli_0003_inv_0022,2026-03-15,2026-06-02,AUD,10871.01,paid,Liam Joshi,consulting
+cli_0003_inv_0023,2025-11-10,2026-05-06,AUD,6568.78,paid,Zara Sharma,support; consulting; setup fee
+cli_0003_inv_0024,2026-03-02,2026-04-30,AUD,4756.78,paid,Ava Bhatia,media spend; consulting; strategy work
+cli_0003_inv_0025,2026-04-15,2026-05-29,AUD,1384.04,paid,Maya Gupta,consulting
+cli_0003_inv_0026,2026-04-02,2026-04-09,AUD,3286.53,paid,Mia Kapoor,consulting
+cli_0003_inv_0027,2026-03-06,2026-05-20,AUD,11746.77,overdue,Liam Singh,support
+cli_0003_inv_0028,2025-10-30,2026-04-14,AUD,11937.57,paid,Mia Bhatia,support; consulting
+cli_0003_inv_0029,2026-03-08,2026-04-29,AUD,2589.26,paid,Anika Singh,consulting; creative work; support
+cli_0003_inv_0030,2026-01-27,2026-06-06,AUD,9050.71,paid,Maya Nair,strategy work; media spend; support
+cli_0003_inv_0031,2026-01-26,2026-06-01,AUD,5011.98,overdue,Sara Nair,setup fee; consulting
+cli_0003_inv_0032,2026-01-12,2026-04-06,AUD,7110.35,overdue,Sara Sharma,media spend; strategy work; creative work
+cli_0003_inv_0033,2026-01-13,2026-04-07,AUD,8012.48,paid,Anika Nair,setup fee
+cli_0003_inv_0034,2026-02-11,2026-04-27,AUD,5333.02,open,Maya Joshi,creative work
+cli_0003_inv_0035,2026-03-24,2026-04-29,AUD,557.49,paid,Anika Joshi,setup fee
+cli_0003_inv_0036,2025-11-03,2026-06-06,AUD,8306.9,paid,Ava Nair,strategy work; support
+cli_0003_inv_0037,2026-01-27,2026-06-07,AUD,5359.85,paid,Ishaan Nair,media spend; creative work; consulting
+cli_0003_inv_0038,2026-02-07,2026-03-30,AUD,11741.74,paid,Kabir Mehta,support
+cli_0003_inv_0039,2026-01-24,2026-06-06,AUD,7603.21,open,Sara Verma,consulting; strategy work
+cli_0003_inv_0040,2026-03-20,2026-05-03,AUD,8492.15,paid,Zara Verma,support
+cli_0003_inv_0041,2026-03-15,2026-04-13,AUD,498.78,paid,Anika Kapoor,support; setup fee
+cli_0003_inv_0042,2026-03-09,2026-04-29,AUD,1926.6,paid,Mia Verma,support; creative work; consulting
+cli_0003_inv_0043,2026-02-23,2026-05-02,AUD,10352.31,paid,Leo Verma,support; media spend; setup fee
+cli_0003_inv_0044,2025-12-27,2026-04-23,AUD,11590.6,open,Kabir Sharma,support; strategy work; creative work
+cli_0003_inv_0045,2026-04-08,2026-04-14,AUD,9947.7,paid,Anika Joshi,strategy work; setup fee
+cli_0003_inv_0046,2026-01-17,2026-04-08,AUD,3378.46,paid,Ava Patel,creative work
+cli_0003_inv_0047,2025-11-21,2026-04-03,AUD,9454.11,paid,Anika Patel,support
+cli_0003_inv_0048,2026-01-29,2026-05-04,AUD,10352.17,open,Leo Nair,consulting; setup fee
+cli_0003_inv_0049,2026-01-01,2026-06-08,AUD,5138.23,paid,Ishaan Reddy,support; consulting
+cli_0003_inv_0050,2026-03-18,2026-04-09,AUD,4035.97,paid,Anika Singh,media spend
+cli_0003_inv_0051,2025-12-23,2026-04-19,AUD,1354.8,paid,Arjun Mehta,support
+cli_0003_inv_0052,2026-01-23,2026-04-21,AUD,9189.92,paid,Kabir Kapoor,support; media spend
+cli_0003_inv_0053,2025-11-23,2026-03-27,AUD,10112.62,paid,Anika Kapoor,strategy work; support
+cli_0003_inv_0054,2026-02-15,2026-05-13,AUD,7749.85,open,Maya Singh,setup fee
+cli_0003_inv_0055,2026-01-15,2026-05-01,AUD,11978.94,paid,Sara Gupta,media spend; strategy work; consulting

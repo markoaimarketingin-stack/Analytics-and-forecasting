@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0012",
+  "company_name": "Vertex Works",
+  "industry": "marketplace",
+  "region": "US",
+  "currency": "USD",
+  "website": "https://vertex-works.example.com",
+  "business_model": "subscription",
+  "employee_band": "51-200",
+  "objective": "traffic",
+  "budget_monthly": 12000,
+  "voice": "professional",
+  "channels": [
+    "email",
+    "referral",
+    "organic",
+    "direct",
+    "meta_ads"
+  ],
+  "created_at": "2026-04-23T20:56:09.595912Z"
+}

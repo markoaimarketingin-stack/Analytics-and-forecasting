@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0003",
+  "company_name": "Nova Finance",
+  "industry": "d2c",
+  "region": "AU",
+  "generated_at": "2026-04-23T20:55:56.240268Z",
+  "counts": {
+    "contacts": 185,
+    "deals": 85,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 5,
+    "uploads": 5,
+    "marketing_rows": 180,
+    "email_campaigns": 25,
+    "posts": 60,
+    "comments": 120,
+    "tickets": 65,
+    "transcripts": 54,
+    "sessions": 29497,
+    "events": 147416,
+    "orders": 199,
+    "refunds": 11,
+    "invoices": 55,
+    "payments": 40,
+    "feedback": 127,
+    "feature_requests": 51,
+    "meeting_notes": 23,
+    "raw_observations": 26
+  }
+}

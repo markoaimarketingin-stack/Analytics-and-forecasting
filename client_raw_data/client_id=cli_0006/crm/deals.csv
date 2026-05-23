@@ -1,0 +1,93 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0006_dl_0001,cli_0006_ct_0083,Nova Commerce - premium bundle,qualified,6708.85,CAD,63,referral,Noah Kapoor,2025-10-10,2025-10-31
+cli_0006_dl_0002,cli_0006_ct_0049,Nova Commerce - membership,qualified,15680.58,CAD,69,website_form,Sara Bhatia,2025-12-22,2026-01-21
+cli_0006_dl_0003,cli_0006_ct_0111,Nova Commerce - pro plan,proposal,15965.32,CAD,65,import,Zara Khan,2025-12-06,2026-01-08
+cli_0006_dl_0004,cli_0006_ct_0016,Nova Commerce - membership,qualified,24984.9,CAD,95,referral,Ava Joshi,2025-12-11,2025-12-24
+cli_0006_dl_0005,cli_0006_ct_0034,Nova Commerce - annual subscription,won,23810.62,CAD,25,website_form,Maya Joshi,2026-02-10,2026-04-02
+cli_0006_dl_0006,cli_0006_ct_0017,Nova Commerce - annual subscription,lost,2199.07,CAD,21,website_form,Zara Verma,2026-02-06,2026-04-06
+cli_0006_dl_0007,cli_0006_ct_0168,Nova Commerce - service retainer,qualified,12335.79,CAD,92,import,Ava Mehta,2025-12-19,2026-01-25
+cli_0006_dl_0008,cli_0006_ct_0063,Nova Commerce - starter plan,qualified,11119.79,CAD,65,website_form,Anika Gupta,2025-11-08,2026-01-07
+cli_0006_dl_0009,cli_0006_ct_0186,Nova Commerce - premium bundle,negotiation,2229.59,CAD,54,import,Ava Khan,2025-11-05,2025-11-18
+cli_0006_dl_0010,cli_0006_ct_0155,Nova Commerce - service retainer,won,15670.62,CAD,36,email_reply,Ishaan Singh,2026-02-03,2026-03-16
+cli_0006_dl_0011,cli_0006_ct_0005,Nova Commerce - premium bundle,proposal,17002.41,CAD,80,import,Liam Reddy,2026-01-30,2026-03-17
+cli_0006_dl_0012,cli_0006_ct_0117,Nova Commerce - annual subscription,qualified,428.78,CAD,23,email_reply,Maya Nair,2026-01-18,2026-02-19
+cli_0006_dl_0013,cli_0006_ct_0062,Nova Commerce - annual subscription,negotiation,20389.96,CAD,89,referral,Arjun Nair,2026-01-20,2026-02-21
+cli_0006_dl_0014,cli_0006_ct_0156,Nova Commerce - audit package,won,22561.71,CAD,42,referral,Sara Patel,2025-11-26,2025-12-10
+cli_0006_dl_0015,cli_0006_ct_0177,Nova Commerce - premium bundle,proposal,19601.05,CAD,33,email_reply,Zara Mehta,2026-04-16,2026-04-19
+cli_0006_dl_0016,cli_0006_ct_0096,Nova Commerce - premium bundle,proposal,2017.43,CAD,62,event,Zara Bhatia,2025-10-01,2025-11-04
+cli_0006_dl_0017,cli_0006_ct_0050,Nova Commerce - starter plan,qualified,17998.23,CAD,75,website_form,Liam Joshi,2025-10-17,2025-11-19
+cli_0006_dl_0018,cli_0006_ct_0186,Nova Commerce - starter plan,proposal,14080.25,CAD,58,import,Liam Joshi,2026-02-11,2026-03-15
+cli_0006_dl_0019,cli_0006_ct_0047,Nova Commerce - membership,new,23077.04,CAD,53,referral,Ava Reddy,2025-12-17,2026-02-04
+cli_0006_dl_0020,cli_0006_ct_0044,Nova Commerce - service retainer,qualified,2743.26,CAD,68,website_form,Maya Mehta,2026-03-24,2026-04-12
+cli_0006_dl_0021,cli_0006_ct_0191,Nova Commerce - service retainer,qualified,12329.67,CAD,58,email_reply,Leo Patel,2026-01-12,2026-02-11
+cli_0006_dl_0022,cli_0006_ct_0088,Nova Commerce - membership,proposal,24096.88,CAD,9,event,Liam Kapoor,2025-11-27,2026-01-25
+cli_0006_dl_0023,cli_0006_ct_0106,Nova Commerce - starter plan,won,24391.97,CAD,61,website_form,Maya Sharma,2026-03-25,2026-04-02
+cli_0006_dl_0024,cli_0006_ct_0176,Nova Commerce - annual subscription,proposal,11765.57,CAD,39,import,Maya Verma,2026-01-12,2026-02-16
+cli_0006_dl_0025,cli_0006_ct_0178,Nova Commerce - premium bundle,lost,13356.93,CAD,53,email_reply,Anika Patel,2025-11-18,2025-12-26
+cli_0006_dl_0026,cli_0006_ct_0162,Nova Commerce - service retainer,negotiation,22666.04,CAD,22,website_form,Ishaan Nair,2025-10-27,2025-11-08
+cli_0006_dl_0027,cli_0006_ct_0169,Nova Commerce - pro plan,lost,19634.94,CAD,89,import,Kabir Nair,2026-02-14,2026-03-22
+cli_0006_dl_0028,cli_0006_ct_0061,Nova Commerce - annual subscription,new,24093.95,CAD,81,website_form,Ava Bhatia,2026-03-12,2026-04-08
+cli_0006_dl_0029,cli_0006_ct_0021,Nova Commerce - premium bundle,won,2531.29,CAD,29,import,Sara Kapoor,2025-10-09,2025-11-05
+cli_0006_dl_0030,cli_0006_ct_0101,Nova Commerce - premium bundle,won,4133.96,CAD,37,email_reply,Kabir Reddy,2025-12-08,2025-12-15
+cli_0006_dl_0031,cli_0006_ct_0053,Nova Commerce - service retainer,qualified,3661.74,CAD,29,website_form,Anika Singh,2026-02-11,2026-02-17
+cli_0006_dl_0032,cli_0006_ct_0135,Nova Commerce - annual subscription,won,17720.87,CAD,78,website_form,Leo Verma,2026-03-23,2026-04-18
+cli_0006_dl_0033,cli_0006_ct_0044,Nova Commerce - pro plan,qualified,24737.3,CAD,48,website_form,Maya Khan,2026-02-12,2026-04-02
+cli_0006_dl_0034,cli_0006_ct_0092,Nova Commerce - membership,proposal,9625.73,CAD,88,website_form,Liam Kapoor,2026-03-12,2026-03-15
+cli_0006_dl_0035,cli_0006_ct_0140,Nova Commerce - pro plan,negotiation,6485.85,CAD,86,referral,Ava Joshi,2025-12-07,2026-01-05
+cli_0006_dl_0036,cli_0006_ct_0066,Nova Commerce - annual subscription,negotiation,22473.2,CAD,50,website_form,Arjun Kapoor,2025-10-24,2025-12-12
+cli_0006_dl_0037,cli_0006_ct_0074,Nova Commerce - service retainer,qualified,6092.58,CAD,45,import,Leo Patel,2025-11-25,2025-12-13
+cli_0006_dl_0038,cli_0006_ct_0031,Nova Commerce - pro plan,qualified,11653.46,CAD,19,import,Liam Gupta,2025-12-31,2026-02-22
+cli_0006_dl_0039,cli_0006_ct_0102,Nova Commerce - service retainer,won,22283.07,CAD,65,website_form,Arjun Mehta,2025-10-13,2025-11-13
+cli_0006_dl_0040,cli_0006_ct_0154,Nova Commerce - starter plan,lost,21984.22,CAD,47,referral,Ava Kapoor,2025-10-18,2025-10-26
+cli_0006_dl_0041,cli_0006_ct_0096,Nova Commerce - membership,proposal,18383.07,CAD,5,event,Zara Singh,2026-01-27,2026-02-26
+cli_0006_dl_0042,cli_0006_ct_0166,Nova Commerce - annual subscription,new,23952.37,CAD,47,import,Anika Patel,2025-11-17,2025-11-29
+cli_0006_dl_0043,cli_0006_ct_0094,Nova Commerce - service retainer,proposal,21093.72,CAD,37,email_reply,Ishaan Gupta,2026-01-31,2026-02-22
+cli_0006_dl_0044,cli_0006_ct_0027,Nova Commerce - starter plan,proposal,10357.19,CAD,90,import,Arjun Reddy,2026-03-10,2026-03-20
+cli_0006_dl_0045,cli_0006_ct_0093,Nova Commerce - premium bundle,new,22928.06,CAD,48,website_form,Liam Sharma,2026-02-01,2026-03-16
+cli_0006_dl_0046,cli_0006_ct_0053,Nova Commerce - annual subscription,qualified,1879.85,CAD,75,website_form,Anika Nair,2025-09-17,2025-11-02
+cli_0006_dl_0047,cli_0006_ct_0189,Nova Commerce - audit package,won,15801.0,CAD,93,referral,Ava Khan,2025-09-15,2025-10-27
+cli_0006_dl_0048,cli_0006_ct_0052,Nova Commerce - service retainer,new,9478.16,CAD,62,website_form,Mia Patel,2026-03-10,2026-03-14
+cli_0006_dl_0049,cli_0006_ct_0104,Nova Commerce - membership,proposal,19910.01,CAD,67,website_form,Maya Singh,2025-10-06,2025-11-09
+cli_0006_dl_0050,cli_0006_ct_0150,Nova Commerce - audit package,negotiation,7836.68,CAD,8,email_reply,Noah Khan,2026-01-21,2026-03-18
+cli_0006_dl_0051,cli_0006_ct_0081,Nova Commerce - service retainer,new,10129.25,CAD,11,event,Ava Sharma,2025-11-25,2026-01-14
+cli_0006_dl_0052,cli_0006_ct_0124,Nova Commerce - annual subscription,proposal,16224.58,CAD,56,website_form,Ishaan Kapoor,2025-10-26,2025-12-13
+cli_0006_dl_0053,cli_0006_ct_0168,Nova Commerce - membership,proposal,9105.23,CAD,63,import,Liam Verma,2026-04-05,2026-04-13
+cli_0006_dl_0054,cli_0006_ct_0165,Nova Commerce - pro plan,proposal,24526.72,CAD,52,website_form,Ava Reddy,2025-12-25,2026-02-14
+cli_0006_dl_0055,cli_0006_ct_0083,Nova Commerce - service retainer,proposal,15495.25,CAD,25,referral,Ishaan Nair,2026-03-24,2026-04-07
+cli_0006_dl_0056,cli_0006_ct_0003,Nova Commerce - pro plan,qualified,19410.71,CAD,23,import,Maya Bhatia,2025-11-13,2025-12-24
+cli_0006_dl_0057,cli_0006_ct_0147,Nova Commerce - starter plan,proposal,15035.13,CAD,19,website_form,Kabir Singh,2026-01-04,2026-02-22
+cli_0006_dl_0058,cli_0006_ct_0150,Nova Commerce - premium bundle,new,15126.13,CAD,5,email_reply,Maya Gupta,2026-01-25,2026-03-20
+cli_0006_dl_0059,cli_0006_ct_0110,Nova Commerce - annual subscription,lost,24129.04,CAD,58,referral,Liam Reddy,2025-10-30,2025-12-21
+cli_0006_dl_0060,cli_0006_ct_0130,Nova Commerce - premium bundle,won,24805.75,CAD,75,email_reply,Mia Joshi,2026-02-23,2026-03-21
+cli_0006_dl_0061,cli_0006_ct_0171,Nova Commerce - service retainer,negotiation,15585.24,CAD,65,email_reply,Zara Nair,2026-02-07,2026-02-11
+cli_0006_dl_0062,cli_0006_ct_0180,Nova Commerce - service retainer,qualified,20206.75,CAD,5,event,Leo Bhatia,2025-11-23,2025-12-09
+cli_0006_dl_0063,cli_0006_ct_0175,Nova Commerce - membership,won,8586.21,CAD,26,email_reply,Liam Kapoor,2026-03-10,2026-04-02
+cli_0006_dl_0064,cli_0006_ct_0093,Nova Commerce - pro plan,qualified,20193.37,CAD,53,website_form,Noah Kapoor,2026-03-09,2026-03-21
+cli_0006_dl_0065,cli_0006_ct_0087,Nova Commerce - service retainer,proposal,21335.36,CAD,15,referral,Sara Verma,2025-10-15,2025-11-17
+cli_0006_dl_0066,cli_0006_ct_0041,Nova Commerce - annual subscription,won,4380.37,CAD,61,event,Ava Verma,2025-11-10,2025-11-30
+cli_0006_dl_0067,cli_0006_ct_0105,Nova Commerce - pro plan,lost,18375.54,CAD,5,website_form,Sara Bhatia,2025-11-15,2026-01-14
+cli_0006_dl_0068,cli_0006_ct_0039,Nova Commerce - annual subscription,won,462.5,CAD,86,import,Maya Singh,2025-10-26,2025-12-03
+cli_0006_dl_0069,cli_0006_ct_0095,Nova Commerce - premium bundle,lost,22163.94,CAD,14,email_reply,Arjun Bhatia,2025-12-20,2025-12-28
+cli_0006_dl_0070,cli_0006_ct_0157,Nova Commerce - audit package,qualified,20081.61,CAD,54,website_form,Liam Sharma,2025-11-16,2025-12-13
+cli_0006_dl_0071,cli_0006_ct_0138,Nova Commerce - annual subscription,qualified,5078.77,CAD,90,website_form,Leo Gupta,2026-01-27,2026-03-27
+cli_0006_dl_0072,cli_0006_ct_0004,Nova Commerce - premium bundle,negotiation,19356.46,CAD,64,email_reply,Arjun Kapoor,2025-11-17,2025-12-16
+cli_0006_dl_0073,cli_0006_ct_0158,Nova Commerce - premium bundle,negotiation,15887.15,CAD,86,referral,Maya Khan,2025-11-24,2026-01-08
+cli_0006_dl_0074,cli_0006_ct_0025,Nova Commerce - service retainer,qualified,886.06,CAD,88,import,Kabir Kapoor,2025-11-24,2026-01-15
+cli_0006_dl_0075,cli_0006_ct_0106,Nova Commerce - pro plan,qualified,3764.89,CAD,59,website_form,Liam Khan,2025-11-01,2025-11-18
+cli_0006_dl_0076,cli_0006_ct_0039,Nova Commerce - pro plan,proposal,9459.89,CAD,86,import,Kabir Sharma,2025-09-05,2025-11-04
+cli_0006_dl_0077,cli_0006_ct_0087,Nova Commerce - pro plan,lost,23533.62,CAD,30,referral,Maya Nair,2025-10-05,2025-11-13
+cli_0006_dl_0078,cli_0006_ct_0001,Nova Commerce - starter plan,lost,20988.81,CAD,20,import,Zara Mehta,2026-01-18,2026-03-16
+cli_0006_dl_0079,cli_0006_ct_0069,Nova Commerce - audit package,qualified,14022.68,CAD,72,email_reply,Kabir Verma,2026-03-20,2026-04-18
+cli_0006_dl_0080,cli_0006_ct_0128,Nova Commerce - membership,won,4724.34,CAD,91,email_reply,Mia Khan,2025-10-17,2025-11-30
+cli_0006_dl_0081,cli_0006_ct_0181,Nova Commerce - annual subscription,qualified,16613.92,CAD,10,website_form,Zara Joshi,2026-02-21,2026-03-18
+cli_0006_dl_0082,cli_0006_ct_0181,Nova Commerce - audit package,qualified,8476.88,CAD,29,website_form,Maya Khan,2026-01-28,2026-02-12
+cli_0006_dl_0083,cli_0006_ct_0055,Nova Commerce - starter plan,negotiation,21422.82,CAD,73,event,Leo Mehta,2025-12-08,2026-01-07
+cli_0006_dl_0084,cli_0006_ct_0108,Nova Commerce - service retainer,lost,16316.67,CAD,26,email_reply,Ava Bhatia,2026-02-08,2026-02-22
+cli_0006_dl_0085,cli_0006_ct_0100,Nova Commerce - audit package,proposal,8108.13,CAD,55,import,Noah Kapoor,2026-01-11,2026-02-22
+cli_0006_dl_0086,cli_0006_ct_0053,Nova Commerce - audit package,lost,16479.99,CAD,15,website_form,Kabir Nair,2025-12-27,2026-01-14
+cli_0006_dl_0087,cli_0006_ct_0092,Nova Commerce - membership,won,23625.14,CAD,25,website_form,Ava Singh,2026-03-14,2026-04-19
+cli_0006_dl_0088,cli_0006_ct_0044,Nova Commerce - service retainer,negotiation,15312.58,CAD,90,website_form,Noah Singh,2026-02-17,2026-03-18
+cli_0006_dl_0089,cli_0006_ct_0135,Nova Commerce - membership,won,527.4,CAD,43,website_form,Ishaan Verma,2025-09-11,2025-10-26
+cli_0006_dl_0090,cli_0006_ct_0155,Nova Commerce - audit package,proposal,14278.13,CAD,15,email_reply,Anika Gupta,2025-12-09,2026-01-13
+cli_0006_dl_0091,cli_0006_ct_0047,Nova Commerce - annual subscription,won,15323.95,CAD,24,referral,Arjun Joshi,2025-11-29,2026-01-01
+cli_0006_dl_0092,cli_0006_ct_0065,Nova Commerce - service retainer,proposal,12656.84,CAD,76,import,Kabir Reddy,2026-01-08,2026-01-29

@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0023",
+  "company_name": "Nova Labs",
+  "industry": "subscription",
+  "region": "US",
+  "currency": "USD",
+  "website": "https://nova-labs.example.com",
+  "business_model": "b2c",
+  "employee_band": "11-50",
+  "objective": "traffic",
+  "budget_monthly": 5000,
+  "voice": "direct",
+  "channels": [
+    "tiktok_ads",
+    "google_ads",
+    "email",
+    "referral",
+    "meta_ads"
+  ],
+  "created_at": "2026-04-23T20:56:28.314852Z"
+}

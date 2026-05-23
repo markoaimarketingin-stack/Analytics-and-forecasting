@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0010",
+  "company_name": "North Studio",
+  "industry": "marketplace",
+  "region": "UK",
+  "generated_at": "2026-04-23T20:56:08.002610Z",
+  "counts": {
+    "contacts": 127,
+    "deals": 81,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 7,
+    "uploads": 5,
+    "marketing_rows": 300,
+    "email_campaigns": 60,
+    "posts": 62,
+    "comments": 124,
+    "tickets": 81,
+    "transcripts": 61,
+    "sessions": 26094,
+    "events": 130079,
+    "orders": 105,
+    "refunds": 14,
+    "invoices": 28,
+    "payments": 14,
+    "feedback": 132,
+    "feature_requests": 26,
+    "meeting_notes": 15,
+    "raw_observations": 38
+  }
+}

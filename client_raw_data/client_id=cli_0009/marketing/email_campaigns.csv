@@ -1,0 +1,44 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0009_em_0001,Education,How to improve Urban Works,38270,37150,12756,895,206,3,2026-02-14
+cli_0009_em_0002,Offer,New Urban Works,32100,31759,4092,486,56,2,2026-01-28
+cli_0009_em_0003,Winback,New Urban Works,27080,26537,10694,1113,39,2,2026-04-15
+cli_0009_em_0004,Winback,New Urban Works,26724,25771,10570,595,67,1,2026-01-29
+cli_0009_em_0005,Winback,New Urban Works,40076,39063,5093,1071,331,1,2026-04-07
+cli_0009_em_0006,Newsletter,A quick update on Urban Works,20072,19754,4162,287,155,0,2026-02-18
+cli_0009_em_0007,Offer,A quick update on Urban Works,5278,5092,2061,219,13,0,2026-01-13
+cli_0009_em_0008,Education,A quick update on Urban Works,43175,41477,15043,3205,35,3,2026-04-12
+cli_0009_em_0009,Launch,New Urban Works,11573,11472,2784,591,51,1,2026-03-27
+cli_0009_em_0010,Launch,Last chance for Urban Works,20001,19505,6778,1425,120,4,2025-11-12
+cli_0009_em_0011,Launch,A quick update on Urban Works,45441,44094,17639,2308,390,5,2026-02-20
+cli_0009_em_0012,Education,New Urban Works,43679,42763,22990,2139,346,5,2025-12-28
+cli_0009_em_0013,Re-engagement,How to improve Urban Works,2266,2184,884,145,14,2,2026-01-11
+cli_0009_em_0014,Winback,New Urban Works,48374,46512,20872,4200,237,4,2025-11-06
+cli_0009_em_0015,Winback,A quick update on Urban Works,1479,1467,455,33,13,1,2025-11-16
+cli_0009_em_0016,Re-engagement,A quick update on Urban Works,4860,4665,1251,247,27,3,2025-12-29
+cli_0009_em_0017,Launch,A quick update on Urban Works,18826,18411,5759,406,145,0,2026-02-04
+cli_0009_em_0018,Launch,New Urban Works,31949,31177,12438,2527,199,5,2026-03-17
+cli_0009_em_0019,Education,New Urban Works,13168,12794,4248,821,63,3,2026-03-11
+cli_0009_em_0020,Re-engagement,A quick update on Urban Works,45357,44576,5630,833,196,0,2026-04-07
+cli_0009_em_0021,Education,How to improve Urban Works,31781,30866,17117,2189,104,0,2025-12-25
+cli_0009_em_0022,Winback,Last chance for Urban Works,5951,5934,727,78,42,5,2025-11-25
+cli_0009_em_0023,Re-engagement,How to improve Urban Works,6148,5882,2007,176,29,4,2026-03-07
+cli_0009_em_0024,Newsletter,A quick update on Urban Works,23636,22488,10116,822,133,5,2026-01-08
+cli_0009_em_0025,Education,New Urban Works,17719,17451,7944,819,10,1,2026-04-18
+cli_0009_em_0026,Education,A quick update on Urban Works,18357,17957,4577,264,129,2,2025-11-27
+cli_0009_em_0027,Newsletter,A quick update on Urban Works,24396,24019,5558,1217,210,5,2026-02-24
+cli_0009_em_0028,Re-engagement,How to improve Urban Works,38673,37189,11225,2404,142,2,2026-02-08
+cli_0009_em_0029,Newsletter,How to improve Urban Works,19412,19370,9007,1142,118,4,2026-02-13
+cli_0009_em_0030,Winback,Last chance for Urban Works,10678,10465,5015,625,46,0,2026-01-05
+cli_0009_em_0031,Offer,Last chance for Urban Works,18163,17424,6415,987,4,3,2026-02-16
+cli_0009_em_0032,Offer,Last chance for Urban Works,17381,17134,7750,1103,51,4,2026-03-07
+cli_0009_em_0033,Offer,How to improve Urban Works,10309,10291,3895,511,88,2,2026-02-19
+cli_0009_em_0034,Newsletter,New Urban Works,49869,48682,6825,676,119,0,2025-12-09
+cli_0009_em_0035,Newsletter,A quick update on Urban Works,45200,43265,10639,1526,439,5,2026-01-28
+cli_0009_em_0036,Offer,New Urban Works,40310,39781,17581,2111,161,3,2026-02-12
+cli_0009_em_0037,Offer,New Urban Works,8473,8246,1286,251,17,2,2026-04-09
+cli_0009_em_0038,Winback,Last chance for Urban Works,14523,13890,7471,1319,73,2,2025-12-02
+cli_0009_em_0039,Education,New Urban Works,11491,11122,4330,620,52,5,2025-11-04
+cli_0009_em_0040,Winback,Last chance for Urban Works,21915,21536,10080,1756,72,0,2026-04-02
+cli_0009_em_0041,Launch,How to improve Urban Works,7929,7627,4023,525,57,3,2026-02-21
+cli_0009_em_0042,Launch,A quick update on Urban Works,7323,7075,3896,740,27,3,2026-03-08
+cli_0009_em_0043,Education,New Urban Works,42214,42100,7928,947,9,1,2025-12-14

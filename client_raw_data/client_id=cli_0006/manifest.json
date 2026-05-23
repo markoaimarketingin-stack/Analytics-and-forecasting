@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0006",
+  "company_name": "Nova Commerce",
+  "industry": "d2c",
+  "region": "CA",
+  "generated_at": "2026-04-23T20:56:01.084809Z",
+  "counts": {
+    "contacts": 198,
+    "deals": 92,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 4,
+    "uploads": 7,
+    "marketing_rows": 300,
+    "email_campaigns": 27,
+    "posts": 55,
+    "comments": 110,
+    "tickets": 47,
+    "transcripts": 64,
+    "sessions": 23473,
+    "events": 117341,
+    "orders": 202,
+    "refunds": 12,
+    "invoices": 65,
+    "payments": 40,
+    "feedback": 120,
+    "feature_requests": 62,
+    "meeting_notes": 13,
+    "raw_observations": 45
+  }
+}

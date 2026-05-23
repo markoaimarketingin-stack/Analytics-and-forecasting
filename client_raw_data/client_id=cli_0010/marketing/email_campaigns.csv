@@ -1,0 +1,61 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0010_em_0001,Education,New North Studio,40125,39211,20167,4090,106,0,2026-02-25
+cli_0010_em_0002,Launch,A quick update on North Studio,45825,43566,9131,1600,38,5,2026-02-10
+cli_0010_em_0003,Newsletter,Last chance for North Studio,15740,15253,4987,682,124,0,2025-12-21
+cli_0010_em_0004,Offer,Last chance for North Studio,1549,1479,575,82,2,1,2025-12-29
+cli_0010_em_0005,Winback,Last chance for North Studio,25569,24383,3269,382,110,5,2026-01-28
+cli_0010_em_0006,Winback,New North Studio,14125,14103,5165,608,62,0,2026-04-04
+cli_0010_em_0007,Newsletter,A quick update on North Studio,38543,37813,14425,2641,185,1,2025-11-30
+cli_0010_em_0008,Launch,Last chance for North Studio,13883,13339,6296,651,90,5,2026-02-27
+cli_0010_em_0009,Winback,How to improve North Studio,44075,42313,24188,3705,277,5,2026-03-09
+cli_0010_em_0010,Winback,A quick update on North Studio,45948,45347,17207,3766,400,0,2026-03-30
+cli_0010_em_0011,Education,A quick update on North Studio,34608,34341,17412,1629,273,1,2025-12-08
+cli_0010_em_0012,Offer,How to improve North Studio,47959,45909,17737,3396,309,5,2026-03-21
+cli_0010_em_0013,Education,How to improve North Studio,42985,41350,6139,454,15,5,2025-12-11
+cli_0010_em_0014,Launch,Last chance for North Studio,27009,25831,6293,702,132,4,2026-02-16
+cli_0010_em_0015,Launch,New North Studio,30988,30701,14283,2738,31,0,2026-02-05
+cli_0010_em_0016,Winback,A quick update on North Studio,40689,38951,12861,644,112,3,2026-02-22
+cli_0010_em_0017,Newsletter,Last chance for North Studio,45474,43462,20317,3074,407,4,2026-03-26
+cli_0010_em_0018,Launch,New North Studio,38570,37941,13525,1641,375,5,2025-12-28
+cli_0010_em_0019,Launch,How to improve North Studio,6338,6159,2815,566,13,0,2025-11-10
+cli_0010_em_0020,Re-engagement,A quick update on North Studio,26873,26675,11564,1003,200,4,2025-11-13
+cli_0010_em_0021,Launch,New North Studio,15375,14893,3551,663,48,4,2026-03-16
+cli_0010_em_0022,Offer,New North Studio,5673,5448,2438,157,48,5,2026-04-01
+cli_0010_em_0023,Winback,Last chance for North Studio,10183,10010,4704,972,63,4,2026-02-27
+cli_0010_em_0024,Newsletter,Last chance for North Studio,15380,15041,6512,336,120,0,2026-01-09
+cli_0010_em_0025,Education,How to improve North Studio,5929,5756,2070,355,13,3,2025-12-27
+cli_0010_em_0026,Re-engagement,Last chance for North Studio,49544,47835,16774,2159,70,0,2026-02-24
+cli_0010_em_0027,Winback,A quick update on North Studio,42759,40975,8780,414,348,3,2026-03-18
+cli_0010_em_0028,Newsletter,How to improve North Studio,41348,40617,10023,1728,257,3,2025-12-13
+cli_0010_em_0029,Newsletter,Last chance for North Studio,38064,37916,12154,2095,32,4,2025-12-16
+cli_0010_em_0030,Offer,A quick update on North Studio,550,526,224,12,2,1,2025-12-18
+cli_0010_em_0031,Education,New North Studio,4351,4234,1764,210,28,2,2026-03-11
+cli_0010_em_0032,Re-engagement,Last chance for North Studio,43667,42987,13839,590,49,5,2026-04-22
+cli_0010_em_0033,Newsletter,New North Studio,30533,29409,13519,1034,94,0,2025-11-06
+cli_0010_em_0034,Newsletter,How to improve North Studio,38226,36458,11320,2160,235,0,2026-03-04
+cli_0010_em_0035,Education,A quick update on North Studio,44366,43680,14818,2375,268,1,2026-01-21
+cli_0010_em_0036,Newsletter,New North Studio,27198,26330,13386,2481,0,0,2025-11-15
+cli_0010_em_0037,Winback,A quick update on North Studio,25522,24266,11062,2014,211,1,2025-12-17
+cli_0010_em_0038,Newsletter,How to improve North Studio,39954,39652,17619,2480,57,1,2025-11-18
+cli_0010_em_0039,Newsletter,A quick update on North Studio,1117,1097,244,16,5,3,2025-11-15
+cli_0010_em_0040,Launch,New North Studio,45369,43619,16908,692,89,5,2026-04-10
+cli_0010_em_0041,Launch,Last chance for North Studio,47446,46268,12404,1776,49,1,2025-10-30
+cli_0010_em_0042,Education,New North Studio,35085,34053,13069,1647,324,4,2026-04-01
+cli_0010_em_0043,Newsletter,Last chance for North Studio,49113,48791,24872,4684,135,1,2026-01-03
+cli_0010_em_0044,Education,New North Studio,12489,11980,4130,292,91,1,2026-04-07
+cli_0010_em_0045,Winback,A quick update on North Studio,23063,22677,2799,211,30,2,2025-11-17
+cli_0010_em_0046,Launch,Last chance for North Studio,25619,25426,12908,2548,173,3,2025-10-30
+cli_0010_em_0047,Re-engagement,How to improve North Studio,21287,20340,11023,1891,171,1,2025-11-24
+cli_0010_em_0048,Re-engagement,Last chance for North Studio,34086,33200,8702,1093,112,5,2026-02-20
+cli_0010_em_0049,Re-engagement,Last chance for North Studio,9035,8889,2879,268,36,1,2026-01-15
+cli_0010_em_0050,Education,A quick update on North Studio,20836,20661,7135,1426,42,2,2026-01-16
+cli_0010_em_0051,Winback,A quick update on North Studio,13998,13744,2350,208,134,2,2026-03-08
+cli_0010_em_0052,Winback,New North Studio,36272,35917,17583,3100,281,3,2026-01-11
+cli_0010_em_0053,Winback,New North Studio,41202,40899,10665,1131,16,4,2025-12-23
+cli_0010_em_0054,Re-engagement,New North Studio,21910,21638,2963,427,195,0,2026-03-18
+cli_0010_em_0055,Winback,A quick update on North Studio,16172,15743,4274,755,70,1,2025-12-26
+cli_0010_em_0056,Offer,New North Studio,47692,46306,15502,2334,14,4,2026-01-21
+cli_0010_em_0057,Newsletter,How to improve North Studio,34220,33453,5795,578,66,4,2026-03-03
+cli_0010_em_0058,Education,Last chance for North Studio,29340,28618,14714,2994,239,3,2026-02-06
+cli_0010_em_0059,Re-engagement,New North Studio,37018,35752,7076,1111,159,2,2026-01-23
+cli_0010_em_0060,Offer,How to improve North Studio,49129,48592,14624,2927,240,0,2026-04-24

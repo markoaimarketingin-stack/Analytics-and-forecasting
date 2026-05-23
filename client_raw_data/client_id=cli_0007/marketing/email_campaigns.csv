@@ -1,0 +1,24 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0007_em_0001,Offer,How to improve Vertex Works,16733,16638,6201,736,125,1,2026-01-14
+cli_0007_em_0002,Education,A quick update on Vertex Works,8208,8082,3792,162,29,4,2026-03-03
+cli_0007_em_0003,Re-engagement,How to improve Vertex Works,29642,28297,11698,1668,249,1,2025-12-06
+cli_0007_em_0004,Winback,New Vertex Works,15741,15387,8645,975,151,4,2025-12-16
+cli_0007_em_0005,Education,A quick update on Vertex Works,48873,47734,16020,3144,23,0,2026-01-12
+cli_0007_em_0006,Winback,New Vertex Works,3900,3870,1528,178,12,3,2026-03-21
+cli_0007_em_0007,Re-engagement,How to improve Vertex Works,33770,33644,16748,1117,118,2,2026-04-06
+cli_0007_em_0008,Education,New Vertex Works,9001,8981,3693,763,63,0,2025-11-02
+cli_0007_em_0009,Re-engagement,How to improve Vertex Works,43351,43040,10710,2128,242,1,2025-10-26
+cli_0007_em_0010,Newsletter,How to improve Vertex Works,13017,12962,1744,189,31,4,2026-04-15
+cli_0007_em_0011,Launch,A quick update on Vertex Works,22136,21423,10628,2008,66,4,2025-12-29
+cli_0007_em_0012,Education,A quick update on Vertex Works,33542,32346,15067,3297,219,2,2025-10-30
+cli_0007_em_0013,Newsletter,New Vertex Works,41424,40589,5586,290,213,5,2026-01-25
+cli_0007_em_0014,Re-engagement,New Vertex Works,9573,9308,4653,499,15,0,2026-03-09
+cli_0007_em_0015,Winback,Last chance for Vertex Works,23912,23303,5197,976,57,1,2025-12-08
+cli_0007_em_0016,Newsletter,A quick update on Vertex Works,38368,38263,15627,2009,219,0,2026-03-25
+cli_0007_em_0017,Education,New Vertex Works,38798,38102,16189,2994,196,2,2025-12-02
+cli_0007_em_0018,Education,How to improve Vertex Works,9713,9413,2981,518,26,4,2026-02-24
+cli_0007_em_0019,Re-engagement,Last chance for Vertex Works,29042,27930,11975,2597,180,3,2026-02-09
+cli_0007_em_0020,Offer,How to improve Vertex Works,32174,31145,8423,790,309,4,2026-02-11
+cli_0007_em_0021,Winback,New Vertex Works,1789,1718,330,49,11,0,2026-02-14
+cli_0007_em_0022,Re-engagement,How to improve Vertex Works,18131,17268,4260,640,171,3,2025-12-26
+cli_0007_em_0023,Offer,New Vertex Works,20395,20195,10135,1352,171,5,2026-02-11

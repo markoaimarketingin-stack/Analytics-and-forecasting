@@ -1,0 +1,82 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0007_dl_0001,cli_0007_ct_0014,Vertex Works - premium bundle,negotiation,4339.27,AUD,11,website_form,Maya Bhatia,2026-01-15,2026-02-24
+cli_0007_dl_0002,cli_0007_ct_0146,Vertex Works - pro plan,won,21472.67,AUD,8,import,Anika Bhatia,2026-03-28,2026-04-22
+cli_0007_dl_0003,cli_0007_ct_0060,Vertex Works - service retainer,lost,15020.37,AUD,58,import,Mia Patel,2026-03-16,2026-04-08
+cli_0007_dl_0004,cli_0007_ct_0017,Vertex Works - premium bundle,lost,12026.49,AUD,32,import,Leo Khan,2026-01-18,2026-01-23
+cli_0007_dl_0005,cli_0007_ct_0081,Vertex Works - starter plan,negotiation,17663.23,AUD,88,event,Arjun Sharma,2025-10-21,2025-12-06
+cli_0007_dl_0006,cli_0007_ct_0078,Vertex Works - audit package,qualified,19618.87,AUD,18,import,Kabir Verma,2025-09-27,2025-11-03
+cli_0007_dl_0007,cli_0007_ct_0048,Vertex Works - pro plan,lost,14075.6,AUD,8,referral,Sara Gupta,2026-02-24,2026-03-20
+cli_0007_dl_0008,cli_0007_ct_0036,Vertex Works - membership,qualified,13526.42,AUD,78,website_form,Leo Mehta,2026-02-24,2026-04-15
+cli_0007_dl_0009,cli_0007_ct_0031,Vertex Works - audit package,qualified,7978.77,AUD,25,import,Maya Patel,2026-03-05,2026-03-22
+cli_0007_dl_0010,cli_0007_ct_0074,Vertex Works - starter plan,negotiation,4867.47,AUD,93,import,Ava Gupta,2026-03-07,2026-04-08
+cli_0007_dl_0011,cli_0007_ct_0116,Vertex Works - pro plan,lost,6486.79,AUD,17,import,Arjun Verma,2026-02-05,2026-03-16
+cli_0007_dl_0012,cli_0007_ct_0088,Vertex Works - audit package,proposal,19156.96,AUD,30,website_form,Leo Mehta,2025-12-15,2026-02-06
+cli_0007_dl_0013,cli_0007_ct_0146,Vertex Works - starter plan,won,10311.26,AUD,51,import,Mia Patel,2025-09-30,2025-11-26
+cli_0007_dl_0014,cli_0007_ct_0151,Vertex Works - service retainer,qualified,2839.01,AUD,80,website_form,Ava Joshi,2025-10-20,2025-12-03
+cli_0007_dl_0015,cli_0007_ct_0065,Vertex Works - pro plan,qualified,2554.32,AUD,23,import,Arjun Reddy,2026-01-21,2026-02-07
+cli_0007_dl_0016,cli_0007_ct_0035,Vertex Works - audit package,negotiation,6107.32,AUD,25,website_form,Zara Reddy,2026-01-18,2026-02-20
+cli_0007_dl_0017,cli_0007_ct_0087,Vertex Works - audit package,proposal,20531.78,AUD,39,email_reply,Ava Joshi,2026-04-01,2026-04-06
+cli_0007_dl_0018,cli_0007_ct_0108,Vertex Works - starter plan,won,4036.83,AUD,69,import,Sara Mehta,2026-03-02,2026-04-20
+cli_0007_dl_0019,cli_0007_ct_0147,Vertex Works - annual subscription,proposal,10428.3,AUD,80,email_reply,Ava Kapoor,2025-12-14,2026-01-18
+cli_0007_dl_0020,cli_0007_ct_0141,Vertex Works - annual subscription,lost,11768.57,AUD,45,email_reply,Kabir Nair,2025-09-07,2025-11-04
+cli_0007_dl_0021,cli_0007_ct_0007,Vertex Works - premium bundle,qualified,3899.35,AUD,66,event,Liam Mehta,2025-11-07,2025-12-01
+cli_0007_dl_0022,cli_0007_ct_0029,Vertex Works - audit package,negotiation,2210.34,AUD,60,email_reply,Ishaan Bhatia,2026-02-27,2026-03-31
+cli_0007_dl_0023,cli_0007_ct_0112,Vertex Works - starter plan,proposal,22313.93,AUD,92,website_form,Leo Verma,2026-01-09,2026-01-22
+cli_0007_dl_0024,cli_0007_ct_0035,Vertex Works - audit package,proposal,20175.55,AUD,74,website_form,Mia Verma,2025-09-11,2025-10-30
+cli_0007_dl_0025,cli_0007_ct_0091,Vertex Works - service retainer,qualified,21825.18,AUD,41,referral,Liam Bhatia,2026-01-01,2026-02-16
+cli_0007_dl_0026,cli_0007_ct_0140,Vertex Works - pro plan,qualified,11118.17,AUD,52,referral,Kabir Nair,2026-02-01,2026-02-25
+cli_0007_dl_0027,cli_0007_ct_0152,Vertex Works - premium bundle,new,5930.03,AUD,92,import,Ishaan Khan,2025-11-04,2025-12-16
+cli_0007_dl_0028,cli_0007_ct_0083,Vertex Works - pro plan,lost,20908.94,AUD,63,email_reply,Maya Mehta,2025-12-07,2026-01-15
+cli_0007_dl_0029,cli_0007_ct_0135,Vertex Works - membership,proposal,21561.73,AUD,69,website_form,Ava Gupta,2025-12-22,2026-01-20
+cli_0007_dl_0030,cli_0007_ct_0089,Vertex Works - audit package,negotiation,10564.17,AUD,23,import,Arjun Joshi,2025-10-27,2025-12-26
+cli_0007_dl_0031,cli_0007_ct_0094,Vertex Works - premium bundle,lost,13901.76,AUD,59,website_form,Kabir Nair,2026-03-19,2026-04-24
+cli_0007_dl_0032,cli_0007_ct_0034,Vertex Works - starter plan,qualified,9221.26,AUD,88,website_form,Sara Verma,2025-12-27,2026-02-08
+cli_0007_dl_0033,cli_0007_ct_0099,Vertex Works - premium bundle,new,3347.42,AUD,87,import,Leo Sharma,2025-10-12,2025-11-14
+cli_0007_dl_0034,cli_0007_ct_0135,Vertex Works - membership,proposal,15850.1,AUD,23,website_form,Ava Reddy,2025-09-08,2025-11-05
+cli_0007_dl_0035,cli_0007_ct_0120,Vertex Works - annual subscription,proposal,17183.11,AUD,38,event,Liam Gupta,2025-10-25,2025-12-20
+cli_0007_dl_0036,cli_0007_ct_0054,Vertex Works - annual subscription,proposal,8284.33,AUD,37,event,Sara Nair,2025-10-12,2025-11-04
+cli_0007_dl_0037,cli_0007_ct_0049,Vertex Works - audit package,qualified,2475.74,AUD,83,email_reply,Maya Verma,2025-10-23,2025-12-02
+cli_0007_dl_0038,cli_0007_ct_0082,Vertex Works - service retainer,lost,8304.66,AUD,30,import,Sara Khan,2026-01-31,2026-03-06
+cli_0007_dl_0039,cli_0007_ct_0065,Vertex Works - audit package,qualified,9216.52,AUD,83,import,Maya Sharma,2025-12-28,2026-02-13
+cli_0007_dl_0040,cli_0007_ct_0064,Vertex Works - membership,new,14682.05,AUD,83,website_form,Leo Mehta,2025-12-08,2026-01-18
+cli_0007_dl_0041,cli_0007_ct_0114,Vertex Works - premium bundle,won,9566.43,AUD,16,website_form,Anika Verma,2025-12-08,2026-01-17
+cli_0007_dl_0042,cli_0007_ct_0039,Vertex Works - audit package,won,16641.71,AUD,40,event,Liam Joshi,2025-09-18,2025-11-16
+cli_0007_dl_0043,cli_0007_ct_0035,Vertex Works - pro plan,new,18367.75,AUD,66,website_form,Noah Gupta,2026-03-27,2026-03-30
+cli_0007_dl_0044,cli_0007_ct_0131,Vertex Works - starter plan,won,18305.12,AUD,81,import,Ishaan Bhatia,2025-12-04,2025-12-22
+cli_0007_dl_0045,cli_0007_ct_0152,Vertex Works - membership,negotiation,8034.56,AUD,38,import,Arjun Kapoor,2026-01-20,2026-01-26
+cli_0007_dl_0046,cli_0007_ct_0154,Vertex Works - membership,negotiation,21279.64,AUD,75,event,Anika Mehta,2026-02-18,2026-02-21
+cli_0007_dl_0047,cli_0007_ct_0133,Vertex Works - starter plan,qualified,16863.56,AUD,64,website_form,Anika Verma,2026-01-12,2026-03-13
+cli_0007_dl_0048,cli_0007_ct_0105,Vertex Works - starter plan,proposal,21825.74,AUD,64,referral,Arjun Sharma,2026-03-04,2026-03-10
+cli_0007_dl_0049,cli_0007_ct_0032,Vertex Works - pro plan,qualified,858.99,AUD,94,import,Liam Gupta,2026-02-01,2026-02-04
+cli_0007_dl_0050,cli_0007_ct_0070,Vertex Works - pro plan,qualified,21977.51,AUD,35,email_reply,Liam Joshi,2026-02-17,2026-03-15
+cli_0007_dl_0051,cli_0007_ct_0038,Vertex Works - audit package,qualified,18247.79,AUD,17,email_reply,Sara Gupta,2025-11-19,2025-12-06
+cli_0007_dl_0052,cli_0007_ct_0025,Vertex Works - starter plan,negotiation,15091.02,AUD,94,import,Ishaan Patel,2026-03-09,2026-04-09
+cli_0007_dl_0053,cli_0007_ct_0087,Vertex Works - audit package,qualified,6077.23,AUD,10,email_reply,Sara Verma,2026-01-21,2026-02-26
+cli_0007_dl_0054,cli_0007_ct_0009,Vertex Works - service retainer,proposal,20424.3,AUD,12,referral,Liam Singh,2026-03-01,2026-04-05
+cli_0007_dl_0055,cli_0007_ct_0116,Vertex Works - membership,negotiation,2504.25,AUD,49,import,Maya Khan,2026-01-22,2026-02-09
+cli_0007_dl_0056,cli_0007_ct_0094,Vertex Works - audit package,proposal,23990.12,AUD,64,website_form,Arjun Singh,2025-11-24,2026-01-16
+cli_0007_dl_0057,cli_0007_ct_0103,Vertex Works - premium bundle,qualified,19033.99,AUD,38,website_form,Mia Khan,2025-09-30,2025-11-10
+cli_0007_dl_0058,cli_0007_ct_0028,Vertex Works - starter plan,qualified,7445.87,AUD,44,import,Mia Sharma,2025-10-20,2025-11-08
+cli_0007_dl_0059,cli_0007_ct_0151,Vertex Works - annual subscription,negotiation,12860.74,AUD,81,website_form,Arjun Khan,2026-03-23,2026-04-05
+cli_0007_dl_0060,cli_0007_ct_0039,Vertex Works - pro plan,qualified,8303.12,AUD,94,event,Arjun Bhatia,2026-01-28,2026-03-26
+cli_0007_dl_0061,cli_0007_ct_0141,Vertex Works - audit package,proposal,17937.47,AUD,95,email_reply,Arjun Joshi,2025-12-16,2025-12-27
+cli_0007_dl_0062,cli_0007_ct_0128,Vertex Works - service retainer,qualified,14256.31,AUD,42,website_form,Sara Joshi,2026-02-08,2026-04-09
+cli_0007_dl_0063,cli_0007_ct_0014,Vertex Works - starter plan,won,5751.16,AUD,48,website_form,Zara Sharma,2025-11-05,2025-11-09
+cli_0007_dl_0064,cli_0007_ct_0065,Vertex Works - annual subscription,proposal,3559.04,AUD,55,import,Ishaan Khan,2025-12-15,2026-01-30
+cli_0007_dl_0065,cli_0007_ct_0098,Vertex Works - premium bundle,proposal,19965.37,AUD,69,website_form,Sara Khan,2026-01-08,2026-02-11
+cli_0007_dl_0066,cli_0007_ct_0110,Vertex Works - starter plan,proposal,23850.1,AUD,50,event,Zara Gupta,2025-10-15,2025-11-29
+cli_0007_dl_0067,cli_0007_ct_0048,Vertex Works - service retainer,proposal,8186.71,AUD,24,referral,Arjun Kapoor,2026-02-04,2026-03-04
+cli_0007_dl_0068,cli_0007_ct_0041,Vertex Works - annual subscription,new,12580.44,AUD,73,import,Kabir Joshi,2026-01-17,2026-03-17
+cli_0007_dl_0069,cli_0007_ct_0050,Vertex Works - service retainer,won,6962.07,AUD,71,website_form,Maya Singh,2026-03-30,2026-04-05
+cli_0007_dl_0070,cli_0007_ct_0127,Vertex Works - premium bundle,won,7606.51,AUD,20,website_form,Zara Kapoor,2025-12-03,2026-01-30
+cli_0007_dl_0071,cli_0007_ct_0031,Vertex Works - audit package,proposal,24331.71,AUD,28,import,Arjun Khan,2025-11-29,2025-12-02
+cli_0007_dl_0072,cli_0007_ct_0112,Vertex Works - audit package,won,6759.08,AUD,64,website_form,Kabir Sharma,2026-02-05,2026-03-30
+cli_0007_dl_0073,cli_0007_ct_0117,Vertex Works - annual subscription,won,4585.43,AUD,48,referral,Mia Verma,2025-11-29,2025-12-17
+cli_0007_dl_0074,cli_0007_ct_0085,Vertex Works - service retainer,negotiation,3213.27,AUD,21,email_reply,Mia Gupta,2026-02-12,2026-02-23
+cli_0007_dl_0075,cli_0007_ct_0119,Vertex Works - annual subscription,new,12447.8,AUD,79,email_reply,Noah Verma,2026-03-18,2026-04-10
+cli_0007_dl_0076,cli_0007_ct_0111,Vertex Works - audit package,lost,9395.42,AUD,38,email_reply,Mia Singh,2026-03-16,2026-04-08
+cli_0007_dl_0077,cli_0007_ct_0109,Vertex Works - service retainer,qualified,18049.39,AUD,6,website_form,Liam Verma,2026-04-09,2026-04-16
+cli_0007_dl_0078,cli_0007_ct_0122,Vertex Works - premium bundle,proposal,17854.09,AUD,48,website_form,Maya Joshi,2026-01-19,2026-02-23
+cli_0007_dl_0079,cli_0007_ct_0152,Vertex Works - audit package,won,18807.0,AUD,84,import,Ishaan Sharma,2026-02-15,2026-02-22
+cli_0007_dl_0080,cli_0007_ct_0084,Vertex Works - audit package,proposal,15178.52,AUD,51,website_form,Leo Verma,2025-10-31,2025-12-01
+cli_0007_dl_0081,cli_0007_ct_0047,Vertex Works - annual subscription,negotiation,6720.16,AUD,40,email_reply,Sara Sharma,2026-03-10,2026-03-16

@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0004",
+  "company_name": "North Growth",
+  "industry": "healthcare",
+  "region": "UAE",
+  "currency": "AED",
+  "website": "https://north-growth.example.com",
+  "business_model": "b2c",
+  "employee_band": "11-50",
+  "objective": "app_install",
+  "budget_monthly": 8000,
+  "voice": "professional",
+  "channels": [
+    "email",
+    "referral",
+    "organic",
+    "direct",
+    "tiktok_ads"
+  ],
+  "created_at": "2026-04-23T20:55:56.272728Z"
+}

@@ -1,0 +1,226 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0020_ord_00001,2025-12-06,0c6ce56513af,starter plan,SGD,126.93,0,email,refunded,paypal
+cli_0020_ord_00002,2026-03-31,a4287adf8762,membership,SGD,1170.65,5,linkedin_ads,paid,wallet
+cli_0020_ord_00003,2025-11-10,b2a8f8e2761a,pro plan,SGD,1055.97,25,meta_ads,paid,bank_transfer
+cli_0020_ord_00004,2026-01-29,663f2e2f505d,service retainer,SGD,200.14,25,email,paid,upi
+cli_0020_ord_00005,2026-03-22,ee6120ceb499,service retainer,SGD,1067.46,15,meta_ads,paid,paypal
+cli_0020_ord_00006,2025-11-27,9d31cf3ba690,starter plan,SGD,555.97,20,email,paid,bank_transfer
+cli_0020_ord_00007,2025-11-27,c9b4b10d87ab,audit package,SGD,137.39,5,linkedin_ads,paid,upi
+cli_0020_ord_00008,2025-11-26,dd094d15e1e0,service retainer,SGD,1808.83,25,email,paid,upi
+cli_0020_ord_00009,2025-10-28,c6eb22457024,annual subscription,SGD,1401.3,10,linkedin_ads,paid,paypal
+cli_0020_ord_00010,2026-03-13,0e87077b3436,starter plan,SGD,2273.43,20,email,paid,wallet
+cli_0020_ord_00011,2025-12-17,40b6f29ae52b,premium bundle,SGD,2096.41,25,email,paid,paypal
+cli_0020_ord_00012,2026-02-06,4f85e144e5c3,annual subscription,SGD,1316.04,10,meta_ads,paid,bank_transfer
+cli_0020_ord_00013,2026-01-11,4daa30915990,pro plan,SGD,429.8,20,meta_ads,refunded,bank_transfer
+cli_0020_ord_00014,2026-03-20,fe3cc833eda2,premium bundle,SGD,870.57,5,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00015,2025-11-11,cca1eada63fb,premium bundle,SGD,1711.78,0,meta_ads,paid,paypal
+cli_0020_ord_00016,2025-12-02,066d8a2fec41,premium bundle,SGD,376.6,20,meta_ads,pending,wallet
+cli_0020_ord_00017,2025-11-02,1ba6656290db,membership,SGD,1064.31,20,email,paid,wallet
+cli_0020_ord_00018,2025-12-02,b8291a027822,annual subscription,SGD,59.06,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00019,2026-01-18,f2105dce6242,annual subscription,SGD,1561.7,25,meta_ads,paid,paypal
+cli_0020_ord_00020,2026-02-08,4a76332c003d,audit package,SGD,2319.11,5,email,pending,bank_transfer
+cli_0020_ord_00021,2025-11-28,e2ce0d213c02,audit package,SGD,1585.27,20,linkedin_ads,pending,card
+cli_0020_ord_00022,2025-12-19,499f9bd0d84b,premium bundle,SGD,775.54,5,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00023,2025-12-24,e188eb035d0d,service retainer,SGD,261.54,5,linkedin_ads,paid,paypal
+cli_0020_ord_00024,2026-01-10,64a40ed2c797,annual subscription,SGD,1002.04,25,email,paid,upi
+cli_0020_ord_00025,2025-11-15,587660c56d6f,pro plan,SGD,1009.4,5,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00026,2026-01-28,9fbc3c5956a4,service retainer,SGD,2425.16,20,meta_ads,refunded,card
+cli_0020_ord_00027,2025-11-04,8914ffc2f390,service retainer,SGD,600.05,0,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00028,2026-04-16,711b1e0686a2,pro plan,SGD,1718.32,25,meta_ads,paid,wallet
+cli_0020_ord_00029,2025-11-22,19149f792e04,starter plan,SGD,634.97,0,meta_ads,paid,wallet
+cli_0020_ord_00030,2025-11-10,6c942239ea27,service retainer,SGD,483.0,25,email,pending,upi
+cli_0020_ord_00031,2026-04-20,2ca90d86b3f0,starter plan,SGD,665.93,20,meta_ads,refunded,upi
+cli_0020_ord_00032,2026-02-17,372725d5744f,premium bundle,SGD,88.61,10,email,pending,card
+cli_0020_ord_00033,2026-03-01,4ee4b2597823,pro plan,SGD,2114.12,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00034,2026-03-21,f2a0a3162019,premium bundle,SGD,1122.04,20,linkedin_ads,paid,card
+cli_0020_ord_00035,2025-11-21,7dfc55e088c8,starter plan,SGD,768.09,20,email,paid,upi
+cli_0020_ord_00036,2026-02-04,fd08b5d84650,annual subscription,SGD,885.81,5,email,paid,paypal
+cli_0020_ord_00037,2025-12-25,dca8294a80fd,starter plan,SGD,878.67,20,meta_ads,paid,bank_transfer
+cli_0020_ord_00038,2025-12-03,9b1b59adad79,pro plan,SGD,2028.1,20,linkedin_ads,paid,paypal
+cli_0020_ord_00039,2026-03-23,09d412749c41,service retainer,SGD,81.46,5,email,paid,wallet
+cli_0020_ord_00040,2026-04-24,f9bc7be282d0,annual subscription,SGD,2357.45,10,email,paid,paypal
+cli_0020_ord_00041,2026-03-06,fa4e6efbdb4f,starter plan,SGD,1218.4,20,email,paid,wallet
+cli_0020_ord_00042,2026-04-23,96a5767dc8ed,membership,SGD,1172.21,10,email,paid,wallet
+cli_0020_ord_00043,2026-02-02,c222d040677e,audit package,SGD,580.32,0,meta_ads,pending,wallet
+cli_0020_ord_00044,2026-01-03,49edf245fe4e,annual subscription,SGD,172.86,20,linkedin_ads,paid,paypal
+cli_0020_ord_00045,2026-03-07,fd34e182f911,membership,SGD,1892.62,0,linkedin_ads,refunded,bank_transfer
+cli_0020_ord_00046,2026-02-14,b9660f364366,pro plan,SGD,1979.86,0,meta_ads,paid,bank_transfer
+cli_0020_ord_00047,2025-12-26,3e39d6b49433,starter plan,SGD,2019.2,10,meta_ads,paid,paypal
+cli_0020_ord_00048,2026-01-24,de88dc7be830,starter plan,SGD,95.84,0,email,paid,paypal
+cli_0020_ord_00049,2026-01-08,a59ff7e1601c,service retainer,SGD,2200.17,10,linkedin_ads,paid,card
+cli_0020_ord_00050,2026-01-23,8da588020cc9,pro plan,SGD,174.05,10,email,paid,upi
+cli_0020_ord_00051,2026-01-05,9f53698bec3b,audit package,SGD,2147.43,20,meta_ads,paid,bank_transfer
+cli_0020_ord_00052,2026-03-16,9b984a56be9c,pro plan,SGD,750.97,15,email,paid,paypal
+cli_0020_ord_00053,2026-04-18,db88e23d1a8e,annual subscription,SGD,2070.26,0,meta_ads,paid,wallet
+cli_0020_ord_00054,2025-12-06,04799c192573,membership,SGD,2058.27,20,meta_ads,paid,card
+cli_0020_ord_00055,2026-03-10,e0dfb8a61e71,starter plan,SGD,1113.81,15,meta_ads,paid,wallet
+cli_0020_ord_00056,2025-12-05,084767c82167,annual subscription,SGD,1282.84,20,email,paid,paypal
+cli_0020_ord_00057,2026-01-09,0dcc75206392,starter plan,SGD,115.61,15,email,paid,paypal
+cli_0020_ord_00058,2026-03-21,d89fdb0157c0,service retainer,SGD,96.54,20,email,paid,upi
+cli_0020_ord_00059,2026-02-09,a17ed502b73e,pro plan,SGD,2166.15,25,meta_ads,paid,bank_transfer
+cli_0020_ord_00060,2026-01-27,63cb85fd4036,premium bundle,SGD,1152.45,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00061,2026-02-19,c2fc4789e1d6,membership,SGD,1282.38,20,linkedin_ads,paid,paypal
+cli_0020_ord_00062,2025-11-09,ba8ac597e9b7,pro plan,SGD,651.89,25,email,paid,card
+cli_0020_ord_00063,2026-04-20,95d9fcb776f5,annual subscription,SGD,2477.32,25,email,paid,wallet
+cli_0020_ord_00064,2026-04-17,b8bfed2fc2c2,service retainer,SGD,1326.47,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00065,2025-11-16,0e2abe6dd12d,audit package,SGD,105.58,15,email,pending,wallet
+cli_0020_ord_00066,2025-11-10,10c4fc82bd93,membership,SGD,149.03,25,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00067,2026-03-15,1c775e6b3743,membership,SGD,1378.27,20,meta_ads,paid,upi
+cli_0020_ord_00068,2025-11-01,b4062188e2cb,service retainer,SGD,2289.81,5,email,pending,bank_transfer
+cli_0020_ord_00069,2025-11-12,ea5540d73b46,annual subscription,SGD,719.59,0,meta_ads,refunded,upi
+cli_0020_ord_00070,2026-02-12,cdac4b3f504b,premium bundle,SGD,453.84,10,linkedin_ads,paid,paypal
+cli_0020_ord_00071,2026-03-22,67b638bf87ee,starter plan,SGD,463.36,15,linkedin_ads,paid,card
+cli_0020_ord_00072,2026-04-19,acdcedb48af6,annual subscription,SGD,788.57,15,email,paid,bank_transfer
+cli_0020_ord_00073,2026-03-31,2592c5b479e6,starter plan,SGD,1612.66,5,meta_ads,paid,paypal
+cli_0020_ord_00074,2026-01-11,d935b1ea02ad,annual subscription,SGD,202.31,10,linkedin_ads,paid,card
+cli_0020_ord_00075,2025-10-31,084fcb4a4bf8,audit package,SGD,74.14,20,meta_ads,paid,card
+cli_0020_ord_00076,2026-02-05,ebe5ef3e97fb,audit package,SGD,343.96,0,email,paid,paypal
+cli_0020_ord_00077,2026-04-19,723372653698,annual subscription,SGD,1765.91,5,meta_ads,paid,upi
+cli_0020_ord_00078,2026-01-16,c2820be98bef,audit package,SGD,126.77,20,meta_ads,paid,card
+cli_0020_ord_00079,2026-02-22,00dace2a4646,starter plan,SGD,2375.16,15,linkedin_ads,paid,upi
+cli_0020_ord_00080,2026-04-07,fe6750c7c70f,starter plan,SGD,394.89,15,linkedin_ads,refunded,paypal
+cli_0020_ord_00081,2026-03-28,e4ee872a05aa,audit package,SGD,1961.97,15,meta_ads,paid,wallet
+cli_0020_ord_00082,2026-02-16,5db7c27a9c9b,service retainer,SGD,1180.8,10,meta_ads,pending,paypal
+cli_0020_ord_00083,2025-12-17,6bfb3b401d1f,membership,SGD,903.57,10,email,pending,paypal
+cli_0020_ord_00084,2025-12-10,f0be283dbb14,premium bundle,SGD,1407.59,5,linkedin_ads,paid,paypal
+cli_0020_ord_00085,2026-01-27,dc4d166e4d7b,premium bundle,SGD,1448.37,5,linkedin_ads,paid,paypal
+cli_0020_ord_00086,2026-01-19,21bcf43350ed,membership,SGD,1948.12,15,linkedin_ads,paid,card
+cli_0020_ord_00087,2025-12-29,16fa2bd17f26,pro plan,SGD,2413.98,0,email,paid,upi
+cli_0020_ord_00088,2025-11-14,daf2388a1a22,premium bundle,SGD,1854.18,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00089,2026-01-03,d8f995b7536a,premium bundle,SGD,2306.22,10,linkedin_ads,paid,wallet
+cli_0020_ord_00090,2025-11-13,af273eab43d3,audit package,SGD,2175.55,10,email,paid,upi
+cli_0020_ord_00091,2026-02-22,4bb7fcede253,annual subscription,SGD,976.1,5,email,pending,bank_transfer
+cli_0020_ord_00092,2025-10-30,c697bf05a01d,membership,SGD,861.89,5,meta_ads,paid,bank_transfer
+cli_0020_ord_00093,2026-02-22,0cb6f248c865,annual subscription,SGD,972.69,10,meta_ads,refunded,wallet
+cli_0020_ord_00094,2026-01-08,7d13a420d3d8,membership,SGD,788.28,10,meta_ads,paid,card
+cli_0020_ord_00095,2026-04-06,076a4a65dd60,service retainer,SGD,1282.28,25,meta_ads,paid,paypal
+cli_0020_ord_00096,2026-01-04,a7be2d2967f3,pro plan,SGD,1011.99,10,linkedin_ads,paid,upi
+cli_0020_ord_00097,2025-11-01,fbfae98f0035,premium bundle,SGD,2179.17,5,email,paid,card
+cli_0020_ord_00098,2025-11-17,7a5fd0f96064,premium bundle,SGD,373.33,0,linkedin_ads,paid,card
+cli_0020_ord_00099,2026-02-05,49d02e543f5a,annual subscription,SGD,2482.38,10,meta_ads,paid,paypal
+cli_0020_ord_00100,2026-01-10,7b7450e588a5,annual subscription,SGD,1266.42,25,email,paid,upi
+cli_0020_ord_00101,2026-03-23,e32e954fde32,service retainer,SGD,1615.78,15,email,refunded,bank_transfer
+cli_0020_ord_00102,2026-02-07,27eff1c3e453,annual subscription,SGD,812.0,20,meta_ads,paid,wallet
+cli_0020_ord_00103,2025-12-29,76c1430c37aa,audit package,SGD,1040.64,10,linkedin_ads,paid,paypal
+cli_0020_ord_00104,2026-01-11,154a2ac5f836,service retainer,SGD,184.59,20,linkedin_ads,paid,upi
+cli_0020_ord_00105,2026-03-15,2a108766fd72,pro plan,SGD,929.74,20,linkedin_ads,paid,paypal
+cli_0020_ord_00106,2026-01-27,79d282bf3939,pro plan,SGD,1464.12,15,email,paid,card
+cli_0020_ord_00107,2025-11-20,617bbe312675,premium bundle,SGD,225.3,0,linkedin_ads,paid,wallet
+cli_0020_ord_00108,2026-02-13,baeecc614c47,audit package,SGD,968.41,15,meta_ads,paid,bank_transfer
+cli_0020_ord_00109,2026-02-23,7bf21f1d9887,annual subscription,SGD,138.36,5,linkedin_ads,paid,upi
+cli_0020_ord_00110,2026-03-20,3041d1a1c5ce,service retainer,SGD,1389.34,25,meta_ads,refunded,paypal
+cli_0020_ord_00111,2026-01-03,86dc84fa578a,starter plan,SGD,2204.89,5,meta_ads,refunded,wallet
+cli_0020_ord_00112,2026-02-09,44a917088670,premium bundle,SGD,630.94,0,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00113,2026-03-05,979ce906d4ae,annual subscription,SGD,1037.5,25,email,paid,card
+cli_0020_ord_00114,2026-03-30,cfe2616ebdad,pro plan,SGD,580.41,25,email,paid,upi
+cli_0020_ord_00115,2025-11-23,745eaae0da85,annual subscription,SGD,2026.87,20,meta_ads,paid,card
+cli_0020_ord_00116,2025-10-31,2ddfdd269e36,audit package,SGD,2023.51,0,linkedin_ads,paid,upi
+cli_0020_ord_00117,2026-01-17,73d8d90b525d,membership,SGD,1850.82,5,linkedin_ads,refunded,card
+cli_0020_ord_00118,2025-12-01,a42fde2d59e0,starter plan,SGD,2289.69,0,meta_ads,paid,bank_transfer
+cli_0020_ord_00119,2025-11-03,ef47c620f88e,annual subscription,SGD,1846.86,20,meta_ads,paid,upi
+cli_0020_ord_00120,2026-04-19,3d00d30a89bf,premium bundle,SGD,1172.98,0,linkedin_ads,paid,card
+cli_0020_ord_00121,2026-04-17,0c773555e7e1,premium bundle,SGD,665.61,0,email,paid,upi
+cli_0020_ord_00122,2026-03-28,a71b7ebd667f,pro plan,SGD,961.42,20,meta_ads,paid,card
+cli_0020_ord_00123,2026-03-29,75810f6f1798,service retainer,SGD,1587.67,25,email,paid,paypal
+cli_0020_ord_00124,2026-02-16,2495bdf1276c,service retainer,SGD,1180.4,20,linkedin_ads,paid,wallet
+cli_0020_ord_00125,2025-12-01,24ed1ec7abc1,audit package,SGD,1574.27,5,linkedin_ads,paid,card
+cli_0020_ord_00126,2026-04-14,24051f78be23,starter plan,SGD,2221.19,15,linkedin_ads,paid,wallet
+cli_0020_ord_00127,2025-12-20,1e7aad4c49b7,starter plan,SGD,433.85,0,meta_ads,paid,card
+cli_0020_ord_00128,2025-12-31,804027a0fb55,annual subscription,SGD,481.01,0,linkedin_ads,paid,card
+cli_0020_ord_00129,2026-01-10,d5eb04da86d4,premium bundle,SGD,2435.64,5,email,paid,card
+cli_0020_ord_00130,2025-12-09,51b80f9d2294,pro plan,SGD,354.1,5,meta_ads,paid,card
+cli_0020_ord_00131,2026-02-11,268f8f6f2b6e,starter plan,SGD,1191.81,20,meta_ads,paid,wallet
+cli_0020_ord_00132,2026-02-14,14c83b5b1d8e,premium bundle,SGD,1865.82,15,email,paid,upi
+cli_0020_ord_00133,2026-04-11,077d4d2a58b6,service retainer,SGD,1992.82,10,email,pending,wallet
+cli_0020_ord_00134,2026-03-28,fdd9a312b7ab,starter plan,SGD,2300.39,15,linkedin_ads,paid,wallet
+cli_0020_ord_00135,2025-12-25,5b584b29e5e9,audit package,SGD,302.78,10,email,paid,paypal
+cli_0020_ord_00136,2026-04-10,977ae36c33c4,pro plan,SGD,2128.83,25,meta_ads,refunded,bank_transfer
+cli_0020_ord_00137,2026-02-27,0a1319b7bf65,premium bundle,SGD,446.8,25,email,pending,paypal
+cli_0020_ord_00138,2026-03-29,a8339d92dada,membership,SGD,970.34,10,email,paid,paypal
+cli_0020_ord_00139,2025-11-03,14e0d4415de0,audit package,SGD,1923.64,15,linkedin_ads,paid,paypal
+cli_0020_ord_00140,2025-12-14,0bc3da7c571b,premium bundle,SGD,937.23,20,email,pending,bank_transfer
+cli_0020_ord_00141,2026-01-11,b235393c9306,annual subscription,SGD,2120.81,0,email,pending,wallet
+cli_0020_ord_00142,2025-12-04,c684d218a482,service retainer,SGD,1532.65,20,meta_ads,paid,card
+cli_0020_ord_00143,2026-01-18,fe8ac507f3c7,membership,SGD,2433.82,10,linkedin_ads,paid,upi
+cli_0020_ord_00144,2025-11-25,c49cf8572943,audit package,SGD,1146.97,5,linkedin_ads,paid,card
+cli_0020_ord_00145,2026-01-13,33c555ed4687,starter plan,SGD,68.62,0,meta_ads,paid,wallet
+cli_0020_ord_00146,2026-03-04,77412efb90b3,premium bundle,SGD,1969.55,0,email,pending,upi
+cli_0020_ord_00147,2026-02-03,778d65299cb5,annual subscription,SGD,1320.41,5,email,paid,paypal
+cli_0020_ord_00148,2026-02-19,9cda551876fe,pro plan,SGD,459.36,15,meta_ads,paid,paypal
+cli_0020_ord_00149,2026-04-18,ea0aec1d790a,service retainer,SGD,215.59,10,linkedin_ads,paid,paypal
+cli_0020_ord_00150,2025-12-02,4585b677499c,audit package,SGD,1889.19,5,linkedin_ads,paid,wallet
+cli_0020_ord_00151,2025-12-28,dd88a2bf1bb3,pro plan,SGD,1918.54,20,meta_ads,paid,card
+cli_0020_ord_00152,2026-02-07,449d48e506e8,premium bundle,SGD,1428.24,10,meta_ads,paid,card
+cli_0020_ord_00153,2025-11-27,6a4e352966d3,service retainer,SGD,1080.6,10,meta_ads,paid,wallet
+cli_0020_ord_00154,2026-01-02,9629c1b4ee61,membership,SGD,2357.75,10,meta_ads,paid,wallet
+cli_0020_ord_00155,2026-02-15,6872a4df8632,membership,SGD,1146.42,25,email,paid,bank_transfer
+cli_0020_ord_00156,2026-02-20,3c4e98d814e8,audit package,SGD,2443.04,25,linkedin_ads,paid,card
+cli_0020_ord_00157,2025-10-26,d37be1ce2798,membership,SGD,268.27,5,linkedin_ads,paid,wallet
+cli_0020_ord_00158,2026-03-04,a41eb41d7187,pro plan,SGD,273.5,10,meta_ads,paid,bank_transfer
+cli_0020_ord_00159,2025-10-29,065508ea5b85,audit package,SGD,188.57,25,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00160,2026-01-22,b43e52cc56cd,audit package,SGD,1843.32,10,email,paid,wallet
+cli_0020_ord_00161,2025-11-12,b46c4e80cb4b,membership,SGD,461.66,0,email,paid,upi
+cli_0020_ord_00162,2025-12-25,4b419d495d97,pro plan,SGD,1932.45,10,meta_ads,refunded,card
+cli_0020_ord_00163,2026-03-05,2231862275a8,starter plan,SGD,114.98,25,meta_ads,paid,card
+cli_0020_ord_00164,2026-01-26,cb9898cef535,service retainer,SGD,1065.06,10,email,paid,bank_transfer
+cli_0020_ord_00165,2026-01-27,f2f6cb929a2d,membership,SGD,2298.66,25,meta_ads,paid,bank_transfer
+cli_0020_ord_00166,2025-12-05,f39abed0143d,pro plan,SGD,1248.6,25,linkedin_ads,paid,upi
+cli_0020_ord_00167,2026-01-07,c4526d27826b,membership,SGD,1448.5,15,meta_ads,paid,paypal
+cli_0020_ord_00168,2025-10-27,5632d5b41bd7,premium bundle,SGD,2267.27,5,email,paid,bank_transfer
+cli_0020_ord_00169,2026-02-20,8b0bb503b7f1,pro plan,SGD,633.34,15,email,paid,wallet
+cli_0020_ord_00170,2026-02-07,a6529bc2c68b,pro plan,SGD,1770.98,15,linkedin_ads,refunded,card
+cli_0020_ord_00171,2026-03-31,3de6685b2aa6,service retainer,SGD,1099.68,0,linkedin_ads,paid,card
+cli_0020_ord_00172,2025-12-05,9122729cd598,service retainer,SGD,297.73,15,meta_ads,refunded,wallet
+cli_0020_ord_00173,2026-02-24,1894c887ab72,audit package,SGD,1478.83,5,linkedin_ads,paid,wallet
+cli_0020_ord_00174,2026-02-14,2b55c177bfa1,annual subscription,SGD,1377.78,0,linkedin_ads,paid,wallet
+cli_0020_ord_00175,2026-03-23,0776ba84197d,audit package,SGD,106.38,25,linkedin_ads,paid,card
+cli_0020_ord_00176,2026-01-01,b0ec72bf242f,annual subscription,SGD,2229.78,15,meta_ads,paid,bank_transfer
+cli_0020_ord_00177,2026-01-02,509a34251574,membership,SGD,654.24,15,email,refunded,bank_transfer
+cli_0020_ord_00178,2025-12-05,1240909de102,premium bundle,SGD,2061.94,15,linkedin_ads,paid,card
+cli_0020_ord_00179,2026-03-31,73907a029006,annual subscription,SGD,296.73,15,meta_ads,pending,card
+cli_0020_ord_00180,2025-11-24,1cb6b7ddcb55,audit package,SGD,2329.14,20,email,paid,paypal
+cli_0020_ord_00181,2026-03-26,6acbee920505,starter plan,SGD,2252.19,0,linkedin_ads,refunded,wallet
+cli_0020_ord_00182,2026-04-14,21bc9ce9438e,audit package,SGD,142.8,5,linkedin_ads,paid,wallet
+cli_0020_ord_00183,2025-12-12,a0a74cad858d,audit package,SGD,139.45,0,email,paid,upi
+cli_0020_ord_00184,2026-03-05,9d1df4ff0b79,pro plan,SGD,2203.07,0,linkedin_ads,pending,upi
+cli_0020_ord_00185,2026-01-09,45ae477a0743,premium bundle,SGD,885.63,0,meta_ads,pending,upi
+cli_0020_ord_00186,2026-01-11,258baf5b7b7a,starter plan,SGD,2361.53,20,meta_ads,refunded,paypal
+cli_0020_ord_00187,2026-01-16,f465a70e997b,service retainer,SGD,255.81,20,linkedin_ads,paid,upi
+cli_0020_ord_00188,2025-11-23,0bb10576448b,pro plan,SGD,577.07,5,linkedin_ads,paid,card
+cli_0020_ord_00189,2025-11-28,51c3cfd4b343,starter plan,SGD,573.64,10,email,paid,wallet
+cli_0020_ord_00190,2026-03-16,52d51f2f04cc,audit package,SGD,399.33,5,meta_ads,paid,paypal
+cli_0020_ord_00191,2026-03-01,321b584b81af,pro plan,SGD,1306.93,15,meta_ads,paid,card
+cli_0020_ord_00192,2026-01-10,da1dacb73358,starter plan,SGD,880.55,25,email,paid,upi
+cli_0020_ord_00193,2026-04-08,d6499cfc199a,pro plan,SGD,1796.49,5,linkedin_ads,paid,paypal
+cli_0020_ord_00194,2026-01-08,b015496271c0,pro plan,SGD,1594.2,0,linkedin_ads,paid,bank_transfer
+cli_0020_ord_00195,2025-10-30,2b5ca1aee6de,premium bundle,SGD,1890.76,15,meta_ads,paid,upi
+cli_0020_ord_00196,2025-11-19,cc17b45dd169,annual subscription,SGD,1964.36,10,linkedin_ads,paid,card
+cli_0020_ord_00197,2026-03-23,8666de66d720,pro plan,SGD,141.52,10,email,paid,paypal
+cli_0020_ord_00198,2026-02-20,7f40076cd272,starter plan,SGD,1015.61,0,meta_ads,paid,paypal
+cli_0020_ord_00199,2026-04-05,f7ac0bd87ccf,pro plan,SGD,2190.18,0,email,paid,upi
+cli_0020_ord_00200,2026-03-31,4e0d2bea5a4e,premium bundle,SGD,507.29,0,email,paid,paypal
+cli_0020_ord_00201,2025-10-27,4621bf4b26a0,starter plan,SGD,1229.59,0,meta_ads,paid,bank_transfer
+cli_0020_ord_00202,2026-02-22,73fdbc0eb3a1,pro plan,SGD,2462.31,0,meta_ads,paid,card
+cli_0020_ord_00203,2025-10-31,16d42b03d84c,membership,SGD,2306.71,20,email,paid,upi
+cli_0020_ord_00204,2026-01-08,df2f7e187b46,annual subscription,SGD,1172.6,10,linkedin_ads,pending,bank_transfer
+cli_0020_ord_00205,2025-10-30,6bdbd9ad63ec,service retainer,SGD,1473.71,10,linkedin_ads,refunded,card
+cli_0020_ord_00206,2025-11-13,e16c19f06f86,audit package,SGD,1048.88,15,meta_ads,pending,paypal
+cli_0020_ord_00207,2025-12-27,835a1ffb427f,audit package,SGD,1867.04,25,linkedin_ads,paid,wallet
+cli_0020_ord_00208,2026-02-12,195997879ba8,premium bundle,SGD,2011.7,25,meta_ads,paid,card
+cli_0020_ord_00209,2026-03-13,12fcbbc1debb,premium bundle,SGD,759.18,15,meta_ads,pending,wallet
+cli_0020_ord_00210,2025-10-31,84a7a56cfbdf,starter plan,SGD,1599.0,10,meta_ads,paid,paypal
+cli_0020_ord_00211,2026-03-17,5e79e7494091,service retainer,SGD,2438.36,15,email,paid,bank_transfer
+cli_0020_ord_00212,2025-11-09,95ced0df37e0,annual subscription,SGD,841.15,25,linkedin_ads,paid,wallet
+cli_0020_ord_00213,2025-12-21,9a9066dac5de,annual subscription,SGD,741.19,25,email,paid,card
+cli_0020_ord_00214,2025-11-12,c62f922cb5f5,annual subscription,SGD,2382.75,10,linkedin_ads,paid,paypal
+cli_0020_ord_00215,2026-02-20,ae41ae4bfa7c,premium bundle,SGD,346.04,25,meta_ads,paid,bank_transfer
+cli_0020_ord_00216,2026-03-24,ee6ae8c111fa,starter plan,SGD,2230.44,15,meta_ads,paid,bank_transfer
+cli_0020_ord_00217,2026-04-23,8bc766036a35,pro plan,SGD,1138.26,25,linkedin_ads,pending,wallet
+cli_0020_ord_00218,2026-03-28,23da3451ff0d,premium bundle,SGD,794.46,15,meta_ads,paid,wallet
+cli_0020_ord_00219,2025-11-18,7bcfdba20078,service retainer,SGD,2320.27,15,email,paid,card
+cli_0020_ord_00220,2026-02-04,1eb25942ef88,pro plan,SGD,1452.9,10,meta_ads,paid,wallet
+cli_0020_ord_00221,2026-01-12,8431c231fea8,membership,SGD,193.97,15,linkedin_ads,paid,card
+cli_0020_ord_00222,2026-01-28,2a98d6675eb1,annual subscription,SGD,1165.71,25,meta_ads,paid,card
+cli_0020_ord_00223,2026-02-18,39d62a624a3d,annual subscription,SGD,355.54,10,meta_ads,paid,card
+cli_0020_ord_00224,2026-04-14,8ed50c293998,pro plan,SGD,612.97,5,email,paid,paypal
+cli_0020_ord_00225,2025-11-22,206ef46f2e54,membership,SGD,1894.76,25,email,pending,card

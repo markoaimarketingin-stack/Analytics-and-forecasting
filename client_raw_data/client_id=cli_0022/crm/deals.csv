@@ -1,0 +1,77 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0022_dl_0001,cli_0022_ct_0013,Summit Finance - audit package,proposal,19705.4,USD,11,import,Ava Nair,2025-12-09,2026-01-07
+cli_0022_dl_0002,cli_0022_ct_0057,Summit Finance - membership,negotiation,5230.07,USD,39,website_form,Leo Verma,2026-03-20,2026-04-22
+cli_0022_dl_0003,cli_0022_ct_0048,Summit Finance - premium bundle,qualified,24981.54,USD,17,website_form,Mia Mehta,2026-01-01,2026-02-05
+cli_0022_dl_0004,cli_0022_ct_0012,Summit Finance - starter plan,negotiation,10853.19,USD,17,website_form,Leo Singh,2025-11-30,2025-12-21
+cli_0022_dl_0005,cli_0022_ct_0067,Summit Finance - annual subscription,won,3432.73,USD,51,website_form,Mia Reddy,2026-02-04,2026-03-11
+cli_0022_dl_0006,cli_0022_ct_0002,Summit Finance - pro plan,qualified,19787.74,USD,91,website_form,Kabir Khan,2025-10-29,2025-12-15
+cli_0022_dl_0007,cli_0022_ct_0077,Summit Finance - membership,qualified,3701.83,USD,72,website_form,Liam Patel,2026-01-04,2026-01-28
+cli_0022_dl_0008,cli_0022_ct_0011,Summit Finance - premium bundle,won,6153.07,USD,72,website_form,Arjun Mehta,2025-10-14,2025-11-17
+cli_0022_dl_0009,cli_0022_ct_0038,Summit Finance - membership,qualified,16559.77,USD,66,import,Zara Bhatia,2026-02-04,2026-02-15
+cli_0022_dl_0010,cli_0022_ct_0040,Summit Finance - membership,qualified,21434.28,USD,24,website_form,Leo Reddy,2026-01-23,2026-02-15
+cli_0022_dl_0011,cli_0022_ct_0068,Summit Finance - starter plan,negotiation,9624.41,USD,78,website_form,Kabir Khan,2025-12-22,2026-01-05
+cli_0022_dl_0012,cli_0022_ct_0041,Summit Finance - audit package,lost,18374.83,USD,46,website_form,Arjun Khan,2025-09-27,2025-11-19
+cli_0022_dl_0013,cli_0022_ct_0074,Summit Finance - premium bundle,negotiation,13028.55,USD,33,referral,Ava Verma,2025-09-30,2025-10-26
+cli_0022_dl_0014,cli_0022_ct_0016,Summit Finance - pro plan,proposal,13821.13,USD,69,event,Anika Verma,2025-12-21,2026-01-31
+cli_0022_dl_0015,cli_0022_ct_0061,Summit Finance - annual subscription,proposal,21795.19,USD,66,import,Anika Patel,2025-11-05,2025-12-13
+cli_0022_dl_0016,cli_0022_ct_0047,Summit Finance - audit package,qualified,1844.3,USD,12,website_form,Maya Kapoor,2025-11-27,2025-12-06
+cli_0022_dl_0017,cli_0022_ct_0057,Summit Finance - service retainer,qualified,8617.54,USD,59,website_form,Ishaan Gupta,2025-10-07,2025-11-29
+cli_0022_dl_0018,cli_0022_ct_0044,Summit Finance - service retainer,qualified,7668.01,USD,29,website_form,Liam Joshi,2025-10-29,2025-12-27
+cli_0022_dl_0019,cli_0022_ct_0005,Summit Finance - starter plan,negotiation,19383.62,USD,47,import,Liam Bhatia,2025-10-03,2025-11-12
+cli_0022_dl_0020,cli_0022_ct_0033,Summit Finance - service retainer,qualified,8136.88,USD,80,email_reply,Sara Gupta,2025-12-17,2026-01-23
+cli_0022_dl_0021,cli_0022_ct_0005,Summit Finance - pro plan,qualified,22071.09,USD,69,import,Ava Nair,2025-10-11,2025-12-02
+cli_0022_dl_0022,cli_0022_ct_0017,Summit Finance - pro plan,won,19348.35,USD,56,import,Anika Khan,2025-11-19,2025-11-24
+cli_0022_dl_0023,cli_0022_ct_0028,Summit Finance - annual subscription,proposal,9141.54,USD,37,email_reply,Ava Reddy,2026-03-17,2026-04-03
+cli_0022_dl_0024,cli_0022_ct_0003,Summit Finance - starter plan,lost,23043.35,USD,11,import,Liam Verma,2026-01-31,2026-03-22
+cli_0022_dl_0025,cli_0022_ct_0079,Summit Finance - service retainer,negotiation,18409.99,USD,95,website_form,Maya Singh,2025-11-09,2025-12-07
+cli_0022_dl_0026,cli_0022_ct_0021,Summit Finance - starter plan,proposal,10578.29,USD,57,website_form,Kabir Sharma,2025-11-20,2026-01-14
+cli_0022_dl_0027,cli_0022_ct_0021,Summit Finance - annual subscription,qualified,12997.35,USD,71,website_form,Zara Singh,2026-02-04,2026-03-10
+cli_0022_dl_0028,cli_0022_ct_0010,Summit Finance - membership,won,22287.82,USD,87,event,Zara Gupta,2025-10-23,2025-11-04
+cli_0022_dl_0029,cli_0022_ct_0070,Summit Finance - audit package,qualified,10293.15,USD,7,website_form,Maya Khan,2025-10-27,2025-11-02
+cli_0022_dl_0030,cli_0022_ct_0047,Summit Finance - audit package,qualified,7784.67,USD,46,website_form,Anika Bhatia,2025-11-02,2025-12-15
+cli_0022_dl_0031,cli_0022_ct_0080,Summit Finance - premium bundle,lost,18676.01,USD,88,event,Arjun Joshi,2025-12-23,2026-01-11
+cli_0022_dl_0032,cli_0022_ct_0043,Summit Finance - premium bundle,qualified,1313.09,USD,87,email_reply,Ishaan Mehta,2026-03-13,2026-04-16
+cli_0022_dl_0033,cli_0022_ct_0035,Summit Finance - membership,won,20857.24,USD,63,email_reply,Anika Sharma,2025-10-29,2025-12-03
+cli_0022_dl_0034,cli_0022_ct_0059,Summit Finance - annual subscription,negotiation,17500.08,USD,70,import,Arjun Joshi,2026-03-12,2026-03-22
+cli_0022_dl_0035,cli_0022_ct_0074,Summit Finance - pro plan,new,16767.2,USD,36,referral,Leo Patel,2025-10-31,2025-11-29
+cli_0022_dl_0036,cli_0022_ct_0039,Summit Finance - annual subscription,negotiation,3984.34,USD,53,import,Liam Sharma,2026-02-16,2026-04-10
+cli_0022_dl_0037,cli_0022_ct_0031,Summit Finance - pro plan,new,24760.36,USD,10,website_form,Liam Nair,2025-10-01,2025-11-04
+cli_0022_dl_0038,cli_0022_ct_0013,Summit Finance - service retainer,qualified,21281.21,USD,37,import,Mia Joshi,2026-02-25,2026-03-15
+cli_0022_dl_0039,cli_0022_ct_0001,Summit Finance - service retainer,qualified,22671.1,USD,39,import,Noah Mehta,2026-03-12,2026-04-03
+cli_0022_dl_0040,cli_0022_ct_0009,Summit Finance - service retainer,new,13908.0,USD,42,website_form,Mia Joshi,2025-11-20,2026-01-10
+cli_0022_dl_0041,cli_0022_ct_0009,Summit Finance - audit package,lost,7636.91,USD,35,website_form,Maya Bhatia,2026-02-23,2026-04-03
+cli_0022_dl_0042,cli_0022_ct_0063,Summit Finance - starter plan,won,17941.06,USD,70,website_form,Anika Mehta,2026-03-14,2026-03-25
+cli_0022_dl_0043,cli_0022_ct_0052,Summit Finance - service retainer,negotiation,14731.17,USD,32,website_form,Zara Patel,2025-11-28,2026-01-20
+cli_0022_dl_0044,cli_0022_ct_0001,Summit Finance - starter plan,lost,9472.17,USD,92,import,Sara Sharma,2026-03-03,2026-03-10
+cli_0022_dl_0045,cli_0022_ct_0028,Summit Finance - starter plan,proposal,3219.77,USD,28,email_reply,Noah Reddy,2025-10-25,2025-11-16
+cli_0022_dl_0046,cli_0022_ct_0038,Summit Finance - membership,lost,5691.12,USD,57,import,Sara Patel,2026-03-26,2026-04-17
+cli_0022_dl_0047,cli_0022_ct_0027,Summit Finance - starter plan,new,14118.87,USD,35,referral,Mia Bhatia,2025-11-12,2025-11-30
+cli_0022_dl_0048,cli_0022_ct_0063,Summit Finance - premium bundle,proposal,7356.58,USD,60,website_form,Sara Gupta,2025-10-29,2025-12-15
+cli_0022_dl_0049,cli_0022_ct_0011,Summit Finance - service retainer,proposal,12047.28,USD,31,website_form,Kabir Joshi,2025-12-15,2025-12-29
+cli_0022_dl_0050,cli_0022_ct_0008,Summit Finance - annual subscription,qualified,9102.61,USD,50,event,Arjun Reddy,2026-01-10,2026-01-14
+cli_0022_dl_0051,cli_0022_ct_0010,Summit Finance - pro plan,proposal,439.5,USD,16,event,Ava Joshi,2026-01-23,2026-02-22
+cli_0022_dl_0052,cli_0022_ct_0030,Summit Finance - membership,won,14507.16,USD,41,import,Mia Reddy,2026-02-15,2026-04-12
+cli_0022_dl_0053,cli_0022_ct_0076,Summit Finance - annual subscription,new,17299.88,USD,76,event,Anika Khan,2025-10-12,2025-11-12
+cli_0022_dl_0054,cli_0022_ct_0078,Summit Finance - membership,won,9310.7,USD,90,referral,Liam Nair,2025-10-09,2025-11-16
+cli_0022_dl_0055,cli_0022_ct_0009,Summit Finance - service retainer,won,2914.25,USD,27,website_form,Kabir Kapoor,2026-03-16,2026-03-27
+cli_0022_dl_0056,cli_0022_ct_0002,Summit Finance - service retainer,lost,3479.57,USD,95,website_form,Kabir Reddy,2025-11-20,2026-01-08
+cli_0022_dl_0057,cli_0022_ct_0058,Summit Finance - premium bundle,negotiation,16624.59,USD,9,import,Zara Mehta,2026-02-26,2026-03-09
+cli_0022_dl_0058,cli_0022_ct_0034,Summit Finance - service retainer,qualified,3719.91,USD,92,website_form,Liam Kapoor,2026-02-17,2026-03-21
+cli_0022_dl_0059,cli_0022_ct_0003,Summit Finance - annual subscription,lost,10766.55,USD,57,import,Anika Mehta,2025-12-11,2026-01-04
+cli_0022_dl_0060,cli_0022_ct_0051,Summit Finance - starter plan,new,21396.42,USD,83,email_reply,Noah Joshi,2026-02-23,2026-02-27
+cli_0022_dl_0061,cli_0022_ct_0007,Summit Finance - service retainer,won,21539.85,USD,37,email_reply,Anika Bhatia,2026-03-12,2026-04-18
+cli_0022_dl_0062,cli_0022_ct_0025,Summit Finance - membership,qualified,23376.0,USD,39,website_form,Arjun Nair,2026-02-25,2026-03-22
+cli_0022_dl_0063,cli_0022_ct_0010,Summit Finance - pro plan,negotiation,23675.79,USD,14,event,Mia Verma,2026-03-08,2026-04-14
+cli_0022_dl_0064,cli_0022_ct_0036,Summit Finance - membership,qualified,13859.14,USD,62,website_form,Ava Patel,2026-04-15,2026-04-19
+cli_0022_dl_0065,cli_0022_ct_0006,Summit Finance - premium bundle,proposal,2520.46,USD,58,event,Liam Patel,2025-12-06,2025-12-19
+cli_0022_dl_0066,cli_0022_ct_0014,Summit Finance - membership,won,5600.37,USD,46,website_form,Maya Mehta,2025-10-14,2025-12-04
+cli_0022_dl_0067,cli_0022_ct_0060,Summit Finance - audit package,qualified,1499.16,USD,12,import,Anika Singh,2026-01-12,2026-02-28
+cli_0022_dl_0068,cli_0022_ct_0065,Summit Finance - pro plan,qualified,19019.68,USD,72,event,Zara Mehta,2025-10-18,2025-11-15
+cli_0022_dl_0069,cli_0022_ct_0001,Summit Finance - membership,proposal,17135.59,USD,84,import,Arjun Verma,2026-03-03,2026-03-21
+cli_0022_dl_0070,cli_0022_ct_0010,Summit Finance - starter plan,qualified,5582.73,USD,36,event,Ishaan Nair,2026-02-22,2026-02-25
+cli_0022_dl_0071,cli_0022_ct_0052,Summit Finance - membership,won,3886.52,USD,55,website_form,Ava Bhatia,2025-12-06,2026-02-03
+cli_0022_dl_0072,cli_0022_ct_0018,Summit Finance - pro plan,negotiation,7186.74,USD,68,referral,Ava Kapoor,2025-11-12,2025-12-19
+cli_0022_dl_0073,cli_0022_ct_0046,Summit Finance - pro plan,negotiation,22747.26,USD,88,referral,Noah Bhatia,2025-12-06,2026-01-17
+cli_0022_dl_0074,cli_0022_ct_0038,Summit Finance - membership,new,16649.18,USD,5,import,Ishaan Khan,2026-02-22,2026-04-23
+cli_0022_dl_0075,cli_0022_ct_0067,Summit Finance - service retainer,proposal,21231.53,USD,64,website_form,Anika Reddy,2025-10-28,2025-11-21
+cli_0022_dl_0076,cli_0022_ct_0031,Summit Finance - service retainer,lost,4681.46,USD,80,website_form,Zara Verma,2025-09-24,2025-11-09

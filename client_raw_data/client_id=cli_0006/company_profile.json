@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0006",
+  "company_name": "Nova Commerce",
+  "industry": "d2c",
+  "region": "CA",
+  "currency": "CAD",
+  "website": "https://nova-commerce.example.com",
+  "business_model": "b2b",
+  "employee_band": "51-200",
+  "objective": "retention",
+  "budget_monthly": 25000,
+  "voice": "playful",
+  "channels": [
+    "meta_ads",
+    "email",
+    "organic",
+    "direct",
+    "referral"
+  ],
+  "created_at": "2026-04-23T20:55:59.478714Z"
+}

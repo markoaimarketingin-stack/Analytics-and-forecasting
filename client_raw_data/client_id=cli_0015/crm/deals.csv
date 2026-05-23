@@ -1,0 +1,58 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0015_dl_0001,cli_0015_ct_0153,Vertex Works - service retainer,qualified,14195.09,EUR,88,website_form,Mia Khan,2026-03-17,2026-04-19
+cli_0015_dl_0002,cli_0015_ct_0046,Vertex Works - service retainer,negotiation,493.81,EUR,71,import,Liam Khan,2026-03-11,2026-04-20
+cli_0015_dl_0003,cli_0015_ct_0156,Vertex Works - annual subscription,qualified,18749.5,EUR,11,website_form,Noah Patel,2026-01-08,2026-02-07
+cli_0015_dl_0004,cli_0015_ct_0055,Vertex Works - pro plan,qualified,24826.69,EUR,7,website_form,Ishaan Singh,2026-01-15,2026-02-08
+cli_0015_dl_0005,cli_0015_ct_0096,Vertex Works - annual subscription,qualified,22780.65,EUR,21,website_form,Liam Joshi,2025-12-27,2026-02-20
+cli_0015_dl_0006,cli_0015_ct_0001,Vertex Works - audit package,negotiation,15918.33,EUR,79,referral,Kabir Khan,2026-02-15,2026-04-02
+cli_0015_dl_0007,cli_0015_ct_0104,Vertex Works - premium bundle,qualified,7979.76,EUR,63,referral,Noah Joshi,2025-12-29,2026-01-31
+cli_0015_dl_0008,cli_0015_ct_0059,Vertex Works - pro plan,negotiation,13555.41,EUR,83,email_reply,Noah Verma,2026-02-16,2026-04-17
+cli_0015_dl_0009,cli_0015_ct_0100,Vertex Works - membership,negotiation,16393.41,EUR,41,import,Zara Singh,2026-01-11,2026-02-21
+cli_0015_dl_0010,cli_0015_ct_0008,Vertex Works - annual subscription,won,4024.21,EUR,38,import,Arjun Singh,2025-12-19,2026-02-01
+cli_0015_dl_0011,cli_0015_ct_0124,Vertex Works - annual subscription,proposal,16549.98,EUR,54,import,Sara Singh,2026-03-17,2026-04-10
+cli_0015_dl_0012,cli_0015_ct_0012,Vertex Works - membership,qualified,22934.83,EUR,59,website_form,Ava Patel,2026-02-16,2026-03-02
+cli_0015_dl_0013,cli_0015_ct_0085,Vertex Works - premium bundle,won,9589.31,EUR,10,email_reply,Anika Gupta,2026-02-06,2026-03-02
+cli_0015_dl_0014,cli_0015_ct_0089,Vertex Works - service retainer,qualified,16233.09,EUR,51,event,Arjun Bhatia,2025-12-05,2026-01-15
+cli_0015_dl_0015,cli_0015_ct_0005,Vertex Works - pro plan,proposal,20514.59,EUR,87,website_form,Liam Patel,2026-03-01,2026-04-01
+cli_0015_dl_0016,cli_0015_ct_0075,Vertex Works - membership,qualified,24488.8,EUR,89,event,Sara Sharma,2026-01-02,2026-01-09
+cli_0015_dl_0017,cli_0015_ct_0095,Vertex Works - membership,negotiation,1114.49,EUR,20,referral,Noah Khan,2026-01-22,2026-03-17
+cli_0015_dl_0018,cli_0015_ct_0166,Vertex Works - audit package,negotiation,17560.6,EUR,24,email_reply,Arjun Kapoor,2026-02-03,2026-03-18
+cli_0015_dl_0019,cli_0015_ct_0150,Vertex Works - starter plan,won,18382.0,EUR,87,import,Liam Mehta,2026-02-11,2026-03-30
+cli_0015_dl_0020,cli_0015_ct_0143,Vertex Works - audit package,qualified,7806.22,EUR,54,email_reply,Arjun Joshi,2026-02-24,2026-03-05
+cli_0015_dl_0021,cli_0015_ct_0155,Vertex Works - annual subscription,qualified,2184.99,EUR,10,event,Kabir Patel,2026-02-13,2026-03-25
+cli_0015_dl_0022,cli_0015_ct_0116,Vertex Works - audit package,negotiation,19110.88,EUR,28,email_reply,Ishaan Reddy,2026-02-13,2026-03-13
+cli_0015_dl_0023,cli_0015_ct_0166,Vertex Works - pro plan,qualified,22931.87,EUR,81,email_reply,Zara Joshi,2026-03-06,2026-03-16
+cli_0015_dl_0024,cli_0015_ct_0046,Vertex Works - pro plan,proposal,9253.91,EUR,73,import,Ishaan Reddy,2026-02-02,2026-02-20
+cli_0015_dl_0025,cli_0015_ct_0144,Vertex Works - membership,won,11289.59,EUR,59,website_form,Arjun Joshi,2026-03-20,2026-04-10
+cli_0015_dl_0026,cli_0015_ct_0128,Vertex Works - membership,new,13383.64,EUR,20,website_form,Sara Khan,2025-12-31,2026-01-23
+cli_0015_dl_0027,cli_0015_ct_0022,Vertex Works - starter plan,negotiation,5308.3,EUR,5,import,Kabir Reddy,2025-10-25,2025-12-10
+cli_0015_dl_0028,cli_0015_ct_0014,Vertex Works - membership,negotiation,15970.02,EUR,88,email_reply,Ava Joshi,2025-10-17,2025-12-04
+cli_0015_dl_0029,cli_0015_ct_0016,Vertex Works - pro plan,new,13118.78,EUR,47,import,Ava Khan,2026-02-20,2026-04-04
+cli_0015_dl_0030,cli_0015_ct_0092,Vertex Works - service retainer,negotiation,19073.07,EUR,78,referral,Mia Sharma,2025-12-17,2026-01-18
+cli_0015_dl_0031,cli_0015_ct_0092,Vertex Works - premium bundle,lost,3433.89,EUR,92,referral,Maya Patel,2026-02-24,2026-03-08
+cli_0015_dl_0032,cli_0015_ct_0136,Vertex Works - starter plan,new,20278.89,EUR,88,event,Kabir Mehta,2025-12-18,2026-01-06
+cli_0015_dl_0033,cli_0015_ct_0016,Vertex Works - service retainer,negotiation,19191.52,EUR,82,import,Ishaan Singh,2026-01-06,2026-03-03
+cli_0015_dl_0034,cli_0015_ct_0133,Vertex Works - audit package,won,22739.17,EUR,77,website_form,Maya Bhatia,2025-11-23,2025-12-08
+cli_0015_dl_0035,cli_0015_ct_0025,Vertex Works - membership,qualified,1362.93,EUR,41,website_form,Mia Joshi,2026-03-01,2026-04-21
+cli_0015_dl_0036,cli_0015_ct_0165,Vertex Works - premium bundle,qualified,17666.09,EUR,30,referral,Sara Sharma,2025-11-25,2026-01-03
+cli_0015_dl_0037,cli_0015_ct_0048,Vertex Works - service retainer,negotiation,5229.68,EUR,47,import,Zara Mehta,2025-10-02,2025-10-28
+cli_0015_dl_0038,cli_0015_ct_0100,Vertex Works - pro plan,new,6832.37,EUR,83,import,Arjun Kapoor,2025-11-13,2025-12-06
+cli_0015_dl_0039,cli_0015_ct_0010,Vertex Works - audit package,new,11416.23,EUR,80,website_form,Leo Khan,2025-11-06,2025-12-30
+cli_0015_dl_0040,cli_0015_ct_0118,Vertex Works - premium bundle,new,23682.32,EUR,59,website_form,Leo Nair,2025-10-07,2025-11-01
+cli_0015_dl_0041,cli_0015_ct_0130,Vertex Works - annual subscription,won,21099.59,EUR,72,website_form,Leo Nair,2026-01-10,2026-02-04
+cli_0015_dl_0042,cli_0015_ct_0023,Vertex Works - service retainer,proposal,19860.1,EUR,59,referral,Sara Sharma,2026-02-27,2026-04-04
+cli_0015_dl_0043,cli_0015_ct_0084,Vertex Works - audit package,proposal,20175.89,EUR,73,referral,Noah Kapoor,2025-09-21,2025-11-07
+cli_0015_dl_0044,cli_0015_ct_0143,Vertex Works - audit package,won,9490.27,EUR,69,email_reply,Zara Sharma,2026-03-02,2026-04-06
+cli_0015_dl_0045,cli_0015_ct_0056,Vertex Works - starter plan,proposal,17658.31,EUR,34,import,Noah Verma,2026-01-16,2026-03-17
+cli_0015_dl_0046,cli_0015_ct_0130,Vertex Works - annual subscription,lost,12829.18,EUR,85,website_form,Arjun Singh,2026-02-03,2026-04-03
+cli_0015_dl_0047,cli_0015_ct_0037,Vertex Works - audit package,won,22226.21,EUR,15,email_reply,Noah Khan,2025-11-12,2025-11-28
+cli_0015_dl_0048,cli_0015_ct_0074,Vertex Works - premium bundle,new,5249.45,EUR,15,event,Kabir Reddy,2025-11-30,2026-01-08
+cli_0015_dl_0049,cli_0015_ct_0048,Vertex Works - membership,qualified,13009.85,EUR,39,import,Kabir Nair,2026-03-17,2026-04-23
+cli_0015_dl_0050,cli_0015_ct_0162,Vertex Works - membership,negotiation,13200.43,EUR,49,website_form,Liam Reddy,2025-09-29,2025-11-01
+cli_0015_dl_0051,cli_0015_ct_0077,Vertex Works - pro plan,negotiation,17698.74,EUR,73,email_reply,Zara Kapoor,2025-10-27,2025-12-04
+cli_0015_dl_0052,cli_0015_ct_0113,Vertex Works - annual subscription,qualified,3853.47,EUR,53,email_reply,Zara Kapoor,2025-10-30,2025-11-19
+cli_0015_dl_0053,cli_0015_ct_0132,Vertex Works - membership,won,10317.39,EUR,82,referral,Kabir Sharma,2025-12-24,2026-01-08
+cli_0015_dl_0054,cli_0015_ct_0145,Vertex Works - audit package,qualified,21346.77,EUR,28,email_reply,Maya Nair,2026-03-21,2026-04-17
+cli_0015_dl_0055,cli_0015_ct_0132,Vertex Works - premium bundle,qualified,15716.56,EUR,26,referral,Leo Khan,2025-12-31,2026-02-11
+cli_0015_dl_0056,cli_0015_ct_0106,Vertex Works - membership,qualified,11219.38,EUR,57,email_reply,Liam Kapoor,2025-11-01,2025-11-19
+cli_0015_dl_0057,cli_0015_ct_0051,Vertex Works - service retainer,won,8715.21,EUR,93,website_form,Arjun Singh,2025-11-10,2025-11-18

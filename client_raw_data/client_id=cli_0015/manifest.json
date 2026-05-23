@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0015",
+  "company_name": "Vertex Works",
+  "industry": "hospitality",
+  "region": "EU",
+  "generated_at": "2026-04-23T20:56:16.377225Z",
+  "counts": {
+    "contacts": 166,
+    "deals": 57,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 4,
+    "uploads": 7,
+    "marketing_rows": 300,
+    "email_campaigns": 43,
+    "posts": 59,
+    "comments": 118,
+    "tickets": 92,
+    "transcripts": 40,
+    "sessions": 24781,
+    "events": 123703,
+    "orders": 164,
+    "refunds": 17,
+    "invoices": 57,
+    "payments": 39,
+    "feedback": 71,
+    "feature_requests": 63,
+    "meeting_notes": 25,
+    "raw_observations": 39
+  }
+}

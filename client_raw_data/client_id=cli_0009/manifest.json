@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0009",
+  "company_name": "Urban Works",
+  "industry": "d2c",
+  "region": "IN",
+  "generated_at": "2026-04-23T20:56:06.313009Z",
+  "counts": {
+    "contacts": 129,
+    "deals": 78,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 7,
+    "uploads": 10,
+    "marketing_rows": 240,
+    "email_campaigns": 43,
+    "posts": 57,
+    "comments": 114,
+    "tickets": 95,
+    "transcripts": 45,
+    "sessions": 28138,
+    "events": 141416,
+    "orders": 162,
+    "refunds": 11,
+    "invoices": 44,
+    "payments": 33,
+    "feedback": 65,
+    "feature_requests": 48,
+    "meeting_notes": 15,
+    "raw_observations": 37
+  }
+}

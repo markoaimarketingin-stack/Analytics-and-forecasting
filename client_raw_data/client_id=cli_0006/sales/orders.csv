@@ -1,0 +1,203 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0006_ord_00001,2026-04-14,7e827c0594fe,premium bundle,CAD,1203.38,0,organic,paid,paypal
+cli_0006_ord_00002,2025-11-30,a3dcf5ce9fc8,annual subscription,CAD,1799.59,25,email,paid,paypal
+cli_0006_ord_00003,2026-04-19,2d74a628f436,annual subscription,CAD,533.79,25,meta_ads,paid,upi
+cli_0006_ord_00004,2025-11-22,d5c803897cdd,service retainer,CAD,95.48,15,organic,paid,upi
+cli_0006_ord_00005,2026-02-14,9bdfa1bb8fea,audit package,CAD,988.78,5,meta_ads,paid,wallet
+cli_0006_ord_00006,2026-04-20,cca70c893981,premium bundle,CAD,1399.61,5,direct,paid,paypal
+cli_0006_ord_00007,2026-02-06,47d2e07af5a9,service retainer,CAD,2428.99,0,meta_ads,paid,card
+cli_0006_ord_00008,2025-12-14,2c81645abc18,membership,CAD,2208.35,20,meta_ads,paid,upi
+cli_0006_ord_00009,2025-11-23,4b74f0cd7fcc,audit package,CAD,976.44,25,direct,paid,bank_transfer
+cli_0006_ord_00010,2026-03-12,77bcc09e604f,membership,CAD,442.2,10,email,paid,bank_transfer
+cli_0006_ord_00011,2025-11-28,2b281d31c585,premium bundle,CAD,919.65,0,meta_ads,paid,paypal
+cli_0006_ord_00012,2026-04-09,427d6d53f54f,service retainer,CAD,1982.68,0,email,paid,paypal
+cli_0006_ord_00013,2026-03-03,cebcdc6880c1,membership,CAD,2234.65,5,organic,paid,wallet
+cli_0006_ord_00014,2025-12-17,6cee7545f786,pro plan,CAD,574.55,25,organic,paid,paypal
+cli_0006_ord_00015,2026-01-09,cfda43d47154,pro plan,CAD,2352.79,20,direct,paid,paypal
+cli_0006_ord_00016,2026-04-01,3afa54cacd24,premium bundle,CAD,1619.36,25,email,paid,paypal
+cli_0006_ord_00017,2025-11-24,943385ac220a,membership,CAD,1233.36,15,direct,paid,card
+cli_0006_ord_00018,2025-11-07,f6e5c978f2a6,starter plan,CAD,877.28,25,organic,paid,paypal
+cli_0006_ord_00019,2026-02-10,f864df6e11d5,membership,CAD,1307.12,5,meta_ads,paid,card
+cli_0006_ord_00020,2025-12-20,aa3843432db0,membership,CAD,2062.53,0,meta_ads,paid,paypal
+cli_0006_ord_00021,2026-01-03,f5948646930c,audit package,CAD,2349.55,0,email,paid,paypal
+cli_0006_ord_00022,2026-03-26,c35871cd8311,service retainer,CAD,1710.47,15,email,paid,paypal
+cli_0006_ord_00023,2026-01-15,4deddea2086d,annual subscription,CAD,1522.76,25,referral,paid,card
+cli_0006_ord_00024,2026-03-18,c8e89df884cf,annual subscription,CAD,73.01,20,direct,paid,upi
+cli_0006_ord_00025,2025-10-27,2389f2e1cc59,service retainer,CAD,512.36,5,organic,paid,upi
+cli_0006_ord_00026,2026-04-17,8cfdd020e74d,annual subscription,CAD,604.01,10,meta_ads,paid,upi
+cli_0006_ord_00027,2026-03-26,bb59d2f1c5e3,pro plan,CAD,1695.79,5,organic,paid,bank_transfer
+cli_0006_ord_00028,2025-12-08,6694daae7972,premium bundle,CAD,1376.13,25,meta_ads,refunded,card
+cli_0006_ord_00029,2026-02-27,4ba100a2e7dd,premium bundle,CAD,2327.11,20,meta_ads,paid,bank_transfer
+cli_0006_ord_00030,2026-01-11,5b4704a9d9e9,membership,CAD,680.93,0,referral,paid,bank_transfer
+cli_0006_ord_00031,2025-12-24,cfca7f966976,premium bundle,CAD,1087.58,10,organic,paid,wallet
+cli_0006_ord_00032,2026-01-09,f35c81628f8f,premium bundle,CAD,190.05,20,organic,paid,bank_transfer
+cli_0006_ord_00033,2026-02-20,22550a19e865,service retainer,CAD,2362.31,25,email,paid,paypal
+cli_0006_ord_00034,2025-12-31,2a6f846e3a77,pro plan,CAD,249.22,15,email,paid,card
+cli_0006_ord_00035,2026-04-14,51ceb14a6bc2,service retainer,CAD,83.95,5,email,refunded,paypal
+cli_0006_ord_00036,2025-12-01,b7178c58cdf6,starter plan,CAD,1712.61,10,direct,paid,bank_transfer
+cli_0006_ord_00037,2025-12-13,cd717507a419,service retainer,CAD,1758.27,0,email,refunded,upi
+cli_0006_ord_00038,2025-11-09,e9c151075da6,starter plan,CAD,974.47,0,meta_ads,pending,card
+cli_0006_ord_00039,2025-11-16,22fe06fab841,pro plan,CAD,1098.92,5,email,paid,upi
+cli_0006_ord_00040,2026-03-13,aba6d0fcac35,starter plan,CAD,1854.68,25,referral,pending,upi
+cli_0006_ord_00041,2026-04-04,9113ccd00309,starter plan,CAD,1838.18,0,email,paid,bank_transfer
+cli_0006_ord_00042,2026-04-22,8a00f3ea5d15,annual subscription,CAD,2395.42,20,organic,paid,paypal
+cli_0006_ord_00043,2026-04-22,c0098be5e1ff,starter plan,CAD,1365.46,0,direct,paid,wallet
+cli_0006_ord_00044,2026-04-18,dfa4a5e24717,starter plan,CAD,1805.67,25,meta_ads,paid,wallet
+cli_0006_ord_00045,2026-01-05,5d74011ce3c9,membership,CAD,2293.82,25,direct,paid,paypal
+cli_0006_ord_00046,2026-03-24,7e7a9ec30cc8,membership,CAD,1469.21,10,meta_ads,paid,wallet
+cli_0006_ord_00047,2026-04-17,c0d37cb65b0d,annual subscription,CAD,344.14,5,direct,paid,paypal
+cli_0006_ord_00048,2025-12-17,9ce19d6a91a0,membership,CAD,1572.66,5,direct,paid,card
+cli_0006_ord_00049,2026-01-03,a30042b8b470,annual subscription,CAD,917.29,20,meta_ads,paid,upi
+cli_0006_ord_00050,2026-01-31,139cdfed0c40,audit package,CAD,275.8,15,organic,pending,paypal
+cli_0006_ord_00051,2026-04-06,e3a0fae1b24c,service retainer,CAD,940.2,5,organic,paid,paypal
+cli_0006_ord_00052,2025-11-01,b69c58487701,premium bundle,CAD,1040.05,5,organic,paid,card
+cli_0006_ord_00053,2025-11-03,e4d536d83793,premium bundle,CAD,1819.85,5,meta_ads,paid,paypal
+cli_0006_ord_00054,2025-11-18,10226a922d96,annual subscription,CAD,661.6,25,meta_ads,paid,bank_transfer
+cli_0006_ord_00055,2025-12-19,b17b26cea09d,audit package,CAD,313.84,25,meta_ads,paid,paypal
+cli_0006_ord_00056,2026-01-25,f05411f9cd78,audit package,CAD,464.77,20,email,paid,paypal
+cli_0006_ord_00057,2026-03-10,9517c3333b74,membership,CAD,542.51,20,email,refunded,bank_transfer
+cli_0006_ord_00058,2026-03-05,6da7a110d3a9,pro plan,CAD,914.95,25,referral,paid,card
+cli_0006_ord_00059,2026-03-10,c0eef8071b2f,service retainer,CAD,1063.17,15,referral,paid,paypal
+cli_0006_ord_00060,2026-03-14,ebc320df6285,membership,CAD,50.95,0,direct,paid,card
+cli_0006_ord_00061,2026-03-24,fc126d60a670,pro plan,CAD,1207.34,10,organic,paid,paypal
+cli_0006_ord_00062,2025-11-28,39badfdbc06e,membership,CAD,888.32,5,referral,paid,wallet
+cli_0006_ord_00063,2025-12-10,4ee550816598,service retainer,CAD,101.3,5,referral,paid,bank_transfer
+cli_0006_ord_00064,2026-03-20,943d90e75b52,audit package,CAD,1712.86,20,organic,paid,card
+cli_0006_ord_00065,2026-02-21,ceb9fad12c7d,annual subscription,CAD,2327.9,5,meta_ads,paid,paypal
+cli_0006_ord_00066,2026-04-17,440e20095207,service retainer,CAD,108.72,5,meta_ads,paid,bank_transfer
+cli_0006_ord_00067,2025-11-19,da167338dfd6,pro plan,CAD,417.75,15,referral,paid,bank_transfer
+cli_0006_ord_00068,2026-03-11,557ce2baf4e9,premium bundle,CAD,2452.46,5,organic,paid,paypal
+cli_0006_ord_00069,2026-01-25,18d8550b3f0f,premium bundle,CAD,1904.63,15,organic,paid,card
+cli_0006_ord_00070,2026-03-04,08757600157b,premium bundle,CAD,1269.06,20,organic,paid,bank_transfer
+cli_0006_ord_00071,2026-01-06,ff5fdcd67e89,premium bundle,CAD,440.49,15,email,paid,wallet
+cli_0006_ord_00072,2026-01-18,8efab6ba564d,premium bundle,CAD,1648.21,5,referral,paid,bank_transfer
+cli_0006_ord_00073,2025-12-02,3a2694fbe275,starter plan,CAD,2091.85,15,referral,pending,bank_transfer
+cli_0006_ord_00074,2025-11-02,d789dd1c19de,starter plan,CAD,2340.73,0,organic,paid,upi
+cli_0006_ord_00075,2025-11-24,e286af626373,annual subscription,CAD,952.05,5,referral,paid,wallet
+cli_0006_ord_00076,2026-02-11,d1c943d4fc75,starter plan,CAD,1132.61,15,direct,paid,bank_transfer
+cli_0006_ord_00077,2026-02-06,47fdfebf6e9e,membership,CAD,171.96,15,direct,paid,paypal
+cli_0006_ord_00078,2026-01-15,f66021dd2d63,membership,CAD,358.22,5,referral,paid,upi
+cli_0006_ord_00079,2026-02-18,df1503025e65,audit package,CAD,1754.02,15,organic,paid,bank_transfer
+cli_0006_ord_00080,2025-11-13,ae30ebc91a04,membership,CAD,1758.03,20,email,paid,paypal
+cli_0006_ord_00081,2026-02-07,cf896ab8427f,premium bundle,CAD,916.52,20,direct,paid,wallet
+cli_0006_ord_00082,2026-02-19,63a3902be2e8,pro plan,CAD,880.62,5,meta_ads,paid,wallet
+cli_0006_ord_00083,2025-12-02,6ee2645f221c,audit package,CAD,930.78,5,organic,paid,bank_transfer
+cli_0006_ord_00084,2025-12-19,e2741984fb14,pro plan,CAD,270.13,20,meta_ads,paid,paypal
+cli_0006_ord_00085,2026-02-08,99b6695254d5,pro plan,CAD,304.32,20,organic,paid,upi
+cli_0006_ord_00086,2026-04-16,80d7734345a1,service retainer,CAD,1008.47,10,referral,paid,wallet
+cli_0006_ord_00087,2026-03-05,82af5902b754,pro plan,CAD,1147.04,10,meta_ads,paid,upi
+cli_0006_ord_00088,2025-12-23,377ae01607b0,audit package,CAD,57.17,25,referral,paid,bank_transfer
+cli_0006_ord_00089,2026-02-02,66336d0fa530,membership,CAD,952.2,25,organic,paid,card
+cli_0006_ord_00090,2026-03-15,99a029bb1a3e,annual subscription,CAD,547.74,20,email,paid,card
+cli_0006_ord_00091,2026-04-06,95ccc3030906,starter plan,CAD,602.38,20,organic,refunded,upi
+cli_0006_ord_00092,2025-12-01,3220fce37baa,pro plan,CAD,1004.67,10,organic,paid,wallet
+cli_0006_ord_00093,2026-01-25,cb458579c050,starter plan,CAD,1998.15,5,organic,paid,wallet
+cli_0006_ord_00094,2025-11-30,d6a5d3bed207,service retainer,CAD,805.5,25,direct,paid,bank_transfer
+cli_0006_ord_00095,2026-04-17,5059b9448c45,membership,CAD,1081.14,5,organic,paid,paypal
+cli_0006_ord_00096,2026-04-05,02eb8333807e,starter plan,CAD,797.84,15,email,pending,paypal
+cli_0006_ord_00097,2026-02-11,b4f3be8e48c6,audit package,CAD,1224.83,10,meta_ads,paid,wallet
+cli_0006_ord_00098,2026-02-26,c59fff605795,membership,CAD,1376.22,15,organic,paid,bank_transfer
+cli_0006_ord_00099,2026-02-26,bfb1a8a5233d,pro plan,CAD,1449.35,10,organic,paid,wallet
+cli_0006_ord_00100,2025-12-15,7697a9a1141b,starter plan,CAD,1572.93,10,meta_ads,paid,wallet
+cli_0006_ord_00101,2026-01-06,bad585185489,annual subscription,CAD,1153.85,20,referral,paid,wallet
+cli_0006_ord_00102,2025-11-05,9adecce9c45f,annual subscription,CAD,1345.74,10,email,paid,bank_transfer
+cli_0006_ord_00103,2026-03-25,0fa88812559d,service retainer,CAD,590.4,25,email,paid,bank_transfer
+cli_0006_ord_00104,2025-12-21,ab1dd45e6d61,premium bundle,CAD,1043.71,25,referral,paid,card
+cli_0006_ord_00105,2026-03-19,4f51f4ca0904,annual subscription,CAD,1814.11,0,referral,pending,wallet
+cli_0006_ord_00106,2026-01-14,f1c0fc0a0d51,starter plan,CAD,1199.01,10,direct,pending,card
+cli_0006_ord_00107,2026-01-12,7b3ed3b06e42,service retainer,CAD,643.62,25,direct,paid,paypal
+cli_0006_ord_00108,2025-12-22,7c58dc0e92c7,annual subscription,CAD,324.44,0,meta_ads,paid,card
+cli_0006_ord_00109,2026-04-19,06f755537e54,pro plan,CAD,2273.33,10,organic,pending,upi
+cli_0006_ord_00110,2026-01-20,b9c5e818360a,annual subscription,CAD,690.21,5,email,refunded,card
+cli_0006_ord_00111,2026-04-20,c8d88afa62bf,pro plan,CAD,1005.75,10,email,paid,wallet
+cli_0006_ord_00112,2025-11-28,658a58ece0d6,audit package,CAD,728.34,20,email,paid,paypal
+cli_0006_ord_00113,2026-01-02,aed92e3b3fd3,pro plan,CAD,330.02,25,organic,paid,paypal
+cli_0006_ord_00114,2026-03-06,85197dd0ea9a,membership,CAD,2245.74,0,organic,paid,upi
+cli_0006_ord_00115,2025-11-05,fd94ec6aad21,pro plan,CAD,419.49,25,email,paid,upi
+cli_0006_ord_00116,2025-11-17,4a654ef2394b,premium bundle,CAD,481.44,10,organic,paid,wallet
+cli_0006_ord_00117,2026-03-21,0f15ad6493a0,service retainer,CAD,919.05,5,direct,pending,upi
+cli_0006_ord_00118,2026-03-01,185b7ef785b9,pro plan,CAD,1061.42,0,direct,paid,upi
+cli_0006_ord_00119,2026-02-08,462957f803cb,membership,CAD,579.89,25,email,paid,upi
+cli_0006_ord_00120,2025-12-08,51afc9c335d2,audit package,CAD,1859.6,20,direct,paid,wallet
+cli_0006_ord_00121,2025-12-20,262bdcef6c07,audit package,CAD,2314.31,25,meta_ads,paid,upi
+cli_0006_ord_00122,2025-11-03,c44e77dcb738,pro plan,CAD,1306.1,5,organic,paid,paypal
+cli_0006_ord_00123,2026-03-25,8c4c2a097d05,premium bundle,CAD,1345.14,5,email,paid,card
+cli_0006_ord_00124,2025-11-17,abcbe203f2c2,service retainer,CAD,2147.62,10,meta_ads,paid,bank_transfer
+cli_0006_ord_00125,2026-04-02,b34e5a5a56dc,starter plan,CAD,1383.05,0,direct,paid,wallet
+cli_0006_ord_00126,2026-04-04,248063185ee3,audit package,CAD,50.58,10,email,paid,card
+cli_0006_ord_00127,2025-12-25,32f931947a88,starter plan,CAD,547.23,10,email,paid,paypal
+cli_0006_ord_00128,2026-03-13,2b8ef9d7929d,annual subscription,CAD,1383.75,0,email,paid,bank_transfer
+cli_0006_ord_00129,2025-12-20,5674389b44b7,starter plan,CAD,2075.11,0,meta_ads,paid,wallet
+cli_0006_ord_00130,2026-04-19,b193d0e45106,service retainer,CAD,610.52,20,direct,paid,wallet
+cli_0006_ord_00131,2026-01-25,bcc43926caf9,premium bundle,CAD,904.65,5,meta_ads,paid,bank_transfer
+cli_0006_ord_00132,2025-12-21,285c9a32dfd9,audit package,CAD,577.98,5,referral,paid,wallet
+cli_0006_ord_00133,2026-01-28,19f3298e977d,audit package,CAD,1880.18,0,organic,paid,bank_transfer
+cli_0006_ord_00134,2026-02-02,2685398b7eab,starter plan,CAD,1560.06,25,direct,paid,card
+cli_0006_ord_00135,2025-10-29,0516563ac01f,starter plan,CAD,1285.96,0,organic,paid,card
+cli_0006_ord_00136,2025-11-05,e7b8c158f073,premium bundle,CAD,205.8,25,organic,paid,card
+cli_0006_ord_00137,2026-02-15,ded899f25baa,starter plan,CAD,1039.11,10,direct,paid,upi
+cli_0006_ord_00138,2025-12-06,83713dddf5d7,service retainer,CAD,450.52,10,meta_ads,paid,bank_transfer
+cli_0006_ord_00139,2026-03-29,8050d3e66f54,premium bundle,CAD,1277.4,10,organic,paid,bank_transfer
+cli_0006_ord_00140,2026-04-15,1913b46a5fc9,service retainer,CAD,1441.31,25,email,paid,wallet
+cli_0006_ord_00141,2025-12-01,983c5eaa6963,premium bundle,CAD,1187.19,25,direct,paid,wallet
+cli_0006_ord_00142,2026-02-27,f17327993fbb,annual subscription,CAD,1844.17,0,direct,paid,bank_transfer
+cli_0006_ord_00143,2026-02-22,6f5f109c8c31,starter plan,CAD,604.9,20,organic,paid,bank_transfer
+cli_0006_ord_00144,2026-03-08,6835beb35d52,service retainer,CAD,82.54,25,email,refunded,paypal
+cli_0006_ord_00145,2026-03-09,464e694fb63e,premium bundle,CAD,1918.73,5,direct,paid,bank_transfer
+cli_0006_ord_00146,2025-10-26,9a63a25d9b1b,membership,CAD,1695.32,25,email,paid,paypal
+cli_0006_ord_00147,2025-11-20,d71aaf9b70da,service retainer,CAD,338.45,15,organic,paid,wallet
+cli_0006_ord_00148,2025-12-07,75377c847e24,starter plan,CAD,446.67,25,meta_ads,paid,card
+cli_0006_ord_00149,2025-11-22,e16373e37504,audit package,CAD,763.74,20,organic,paid,upi
+cli_0006_ord_00150,2026-01-18,646f7129eb01,premium bundle,CAD,675.46,5,email,paid,card
+cli_0006_ord_00151,2026-01-17,73a6e68e58cd,starter plan,CAD,2431.23,15,email,paid,paypal
+cli_0006_ord_00152,2026-02-03,12a4b5c7d185,premium bundle,CAD,482.92,5,email,paid,card
+cli_0006_ord_00153,2025-10-30,a12b554f5abe,membership,CAD,85.03,25,referral,paid,card
+cli_0006_ord_00154,2026-02-26,adcde3e501c6,audit package,CAD,2022.78,25,referral,paid,card
+cli_0006_ord_00155,2025-12-17,865422bd7f5a,premium bundle,CAD,533.33,10,email,paid,upi
+cli_0006_ord_00156,2026-01-19,762eb4d629a9,pro plan,CAD,2458.77,5,direct,refunded,wallet
+cli_0006_ord_00157,2026-04-15,0423a24763ae,premium bundle,CAD,1437.97,0,referral,paid,paypal
+cli_0006_ord_00158,2026-03-09,8a37765688a9,pro plan,CAD,2173.71,5,email,paid,paypal
+cli_0006_ord_00159,2026-03-12,1ceefd162557,annual subscription,CAD,2232.2,25,meta_ads,paid,wallet
+cli_0006_ord_00160,2026-04-17,2bc4564ae39a,membership,CAD,207.0,15,meta_ads,paid,bank_transfer
+cli_0006_ord_00161,2026-04-07,a4a76582e97a,annual subscription,CAD,1992.57,25,direct,paid,bank_transfer
+cli_0006_ord_00162,2025-12-05,05ac5ed1fd76,membership,CAD,324.27,25,meta_ads,paid,paypal
+cli_0006_ord_00163,2025-12-08,03526fe280ac,pro plan,CAD,1117.88,20,email,paid,wallet
+cli_0006_ord_00164,2026-02-09,851a679e055a,premium bundle,CAD,1245.69,25,email,paid,upi
+cli_0006_ord_00165,2026-02-11,db0f83903ac3,premium bundle,CAD,1486.78,5,direct,paid,card
+cli_0006_ord_00166,2026-01-03,7431ff8e20ec,starter plan,CAD,572.91,25,organic,refunded,paypal
+cli_0006_ord_00167,2026-03-08,0a619495d56e,service retainer,CAD,1260.59,15,referral,paid,bank_transfer
+cli_0006_ord_00168,2025-11-21,99bc5bd3f67d,annual subscription,CAD,2407.37,15,organic,paid,card
+cli_0006_ord_00169,2025-11-17,a4814ac2b46a,starter plan,CAD,649.25,0,email,paid,upi
+cli_0006_ord_00170,2026-02-13,4297d62f609d,starter plan,CAD,470.07,0,organic,paid,paypal
+cli_0006_ord_00171,2026-04-24,e7a821673ca4,audit package,CAD,1466.63,10,meta_ads,refunded,card
+cli_0006_ord_00172,2026-04-02,510ecabb1f66,starter plan,CAD,1157.54,0,organic,paid,card
+cli_0006_ord_00173,2025-12-08,2949f7ff63c7,audit package,CAD,576.68,10,direct,paid,card
+cli_0006_ord_00174,2026-01-05,ed2126929050,pro plan,CAD,2013.3,0,meta_ads,paid,upi
+cli_0006_ord_00175,2026-04-06,6c66cf157394,audit package,CAD,585.8,25,direct,paid,wallet
+cli_0006_ord_00176,2025-11-09,933c92c4b415,service retainer,CAD,2296.67,20,direct,paid,card
+cli_0006_ord_00177,2026-02-18,6942dee8a609,annual subscription,CAD,2080.61,0,referral,paid,wallet
+cli_0006_ord_00178,2026-01-28,7483115db24c,starter plan,CAD,708.58,0,direct,paid,wallet
+cli_0006_ord_00179,2026-01-16,8a0e447b5101,audit package,CAD,2071.88,15,meta_ads,paid,wallet
+cli_0006_ord_00180,2025-11-04,2c97553cf1bf,pro plan,CAD,1383.74,25,email,paid,bank_transfer
+cli_0006_ord_00181,2025-11-12,bd1e5abd67b8,premium bundle,CAD,1904.17,5,meta_ads,paid,bank_transfer
+cli_0006_ord_00182,2025-11-13,863f24ff2b8a,service retainer,CAD,356.92,20,email,paid,wallet
+cli_0006_ord_00183,2026-04-04,c438439a6a9b,service retainer,CAD,948.26,25,direct,paid,paypal
+cli_0006_ord_00184,2026-02-07,ee174492d1dd,starter plan,CAD,1861.17,0,organic,paid,bank_transfer
+cli_0006_ord_00185,2025-11-09,934b39200457,annual subscription,CAD,468.74,5,meta_ads,refunded,card
+cli_0006_ord_00186,2026-04-22,7d7e42a32cb4,starter plan,CAD,453.69,20,referral,paid,bank_transfer
+cli_0006_ord_00187,2026-02-02,0ba5cfb1f3cd,starter plan,CAD,1458.94,20,email,paid,card
+cli_0006_ord_00188,2026-01-13,3cdf6f88c0a5,annual subscription,CAD,1853.95,25,direct,paid,upi
+cli_0006_ord_00189,2026-02-17,229f1a3855a8,membership,CAD,1311.75,10,organic,paid,upi
+cli_0006_ord_00190,2025-12-10,0247bb635f55,annual subscription,CAD,1179.22,0,organic,paid,bank_transfer
+cli_0006_ord_00191,2025-12-14,ba576be14257,premium bundle,CAD,500.65,15,organic,paid,card
+cli_0006_ord_00192,2026-02-19,8fef64487cd2,premium bundle,CAD,1712.88,10,organic,paid,wallet
+cli_0006_ord_00193,2025-11-16,72d25b2841fd,annual subscription,CAD,2078.56,5,email,paid,paypal
+cli_0006_ord_00194,2026-03-14,e594c63957ff,premium bundle,CAD,2370.09,5,referral,paid,bank_transfer
+cli_0006_ord_00195,2026-01-15,49cb40e029ed,audit package,CAD,1953.05,25,meta_ads,paid,bank_transfer
+cli_0006_ord_00196,2026-02-22,8c45a6d8ebe2,membership,CAD,1634.53,0,organic,paid,upi
+cli_0006_ord_00197,2026-04-02,d39097d455ed,pro plan,CAD,1933.34,0,organic,paid,bank_transfer
+cli_0006_ord_00198,2025-12-04,a6b7b871b3b0,starter plan,CAD,711.77,10,referral,paid,paypal
+cli_0006_ord_00199,2026-01-10,85b166d62c8f,starter plan,CAD,2258.74,5,meta_ads,paid,card
+cli_0006_ord_00200,2026-04-16,15d58e64589a,premium bundle,CAD,2099.16,15,direct,paid,wallet
+cli_0006_ord_00201,2026-02-03,1eed9245133e,membership,CAD,939.54,0,meta_ads,refunded,card
+cli_0006_ord_00202,2025-12-11,e3251a08e849,starter plan,CAD,1368.95,25,referral,pending,wallet

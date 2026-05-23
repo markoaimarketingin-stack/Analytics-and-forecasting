@@ -1,0 +1,20 @@
+{
+  "client_id": "cli_0011",
+  "company_name": "Urban Labs",
+  "industry": "marketplace",
+  "region": "UAE",
+  "currency": "AED",
+  "website": "https://urban-labs.example.com",
+  "business_model": "b2c",
+  "employee_band": "51-200",
+  "objective": "retention",
+  "budget_monthly": 8000,
+  "voice": "educational",
+  "channels": [
+    "organic",
+    "google_ads",
+    "tiktok_ads",
+    "linkedin_ads"
+  ],
+  "created_at": "2026-04-23T20:56:08.027679Z"
+}

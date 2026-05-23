@@ -1,0 +1,42 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0001_em_0001,Winback,How to improve Vertex Commerce,1756,1686,314,34,0,4,2026-01-30
+cli_0001_em_0002,Education,A quick update on Vertex Commerce,26110,25270,3792,597,249,1,2026-03-26
+cli_0001_em_0003,Winback,A quick update on Vertex Commerce,44292,42882,15215,1506,53,3,2026-01-26
+cli_0001_em_0004,Winback,How to improve Vertex Commerce,41366,40413,22277,4398,233,1,2026-03-05
+cli_0001_em_0005,Winback,How to improve Vertex Commerce,41114,39405,6253,763,152,2,2026-02-10
+cli_0001_em_0006,Education,A quick update on Vertex Commerce,25991,24873,8993,1284,227,1,2026-01-06
+cli_0001_em_0007,Newsletter,A quick update on Vertex Commerce,24575,24331,5620,842,90,5,2025-11-13
+cli_0001_em_0008,Offer,A quick update on Vertex Commerce,41044,39812,7747,891,245,4,2026-03-21
+cli_0001_em_0009,Offer,How to improve Vertex Commerce,4536,4368,893,149,32,0,2025-11-22
+cli_0001_em_0010,Newsletter,A quick update on Vertex Commerce,30689,29973,7664,1422,138,2,2025-12-01
+cli_0001_em_0011,Education,New Vertex Commerce,38528,38198,15068,3107,298,0,2026-04-15
+cli_0001_em_0012,Launch,How to improve Vertex Commerce,28218,27142,8826,366,148,0,2025-12-23
+cli_0001_em_0013,Re-engagement,New Vertex Commerce,26417,26111,10638,945,10,1,2025-11-20
+cli_0001_em_0014,Offer,How to improve Vertex Commerce,6280,6228,2161,273,28,1,2026-04-07
+cli_0001_em_0015,Offer,A quick update on Vertex Commerce,1576,1537,803,86,7,0,2026-03-12
+cli_0001_em_0016,Launch,How to improve Vertex Commerce,37572,37209,7730,1621,325,4,2026-03-08
+cli_0001_em_0017,Re-engagement,New Vertex Commerce,18880,18585,6346,824,88,2,2025-12-08
+cli_0001_em_0018,Newsletter,Last chance for Vertex Commerce,7087,6807,1383,300,45,4,2026-03-23
+cli_0001_em_0019,Education,A quick update on Vertex Commerce,10729,10429,2659,550,60,4,2025-12-14
+cli_0001_em_0020,Re-engagement,Last chance for Vertex Commerce,14384,13929,7101,629,83,3,2025-12-29
+cli_0001_em_0021,Newsletter,A quick update on Vertex Commerce,6141,6078,2824,469,24,2,2026-04-04
+cli_0001_em_0022,Launch,A quick update on Vertex Commerce,27333,26772,11961,2038,108,2,2026-03-29
+cli_0001_em_0023,Education,New Vertex Commerce,10634,10156,4091,411,2,2,2026-02-09
+cli_0001_em_0024,Offer,A quick update on Vertex Commerce,17445,17317,6269,617,148,1,2026-01-14
+cli_0001_em_0025,Launch,A quick update on Vertex Commerce,30369,28929,11923,682,28,5,2025-12-26
+cli_0001_em_0026,Re-engagement,New Vertex Commerce,28242,27293,7060,682,234,5,2026-02-05
+cli_0001_em_0027,Newsletter,A quick update on Vertex Commerce,33725,33133,11559,1591,111,0,2025-11-17
+cli_0001_em_0028,Launch,A quick update on Vertex Commerce,15366,15003,7710,1469,131,0,2026-03-13
+cli_0001_em_0029,Education,A quick update on Vertex Commerce,45217,44917,17806,3130,319,5,2026-04-21
+cli_0001_em_0030,Launch,Last chance for Vertex Commerce,47803,45465,10942,2018,220,0,2026-03-23
+cli_0001_em_0031,Newsletter,How to improve Vertex Commerce,23424,22489,7236,955,75,2,2026-03-12
+cli_0001_em_0032,Re-engagement,A quick update on Vertex Commerce,43678,41638,15596,2248,171,5,2026-03-02
+cli_0001_em_0033,Launch,A quick update on Vertex Commerce,8262,8206,3301,472,58,1,2025-11-06
+cli_0001_em_0034,Newsletter,New Vertex Commerce,8025,7901,4169,749,39,1,2025-11-27
+cli_0001_em_0035,Education,New Vertex Commerce,12357,11830,6561,1108,83,3,2026-03-06
+cli_0001_em_0036,Offer,New Vertex Commerce,25227,24210,6273,1242,51,2,2026-03-28
+cli_0001_em_0037,Launch,How to improve Vertex Commerce,12860,12409,5135,1032,93,4,2025-11-11
+cli_0001_em_0038,Launch,How to improve Vertex Commerce,22729,21748,9964,962,67,0,2025-12-25
+cli_0001_em_0039,Education,How to improve Vertex Commerce,1958,1929,545,61,4,0,2025-11-24
+cli_0001_em_0040,Newsletter,How to improve Vertex Commerce,11136,10634,3044,349,82,2,2026-04-01
+cli_0001_em_0041,Re-engagement,How to improve Vertex Commerce,39430,37488,18979,4100,385,2,2026-03-15

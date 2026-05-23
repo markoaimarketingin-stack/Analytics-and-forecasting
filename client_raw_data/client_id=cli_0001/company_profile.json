@@ -1,0 +1,19 @@
+{
+  "client_id": "cli_0001",
+  "company_name": "Vertex Commerce",
+  "industry": "saas",
+  "region": "US",
+  "currency": "USD",
+  "website": "https://vertex-commerce.example.com",
+  "business_model": "b2b",
+  "employee_band": "1-10",
+  "objective": "purchase",
+  "budget_monthly": 15000,
+  "voice": "playful",
+  "channels": [
+    "meta_ads",
+    "email",
+    "linkedin_ads"
+  ],
+  "created_at": "2026-04-23T20:55:50.591993Z"
+}

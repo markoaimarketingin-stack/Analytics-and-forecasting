@@ -1,0 +1,23 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0004_em_0001,Offer,A quick update on North Growth,6027,5760,1955,328,14,3,2026-01-07
+cli_0004_em_0002,Education,New North Growth,32094,32005,8986,832,216,1,2025-12-10
+cli_0004_em_0003,Re-engagement,How to improve North Growth,29924,28883,9689,1741,287,4,2025-12-31
+cli_0004_em_0004,Winback,New North Growth,14427,14098,4579,743,58,3,2025-11-21
+cli_0004_em_0005,Winback,How to improve North Growth,36259,35955,19797,1982,10,4,2025-12-07
+cli_0004_em_0006,Launch,Last chance for North Growth,49302,48282,9059,1773,467,1,2026-03-29
+cli_0004_em_0007,Launch,How to improve North Growth,43276,41547,12539,1373,224,0,2026-01-15
+cli_0004_em_0008,Launch,New North Growth,40077,39913,10928,1216,266,4,2025-12-30
+cli_0004_em_0009,Newsletter,How to improve North Growth,37186,35895,12960,2694,300,1,2026-03-23
+cli_0004_em_0010,Offer,A quick update on North Growth,32786,31246,12582,562,69,5,2026-04-20
+cli_0004_em_0011,Newsletter,A quick update on North Growth,8431,8198,2488,136,73,4,2026-03-16
+cli_0004_em_0012,Offer,Last chance for North Growth,1336,1298,366,73,8,3,2025-11-01
+cli_0004_em_0013,Newsletter,New North Growth,25374,25089,6136,1192,3,2,2026-01-18
+cli_0004_em_0014,Offer,Last chance for North Growth,1831,1812,272,13,7,2,2025-12-04
+cli_0004_em_0015,Launch,New North Growth,28167,27509,13477,678,229,1,2025-11-09
+cli_0004_em_0016,Winback,How to improve North Growth,6414,6248,1768,375,40,2,2026-03-03
+cli_0004_em_0017,Re-engagement,How to improve North Growth,30246,29586,4502,654,90,3,2026-03-29
+cli_0004_em_0018,Newsletter,How to improve North Growth,44262,43255,8568,1010,246,4,2025-11-04
+cli_0004_em_0019,Education,Last chance for North Growth,37527,36097,20504,1913,329,4,2026-04-03
+cli_0004_em_0020,Winback,New North Growth,26716,25686,6736,505,63,4,2025-12-22
+cli_0004_em_0021,Newsletter,A quick update on North Growth,34604,33658,9608,1481,284,4,2026-01-19
+cli_0004_em_0022,Winback,Last chance for North Growth,13716,13414,3392,640,17,4,2026-01-03

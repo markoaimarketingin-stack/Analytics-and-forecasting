@@ -1,0 +1,30 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0018_em_0001,Education,How to improve Signal Collective,15301,14755,5093,700,47,2,2026-03-30
+cli_0018_em_0002,Winback,A quick update on Signal Collective,25109,24204,10173,1133,156,5,2025-12-30
+cli_0018_em_0003,Re-engagement,New Signal Collective,48370,46838,7843,822,115,0,2026-04-05
+cli_0018_em_0004,Re-engagement,New Signal Collective,15317,14555,2040,83,139,2,2026-03-25
+cli_0018_em_0005,Newsletter,A quick update on Signal Collective,19528,18640,4412,673,184,5,2025-12-23
+cli_0018_em_0006,Winback,How to improve Signal Collective,38205,36784,10703,2321,115,3,2025-11-15
+cli_0018_em_0007,Re-engagement,New Signal Collective,14479,13988,6541,1268,125,0,2026-02-23
+cli_0018_em_0008,Education,Last chance for Signal Collective,41193,39482,11826,1451,161,1,2025-11-08
+cli_0018_em_0009,Newsletter,New Signal Collective,8126,8099,4414,606,60,3,2025-11-25
+cli_0018_em_0010,Re-engagement,New Signal Collective,3533,3482,474,86,25,2,2025-12-31
+cli_0018_em_0011,Re-engagement,Last chance for Signal Collective,34114,32605,12482,1875,61,5,2025-10-26
+cli_0018_em_0012,Education,Last chance for Signal Collective,20257,19953,3007,543,64,5,2025-11-25
+cli_0018_em_0013,Winback,A quick update on Signal Collective,9329,9279,3473,241,36,5,2026-03-03
+cli_0018_em_0014,Re-engagement,A quick update on Signal Collective,11602,11101,3297,307,28,0,2025-11-01
+cli_0018_em_0015,Newsletter,A quick update on Signal Collective,28006,26712,12269,2037,13,1,2025-12-13
+cli_0018_em_0016,Re-engagement,How to improve Signal Collective,41341,40454,13316,991,348,0,2025-12-05
+cli_0018_em_0017,Newsletter,Last chance for Signal Collective,18358,17446,9658,1330,45,0,2025-10-26
+cli_0018_em_0018,Launch,New Signal Collective,12343,12105,5892,645,74,2,2026-01-05
+cli_0018_em_0019,Winback,How to improve Signal Collective,46762,46169,24721,5062,286,0,2026-03-30
+cli_0018_em_0020,Education,New Signal Collective,20868,20739,3124,421,98,3,2025-12-26
+cli_0018_em_0021,Winback,Last chance for Signal Collective,15609,15138,4236,296,41,3,2025-12-05
+cli_0018_em_0022,Newsletter,How to improve Signal Collective,33473,32330,8668,347,57,2,2026-04-15
+cli_0018_em_0023,Education,New Signal Collective,15032,14947,6954,1330,66,1,2026-02-25
+cli_0018_em_0024,Winback,A quick update on Signal Collective,34246,33937,13579,1635,255,2,2025-11-06
+cli_0018_em_0025,Launch,Last chance for Signal Collective,29278,29246,9097,376,99,0,2026-02-10
+cli_0018_em_0026,Re-engagement,Last chance for Signal Collective,33822,32216,5316,915,112,5,2025-11-22
+cli_0018_em_0027,Winback,How to improve Signal Collective,42801,41851,18353,1693,296,2,2025-12-14
+cli_0018_em_0028,Education,Last chance for Signal Collective,20402,19720,10865,2328,134,3,2026-04-05
+cli_0018_em_0029,Launch,Last chance for Signal Collective,5907,5811,1315,207,48,0,2026-01-30

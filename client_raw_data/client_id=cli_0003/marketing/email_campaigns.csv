@@ -1,0 +1,26 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0003_em_0001,Re-engagement,How to improve Nova Finance,15627,15528,4940,345,98,0,2026-01-22
+cli_0003_em_0002,Winback,How to improve Nova Finance,8186,8096,2555,549,16,5,2025-10-30
+cli_0003_em_0003,Launch,How to improve Nova Finance,27982,27056,10168,1054,25,3,2026-01-14
+cli_0003_em_0004,Education,Last chance for Nova Finance,7019,6801,2676,437,66,3,2025-11-05
+cli_0003_em_0005,Education,New Nova Finance,47812,47570,22605,3973,82,3,2026-01-28
+cli_0003_em_0006,Offer,How to improve Nova Finance,39502,38072,13449,1704,191,2,2026-03-02
+cli_0003_em_0007,Winback,New Nova Finance,7578,7337,3871,742,50,4,2025-11-21
+cli_0003_em_0008,Newsletter,A quick update on Nova Finance,8492,8164,1518,234,11,4,2026-04-01
+cli_0003_em_0009,Newsletter,New Nova Finance,16761,16354,8926,524,101,4,2026-01-04
+cli_0003_em_0010,Launch,How to improve Nova Finance,35974,35292,11246,1126,162,2,2026-01-30
+cli_0003_em_0011,Offer,How to improve Nova Finance,47411,46638,23119,3375,153,3,2026-03-13
+cli_0003_em_0012,Launch,A quick update on Nova Finance,44297,42378,6481,466,208,1,2026-01-23
+cli_0003_em_0013,Newsletter,New Nova Finance,37599,36306,10944,1398,243,3,2026-01-16
+cli_0003_em_0014,Re-engagement,A quick update on Nova Finance,42808,41552,20468,1665,107,1,2026-03-17
+cli_0003_em_0015,Offer,How to improve Nova Finance,12764,12648,4787,789,16,4,2026-01-09
+cli_0003_em_0016,Re-engagement,New Nova Finance,28989,27641,9517,389,274,5,2026-01-15
+cli_0003_em_0017,Newsletter,Last chance for Nova Finance,6735,6485,3208,665,34,5,2025-12-02
+cli_0003_em_0018,Offer,A quick update on Nova Finance,28657,28267,11706,1352,23,4,2026-01-21
+cli_0003_em_0019,Winback,New Nova Finance,18364,17967,7186,622,37,1,2025-11-05
+cli_0003_em_0020,Education,How to improve Nova Finance,11242,11078,4720,475,31,4,2025-11-26
+cli_0003_em_0021,Education,A quick update on Nova Finance,21535,21333,6992,1170,114,2,2026-03-01
+cli_0003_em_0022,Winback,Last chance for Nova Finance,23784,23569,8084,1296,167,4,2026-03-20
+cli_0003_em_0023,Newsletter,New Nova Finance,48777,47544,21639,1655,466,0,2025-11-08
+cli_0003_em_0024,Winback,How to improve Nova Finance,30616,29300,8264,670,135,3,2025-11-22
+cli_0003_em_0025,Education,How to improve Nova Finance,10222,10103,3238,486,57,0,2026-02-05

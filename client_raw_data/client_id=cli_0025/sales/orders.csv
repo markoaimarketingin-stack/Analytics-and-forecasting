@@ -1,0 +1,130 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0025_ord_00001,2026-03-22,85163d39295d,annual subscription,CAD,749.85,20,tiktok_ads,paid,bank_transfer
+cli_0025_ord_00002,2026-04-15,658d2d6e0012,annual subscription,CAD,1872.81,10,direct,paid,wallet
+cli_0025_ord_00003,2025-12-04,beb501ded5ad,audit package,CAD,1542.9,0,linkedin_ads,paid,paypal
+cli_0025_ord_00004,2026-01-30,b033e3e00be2,service retainer,CAD,2344.31,10,direct,paid,paypal
+cli_0025_ord_00005,2026-03-12,302e6437b493,pro plan,CAD,2312.08,0,direct,paid,upi
+cli_0025_ord_00006,2025-11-14,756a64c0ca97,annual subscription,CAD,316.3,20,tiktok_ads,paid,wallet
+cli_0025_ord_00007,2026-01-16,5ca7179fe2cf,membership,CAD,520.32,25,linkedin_ads,paid,bank_transfer
+cli_0025_ord_00008,2026-01-06,642aec24d421,premium bundle,CAD,739.33,0,linkedin_ads,paid,wallet
+cli_0025_ord_00009,2026-02-06,f78cf5b2f5b1,premium bundle,CAD,1409.63,25,email,paid,bank_transfer
+cli_0025_ord_00010,2026-02-16,6ec7dce266f6,starter plan,CAD,2263.18,15,google_ads,paid,bank_transfer
+cli_0025_ord_00011,2026-03-30,44d2f233076b,audit package,CAD,438.86,10,direct,paid,paypal
+cli_0025_ord_00012,2025-12-04,c34f18caf829,pro plan,CAD,1516.08,0,direct,paid,paypal
+cli_0025_ord_00013,2026-01-06,9619058f86ed,service retainer,CAD,1678.25,10,google_ads,paid,wallet
+cli_0025_ord_00014,2026-04-10,196a88c68195,service retainer,CAD,2088.7,20,direct,paid,bank_transfer
+cli_0025_ord_00015,2025-11-19,2b7e44d65eab,premium bundle,CAD,1747.49,15,email,paid,paypal
+cli_0025_ord_00016,2025-12-15,d90f14d1c6f5,service retainer,CAD,2353.06,15,tiktok_ads,paid,upi
+cli_0025_ord_00017,2026-04-23,5b8ca6ddf011,pro plan,CAD,2061.94,15,direct,refunded,paypal
+cli_0025_ord_00018,2025-12-01,ed251e1f94ef,service retainer,CAD,1338.88,20,email,refunded,wallet
+cli_0025_ord_00019,2026-01-30,ed9ab084d97e,audit package,CAD,2155.62,5,tiktok_ads,paid,card
+cli_0025_ord_00020,2025-10-27,ebbfbbce64f9,starter plan,CAD,2110.2,25,email,paid,wallet
+cli_0025_ord_00021,2026-03-28,96ebf3990115,annual subscription,CAD,1884.1,10,linkedin_ads,paid,card
+cli_0025_ord_00022,2026-01-09,1888f93a767a,starter plan,CAD,979.79,25,email,paid,paypal
+cli_0025_ord_00023,2025-11-24,8abc0f493c01,pro plan,CAD,599.54,25,tiktok_ads,paid,bank_transfer
+cli_0025_ord_00024,2026-01-26,3edc0768547d,premium bundle,CAD,2254.6,10,linkedin_ads,paid,upi
+cli_0025_ord_00025,2025-12-21,503917bf3c04,pro plan,CAD,2066.62,0,google_ads,paid,wallet
+cli_0025_ord_00026,2026-03-18,af650da859d5,service retainer,CAD,1441.78,5,tiktok_ads,pending,card
+cli_0025_ord_00027,2025-12-01,019f1d36f42a,audit package,CAD,477.98,15,google_ads,paid,paypal
+cli_0025_ord_00028,2026-01-26,83c4b197a2b2,annual subscription,CAD,123.63,15,tiktok_ads,paid,paypal
+cli_0025_ord_00029,2025-10-30,8dac1488d396,membership,CAD,914.44,0,linkedin_ads,paid,card
+cli_0025_ord_00030,2026-01-26,596bd920b981,starter plan,CAD,2173.2,20,google_ads,refunded,wallet
+cli_0025_ord_00031,2025-12-09,76fcb9da0d9c,annual subscription,CAD,2373.15,10,google_ads,paid,upi
+cli_0025_ord_00032,2025-12-11,8b39072b2add,starter plan,CAD,1765.78,25,linkedin_ads,paid,bank_transfer
+cli_0025_ord_00033,2026-02-14,06c1ec5d03f9,pro plan,CAD,1822.6,5,tiktok_ads,paid,paypal
+cli_0025_ord_00034,2026-01-12,ceec3c3c227d,premium bundle,CAD,1842.31,15,direct,paid,wallet
+cli_0025_ord_00035,2025-11-04,0fca629f9822,starter plan,CAD,710.98,0,google_ads,paid,card
+cli_0025_ord_00036,2026-01-19,d3c03cfc9ad0,pro plan,CAD,156.39,15,email,refunded,bank_transfer
+cli_0025_ord_00037,2026-03-03,c4b6e6db51b9,membership,CAD,50.27,0,tiktok_ads,pending,card
+cli_0025_ord_00038,2025-11-24,f7cd3145325a,audit package,CAD,2236.2,20,direct,paid,paypal
+cli_0025_ord_00039,2026-02-19,febe18c4a943,pro plan,CAD,1329.93,10,tiktok_ads,pending,paypal
+cli_0025_ord_00040,2026-04-20,73bae326078a,pro plan,CAD,2036.21,25,linkedin_ads,paid,upi
+cli_0025_ord_00041,2026-02-19,47b47b600152,annual subscription,CAD,2039.21,25,google_ads,paid,card
+cli_0025_ord_00042,2026-04-01,1ef9214a2451,pro plan,CAD,1120.79,0,linkedin_ads,paid,wallet
+cli_0025_ord_00043,2025-11-15,45271aeed92c,audit package,CAD,705.06,20,direct,paid,card
+cli_0025_ord_00044,2026-03-16,c797ec7b1ba4,pro plan,CAD,437.0,10,tiktok_ads,paid,wallet
+cli_0025_ord_00045,2025-11-19,a04443856b3a,pro plan,CAD,1491.48,25,google_ads,paid,card
+cli_0025_ord_00046,2025-11-16,c7e97e13fe3c,service retainer,CAD,388.97,25,google_ads,paid,paypal
+cli_0025_ord_00047,2026-04-12,92417409d34a,membership,CAD,2069.62,5,linkedin_ads,paid,upi
+cli_0025_ord_00048,2026-01-12,f87405cca411,audit package,CAD,187.77,15,linkedin_ads,paid,bank_transfer
+cli_0025_ord_00049,2026-02-09,8ee2464e396f,pro plan,CAD,2349.23,20,email,paid,card
+cli_0025_ord_00050,2025-12-25,02f5f47bf07a,annual subscription,CAD,1507.38,25,direct,paid,wallet
+cli_0025_ord_00051,2025-11-23,08400041ca89,pro plan,CAD,972.77,5,direct,paid,upi
+cli_0025_ord_00052,2025-11-24,b99c4391ad5a,audit package,CAD,1239.68,10,direct,paid,upi
+cli_0025_ord_00053,2026-03-30,47401689c1e6,pro plan,CAD,1116.79,5,email,paid,bank_transfer
+cli_0025_ord_00054,2025-12-06,00cc186b9ea5,pro plan,CAD,313.21,15,email,paid,upi
+cli_0025_ord_00055,2026-04-13,fd34da4ff281,premium bundle,CAD,2279.28,0,tiktok_ads,paid,bank_transfer
+cli_0025_ord_00056,2026-04-24,0e631ed3273b,starter plan,CAD,1377.43,15,linkedin_ads,refunded,bank_transfer
+cli_0025_ord_00057,2026-03-03,324f6b78d755,membership,CAD,1569.12,15,google_ads,refunded,wallet
+cli_0025_ord_00058,2026-04-03,a6e0cec8fcb5,premium bundle,CAD,2352.19,10,linkedin_ads,paid,wallet
+cli_0025_ord_00059,2026-03-21,2c845ff8635c,membership,CAD,885.63,20,google_ads,refunded,bank_transfer
+cli_0025_ord_00060,2025-12-03,0f7627a00436,annual subscription,CAD,647.67,15,google_ads,paid,upi
+cli_0025_ord_00061,2025-11-07,1f5f634911a8,membership,CAD,2479.04,20,linkedin_ads,paid,wallet
+cli_0025_ord_00062,2026-04-03,dbef878a0ffa,starter plan,CAD,2495.55,5,email,paid,paypal
+cli_0025_ord_00063,2025-12-14,4f3d0222d43a,pro plan,CAD,561.83,15,linkedin_ads,refunded,wallet
+cli_0025_ord_00064,2026-01-20,6a2782ac3051,membership,CAD,1330.29,20,linkedin_ads,paid,paypal
+cli_0025_ord_00065,2026-03-01,72e84421164f,audit package,CAD,795.84,20,google_ads,refunded,paypal
+cli_0025_ord_00066,2025-11-02,96e26d9fbd4e,service retainer,CAD,184.74,5,google_ads,paid,wallet
+cli_0025_ord_00067,2026-03-03,66ed36589288,audit package,CAD,2187.16,10,linkedin_ads,refunded,paypal
+cli_0025_ord_00068,2025-11-25,91f22046615a,pro plan,CAD,2404.3,0,email,pending,bank_transfer
+cli_0025_ord_00069,2026-01-02,bc7fb284309f,starter plan,CAD,1721.04,5,google_ads,paid,upi
+cli_0025_ord_00070,2025-12-27,e523e3891660,membership,CAD,1965.1,10,email,pending,card
+cli_0025_ord_00071,2026-01-11,de88c8c25182,premium bundle,CAD,1945.75,20,linkedin_ads,paid,paypal
+cli_0025_ord_00072,2026-03-19,9f1174a68f24,annual subscription,CAD,2476.52,10,direct,paid,wallet
+cli_0025_ord_00073,2026-03-04,e250942e5392,audit package,CAD,865.36,20,direct,paid,card
+cli_0025_ord_00074,2025-11-17,b690de545f49,annual subscription,CAD,1832.43,5,google_ads,paid,upi
+cli_0025_ord_00075,2026-03-26,a597ab050ac0,service retainer,CAD,1690.93,15,email,paid,bank_transfer
+cli_0025_ord_00076,2025-10-28,23a8c1754469,annual subscription,CAD,2042.48,10,direct,paid,card
+cli_0025_ord_00077,2026-01-27,5cb701500cb6,audit package,CAD,964.9,10,direct,paid,bank_transfer
+cli_0025_ord_00078,2025-11-05,cde27cc59f54,membership,CAD,1070.14,5,email,paid,paypal
+cli_0025_ord_00079,2025-11-13,8b9b52068224,service retainer,CAD,1113.29,25,google_ads,pending,wallet
+cli_0025_ord_00080,2025-12-24,d89fd1524365,starter plan,CAD,1448.4,25,google_ads,refunded,card
+cli_0025_ord_00081,2026-01-02,10047017eb39,annual subscription,CAD,1926.99,0,email,refunded,wallet
+cli_0025_ord_00082,2025-11-14,9d687a70e803,annual subscription,CAD,1592.2,15,direct,paid,upi
+cli_0025_ord_00083,2026-02-01,599b99cf3df8,annual subscription,CAD,67.94,20,google_ads,paid,paypal
+cli_0025_ord_00084,2026-03-02,e12fc026bfa4,premium bundle,CAD,1168.02,20,linkedin_ads,paid,bank_transfer
+cli_0025_ord_00085,2025-12-17,d1b5cc4722cd,starter plan,CAD,1885.86,0,direct,paid,wallet
+cli_0025_ord_00086,2026-04-20,54b2fa9e9e4b,audit package,CAD,1380.65,25,direct,paid,upi
+cli_0025_ord_00087,2025-11-12,3b2325f6d9be,starter plan,CAD,2063.56,20,email,paid,bank_transfer
+cli_0025_ord_00088,2025-11-24,73882efb2f79,pro plan,CAD,1095.67,0,google_ads,paid,card
+cli_0025_ord_00089,2026-01-03,dbc9b3b851b2,pro plan,CAD,2372.84,0,direct,paid,card
+cli_0025_ord_00090,2026-03-01,c7fdd6f81a2f,premium bundle,CAD,974.39,10,email,pending,wallet
+cli_0025_ord_00091,2025-11-14,bf288763788c,annual subscription,CAD,1115.69,20,google_ads,paid,card
+cli_0025_ord_00092,2025-11-07,8830057563eb,audit package,CAD,600.07,10,email,paid,upi
+cli_0025_ord_00093,2025-12-30,a54263cf00bf,audit package,CAD,1276.93,0,email,paid,wallet
+cli_0025_ord_00094,2026-02-24,8f3c5b38ccd3,starter plan,CAD,2437.17,5,tiktok_ads,refunded,upi
+cli_0025_ord_00095,2026-03-21,0744c7a01b06,membership,CAD,1950.05,25,tiktok_ads,paid,wallet
+cli_0025_ord_00096,2026-02-12,0f918ec00b9c,service retainer,CAD,773.91,20,email,paid,wallet
+cli_0025_ord_00097,2026-03-04,fab1c5f3df6b,premium bundle,CAD,1247.56,15,tiktok_ads,paid,wallet
+cli_0025_ord_00098,2025-11-21,9aab7b666091,annual subscription,CAD,181.18,10,email,paid,bank_transfer
+cli_0025_ord_00099,2025-12-17,eea71fec6dd3,service retainer,CAD,1816.95,10,tiktok_ads,paid,card
+cli_0025_ord_00100,2026-01-08,9654ccdd9c03,premium bundle,CAD,482.39,5,direct,paid,bank_transfer
+cli_0025_ord_00101,2026-01-01,a1e3567f30c6,membership,CAD,613.62,20,email,paid,wallet
+cli_0025_ord_00102,2026-02-13,c3d871ac1128,annual subscription,CAD,2484.19,0,direct,paid,wallet
+cli_0025_ord_00103,2025-11-21,a16b2d664eb7,audit package,CAD,178.25,10,direct,paid,wallet
+cli_0025_ord_00104,2026-01-25,3285f75e9a27,premium bundle,CAD,502.29,0,direct,refunded,paypal
+cli_0025_ord_00105,2026-01-22,6f75ec569dbb,annual subscription,CAD,1924.74,5,google_ads,paid,upi
+cli_0025_ord_00106,2026-01-15,7b0126cea203,premium bundle,CAD,773.8,20,direct,paid,wallet
+cli_0025_ord_00107,2026-01-05,3193e488b43f,membership,CAD,330.28,10,linkedin_ads,paid,card
+cli_0025_ord_00108,2025-12-15,7d6ce2715c2a,audit package,CAD,1154.45,10,tiktok_ads,paid,bank_transfer
+cli_0025_ord_00109,2026-01-12,e3cb01feca76,premium bundle,CAD,1052.1,5,direct,pending,bank_transfer
+cli_0025_ord_00110,2026-01-01,693fb463d07b,annual subscription,CAD,217.85,0,direct,refunded,bank_transfer
+cli_0025_ord_00111,2026-01-15,d68bb8eb404c,starter plan,CAD,1678.38,10,email,paid,wallet
+cli_0025_ord_00112,2026-02-23,2c8d2ae081a7,service retainer,CAD,1268.92,15,direct,paid,upi
+cli_0025_ord_00113,2025-11-08,042b1c004682,premium bundle,CAD,706.52,10,google_ads,paid,bank_transfer
+cli_0025_ord_00114,2026-02-21,a814bc95ae9f,pro plan,CAD,2382.73,10,email,paid,upi
+cli_0025_ord_00115,2026-03-03,92446b18a7fb,premium bundle,CAD,385.39,15,email,paid,upi
+cli_0025_ord_00116,2026-02-06,e3c728166b08,annual subscription,CAD,1850.41,10,google_ads,paid,upi
+cli_0025_ord_00117,2025-12-04,077b4d59185c,annual subscription,CAD,1404.15,25,google_ads,paid,wallet
+cli_0025_ord_00118,2026-01-20,e8298c28a77c,pro plan,CAD,1489.75,5,linkedin_ads,refunded,bank_transfer
+cli_0025_ord_00119,2026-04-13,7d7694a2f279,audit package,CAD,1938.85,0,google_ads,paid,bank_transfer
+cli_0025_ord_00120,2026-03-28,ab2b5450081a,pro plan,CAD,408.58,25,email,paid,paypal
+cli_0025_ord_00121,2026-01-05,a5c583ef114e,audit package,CAD,2400.77,15,linkedin_ads,paid,upi
+cli_0025_ord_00122,2026-03-13,c47a0acb58c4,starter plan,CAD,1496.27,0,direct,paid,card
+cli_0025_ord_00123,2026-02-11,f48f2d3bb87e,annual subscription,CAD,361.38,25,tiktok_ads,pending,upi
+cli_0025_ord_00124,2026-04-13,60f1533a596d,starter plan,CAD,2215.53,10,google_ads,paid,wallet
+cli_0025_ord_00125,2026-01-28,10f2379403b6,membership,CAD,1932.56,0,linkedin_ads,paid,paypal
+cli_0025_ord_00126,2026-03-06,e32e646442a0,service retainer,CAD,214.06,15,email,paid,card
+cli_0025_ord_00127,2026-02-22,db3850290804,pro plan,CAD,1791.44,5,direct,paid,wallet
+cli_0025_ord_00128,2026-03-29,14e1a40f3fb0,service retainer,CAD,2399.04,0,email,paid,bank_transfer
+cli_0025_ord_00129,2025-11-18,e70b8e8a8562,premium bundle,CAD,975.07,20,google_ads,paid,upi

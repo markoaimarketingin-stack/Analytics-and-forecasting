@@ -1,0 +1,51 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0020_inv_0001,2025-11-11,2026-04-11,SGD,11154.41,overdue,Maya Singh,consulting; creative work
+cli_0020_inv_0002,2025-11-11,2026-04-08,SGD,6596.78,overdue,Liam Patel,strategy work; media spend
+cli_0020_inv_0003,2026-01-24,2026-04-17,SGD,5178.83,open,Maya Khan,consulting; media spend
+cli_0020_inv_0004,2025-11-14,2026-04-02,SGD,2599.81,paid,Sara Joshi,support; media spend
+cli_0020_inv_0005,2026-03-08,2026-03-28,SGD,1868.87,open,Sara Nair,setup fee; media spend; strategy work
+cli_0020_inv_0006,2025-11-07,2026-03-30,SGD,7827.19,paid,Ishaan Bhatia,support; consulting; media spend
+cli_0020_inv_0007,2026-02-27,2026-03-27,SGD,10786.91,paid,Liam Kapoor,support; setup fee; strategy work
+cli_0020_inv_0008,2026-04-02,2026-05-07,SGD,9674.78,open,Zara Patel,consulting; support; setup fee
+cli_0020_inv_0009,2025-12-31,2026-04-13,SGD,11889.67,paid,Mia Mehta,consulting
+cli_0020_inv_0010,2025-11-28,2026-05-13,SGD,9941.28,paid,Sara Patel,setup fee; consulting; strategy work
+cli_0020_inv_0011,2026-04-21,2026-05-20,SGD,6889.15,paid,Ishaan Sharma,strategy work; consulting
+cli_0020_inv_0012,2026-03-20,2026-05-01,SGD,897.66,paid,Ishaan Verma,creative work
+cli_0020_inv_0013,2025-11-23,2026-05-30,SGD,11453.07,paid,Arjun Sharma,support
+cli_0020_inv_0014,2026-01-05,2026-05-09,SGD,4144.22,paid,Liam Verma,creative work; setup fee
+cli_0020_inv_0015,2026-04-18,2026-05-23,SGD,9701.68,paid,Ishaan Khan,creative work
+cli_0020_inv_0016,2026-03-18,2026-06-07,SGD,6317.78,paid,Arjun Nair,creative work; strategy work
+cli_0020_inv_0017,2026-01-09,2026-05-08,SGD,7338.82,paid,Ava Reddy,media spend; support; strategy work
+cli_0020_inv_0018,2025-12-07,2026-04-15,SGD,9911.4,open,Anika Nair,media spend; strategy work
+cli_0020_inv_0019,2025-10-30,2026-05-10,SGD,1968.67,open,Ishaan Kapoor,creative work
+cli_0020_inv_0020,2025-11-24,2026-04-22,SGD,3246.98,paid,Noah Joshi,consulting; media spend
+cli_0020_inv_0021,2026-04-11,2026-05-25,SGD,3580.72,paid,Zara Sharma,support; setup fee; strategy work
+cli_0020_inv_0022,2026-01-01,2026-04-15,SGD,10396.41,open,Zara Reddy,strategy work; support; media spend
+cli_0020_inv_0023,2025-10-29,2026-03-27,SGD,2366.14,open,Sara Kapoor,setup fee
+cli_0020_inv_0024,2025-10-28,2026-05-20,SGD,2963.58,paid,Mia Joshi,setup fee; strategy work
+cli_0020_inv_0025,2026-03-02,2026-05-30,SGD,11193.38,paid,Ava Verma,media spend; creative work; support
+cli_0020_inv_0026,2025-11-23,2026-06-07,SGD,9332.44,paid,Arjun Nair,consulting; setup fee; support
+cli_0020_inv_0027,2026-03-13,2026-04-09,SGD,10936.7,paid,Mia Khan,creative work; consulting; setup fee
+cli_0020_inv_0028,2026-03-07,2026-04-28,SGD,11007.75,paid,Zara Mehta,creative work; strategy work
+cli_0020_inv_0029,2026-03-09,2026-05-26,SGD,5573.29,overdue,Mia Sharma,support; media spend
+cli_0020_inv_0030,2026-03-22,2026-04-06,SGD,10723.36,paid,Ishaan Kapoor,media spend; consulting
+cli_0020_inv_0031,2026-01-07,2026-04-11,SGD,7471.7,paid,Sara Bhatia,support; media spend; setup fee
+cli_0020_inv_0032,2026-02-11,2026-04-14,SGD,4344.71,open,Ava Khan,consulting; setup fee; creative work
+cli_0020_inv_0033,2026-02-07,2026-04-25,SGD,151.61,paid,Anika Nair,support; setup fee; media spend
+cli_0020_inv_0034,2025-11-01,2026-04-05,SGD,1787.79,paid,Kabir Nair,strategy work
+cli_0020_inv_0035,2026-01-26,2026-05-25,SGD,5270.48,paid,Zara Joshi,strategy work; support; creative work
+cli_0020_inv_0036,2025-11-25,2026-03-27,SGD,2321.57,paid,Sara Reddy,strategy work; creative work; consulting
+cli_0020_inv_0037,2026-03-20,2026-04-05,SGD,218.33,paid,Liam Verma,creative work
+cli_0020_inv_0038,2026-04-02,2026-06-05,SGD,1893.55,paid,Anika Sharma,support; consulting; strategy work
+cli_0020_inv_0039,2026-01-20,2026-04-14,SGD,4069.36,open,Zara Bhatia,consulting
+cli_0020_inv_0040,2026-03-07,2026-04-17,SGD,6632.03,paid,Ishaan Bhatia,support; setup fee
+cli_0020_inv_0041,2026-04-04,2026-05-18,SGD,5745.81,paid,Anika Khan,consulting
+cli_0020_inv_0042,2026-02-02,2026-06-03,SGD,535.07,paid,Kabir Khan,strategy work
+cli_0020_inv_0043,2026-03-18,2026-04-14,SGD,3150.64,paid,Ava Verma,strategy work; consulting
+cli_0020_inv_0044,2025-11-28,2026-05-18,SGD,8503.31,paid,Ishaan Singh,consulting; creative work; media spend
+cli_0020_inv_0045,2026-04-10,2026-05-05,SGD,152.15,overdue,Liam Reddy,media spend; strategy work; setup fee
+cli_0020_inv_0046,2025-11-05,2026-04-19,SGD,10321.8,paid,Anika Gupta,consulting
+cli_0020_inv_0047,2025-11-21,2026-03-29,SGD,9045.34,overdue,Sara Patel,setup fee
+cli_0020_inv_0048,2025-10-27,2026-04-23,SGD,9310.67,paid,Liam Verma,media spend; support; setup fee
+cli_0020_inv_0049,2026-02-03,2026-05-07,SGD,8199.74,open,Ishaan Bhatia,media spend; creative work; consulting
+cli_0020_inv_0050,2026-01-18,2026-05-01,SGD,11201.81,paid,Ava Joshi,support; media spend

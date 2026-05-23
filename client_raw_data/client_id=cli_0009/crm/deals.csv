@@ -1,0 +1,79 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0009_dl_0001,cli_0009_ct_0077,Urban Works - service retainer,new,15595.9,INR,66,import,Kabir Nair,2026-01-15,2026-03-02
+cli_0009_dl_0002,cli_0009_ct_0082,Urban Works - pro plan,new,14570.39,INR,76,website_form,Leo Khan,2026-01-13,2026-02-14
+cli_0009_dl_0003,cli_0009_ct_0120,Urban Works - audit package,won,20009.81,INR,75,website_form,Sara Sharma,2026-03-03,2026-04-20
+cli_0009_dl_0004,cli_0009_ct_0094,Urban Works - pro plan,negotiation,18842.28,INR,79,website_form,Arjun Khan,2026-03-24,2026-04-23
+cli_0009_dl_0005,cli_0009_ct_0120,Urban Works - service retainer,proposal,13789.94,INR,86,website_form,Zara Sharma,2026-02-24,2026-03-02
+cli_0009_dl_0006,cli_0009_ct_0030,Urban Works - service retainer,new,11916.25,INR,81,event,Anika Kapoor,2025-12-02,2025-12-17
+cli_0009_dl_0007,cli_0009_ct_0029,Urban Works - service retainer,proposal,2044.9,INR,77,website_form,Mia Mehta,2025-10-26,2025-12-23
+cli_0009_dl_0008,cli_0009_ct_0038,Urban Works - starter plan,lost,11905.23,INR,93,website_form,Leo Khan,2026-02-05,2026-03-13
+cli_0009_dl_0009,cli_0009_ct_0039,Urban Works - annual subscription,new,11515.37,INR,72,event,Sara Kapoor,2026-03-21,2026-04-01
+cli_0009_dl_0010,cli_0009_ct_0025,Urban Works - membership,won,16489.3,INR,27,referral,Maya Nair,2026-01-20,2026-02-28
+cli_0009_dl_0011,cli_0009_ct_0010,Urban Works - service retainer,proposal,18293.27,INR,20,import,Sara Kapoor,2026-01-30,2026-02-04
+cli_0009_dl_0012,cli_0009_ct_0093,Urban Works - pro plan,new,6441.14,INR,46,website_form,Leo Kapoor,2025-12-08,2025-12-18
+cli_0009_dl_0013,cli_0009_ct_0068,Urban Works - annual subscription,negotiation,9987.27,INR,49,import,Mia Singh,2026-01-18,2026-02-15
+cli_0009_dl_0014,cli_0009_ct_0129,Urban Works - membership,proposal,10544.4,INR,67,website_form,Maya Nair,2026-02-21,2026-04-09
+cli_0009_dl_0015,cli_0009_ct_0123,Urban Works - service retainer,new,20675.0,INR,63,website_form,Noah Verma,2026-03-10,2026-04-22
+cli_0009_dl_0016,cli_0009_ct_0060,Urban Works - audit package,qualified,24458.35,INR,64,website_form,Maya Verma,2026-03-14,2026-04-22
+cli_0009_dl_0017,cli_0009_ct_0036,Urban Works - pro plan,won,6367.38,INR,89,website_form,Zara Kapoor,2025-10-11,2025-11-23
+cli_0009_dl_0018,cli_0009_ct_0111,Urban Works - annual subscription,new,19621.83,INR,69,import,Kabir Joshi,2025-11-14,2026-01-13
+cli_0009_dl_0019,cli_0009_ct_0020,Urban Works - annual subscription,qualified,13012.62,INR,22,website_form,Sara Sharma,2025-12-31,2026-02-23
+cli_0009_dl_0020,cli_0009_ct_0030,Urban Works - service retainer,proposal,7730.88,INR,62,event,Ava Patel,2025-09-30,2025-11-16
+cli_0009_dl_0021,cli_0009_ct_0058,Urban Works - pro plan,proposal,12245.07,INR,15,website_form,Noah Gupta,2025-12-23,2026-01-02
+cli_0009_dl_0022,cli_0009_ct_0031,Urban Works - audit package,new,23889.27,INR,70,referral,Leo Nair,2025-11-07,2025-12-20
+cli_0009_dl_0023,cli_0009_ct_0065,Urban Works - premium bundle,qualified,5177.35,INR,7,email_reply,Ishaan Kapoor,2025-11-01,2025-12-01
+cli_0009_dl_0024,cli_0009_ct_0055,Urban Works - service retainer,qualified,17596.51,INR,81,website_form,Maya Verma,2025-12-13,2025-12-31
+cli_0009_dl_0025,cli_0009_ct_0067,Urban Works - annual subscription,proposal,11114.1,INR,84,import,Zara Sharma,2026-01-29,2026-02-06
+cli_0009_dl_0026,cli_0009_ct_0021,Urban Works - annual subscription,won,18063.22,INR,50,website_form,Zara Gupta,2026-02-27,2026-04-06
+cli_0009_dl_0027,cli_0009_ct_0070,Urban Works - pro plan,proposal,13330.65,INR,87,website_form,Mia Sharma,2025-12-05,2026-01-01
+cli_0009_dl_0028,cli_0009_ct_0046,Urban Works - audit package,qualified,19550.59,INR,8,website_form,Anika Kapoor,2025-12-22,2026-01-17
+cli_0009_dl_0029,cli_0009_ct_0028,Urban Works - starter plan,proposal,24835.04,INR,85,event,Leo Nair,2025-12-26,2026-01-09
+cli_0009_dl_0030,cli_0009_ct_0054,Urban Works - premium bundle,negotiation,1946.08,INR,53,import,Mia Bhatia,2025-12-29,2026-01-07
+cli_0009_dl_0031,cli_0009_ct_0063,Urban Works - membership,negotiation,21969.28,INR,87,email_reply,Leo Mehta,2025-12-24,2026-01-21
+cli_0009_dl_0032,cli_0009_ct_0115,Urban Works - audit package,proposal,19788.99,INR,39,website_form,Ava Sharma,2025-12-11,2026-01-11
+cli_0009_dl_0033,cli_0009_ct_0015,Urban Works - starter plan,proposal,22789.09,INR,66,import,Anika Singh,2025-10-24,2025-12-23
+cli_0009_dl_0034,cli_0009_ct_0070,Urban Works - annual subscription,won,6258.48,INR,55,website_form,Ishaan Joshi,2026-02-20,2026-02-26
+cli_0009_dl_0035,cli_0009_ct_0053,Urban Works - annual subscription,qualified,17315.45,INR,82,referral,Mia Bhatia,2026-02-28,2026-04-23
+cli_0009_dl_0036,cli_0009_ct_0044,Urban Works - audit package,qualified,23270.92,INR,46,referral,Ishaan Mehta,2025-11-07,2025-12-03
+cli_0009_dl_0037,cli_0009_ct_0067,Urban Works - pro plan,qualified,23782.47,INR,36,import,Ishaan Singh,2026-01-11,2026-01-31
+cli_0009_dl_0038,cli_0009_ct_0116,Urban Works - starter plan,proposal,17753.79,INR,62,website_form,Kabir Sharma,2026-01-12,2026-03-02
+cli_0009_dl_0039,cli_0009_ct_0072,Urban Works - premium bundle,negotiation,9069.28,INR,75,referral,Sara Kapoor,2026-03-27,2026-04-18
+cli_0009_dl_0040,cli_0009_ct_0112,Urban Works - service retainer,proposal,9013.44,INR,35,import,Noah Mehta,2025-10-23,2025-10-30
+cli_0009_dl_0041,cli_0009_ct_0005,Urban Works - pro plan,won,20487.87,INR,64,email_reply,Mia Khan,2026-02-03,2026-03-23
+cli_0009_dl_0042,cli_0009_ct_0025,Urban Works - membership,negotiation,8666.93,INR,43,referral,Arjun Kapoor,2025-11-08,2025-12-05
+cli_0009_dl_0043,cli_0009_ct_0101,Urban Works - starter plan,qualified,17861.64,INR,52,import,Anika Nair,2026-03-19,2026-03-26
+cli_0009_dl_0044,cli_0009_ct_0095,Urban Works - pro plan,proposal,24799.97,INR,91,website_form,Kabir Singh,2026-02-18,2026-04-09
+cli_0009_dl_0045,cli_0009_ct_0097,Urban Works - starter plan,qualified,11006.55,INR,38,import,Noah Kapoor,2025-11-17,2025-12-09
+cli_0009_dl_0046,cli_0009_ct_0059,Urban Works - premium bundle,new,18985.58,INR,35,website_form,Anika Patel,2026-02-14,2026-03-11
+cli_0009_dl_0047,cli_0009_ct_0016,Urban Works - premium bundle,qualified,6527.07,INR,86,import,Zara Khan,2025-12-06,2026-01-31
+cli_0009_dl_0048,cli_0009_ct_0127,Urban Works - starter plan,qualified,18505.62,INR,76,import,Sara Mehta,2026-02-04,2026-03-26
+cli_0009_dl_0049,cli_0009_ct_0066,Urban Works - premium bundle,lost,15457.32,INR,38,website_form,Mia Reddy,2025-11-20,2025-12-25
+cli_0009_dl_0050,cli_0009_ct_0008,Urban Works - annual subscription,negotiation,8092.32,INR,37,import,Maya Kapoor,2026-03-07,2026-04-02
+cli_0009_dl_0051,cli_0009_ct_0068,Urban Works - premium bundle,proposal,4811.71,INR,77,import,Kabir Nair,2026-02-10,2026-03-27
+cli_0009_dl_0052,cli_0009_ct_0054,Urban Works - annual subscription,qualified,21527.79,INR,93,import,Kabir Sharma,2026-01-16,2026-03-12
+cli_0009_dl_0053,cli_0009_ct_0033,Urban Works - pro plan,qualified,20234.18,INR,88,email_reply,Ava Joshi,2025-12-02,2025-12-29
+cli_0009_dl_0054,cli_0009_ct_0090,Urban Works - audit package,won,24644.63,INR,79,email_reply,Kabir Joshi,2025-10-22,2025-12-19
+cli_0009_dl_0055,cli_0009_ct_0114,Urban Works - membership,qualified,2971.86,INR,91,import,Noah Nair,2025-11-16,2025-11-26
+cli_0009_dl_0056,cli_0009_ct_0018,Urban Works - service retainer,qualified,9724.19,INR,10,email_reply,Anika Kapoor,2025-12-02,2026-01-23
+cli_0009_dl_0057,cli_0009_ct_0008,Urban Works - pro plan,won,11822.87,INR,66,import,Arjun Patel,2025-09-04,2025-11-03
+cli_0009_dl_0058,cli_0009_ct_0047,Urban Works - membership,won,7862.24,INR,64,website_form,Noah Patel,2026-02-07,2026-03-16
+cli_0009_dl_0059,cli_0009_ct_0086,Urban Works - pro plan,qualified,1334.89,INR,71,website_form,Leo Verma,2025-10-23,2025-11-26
+cli_0009_dl_0060,cli_0009_ct_0072,Urban Works - audit package,proposal,1726.86,INR,91,referral,Leo Mehta,2026-03-21,2026-04-08
+cli_0009_dl_0061,cli_0009_ct_0082,Urban Works - audit package,won,6791.54,INR,95,website_form,Sara Nair,2026-01-25,2026-03-06
+cli_0009_dl_0062,cli_0009_ct_0111,Urban Works - pro plan,won,15409.34,INR,76,import,Liam Mehta,2025-11-15,2025-12-24
+cli_0009_dl_0063,cli_0009_ct_0055,Urban Works - audit package,won,15261.61,INR,33,website_form,Zara Bhatia,2026-03-08,2026-03-12
+cli_0009_dl_0064,cli_0009_ct_0083,Urban Works - starter plan,lost,17464.19,INR,22,import,Kabir Kapoor,2025-10-15,2025-11-16
+cli_0009_dl_0065,cli_0009_ct_0072,Urban Works - annual subscription,qualified,19728.71,INR,11,referral,Zara Patel,2025-12-24,2026-01-27
+cli_0009_dl_0066,cli_0009_ct_0104,Urban Works - membership,qualified,22614.96,INR,72,import,Mia Sharma,2025-11-11,2025-11-27
+cli_0009_dl_0067,cli_0009_ct_0089,Urban Works - starter plan,qualified,12658.93,INR,60,website_form,Arjun Bhatia,2025-12-05,2026-01-06
+cli_0009_dl_0068,cli_0009_ct_0116,Urban Works - service retainer,won,3630.49,INR,94,website_form,Sara Patel,2026-03-08,2026-03-31
+cli_0009_dl_0069,cli_0009_ct_0023,Urban Works - pro plan,negotiation,4326.9,INR,91,referral,Sara Khan,2025-10-13,2025-12-04
+cli_0009_dl_0070,cli_0009_ct_0037,Urban Works - audit package,lost,7142.51,INR,67,referral,Mia Singh,2025-11-15,2026-01-04
+cli_0009_dl_0071,cli_0009_ct_0105,Urban Works - service retainer,won,2897.13,INR,49,website_form,Arjun Khan,2026-03-12,2026-04-17
+cli_0009_dl_0072,cli_0009_ct_0049,Urban Works - audit package,qualified,16827.53,INR,39,import,Maya Joshi,2025-10-03,2025-11-24
+cli_0009_dl_0073,cli_0009_ct_0063,Urban Works - starter plan,qualified,9510.5,INR,38,email_reply,Maya Joshi,2025-10-10,2025-11-09
+cli_0009_dl_0074,cli_0009_ct_0016,Urban Works - starter plan,lost,5227.12,INR,29,import,Kabir Verma,2025-11-28,2026-01-08
+cli_0009_dl_0075,cli_0009_ct_0005,Urban Works - pro plan,qualified,24601.69,INR,44,email_reply,Ishaan Mehta,2026-04-13,2026-04-18
+cli_0009_dl_0076,cli_0009_ct_0025,Urban Works - starter plan,lost,1927.03,INR,32,referral,Ava Bhatia,2026-01-14,2026-02-01
+cli_0009_dl_0077,cli_0009_ct_0005,Urban Works - starter plan,won,12234.3,INR,26,email_reply,Anika Sharma,2025-11-09,2025-11-13
+cli_0009_dl_0078,cli_0009_ct_0044,Urban Works - audit package,new,12328.74,INR,54,referral,Mia Gupta,2026-01-31,2026-02-08

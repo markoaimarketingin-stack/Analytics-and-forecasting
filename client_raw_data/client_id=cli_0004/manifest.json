@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0004",
+  "company_name": "North Growth",
+  "industry": "healthcare",
+  "region": "UAE",
+  "generated_at": "2026-04-23T20:55:57.756917Z",
+  "counts": {
+    "contacts": 87,
+    "deals": 47,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 11,
+    "marketing_rows": 300,
+    "email_campaigns": 22,
+    "posts": 58,
+    "comments": 116,
+    "tickets": 93,
+    "transcripts": 83,
+    "sessions": 24683,
+    "events": 123415,
+    "orders": 118,
+    "refunds": 10,
+    "invoices": 54,
+    "payments": 43,
+    "feedback": 60,
+    "feature_requests": 73,
+    "meeting_notes": 17,
+    "raw_observations": 49
+  }
+}

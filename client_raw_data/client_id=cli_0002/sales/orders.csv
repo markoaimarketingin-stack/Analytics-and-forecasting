@@ -1,0 +1,106 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0002_ord_00001,2025-12-08,b7e3df415ffd,premium bundle,GBP,1622.14,10,linkedin_ads,paid,bank_transfer
+cli_0002_ord_00002,2025-10-30,a9b7627a14de,membership,GBP,560.93,25,linkedin_ads,refunded,paypal
+cli_0002_ord_00003,2026-01-20,090ed3e6323d,membership,GBP,1531.8,20,referral,pending,card
+cli_0002_ord_00004,2025-10-29,b015c37702b2,membership,GBP,535.45,15,referral,paid,upi
+cli_0002_ord_00005,2026-02-21,65d3e668fbf9,premium bundle,GBP,1235.71,15,referral,paid,card
+cli_0002_ord_00006,2025-12-28,bdffbd14097e,starter plan,GBP,1234.34,15,tiktok_ads,paid,wallet
+cli_0002_ord_00007,2026-01-31,e5425e8c0d26,pro plan,GBP,1920.04,20,referral,paid,card
+cli_0002_ord_00008,2026-04-09,ae167875a3d3,premium bundle,GBP,805.79,0,email,paid,bank_transfer
+cli_0002_ord_00009,2026-04-13,68e51591a450,starter plan,GBP,1867.44,10,email,refunded,card
+cli_0002_ord_00010,2026-01-04,180cd9dc720f,service retainer,GBP,1329.02,0,linkedin_ads,paid,card
+cli_0002_ord_00011,2026-02-18,ebaccc5e3be6,audit package,GBP,912.36,10,meta_ads,paid,card
+cli_0002_ord_00012,2026-03-04,16dc44cf7410,starter plan,GBP,2176.54,0,referral,paid,upi
+cli_0002_ord_00013,2026-01-04,8112a114c01e,audit package,GBP,403.7,25,email,paid,paypal
+cli_0002_ord_00014,2025-10-28,58290053f7c1,audit package,GBP,65.16,10,tiktok_ads,paid,wallet
+cli_0002_ord_00015,2026-01-01,6aa76adf10d8,annual subscription,GBP,1939.92,5,meta_ads,pending,upi
+cli_0002_ord_00016,2025-11-25,e0b2298096c6,pro plan,GBP,1786.04,0,linkedin_ads,paid,upi
+cli_0002_ord_00017,2026-03-18,b0bf62536073,membership,GBP,2272.58,10,email,paid,wallet
+cli_0002_ord_00018,2026-03-11,3df2209f923a,service retainer,GBP,2275.73,5,referral,paid,card
+cli_0002_ord_00019,2026-03-17,e87c48cfa551,starter plan,GBP,1051.95,10,email,paid,paypal
+cli_0002_ord_00020,2026-02-22,d5aa63c7757d,annual subscription,GBP,1818.69,25,linkedin_ads,paid,wallet
+cli_0002_ord_00021,2026-02-13,349488f13fd9,annual subscription,GBP,1049.69,5,tiktok_ads,paid,paypal
+cli_0002_ord_00022,2026-04-23,911c894216b4,annual subscription,GBP,2139.42,10,meta_ads,paid,bank_transfer
+cli_0002_ord_00023,2025-12-15,40427070bc3c,service retainer,GBP,211.29,5,linkedin_ads,paid,wallet
+cli_0002_ord_00024,2026-03-07,320aa213a1e5,service retainer,GBP,1820.42,5,meta_ads,paid,upi
+cli_0002_ord_00025,2025-12-25,4dfcb82d9b8a,pro plan,GBP,216.59,10,email,paid,wallet
+cli_0002_ord_00026,2026-02-06,dbc08bda916c,audit package,GBP,236.33,20,tiktok_ads,paid,wallet
+cli_0002_ord_00027,2026-04-01,fa42d2b8c22f,annual subscription,GBP,2000.86,10,referral,paid,bank_transfer
+cli_0002_ord_00028,2026-03-08,7b389752e93d,premium bundle,GBP,262.57,5,tiktok_ads,paid,card
+cli_0002_ord_00029,2025-12-06,f0f2f0388e27,audit package,GBP,1346.87,15,linkedin_ads,paid,upi
+cli_0002_ord_00030,2026-03-03,92dc0a9546be,service retainer,GBP,1931.48,20,meta_ads,paid,bank_transfer
+cli_0002_ord_00031,2026-03-27,391fbdf66764,audit package,GBP,1946.22,25,referral,paid,upi
+cli_0002_ord_00032,2026-04-13,fba629ff8574,starter plan,GBP,1905.08,0,tiktok_ads,paid,bank_transfer
+cli_0002_ord_00033,2025-12-17,e65562b262e4,pro plan,GBP,1560.8,15,meta_ads,paid,bank_transfer
+cli_0002_ord_00034,2025-11-23,d7904d8b2412,annual subscription,GBP,2286.71,15,tiktok_ads,paid,card
+cli_0002_ord_00035,2025-12-05,f85e7a1a4e42,pro plan,GBP,363.18,20,linkedin_ads,paid,bank_transfer
+cli_0002_ord_00036,2026-01-19,e20559cc0dd9,service retainer,GBP,76.33,20,referral,pending,upi
+cli_0002_ord_00037,2026-01-21,cd4470460132,premium bundle,GBP,2050.12,15,linkedin_ads,paid,bank_transfer
+cli_0002_ord_00038,2025-10-27,83d2af0a7620,audit package,GBP,2194.54,15,meta_ads,paid,upi
+cli_0002_ord_00039,2026-03-05,cdd564d53ce0,service retainer,GBP,1993.89,5,linkedin_ads,paid,bank_transfer
+cli_0002_ord_00040,2025-11-14,a2a237f390f4,pro plan,GBP,1482.39,0,linkedin_ads,paid,card
+cli_0002_ord_00041,2026-04-13,9e2006ffac0a,service retainer,GBP,861.4,20,tiktok_ads,paid,upi
+cli_0002_ord_00042,2026-03-09,ca6496694903,service retainer,GBP,779.55,0,meta_ads,paid,wallet
+cli_0002_ord_00043,2026-01-17,fc2d9a065c5f,audit package,GBP,2201.09,5,referral,pending,paypal
+cli_0002_ord_00044,2026-02-21,9c24e863d39d,starter plan,GBP,2417.35,15,referral,paid,paypal
+cli_0002_ord_00045,2025-11-29,8dc3c4bd3a4b,starter plan,GBP,312.25,15,email,paid,upi
+cli_0002_ord_00046,2026-04-04,213ccfeda012,service retainer,GBP,1997.71,25,referral,paid,paypal
+cli_0002_ord_00047,2025-12-29,99e96261d8f5,audit package,GBP,861.68,0,referral,paid,paypal
+cli_0002_ord_00048,2026-03-18,1c7e05b0f902,annual subscription,GBP,2104.65,0,meta_ads,paid,upi
+cli_0002_ord_00049,2026-02-11,404efcc8815e,audit package,GBP,1850.52,25,meta_ads,paid,upi
+cli_0002_ord_00050,2026-01-26,7491272c5e0a,service retainer,GBP,954.81,20,email,pending,upi
+cli_0002_ord_00051,2026-04-01,d6a08d173e72,audit package,GBP,487.43,0,email,paid,bank_transfer
+cli_0002_ord_00052,2025-12-08,33c3ab5f9901,annual subscription,GBP,1332.81,25,linkedin_ads,paid,wallet
+cli_0002_ord_00053,2026-02-16,161e7a67f7fb,service retainer,GBP,1074.07,0,meta_ads,paid,card
+cli_0002_ord_00054,2026-02-21,8ecfa9f8f8e4,premium bundle,GBP,1937.37,0,meta_ads,refunded,upi
+cli_0002_ord_00055,2025-12-15,0eed3cde8627,premium bundle,GBP,651.31,0,linkedin_ads,paid,card
+cli_0002_ord_00056,2025-12-04,66b7ac6eedc7,pro plan,GBP,1998.66,25,meta_ads,paid,card
+cli_0002_ord_00057,2026-01-24,7f90b0a038b5,premium bundle,GBP,983.99,20,tiktok_ads,pending,bank_transfer
+cli_0002_ord_00058,2026-02-07,cf9d981ff0b7,audit package,GBP,1665.84,5,tiktok_ads,paid,paypal
+cli_0002_ord_00059,2026-03-12,54380719edb4,service retainer,GBP,1281.6,5,linkedin_ads,paid,upi
+cli_0002_ord_00060,2025-10-29,6c5b014bb9e4,pro plan,GBP,1636.38,15,tiktok_ads,paid,card
+cli_0002_ord_00061,2025-10-27,d195ebb70c96,annual subscription,GBP,2041.44,5,referral,paid,bank_transfer
+cli_0002_ord_00062,2025-12-14,bd6cb1522a96,annual subscription,GBP,1579.83,10,tiktok_ads,paid,wallet
+cli_0002_ord_00063,2026-03-13,defa58c5f15b,starter plan,GBP,2199.9,15,referral,paid,upi
+cli_0002_ord_00064,2026-02-04,0f8af5dcd1aa,starter plan,GBP,758.67,15,meta_ads,pending,wallet
+cli_0002_ord_00065,2026-04-19,000a04726775,audit package,GBP,2410.48,15,email,pending,card
+cli_0002_ord_00066,2026-02-13,71dfd80e2e41,service retainer,GBP,1794.97,20,linkedin_ads,paid,upi
+cli_0002_ord_00067,2026-04-12,ae7130d938b1,audit package,GBP,2011.7,10,email,refunded,bank_transfer
+cli_0002_ord_00068,2025-11-01,a35c559bb819,service retainer,GBP,1335.29,20,linkedin_ads,paid,bank_transfer
+cli_0002_ord_00069,2026-04-22,5730afe53149,pro plan,GBP,1263.91,0,tiktok_ads,pending,paypal
+cli_0002_ord_00070,2026-02-12,a638d9cfbaf8,membership,GBP,543.09,15,email,paid,wallet
+cli_0002_ord_00071,2026-01-17,7d81050969e4,audit package,GBP,218.91,15,tiktok_ads,paid,wallet
+cli_0002_ord_00072,2026-01-08,5bcbe07fdaab,starter plan,GBP,521.31,10,linkedin_ads,paid,upi
+cli_0002_ord_00073,2026-01-23,7f386b1706c7,annual subscription,GBP,2341.57,25,linkedin_ads,paid,paypal
+cli_0002_ord_00074,2025-12-09,4378a6b6bdc1,service retainer,GBP,2244.36,20,meta_ads,paid,card
+cli_0002_ord_00075,2026-01-16,d25bb9e723df,audit package,GBP,174.49,20,meta_ads,paid,wallet
+cli_0002_ord_00076,2026-01-02,d66b768fc781,membership,GBP,2000.84,5,tiktok_ads,paid,wallet
+cli_0002_ord_00077,2026-01-23,98ef07f4a798,audit package,GBP,89.21,25,referral,paid,card
+cli_0002_ord_00078,2026-01-05,1f7962f94113,membership,GBP,1043.92,20,meta_ads,refunded,card
+cli_0002_ord_00079,2026-03-07,dd2f350e3b02,audit package,GBP,121.59,5,referral,refunded,wallet
+cli_0002_ord_00080,2025-12-29,eb739530bfdb,pro plan,GBP,1657.07,15,email,paid,bank_transfer
+cli_0002_ord_00081,2025-12-17,4db772979fc8,pro plan,GBP,1441.11,15,email,paid,bank_transfer
+cli_0002_ord_00082,2026-04-23,966bcc226933,audit package,GBP,1316.07,15,linkedin_ads,refunded,card
+cli_0002_ord_00083,2025-12-01,24f99626b874,service retainer,GBP,1691.41,5,meta_ads,pending,paypal
+cli_0002_ord_00084,2025-12-20,7eb34f5cfb9b,annual subscription,GBP,1254.64,0,referral,pending,bank_transfer
+cli_0002_ord_00085,2026-02-11,e3195ee30693,membership,GBP,2058.8,20,linkedin_ads,paid,card
+cli_0002_ord_00086,2026-01-02,34111119290b,audit package,GBP,1731.25,5,meta_ads,refunded,bank_transfer
+cli_0002_ord_00087,2025-12-10,7a4322b7292b,service retainer,GBP,2373.15,20,linkedin_ads,paid,card
+cli_0002_ord_00088,2025-11-25,41ab386210e4,service retainer,GBP,1137.94,10,tiktok_ads,paid,card
+cli_0002_ord_00089,2026-03-27,1fe6476949d9,audit package,GBP,2409.87,25,tiktok_ads,paid,upi
+cli_0002_ord_00090,2026-03-12,433f486f8ca5,audit package,GBP,233.6,20,linkedin_ads,paid,wallet
+cli_0002_ord_00091,2026-04-16,7db222df87b4,premium bundle,GBP,2006.37,10,referral,paid,bank_transfer
+cli_0002_ord_00092,2026-04-07,a152e115a570,starter plan,GBP,1381.45,5,meta_ads,paid,wallet
+cli_0002_ord_00093,2026-01-01,b23a1277247f,premium bundle,GBP,2075.14,5,meta_ads,paid,wallet
+cli_0002_ord_00094,2026-04-06,e06b0604a83d,annual subscription,GBP,1301.32,0,linkedin_ads,paid,card
+cli_0002_ord_00095,2026-01-29,826b1feda068,premium bundle,GBP,353.85,5,referral,refunded,paypal
+cli_0002_ord_00096,2025-11-24,118c734ef1d5,annual subscription,GBP,2215.22,10,linkedin_ads,paid,card
+cli_0002_ord_00097,2026-02-02,178dfd0b4e45,annual subscription,GBP,336.92,15,email,refunded,upi
+cli_0002_ord_00098,2026-02-18,7b7fd118f1c8,service retainer,GBP,1471.21,0,tiktok_ads,paid,upi
+cli_0002_ord_00099,2026-02-10,59df15181044,audit package,GBP,473.92,5,email,paid,bank_transfer
+cli_0002_ord_00100,2026-04-21,87409d76f609,premium bundle,GBP,318.75,25,meta_ads,refunded,upi
+cli_0002_ord_00101,2026-02-28,6a00a92965c2,membership,GBP,1385.81,15,meta_ads,paid,card
+cli_0002_ord_00102,2026-01-09,8c1ca1abdded,annual subscription,GBP,1293.71,0,email,paid,bank_transfer
+cli_0002_ord_00103,2026-02-18,24c2a35b4010,audit package,GBP,1297.25,0,email,paid,bank_transfer
+cli_0002_ord_00104,2025-12-21,306e6c8c3718,membership,GBP,385.42,25,tiktok_ads,pending,paypal
+cli_0002_ord_00105,2026-03-15,f69d46ca9785,pro plan,GBP,2050.82,10,tiktok_ads,paid,upi

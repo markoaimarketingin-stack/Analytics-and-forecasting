@@ -1,0 +1,44 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0005_em_0001,Education,How to improve North Commerce,35841,35086,7486,964,254,5,2025-12-04
+cli_0005_em_0002,Winback,How to improve North Commerce,3380,3311,1516,187,6,5,2026-02-19
+cli_0005_em_0003,Education,New North Commerce,26663,26374,9624,1774,70,4,2025-11-29
+cli_0005_em_0004,Launch,How to improve North Commerce,37148,35421,19466,2089,302,2,2025-12-14
+cli_0005_em_0005,Newsletter,A quick update on North Commerce,46232,45375,7243,874,44,0,2025-11-06
+cli_0005_em_0006,Education,Last chance for North Commerce,32101,31511,6379,832,144,3,2025-12-10
+cli_0005_em_0007,Offer,A quick update on North Commerce,49046,47006,20337,1018,88,2,2026-01-10
+cli_0005_em_0008,Education,New North Commerce,1799,1738,552,68,11,2,2026-03-20
+cli_0005_em_0009,Newsletter,How to improve North Commerce,43805,42269,21178,3185,326,5,2026-03-26
+cli_0005_em_0010,Launch,A quick update on North Commerce,40456,40104,9720,466,75,2,2025-12-13
+cli_0005_em_0011,Winback,Last chance for North Commerce,1956,1936,1030,216,10,1,2025-11-08
+cli_0005_em_0012,Winback,New North Commerce,25422,25132,12699,1637,181,1,2026-01-22
+cli_0005_em_0013,Newsletter,New North Commerce,5827,5764,3040,273,29,3,2026-04-18
+cli_0005_em_0014,Newsletter,New North Commerce,2917,2796,1053,230,4,4,2026-03-30
+cli_0005_em_0015,Winback,A quick update on North Commerce,49675,48133,8925,860,393,1,2026-03-02
+cli_0005_em_0016,Offer,How to improve North Commerce,42758,42179,17142,2153,113,1,2026-03-05
+cli_0005_em_0017,Offer,A quick update on North Commerce,34859,34702,9809,572,236,5,2025-11-20
+cli_0005_em_0018,Launch,New North Commerce,21136,20638,4615,416,26,0,2026-04-18
+cli_0005_em_0019,Newsletter,New North Commerce,32697,32405,10158,1789,156,0,2026-01-29
+cli_0005_em_0020,Launch,New North Commerce,17166,16761,8470,1495,132,4,2026-03-27
+cli_0005_em_0021,Offer,How to improve North Commerce,46036,44042,15263,2557,87,5,2026-03-26
+cli_0005_em_0022,Re-engagement,How to improve North Commerce,35689,35423,18733,1492,32,5,2025-11-08
+cli_0005_em_0023,Education,How to improve North Commerce,28447,27557,15201,1595,279,0,2025-11-22
+cli_0005_em_0024,Education,New North Commerce,14080,14030,4224,614,58,4,2026-03-03
+cli_0005_em_0025,Offer,How to improve North Commerce,14282,14015,5694,970,50,5,2025-11-22
+cli_0005_em_0026,Offer,A quick update on North Commerce,22233,21319,8068,932,187,1,2025-11-21
+cli_0005_em_0027,Winback,New North Commerce,28451,28235,6619,931,113,1,2025-11-18
+cli_0005_em_0028,Education,A quick update on North Commerce,21259,21105,7570,552,61,4,2026-04-09
+cli_0005_em_0029,Launch,A quick update on North Commerce,45032,44819,10929,843,445,3,2026-01-05
+cli_0005_em_0030,Education,How to improve North Commerce,14741,14547,3501,731,0,5,2026-03-25
+cli_0005_em_0031,Winback,A quick update on North Commerce,49607,47926,18994,3181,420,4,2026-03-28
+cli_0005_em_0032,Winback,Last chance for North Commerce,4705,4474,1547,265,8,5,2025-11-12
+cli_0005_em_0033,Re-engagement,Last chance for North Commerce,7876,7866,3345,185,32,4,2026-02-19
+cli_0005_em_0034,Winback,New North Commerce,762,758,124,8,5,5,2026-01-26
+cli_0005_em_0035,Winback,New North Commerce,8722,8647,1516,213,9,3,2026-02-16
+cli_0005_em_0036,Offer,A quick update on North Commerce,16176,15573,6631,996,9,2,2026-04-14
+cli_0005_em_0037,Newsletter,How to improve North Commerce,21667,21316,4180,412,109,5,2025-11-11
+cli_0005_em_0038,Launch,How to improve North Commerce,17958,17710,6098,512,176,5,2026-01-12
+cli_0005_em_0039,Launch,A quick update on North Commerce,43147,41010,21264,1270,4,4,2026-04-18
+cli_0005_em_0040,Offer,New North Commerce,39625,37954,5422,995,33,2,2026-02-11
+cli_0005_em_0041,Education,New North Commerce,21908,21846,4818,533,107,4,2026-04-06
+cli_0005_em_0042,Offer,How to improve North Commerce,49076,47478,26200,4686,263,4,2026-01-10
+cli_0005_em_0043,Newsletter,A quick update on North Commerce,2531,2490,1206,231,9,3,2026-01-12

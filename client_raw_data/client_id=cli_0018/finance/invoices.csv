@@ -1,0 +1,64 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0018_inv_0001,2026-03-26,2026-05-24,EUR,3406.58,paid,Mia Sharma,consulting
+cli_0018_inv_0002,2026-01-10,2026-04-01,EUR,11843.76,paid,Mia Verma,strategy work
+cli_0018_inv_0003,2025-11-30,2026-04-30,EUR,6635.51,paid,Ishaan Kapoor,support; creative work
+cli_0018_inv_0004,2025-11-10,2026-06-05,EUR,5788.82,paid,Arjun Reddy,setup fee; consulting; media spend
+cli_0018_inv_0005,2026-03-15,2026-05-23,EUR,11869.51,paid,Mia Gupta,strategy work; support
+cli_0018_inv_0006,2025-12-31,2026-05-12,EUR,11369.71,paid,Sara Khan,consulting; setup fee; strategy work
+cli_0018_inv_0007,2025-11-18,2026-03-28,EUR,9643.08,overdue,Ava Sharma,support; consulting; setup fee
+cli_0018_inv_0008,2026-03-09,2026-04-10,EUR,11480.47,paid,Ishaan Khan,creative work
+cli_0018_inv_0009,2025-12-01,2026-03-27,EUR,10159.15,paid,Leo Bhatia,media spend; setup fee
+cli_0018_inv_0010,2025-12-16,2026-06-06,EUR,8173.26,paid,Maya Bhatia,creative work
+cli_0018_inv_0011,2025-12-11,2026-05-31,EUR,2540.53,paid,Liam Patel,support
+cli_0018_inv_0012,2026-03-14,2026-06-04,EUR,3281.1,paid,Leo Nair,creative work
+cli_0018_inv_0013,2026-04-14,2026-04-04,EUR,10025.64,paid,Kabir Mehta,consulting; setup fee
+cli_0018_inv_0014,2025-10-26,2026-05-14,EUR,6183.87,paid,Ishaan Nair,setup fee; consulting; strategy work
+cli_0018_inv_0015,2026-03-09,2026-05-09,EUR,5018.42,open,Sara Khan,creative work; media spend; consulting
+cli_0018_inv_0016,2026-04-18,2026-05-07,EUR,10724.96,paid,Maya Sharma,creative work; strategy work; media spend
+cli_0018_inv_0017,2026-01-13,2026-04-30,EUR,3147.26,open,Ava Mehta,support; strategy work; setup fee
+cli_0018_inv_0018,2025-11-09,2026-03-30,EUR,5193.97,paid,Mia Verma,media spend; consulting
+cli_0018_inv_0019,2026-01-16,2026-04-26,EUR,7869.88,overdue,Leo Khan,media spend
+cli_0018_inv_0020,2025-12-27,2026-04-15,EUR,6598.55,paid,Sara Nair,setup fee
+cli_0018_inv_0021,2026-04-21,2026-05-29,EUR,5326.01,paid,Mia Nair,setup fee; creative work
+cli_0018_inv_0022,2025-12-06,2026-06-01,EUR,11157.69,open,Zara Joshi,consulting; setup fee
+cli_0018_inv_0023,2026-04-24,2026-06-07,EUR,9570.15,open,Leo Verma,media spend; consulting
+cli_0018_inv_0024,2025-12-30,2026-06-03,EUR,4906.43,overdue,Anika Nair,support; creative work
+cli_0018_inv_0025,2026-01-17,2026-05-25,EUR,2318.26,paid,Zara Mehta,consulting; media spend; support
+cli_0018_inv_0026,2026-01-29,2026-04-19,EUR,11998.0,paid,Mia Kapoor,support; strategy work
+cli_0018_inv_0027,2026-01-06,2026-04-04,EUR,2997.41,paid,Liam Reddy,support
+cli_0018_inv_0028,2025-11-05,2026-04-13,EUR,6690.58,open,Leo Singh,creative work
+cli_0018_inv_0029,2026-04-19,2026-04-23,EUR,2534.7,paid,Zara Kapoor,support; consulting; media spend
+cli_0018_inv_0030,2026-04-23,2026-06-06,EUR,9735.0,paid,Mia Mehta,media spend; consulting; setup fee
+cli_0018_inv_0031,2025-12-02,2026-05-30,EUR,3836.59,paid,Anika Singh,support; strategy work; creative work
+cli_0018_inv_0032,2026-02-14,2026-05-24,EUR,3871.78,paid,Liam Kapoor,consulting
+cli_0018_inv_0033,2025-11-01,2026-04-09,EUR,9682.42,overdue,Liam Verma,strategy work
+cli_0018_inv_0034,2025-12-24,2026-04-05,EUR,1277.11,open,Liam Reddy,strategy work; setup fee; support
+cli_0018_inv_0035,2026-01-25,2026-05-01,EUR,9273.93,overdue,Zara Joshi,creative work; setup fee; strategy work
+cli_0018_inv_0036,2026-03-25,2026-03-29,EUR,11370.62,paid,Zara Bhatia,consulting
+cli_0018_inv_0037,2025-12-27,2026-04-06,EUR,1884.56,overdue,Ishaan Nair,consulting; creative work; media spend
+cli_0018_inv_0038,2026-04-23,2026-04-22,EUR,7178.64,paid,Sara Joshi,strategy work; creative work
+cli_0018_inv_0039,2026-02-27,2026-05-22,EUR,10158.04,paid,Leo Patel,consulting; media spend; strategy work
+cli_0018_inv_0040,2026-04-01,2026-04-11,EUR,10224.0,open,Liam Joshi,strategy work; setup fee
+cli_0018_inv_0041,2026-04-04,2026-05-17,EUR,9977.45,paid,Kabir Patel,creative work; strategy work
+cli_0018_inv_0042,2026-01-08,2026-05-14,EUR,4161.57,overdue,Zara Patel,setup fee; creative work; strategy work
+cli_0018_inv_0043,2025-11-01,2026-04-15,EUR,2608.47,paid,Noah Verma,strategy work; setup fee
+cli_0018_inv_0044,2026-01-24,2026-05-29,EUR,10291.33,paid,Kabir Kapoor,setup fee; strategy work
+cli_0018_inv_0045,2026-03-31,2026-04-28,EUR,10641.25,paid,Kabir Sharma,media spend; strategy work; support
+cli_0018_inv_0046,2026-04-16,2026-04-20,EUR,220.33,open,Kabir Khan,creative work; support
+cli_0018_inv_0047,2026-04-05,2026-04-29,EUR,6396.9,open,Anika Reddy,setup fee; creative work; strategy work
+cli_0018_inv_0048,2025-11-08,2026-06-03,EUR,195.3,paid,Anika Bhatia,setup fee; consulting
+cli_0018_inv_0049,2026-02-03,2026-04-21,EUR,4410.32,paid,Sara Verma,setup fee; strategy work
+cli_0018_inv_0050,2025-12-30,2026-05-16,EUR,9867.02,open,Kabir Bhatia,consulting
+cli_0018_inv_0051,2026-04-12,2026-03-29,EUR,5206.01,overdue,Sara Khan,strategy work; support; consulting
+cli_0018_inv_0052,2026-01-08,2026-04-19,EUR,9680.99,paid,Ava Sharma,support; setup fee; creative work
+cli_0018_inv_0053,2026-02-20,2026-06-02,EUR,542.03,paid,Maya Verma,media spend
+cli_0018_inv_0054,2026-02-12,2026-05-25,EUR,1540.08,open,Noah Verma,media spend
+cli_0018_inv_0055,2026-03-31,2026-05-02,EUR,780.89,paid,Ishaan Mehta,creative work
+cli_0018_inv_0056,2025-10-27,2026-05-22,EUR,5188.43,paid,Ishaan Singh,strategy work
+cli_0018_inv_0057,2026-03-22,2026-05-20,EUR,9904.53,paid,Leo Kapoor,setup fee; creative work; media spend
+cli_0018_inv_0058,2026-01-11,2026-05-15,EUR,271.41,open,Mia Reddy,consulting
+cli_0018_inv_0059,2025-12-04,2026-05-11,EUR,9311.82,paid,Ishaan Reddy,support; setup fee
+cli_0018_inv_0060,2026-03-22,2026-05-14,EUR,771.39,paid,Ishaan Joshi,creative work; consulting
+cli_0018_inv_0061,2025-11-11,2026-05-20,EUR,1792.86,paid,Ishaan Reddy,support; consulting
+cli_0018_inv_0062,2026-02-17,2026-05-01,EUR,1205.47,paid,Leo Mehta,setup fee; strategy work; consulting
+cli_0018_inv_0063,2026-04-06,2026-06-08,EUR,1022.14,paid,Kabir Mehta,strategy work; support

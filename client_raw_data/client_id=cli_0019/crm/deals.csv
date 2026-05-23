@@ -1,0 +1,110 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0019_dl_0001,cli_0019_ct_0046,Bright Labs - premium bundle,qualified,13806.38,AUD,57,import,Zara Joshi,2026-02-19,2026-04-20
+cli_0019_dl_0002,cli_0019_ct_0004,Bright Labs - starter plan,won,8457.07,AUD,51,website_form,Liam Verma,2025-11-09,2025-12-05
+cli_0019_dl_0003,cli_0019_ct_0033,Bright Labs - membership,qualified,22405.13,AUD,87,import,Mia Khan,2026-01-14,2026-01-22
+cli_0019_dl_0004,cli_0019_ct_0100,Bright Labs - starter plan,proposal,1647.35,AUD,43,referral,Arjun Joshi,2025-10-19,2025-12-01
+cli_0019_dl_0005,cli_0019_ct_0118,Bright Labs - starter plan,negotiation,7940.26,AUD,77,email_reply,Ava Mehta,2025-11-21,2026-01-07
+cli_0019_dl_0006,cli_0019_ct_0106,Bright Labs - audit package,negotiation,10263.82,AUD,64,import,Liam Mehta,2025-12-16,2026-01-22
+cli_0019_dl_0007,cli_0019_ct_0113,Bright Labs - starter plan,proposal,21824.74,AUD,64,referral,Sara Joshi,2026-03-02,2026-03-29
+cli_0019_dl_0008,cli_0019_ct_0110,Bright Labs - premium bundle,new,12413.54,AUD,15,referral,Ishaan Reddy,2026-03-12,2026-03-19
+cli_0019_dl_0009,cli_0019_ct_0078,Bright Labs - membership,negotiation,18839.47,AUD,7,email_reply,Liam Verma,2026-03-29,2026-04-12
+cli_0019_dl_0010,cli_0019_ct_0071,Bright Labs - audit package,won,10490.94,AUD,52,import,Sara Reddy,2025-10-14,2025-11-21
+cli_0019_dl_0011,cli_0019_ct_0073,Bright Labs - annual subscription,won,13011.2,AUD,86,website_form,Anika Reddy,2025-12-23,2026-01-10
+cli_0019_dl_0012,cli_0019_ct_0086,Bright Labs - membership,proposal,8323.04,AUD,71,email_reply,Leo Verma,2025-11-04,2025-12-10
+cli_0019_dl_0013,cli_0019_ct_0038,Bright Labs - service retainer,won,18052.01,AUD,76,import,Anika Kapoor,2026-04-07,2026-04-18
+cli_0019_dl_0014,cli_0019_ct_0094,Bright Labs - premium bundle,negotiation,1557.09,AUD,95,website_form,Ishaan Khan,2026-02-01,2026-02-22
+cli_0019_dl_0015,cli_0019_ct_0104,Bright Labs - audit package,proposal,12268.21,AUD,16,website_form,Maya Joshi,2025-12-14,2026-01-25
+cli_0019_dl_0016,cli_0019_ct_0043,Bright Labs - premium bundle,negotiation,23230.21,AUD,30,event,Ava Gupta,2026-01-07,2026-02-16
+cli_0019_dl_0017,cli_0019_ct_0088,Bright Labs - pro plan,negotiation,15783.87,AUD,27,website_form,Arjun Joshi,2025-11-15,2026-01-12
+cli_0019_dl_0018,cli_0019_ct_0058,Bright Labs - membership,proposal,20977.24,AUD,30,email_reply,Anika Joshi,2026-01-10,2026-03-06
+cli_0019_dl_0019,cli_0019_ct_0046,Bright Labs - membership,negotiation,20483.49,AUD,87,import,Ishaan Patel,2025-12-14,2026-01-29
+cli_0019_dl_0020,cli_0019_ct_0022,Bright Labs - pro plan,qualified,20689.16,AUD,90,website_form,Maya Singh,2026-02-09,2026-03-15
+cli_0019_dl_0021,cli_0019_ct_0114,Bright Labs - membership,lost,19129.45,AUD,26,referral,Sara Singh,2025-12-06,2026-01-07
+cli_0019_dl_0022,cli_0019_ct_0106,Bright Labs - pro plan,won,7447.66,AUD,34,import,Liam Khan,2025-10-03,2025-10-26
+cli_0019_dl_0023,cli_0019_ct_0001,Bright Labs - annual subscription,qualified,16748.07,AUD,63,website_form,Noah Reddy,2026-01-28,2026-03-02
+cli_0019_dl_0024,cli_0019_ct_0100,Bright Labs - membership,negotiation,7559.13,AUD,18,referral,Anika Gupta,2026-03-13,2026-04-01
+cli_0019_dl_0025,cli_0019_ct_0022,Bright Labs - audit package,new,11101.75,AUD,38,website_form,Ishaan Bhatia,2025-12-17,2026-01-08
+cli_0019_dl_0026,cli_0019_ct_0077,Bright Labs - annual subscription,qualified,5390.53,AUD,84,website_form,Zara Patel,2026-02-26,2026-04-03
+cli_0019_dl_0027,cli_0019_ct_0061,Bright Labs - pro plan,lost,8948.14,AUD,73,website_form,Ishaan Kapoor,2025-11-05,2026-01-04
+cli_0019_dl_0028,cli_0019_ct_0108,Bright Labs - audit package,negotiation,7255.1,AUD,84,import,Ishaan Bhatia,2026-02-15,2026-03-17
+cli_0019_dl_0029,cli_0019_ct_0027,Bright Labs - service retainer,proposal,14679.54,AUD,5,referral,Liam Nair,2025-11-16,2025-12-03
+cli_0019_dl_0030,cli_0019_ct_0029,Bright Labs - pro plan,qualified,18940.59,AUD,18,email_reply,Kabir Nair,2026-01-10,2026-01-23
+cli_0019_dl_0031,cli_0019_ct_0034,Bright Labs - annual subscription,proposal,10173.58,AUD,93,event,Zara Khan,2026-01-16,2026-01-27
+cli_0019_dl_0032,cli_0019_ct_0056,Bright Labs - starter plan,proposal,13837.08,AUD,87,import,Sara Verma,2026-01-26,2026-02-10
+cli_0019_dl_0033,cli_0019_ct_0041,Bright Labs - membership,won,17954.64,AUD,10,import,Kabir Kapoor,2025-11-21,2025-12-11
+cli_0019_dl_0034,cli_0019_ct_0103,Bright Labs - audit package,new,17430.5,AUD,67,event,Ava Khan,2025-09-30,2025-11-23
+cli_0019_dl_0035,cli_0019_ct_0119,Bright Labs - annual subscription,won,4506.42,AUD,16,email_reply,Zara Reddy,2025-12-17,2026-02-08
+cli_0019_dl_0036,cli_0019_ct_0045,Bright Labs - premium bundle,new,5376.74,AUD,44,event,Kabir Gupta,2026-01-18,2026-01-26
+cli_0019_dl_0037,cli_0019_ct_0057,Bright Labs - membership,new,23444.1,AUD,42,event,Ava Reddy,2026-02-03,2026-04-01
+cli_0019_dl_0038,cli_0019_ct_0054,Bright Labs - audit package,qualified,15470.74,AUD,87,referral,Mia Khan,2025-12-20,2026-01-04
+cli_0019_dl_0039,cli_0019_ct_0049,Bright Labs - service retainer,qualified,6284.37,AUD,65,website_form,Arjun Joshi,2026-01-12,2026-02-13
+cli_0019_dl_0040,cli_0019_ct_0066,Bright Labs - audit package,qualified,12202.68,AUD,38,import,Kabir Verma,2025-08-31,2025-10-28
+cli_0019_dl_0041,cli_0019_ct_0088,Bright Labs - audit package,won,17535.45,AUD,89,website_form,Noah Khan,2026-03-05,2026-04-16
+cli_0019_dl_0042,cli_0019_ct_0054,Bright Labs - annual subscription,proposal,2947.32,AUD,41,referral,Mia Joshi,2026-02-01,2026-03-17
+cli_0019_dl_0043,cli_0019_ct_0107,Bright Labs - pro plan,won,20490.22,AUD,69,website_form,Maya Patel,2025-10-30,2025-12-15
+cli_0019_dl_0044,cli_0019_ct_0058,Bright Labs - annual subscription,qualified,21594.15,AUD,34,email_reply,Sara Gupta,2025-10-13,2025-11-06
+cli_0019_dl_0045,cli_0019_ct_0076,Bright Labs - starter plan,proposal,21153.69,AUD,89,import,Sara Khan,2025-11-08,2026-01-05
+cli_0019_dl_0046,cli_0019_ct_0042,Bright Labs - pro plan,new,9877.22,AUD,33,email_reply,Arjun Bhatia,2025-11-13,2025-12-19
+cli_0019_dl_0047,cli_0019_ct_0116,Bright Labs - premium bundle,negotiation,11942.37,AUD,42,website_form,Ava Patel,2025-11-15,2025-12-17
+cli_0019_dl_0048,cli_0019_ct_0014,Bright Labs - service retainer,qualified,692.11,AUD,89,website_form,Ishaan Gupta,2026-03-16,2026-03-26
+cli_0019_dl_0049,cli_0019_ct_0098,Bright Labs - service retainer,won,6309.71,AUD,81,email_reply,Mia Joshi,2026-03-30,2026-04-18
+cli_0019_dl_0050,cli_0019_ct_0100,Bright Labs - service retainer,won,10044.24,AUD,31,referral,Leo Verma,2026-01-18,2026-03-17
+cli_0019_dl_0051,cli_0019_ct_0010,Bright Labs - membership,lost,6215.3,AUD,45,website_form,Leo Joshi,2025-10-31,2025-11-23
+cli_0019_dl_0052,cli_0019_ct_0072,Bright Labs - service retainer,new,21965.28,AUD,22,import,Kabir Gupta,2025-12-30,2026-01-03
+cli_0019_dl_0053,cli_0019_ct_0059,Bright Labs - premium bundle,qualified,3009.95,AUD,80,email_reply,Zara Reddy,2026-03-09,2026-04-08
+cli_0019_dl_0054,cli_0019_ct_0084,Bright Labs - premium bundle,proposal,2244.87,AUD,28,event,Zara Patel,2026-02-02,2026-02-28
+cli_0019_dl_0055,cli_0019_ct_0119,Bright Labs - annual subscription,qualified,7560.76,AUD,15,email_reply,Anika Khan,2025-11-12,2025-11-27
+cli_0019_dl_0056,cli_0019_ct_0093,Bright Labs - pro plan,qualified,5123.34,AUD,48,import,Zara Singh,2026-02-20,2026-03-17
+cli_0019_dl_0057,cli_0019_ct_0097,Bright Labs - membership,new,18332.98,AUD,71,website_form,Ishaan Bhatia,2026-01-29,2026-02-03
+cli_0019_dl_0058,cli_0019_ct_0012,Bright Labs - starter plan,negotiation,21957.38,AUD,5,event,Sara Verma,2025-09-22,2025-11-19
+cli_0019_dl_0059,cli_0019_ct_0107,Bright Labs - pro plan,negotiation,9710.45,AUD,81,website_form,Anika Nair,2025-12-24,2026-02-09
+cli_0019_dl_0060,cli_0019_ct_0064,Bright Labs - annual subscription,won,21691.12,AUD,66,import,Noah Patel,2026-02-18,2026-03-05
+cli_0019_dl_0061,cli_0019_ct_0015,Bright Labs - service retainer,proposal,10940.78,AUD,69,email_reply,Kabir Sharma,2025-12-08,2025-12-29
+cli_0019_dl_0062,cli_0019_ct_0064,Bright Labs - annual subscription,won,5898.88,AUD,28,import,Ishaan Khan,2025-11-01,2025-12-07
+cli_0019_dl_0063,cli_0019_ct_0049,Bright Labs - starter plan,won,1145.97,AUD,27,website_form,Noah Reddy,2026-01-20,2026-01-23
+cli_0019_dl_0064,cli_0019_ct_0006,Bright Labs - annual subscription,new,11171.53,AUD,26,import,Maya Khan,2025-12-19,2026-01-28
+cli_0019_dl_0065,cli_0019_ct_0056,Bright Labs - starter plan,negotiation,21220.38,AUD,87,import,Sara Mehta,2025-12-03,2025-12-14
+cli_0019_dl_0066,cli_0019_ct_0100,Bright Labs - premium bundle,qualified,17044.43,AUD,15,referral,Kabir Gupta,2025-10-23,2025-10-27
+cli_0019_dl_0067,cli_0019_ct_0108,Bright Labs - pro plan,qualified,22392.55,AUD,17,import,Liam Joshi,2026-03-02,2026-04-20
+cli_0019_dl_0068,cli_0019_ct_0002,Bright Labs - membership,qualified,12476.72,AUD,88,email_reply,Maya Gupta,2025-10-27,2025-12-03
+cli_0019_dl_0069,cli_0019_ct_0034,Bright Labs - premium bundle,proposal,2026.85,AUD,67,event,Anika Nair,2026-02-21,2026-03-30
+cli_0019_dl_0070,cli_0019_ct_0023,Bright Labs - pro plan,qualified,14993.44,AUD,5,event,Kabir Gupta,2025-11-04,2025-11-24
+cli_0019_dl_0071,cli_0019_ct_0059,Bright Labs - service retainer,qualified,6232.03,AUD,22,email_reply,Ava Sharma,2025-11-04,2025-12-01
+cli_0019_dl_0072,cli_0019_ct_0027,Bright Labs - premium bundle,lost,24859.29,AUD,67,referral,Arjun Joshi,2025-12-30,2026-02-13
+cli_0019_dl_0073,cli_0019_ct_0083,Bright Labs - audit package,proposal,18406.98,AUD,95,import,Leo Nair,2026-01-08,2026-01-28
+cli_0019_dl_0074,cli_0019_ct_0082,Bright Labs - annual subscription,proposal,15429.47,AUD,59,website_form,Zara Singh,2026-01-03,2026-01-13
+cli_0019_dl_0075,cli_0019_ct_0016,Bright Labs - annual subscription,proposal,2722.21,AUD,22,import,Kabir Verma,2025-11-03,2025-11-19
+cli_0019_dl_0076,cli_0019_ct_0045,Bright Labs - premium bundle,won,13570.24,AUD,21,event,Liam Singh,2026-03-17,2026-03-26
+cli_0019_dl_0077,cli_0019_ct_0089,Bright Labs - starter plan,won,3335.29,AUD,32,email_reply,Zara Joshi,2025-11-30,2025-12-04
+cli_0019_dl_0078,cli_0019_ct_0079,Bright Labs - premium bundle,won,5421.63,AUD,6,website_form,Ava Reddy,2025-12-26,2026-01-13
+cli_0019_dl_0079,cli_0019_ct_0118,Bright Labs - starter plan,lost,20770.64,AUD,53,email_reply,Sara Mehta,2026-01-14,2026-02-19
+cli_0019_dl_0080,cli_0019_ct_0038,Bright Labs - premium bundle,qualified,13838.72,AUD,67,import,Liam Verma,2026-01-14,2026-03-14
+cli_0019_dl_0081,cli_0019_ct_0097,Bright Labs - audit package,qualified,11653.39,AUD,77,website_form,Kabir Patel,2025-09-08,2025-11-07
+cli_0019_dl_0082,cli_0019_ct_0072,Bright Labs - starter plan,won,14403.54,AUD,58,import,Liam Verma,2025-10-11,2025-11-07
+cli_0019_dl_0083,cli_0019_ct_0031,Bright Labs - pro plan,negotiation,13032.81,AUD,67,email_reply,Anika Joshi,2025-11-06,2025-12-26
+cli_0019_dl_0084,cli_0019_ct_0104,Bright Labs - premium bundle,won,22310.38,AUD,66,website_form,Liam Singh,2025-11-03,2025-12-24
+cli_0019_dl_0085,cli_0019_ct_0065,Bright Labs - service retainer,qualified,17894.62,AUD,49,email_reply,Sara Patel,2026-01-05,2026-01-08
+cli_0019_dl_0086,cli_0019_ct_0028,Bright Labs - service retainer,lost,12716.94,AUD,77,website_form,Zara Singh,2025-12-20,2026-01-22
+cli_0019_dl_0087,cli_0019_ct_0116,Bright Labs - starter plan,lost,8875.39,AUD,51,website_form,Kabir Reddy,2026-03-08,2026-03-13
+cli_0019_dl_0088,cli_0019_ct_0096,Bright Labs - pro plan,proposal,12342.93,AUD,68,email_reply,Arjun Singh,2026-02-12,2026-03-30
+cli_0019_dl_0089,cli_0019_ct_0041,Bright Labs - membership,proposal,21467.34,AUD,92,import,Noah Nair,2026-01-03,2026-02-11
+cli_0019_dl_0090,cli_0019_ct_0024,Bright Labs - membership,proposal,13757.03,AUD,33,email_reply,Anika Khan,2026-02-26,2026-03-15
+cli_0019_dl_0091,cli_0019_ct_0076,Bright Labs - pro plan,proposal,10481.02,AUD,35,import,Ava Kapoor,2025-12-26,2026-01-28
+cli_0019_dl_0092,cli_0019_ct_0059,Bright Labs - annual subscription,proposal,15650.45,AUD,54,email_reply,Liam Gupta,2025-10-27,2025-11-30
+cli_0019_dl_0093,cli_0019_ct_0110,Bright Labs - starter plan,qualified,10644.69,AUD,62,referral,Leo Kapoor,2025-12-11,2026-01-29
+cli_0019_dl_0094,cli_0019_ct_0045,Bright Labs - membership,won,10357.79,AUD,43,event,Zara Kapoor,2025-12-02,2026-01-31
+cli_0019_dl_0095,cli_0019_ct_0005,Bright Labs - audit package,new,16614.7,AUD,77,email_reply,Zara Patel,2025-10-18,2025-11-16
+cli_0019_dl_0096,cli_0019_ct_0066,Bright Labs - membership,negotiation,24731.7,AUD,73,import,Zara Sharma,2025-11-05,2025-11-16
+cli_0019_dl_0097,cli_0019_ct_0055,Bright Labs - service retainer,qualified,21933.68,AUD,30,event,Kabir Mehta,2025-11-15,2025-12-08
+cli_0019_dl_0098,cli_0019_ct_0094,Bright Labs - starter plan,qualified,4859.59,AUD,18,website_form,Zara Verma,2025-11-23,2026-01-17
+cli_0019_dl_0099,cli_0019_ct_0059,Bright Labs - membership,lost,7990.98,AUD,28,email_reply,Anika Nair,2025-12-06,2026-01-11
+cli_0019_dl_0100,cli_0019_ct_0102,Bright Labs - membership,qualified,19943.5,AUD,23,email_reply,Anika Singh,2025-10-13,2025-11-28
+cli_0019_dl_0101,cli_0019_ct_0053,Bright Labs - audit package,negotiation,7550.48,AUD,67,referral,Sara Kapoor,2026-03-25,2026-04-11
+cli_0019_dl_0102,cli_0019_ct_0021,Bright Labs - service retainer,won,22052.9,AUD,14,import,Anika Khan,2025-11-04,2025-12-17
+cli_0019_dl_0103,cli_0019_ct_0070,Bright Labs - audit package,won,23942.22,AUD,62,event,Kabir Mehta,2025-10-30,2025-11-27
+cli_0019_dl_0104,cli_0019_ct_0047,Bright Labs - premium bundle,won,12025.35,AUD,46,email_reply,Zara Sharma,2026-02-18,2026-03-01
+cli_0019_dl_0105,cli_0019_ct_0099,Bright Labs - premium bundle,proposal,20464.93,AUD,24,referral,Mia Bhatia,2026-03-03,2026-03-10
+cli_0019_dl_0106,cli_0019_ct_0003,Bright Labs - premium bundle,proposal,22086.08,AUD,66,referral,Noah Mehta,2025-10-29,2025-12-15
+cli_0019_dl_0107,cli_0019_ct_0077,Bright Labs - starter plan,lost,1739.11,AUD,15,website_form,Ava Kapoor,2026-02-22,2026-03-25
+cli_0019_dl_0108,cli_0019_ct_0102,Bright Labs - service retainer,won,20777.45,AUD,43,email_reply,Ava Gupta,2025-11-03,2025-11-07
+cli_0019_dl_0109,cli_0019_ct_0066,Bright Labs - starter plan,proposal,9557.08,AUD,83,import,Arjun Bhatia,2026-03-12,2026-04-20

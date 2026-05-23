@@ -1,0 +1,20 @@
+{
+  "client_id": "cli_0009",
+  "company_name": "Urban Works",
+  "industry": "d2c",
+  "region": "IN",
+  "currency": "INR",
+  "website": "https://urban-works.example.com",
+  "business_model": "b2c",
+  "employee_band": "201-500",
+  "objective": "retention",
+  "budget_monthly": 25000,
+  "voice": "educational",
+  "channels": [
+    "referral",
+    "tiktok_ads",
+    "meta_ads",
+    "organic"
+  ],
+  "created_at": "2026-04-23T20:56:04.518448Z"
+}

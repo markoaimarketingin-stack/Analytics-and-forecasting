@@ -1,0 +1,94 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0024_dl_0001,cli_0024_ct_0105,Pulse Market - service retainer,lost,21926.27,GBP,57,email_reply,Anika Kapoor,2026-01-18,2026-01-31
+cli_0024_dl_0002,cli_0024_ct_0096,Pulse Market - membership,negotiation,10178.86,GBP,44,website_form,Leo Verma,2026-03-26,2026-04-17
+cli_0024_dl_0003,cli_0024_ct_0009,Pulse Market - membership,qualified,19291.71,GBP,71,website_form,Kabir Verma,2026-02-09,2026-02-28
+cli_0024_dl_0004,cli_0024_ct_0022,Pulse Market - starter plan,qualified,5114.71,GBP,55,email_reply,Ishaan Mehta,2025-11-02,2025-12-29
+cli_0024_dl_0005,cli_0024_ct_0041,Pulse Market - annual subscription,lost,16221.66,GBP,46,website_form,Kabir Khan,2026-02-07,2026-04-03
+cli_0024_dl_0006,cli_0024_ct_0036,Pulse Market - audit package,qualified,7269.92,GBP,20,event,Mia Kapoor,2026-01-10,2026-02-06
+cli_0024_dl_0007,cli_0024_ct_0010,Pulse Market - audit package,lost,18956.78,GBP,32,import,Leo Verma,2025-12-25,2026-01-09
+cli_0024_dl_0008,cli_0024_ct_0064,Pulse Market - annual subscription,new,16116.33,GBP,29,import,Ava Joshi,2025-12-27,2026-01-14
+cli_0024_dl_0009,cli_0024_ct_0102,Pulse Market - audit package,qualified,24893.76,GBP,53,event,Zara Verma,2025-12-20,2026-01-13
+cli_0024_dl_0010,cli_0024_ct_0047,Pulse Market - annual subscription,new,12020.87,GBP,29,website_form,Leo Sharma,2026-01-06,2026-03-04
+cli_0024_dl_0011,cli_0024_ct_0052,Pulse Market - membership,lost,17573.67,GBP,79,import,Noah Joshi,2026-02-06,2026-03-07
+cli_0024_dl_0012,cli_0024_ct_0094,Pulse Market - audit package,won,1793.07,GBP,22,referral,Ishaan Reddy,2025-10-02,2025-12-01
+cli_0024_dl_0013,cli_0024_ct_0087,Pulse Market - service retainer,proposal,22712.28,GBP,46,email_reply,Maya Khan,2025-10-04,2025-10-27
+cli_0024_dl_0014,cli_0024_ct_0077,Pulse Market - starter plan,won,4997.22,GBP,9,event,Kabir Nair,2026-03-29,2026-04-16
+cli_0024_dl_0015,cli_0024_ct_0016,Pulse Market - service retainer,new,3065.53,GBP,56,email_reply,Anika Khan,2026-02-21,2026-04-08
+cli_0024_dl_0016,cli_0024_ct_0155,Pulse Market - starter plan,negotiation,1839.87,GBP,78,email_reply,Arjun Patel,2026-02-18,2026-02-21
+cli_0024_dl_0017,cli_0024_ct_0062,Pulse Market - starter plan,proposal,3362.59,GBP,91,referral,Ishaan Nair,2026-03-04,2026-04-19
+cli_0024_dl_0018,cli_0024_ct_0149,Pulse Market - audit package,negotiation,6877.89,GBP,54,email_reply,Anika Bhatia,2026-03-29,2026-04-20
+cli_0024_dl_0019,cli_0024_ct_0063,Pulse Market - service retainer,new,11257.02,GBP,30,import,Kabir Mehta,2026-03-10,2026-04-15
+cli_0024_dl_0020,cli_0024_ct_0054,Pulse Market - audit package,new,5640.96,GBP,53,email_reply,Zara Joshi,2025-11-21,2025-12-20
+cli_0024_dl_0021,cli_0024_ct_0030,Pulse Market - service retainer,new,14278.0,GBP,63,import,Ishaan Sharma,2026-01-28,2026-02-22
+cli_0024_dl_0022,cli_0024_ct_0150,Pulse Market - membership,won,1687.43,GBP,53,referral,Liam Patel,2026-01-02,2026-01-20
+cli_0024_dl_0023,cli_0024_ct_0043,Pulse Market - pro plan,proposal,5761.14,GBP,19,referral,Liam Nair,2026-01-01,2026-02-27
+cli_0024_dl_0024,cli_0024_ct_0098,Pulse Market - service retainer,proposal,11788.04,GBP,48,referral,Ava Joshi,2025-12-23,2026-02-15
+cli_0024_dl_0025,cli_0024_ct_0055,Pulse Market - service retainer,won,22102.26,GBP,83,referral,Sara Kapoor,2025-12-11,2025-12-18
+cli_0024_dl_0026,cli_0024_ct_0023,Pulse Market - service retainer,proposal,9117.48,GBP,12,email_reply,Kabir Mehta,2025-11-22,2025-12-30
+cli_0024_dl_0027,cli_0024_ct_0143,Pulse Market - audit package,qualified,8322.24,GBP,68,email_reply,Arjun Verma,2025-12-03,2026-01-22
+cli_0024_dl_0028,cli_0024_ct_0152,Pulse Market - membership,qualified,865.07,GBP,67,referral,Kabir Mehta,2025-10-19,2025-12-08
+cli_0024_dl_0029,cli_0024_ct_0084,Pulse Market - annual subscription,qualified,10709.12,GBP,67,website_form,Kabir Khan,2026-01-03,2026-01-25
+cli_0024_dl_0030,cli_0024_ct_0044,Pulse Market - starter plan,negotiation,14744.18,GBP,62,email_reply,Sara Bhatia,2025-10-18,2025-11-15
+cli_0024_dl_0031,cli_0024_ct_0089,Pulse Market - starter plan,proposal,18471.62,GBP,58,website_form,Mia Khan,2025-11-12,2025-12-18
+cli_0024_dl_0032,cli_0024_ct_0092,Pulse Market - membership,proposal,13045.93,GBP,16,import,Mia Reddy,2025-10-11,2025-11-17
+cli_0024_dl_0033,cli_0024_ct_0149,Pulse Market - audit package,qualified,1197.34,GBP,66,email_reply,Zara Kapoor,2025-12-27,2026-01-20
+cli_0024_dl_0034,cli_0024_ct_0095,Pulse Market - annual subscription,negotiation,18454.16,GBP,51,import,Maya Verma,2026-02-06,2026-03-13
+cli_0024_dl_0035,cli_0024_ct_0140,Pulse Market - premium bundle,lost,6129.19,GBP,85,website_form,Leo Patel,2025-11-19,2026-01-02
+cli_0024_dl_0036,cli_0024_ct_0051,Pulse Market - audit package,proposal,10482.16,GBP,42,website_form,Anika Singh,2026-02-27,2026-03-31
+cli_0024_dl_0037,cli_0024_ct_0121,Pulse Market - premium bundle,qualified,4132.06,GBP,14,event,Arjun Singh,2026-01-07,2026-02-27
+cli_0024_dl_0038,cli_0024_ct_0023,Pulse Market - annual subscription,qualified,16425.17,GBP,77,email_reply,Kabir Nair,2025-12-10,2026-02-01
+cli_0024_dl_0039,cli_0024_ct_0009,Pulse Market - starter plan,lost,23921.82,GBP,66,website_form,Ava Nair,2026-01-17,2026-03-15
+cli_0024_dl_0040,cli_0024_ct_0091,Pulse Market - premium bundle,proposal,5047.43,GBP,24,website_form,Noah Reddy,2025-12-22,2026-01-06
+cli_0024_dl_0041,cli_0024_ct_0121,Pulse Market - membership,new,17248.28,GBP,61,event,Noah Khan,2025-11-04,2025-12-25
+cli_0024_dl_0042,cli_0024_ct_0007,Pulse Market - service retainer,new,18146.2,GBP,45,email_reply,Arjun Patel,2025-10-05,2025-12-03
+cli_0024_dl_0043,cli_0024_ct_0165,Pulse Market - annual subscription,qualified,20146.84,GBP,53,event,Kabir Sharma,2026-01-14,2026-03-13
+cli_0024_dl_0044,cli_0024_ct_0037,Pulse Market - starter plan,proposal,10474.12,GBP,12,event,Sara Reddy,2026-04-02,2026-04-24
+cli_0024_dl_0045,cli_0024_ct_0034,Pulse Market - premium bundle,qualified,20591.78,GBP,90,email_reply,Ishaan Kapoor,2025-11-02,2025-12-30
+cli_0024_dl_0046,cli_0024_ct_0007,Pulse Market - starter plan,qualified,15043.54,GBP,61,email_reply,Sara Gupta,2025-11-02,2025-11-28
+cli_0024_dl_0047,cli_0024_ct_0138,Pulse Market - membership,won,15673.84,GBP,74,website_form,Noah Mehta,2025-11-25,2025-12-29
+cli_0024_dl_0048,cli_0024_ct_0104,Pulse Market - annual subscription,new,4790.25,GBP,22,website_form,Anika Singh,2025-11-02,2025-12-31
+cli_0024_dl_0049,cli_0024_ct_0165,Pulse Market - annual subscription,proposal,23275.39,GBP,66,event,Sara Patel,2025-10-22,2025-12-19
+cli_0024_dl_0050,cli_0024_ct_0162,Pulse Market - audit package,proposal,17907.71,GBP,71,event,Mia Singh,2025-12-02,2025-12-11
+cli_0024_dl_0051,cli_0024_ct_0119,Pulse Market - premium bundle,negotiation,331.82,GBP,22,import,Sara Mehta,2026-01-18,2026-03-02
+cli_0024_dl_0052,cli_0024_ct_0112,Pulse Market - premium bundle,new,21406.27,GBP,91,website_form,Maya Kapoor,2025-09-16,2025-10-27
+cli_0024_dl_0053,cli_0024_ct_0158,Pulse Market - audit package,qualified,6580.08,GBP,49,website_form,Anika Reddy,2025-09-28,2025-11-23
+cli_0024_dl_0054,cli_0024_ct_0110,Pulse Market - service retainer,qualified,5086.29,GBP,69,event,Noah Kapoor,2025-12-16,2026-01-24
+cli_0024_dl_0055,cli_0024_ct_0101,Pulse Market - membership,won,24260.9,GBP,20,website_form,Kabir Gupta,2026-02-04,2026-02-28
+cli_0024_dl_0056,cli_0024_ct_0148,Pulse Market - pro plan,lost,12241.68,GBP,37,email_reply,Arjun Singh,2026-01-29,2026-02-03
+cli_0024_dl_0057,cli_0024_ct_0101,Pulse Market - pro plan,new,15515.63,GBP,15,website_form,Noah Mehta,2025-09-07,2025-11-06
+cli_0024_dl_0058,cli_0024_ct_0033,Pulse Market - pro plan,negotiation,18567.9,GBP,87,import,Ava Reddy,2025-10-21,2025-12-05
+cli_0024_dl_0059,cli_0024_ct_0044,Pulse Market - annual subscription,negotiation,14531.26,GBP,76,email_reply,Maya Bhatia,2026-01-31,2026-03-28
+cli_0024_dl_0060,cli_0024_ct_0122,Pulse Market - service retainer,proposal,24241.97,GBP,5,website_form,Kabir Sharma,2026-01-23,2026-03-24
+cli_0024_dl_0061,cli_0024_ct_0139,Pulse Market - audit package,qualified,15809.48,GBP,30,import,Ishaan Reddy,2026-03-07,2026-04-16
+cli_0024_dl_0062,cli_0024_ct_0105,Pulse Market - starter plan,won,13391.17,GBP,11,email_reply,Zara Patel,2025-11-17,2026-01-09
+cli_0024_dl_0063,cli_0024_ct_0016,Pulse Market - service retainer,qualified,20743.74,GBP,93,email_reply,Maya Reddy,2026-01-26,2026-02-12
+cli_0024_dl_0064,cli_0024_ct_0090,Pulse Market - starter plan,qualified,16173.02,GBP,74,email_reply,Liam Reddy,2026-02-20,2026-04-11
+cli_0024_dl_0065,cli_0024_ct_0063,Pulse Market - annual subscription,won,11094.3,GBP,45,import,Mia Gupta,2026-02-19,2026-03-25
+cli_0024_dl_0066,cli_0024_ct_0002,Pulse Market - audit package,qualified,13349.66,GBP,35,email_reply,Arjun Singh,2026-04-01,2026-04-11
+cli_0024_dl_0067,cli_0024_ct_0003,Pulse Market - audit package,qualified,16378.7,GBP,36,email_reply,Leo Joshi,2025-12-28,2026-01-20
+cli_0024_dl_0068,cli_0024_ct_0053,Pulse Market - annual subscription,won,3474.1,GBP,39,email_reply,Kabir Bhatia,2025-10-19,2025-10-27
+cli_0024_dl_0069,cli_0024_ct_0137,Pulse Market - annual subscription,proposal,7909.4,GBP,75,referral,Leo Gupta,2025-09-25,2025-11-10
+cli_0024_dl_0070,cli_0024_ct_0143,Pulse Market - annual subscription,lost,473.14,GBP,34,email_reply,Zara Singh,2025-12-15,2026-01-14
+cli_0024_dl_0071,cli_0024_ct_0037,Pulse Market - membership,qualified,808.16,GBP,93,event,Sara Verma,2026-02-10,2026-02-20
+cli_0024_dl_0072,cli_0024_ct_0159,Pulse Market - annual subscription,lost,10077.9,GBP,51,website_form,Liam Singh,2025-11-03,2025-12-17
+cli_0024_dl_0073,cli_0024_ct_0094,Pulse Market - premium bundle,negotiation,6879.02,GBP,51,referral,Noah Nair,2026-01-12,2026-02-27
+cli_0024_dl_0074,cli_0024_ct_0036,Pulse Market - annual subscription,qualified,23776.8,GBP,58,event,Ishaan Sharma,2025-11-15,2025-12-18
+cli_0024_dl_0075,cli_0024_ct_0064,Pulse Market - membership,proposal,18712.9,GBP,61,import,Liam Joshi,2025-12-15,2026-01-07
+cli_0024_dl_0076,cli_0024_ct_0152,Pulse Market - service retainer,proposal,14955.78,GBP,74,referral,Leo Gupta,2025-12-15,2026-01-29
+cli_0024_dl_0077,cli_0024_ct_0140,Pulse Market - starter plan,lost,10732.72,GBP,5,website_form,Ava Sharma,2025-12-13,2026-01-21
+cli_0024_dl_0078,cli_0024_ct_0059,Pulse Market - service retainer,won,14411.93,GBP,85,import,Arjun Verma,2025-12-02,2025-12-11
+cli_0024_dl_0079,cli_0024_ct_0113,Pulse Market - starter plan,lost,6437.08,GBP,91,import,Mia Singh,2026-01-10,2026-01-29
+cli_0024_dl_0080,cli_0024_ct_0042,Pulse Market - service retainer,proposal,14525.1,GBP,37,website_form,Ava Mehta,2025-11-23,2025-12-02
+cli_0024_dl_0081,cli_0024_ct_0145,Pulse Market - pro plan,new,17039.81,GBP,58,import,Anika Joshi,2025-10-13,2025-11-25
+cli_0024_dl_0082,cli_0024_ct_0099,Pulse Market - audit package,won,9558.05,GBP,27,email_reply,Maya Reddy,2025-09-19,2025-11-05
+cli_0024_dl_0083,cli_0024_ct_0165,Pulse Market - audit package,qualified,3439.51,GBP,16,event,Sara Kapoor,2025-11-24,2026-01-21
+cli_0024_dl_0084,cli_0024_ct_0035,Pulse Market - annual subscription,negotiation,12538.11,GBP,70,website_form,Zara Khan,2025-11-17,2025-12-29
+cli_0024_dl_0085,cli_0024_ct_0010,Pulse Market - starter plan,won,12066.75,GBP,28,import,Mia Kapoor,2026-01-21,2026-03-20
+cli_0024_dl_0086,cli_0024_ct_0029,Pulse Market - premium bundle,qualified,12978.99,GBP,49,website_form,Kabir Patel,2026-01-25,2026-02-19
+cli_0024_dl_0087,cli_0024_ct_0073,Pulse Market - annual subscription,qualified,17447.96,GBP,38,website_form,Sara Sharma,2025-12-11,2026-01-20
+cli_0024_dl_0088,cli_0024_ct_0142,Pulse Market - starter plan,qualified,2667.13,GBP,70,website_form,Sara Kapoor,2026-01-28,2026-02-04
+cli_0024_dl_0089,cli_0024_ct_0136,Pulse Market - pro plan,qualified,935.26,GBP,23,website_form,Noah Bhatia,2025-09-30,2025-11-20
+cli_0024_dl_0090,cli_0024_ct_0050,Pulse Market - annual subscription,proposal,21159.01,GBP,18,import,Zara Joshi,2026-02-12,2026-03-05
+cli_0024_dl_0091,cli_0024_ct_0071,Pulse Market - premium bundle,qualified,14692.44,GBP,55,email_reply,Liam Sharma,2026-02-22,2026-04-05
+cli_0024_dl_0092,cli_0024_ct_0142,Pulse Market - annual subscription,negotiation,17935.91,GBP,57,website_form,Zara Patel,2025-11-15,2025-11-19
+cli_0024_dl_0093,cli_0024_ct_0172,Pulse Market - pro plan,qualified,19564.65,GBP,62,website_form,Leo Kapoor,2025-11-21,2025-12-18

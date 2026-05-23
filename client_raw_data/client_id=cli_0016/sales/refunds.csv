@@ -1,0 +1,7 @@
+refund_id,order_id,refund_date,reason,amount
+cli_0016_rf_00011,cli_0016_ord_00011,2026-04-02,other,27.03
+cli_0016_rf_00021,cli_0016_ord_00021,2026-01-20,customer_request,1315.33
+cli_0016_rf_00040,cli_0016_ord_00040,2026-02-08,shipping_delay,310.51
+cli_0016_rf_00047,cli_0016_ord_00047,2026-03-19,customer_request,639.43
+cli_0016_rf_00049,cli_0016_ord_00049,2026-04-24,product_issue,1863.47
+cli_0016_rf_00051,cli_0016_ord_00051,2026-01-16,customer_request,221.41

@@ -1,0 +1,120 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0002_dl_0001,cli_0002_ct_0067,Pulse Commerce - service retainer,negotiation,16889.99,GBP,81,email_reply,Noah Mehta,2026-03-08,2026-03-16
+cli_0002_dl_0002,cli_0002_ct_0049,Pulse Commerce - pro plan,proposal,21157.97,GBP,36,website_form,Ishaan Mehta,2026-03-04,2026-03-30
+cli_0002_dl_0003,cli_0002_ct_0050,Pulse Commerce - membership,negotiation,2998.21,GBP,20,import,Mia Gupta,2026-01-02,2026-01-24
+cli_0002_dl_0004,cli_0002_ct_0069,Pulse Commerce - membership,qualified,14006.41,GBP,91,website_form,Mia Nair,2026-02-10,2026-02-16
+cli_0002_dl_0005,cli_0002_ct_0035,Pulse Commerce - starter plan,negotiation,444.25,GBP,65,website_form,Arjun Mehta,2025-09-28,2025-11-26
+cli_0002_dl_0006,cli_0002_ct_0067,Pulse Commerce - premium bundle,won,22985.79,GBP,67,email_reply,Mia Patel,2025-11-02,2025-12-05
+cli_0002_dl_0007,cli_0002_ct_0007,Pulse Commerce - audit package,lost,9589.6,GBP,81,import,Ishaan Patel,2025-12-18,2025-12-30
+cli_0002_dl_0008,cli_0002_ct_0062,Pulse Commerce - premium bundle,qualified,13229.8,GBP,79,website_form,Maya Nair,2025-10-07,2025-11-16
+cli_0002_dl_0009,cli_0002_ct_0054,Pulse Commerce - pro plan,negotiation,9418.54,GBP,30,event,Ava Joshi,2026-03-11,2026-04-20
+cli_0002_dl_0010,cli_0002_ct_0015,Pulse Commerce - service retainer,qualified,6190.97,GBP,29,website_form,Noah Sharma,2025-12-01,2026-01-07
+cli_0002_dl_0011,cli_0002_ct_0056,Pulse Commerce - premium bundle,won,11691.82,GBP,15,website_form,Zara Khan,2025-11-23,2026-01-05
+cli_0002_dl_0012,cli_0002_ct_0090,Pulse Commerce - service retainer,qualified,13719.26,GBP,92,email_reply,Liam Joshi,2025-12-25,2026-02-06
+cli_0002_dl_0013,cli_0002_ct_0030,Pulse Commerce - starter plan,lost,23626.03,GBP,73,website_form,Ava Khan,2025-12-05,2026-01-26
+cli_0002_dl_0014,cli_0002_ct_0046,Pulse Commerce - membership,proposal,19361.29,GBP,85,import,Arjun Verma,2025-12-02,2026-01-03
+cli_0002_dl_0015,cli_0002_ct_0034,Pulse Commerce - premium bundle,negotiation,5956.75,GBP,17,website_form,Zara Reddy,2026-01-28,2026-02-01
+cli_0002_dl_0016,cli_0002_ct_0071,Pulse Commerce - membership,qualified,4667.76,GBP,23,referral,Ishaan Patel,2025-10-16,2025-12-15
+cli_0002_dl_0017,cli_0002_ct_0085,Pulse Commerce - premium bundle,new,2519.74,GBP,20,email_reply,Maya Patel,2025-10-07,2025-11-01
+cli_0002_dl_0018,cli_0002_ct_0038,Pulse Commerce - service retainer,negotiation,9029.44,GBP,56,event,Ava Sharma,2025-10-07,2025-11-27
+cli_0002_dl_0019,cli_0002_ct_0062,Pulse Commerce - audit package,qualified,17525.78,GBP,24,website_form,Mia Singh,2026-03-08,2026-03-24
+cli_0002_dl_0020,cli_0002_ct_0078,Pulse Commerce - annual subscription,won,14393.62,GBP,52,event,Maya Sharma,2026-01-10,2026-02-21
+cli_0002_dl_0021,cli_0002_ct_0043,Pulse Commerce - annual subscription,negotiation,2450.38,GBP,7,import,Kabir Kapoor,2025-12-18,2026-01-20
+cli_0002_dl_0022,cli_0002_ct_0018,Pulse Commerce - service retainer,qualified,413.44,GBP,89,email_reply,Maya Gupta,2025-11-10,2025-11-23
+cli_0002_dl_0023,cli_0002_ct_0047,Pulse Commerce - premium bundle,lost,21208.27,GBP,81,import,Anika Joshi,2025-11-02,2025-12-15
+cli_0002_dl_0024,cli_0002_ct_0045,Pulse Commerce - service retainer,qualified,14088.7,GBP,95,website_form,Sara Joshi,2026-01-13,2026-01-16
+cli_0002_dl_0025,cli_0002_ct_0077,Pulse Commerce - audit package,qualified,11816.66,GBP,92,email_reply,Ishaan Mehta,2025-11-22,2026-01-21
+cli_0002_dl_0026,cli_0002_ct_0017,Pulse Commerce - membership,negotiation,5591.45,GBP,36,import,Noah Bhatia,2025-12-03,2026-01-03
+cli_0002_dl_0027,cli_0002_ct_0058,Pulse Commerce - starter plan,new,18424.59,GBP,50,website_form,Sara Verma,2025-10-30,2025-12-10
+cli_0002_dl_0028,cli_0002_ct_0083,Pulse Commerce - service retainer,qualified,7153.09,GBP,74,website_form,Ishaan Nair,2025-11-19,2025-12-17
+cli_0002_dl_0029,cli_0002_ct_0066,Pulse Commerce - service retainer,qualified,19586.79,GBP,25,website_form,Arjun Gupta,2026-02-04,2026-03-30
+cli_0002_dl_0030,cli_0002_ct_0062,Pulse Commerce - service retainer,won,6812.24,GBP,41,website_form,Ishaan Reddy,2025-10-23,2025-11-24
+cli_0002_dl_0031,cli_0002_ct_0029,Pulse Commerce - membership,qualified,12510.35,GBP,36,website_form,Anika Bhatia,2025-09-18,2025-11-03
+cli_0002_dl_0032,cli_0002_ct_0045,Pulse Commerce - premium bundle,proposal,20632.81,GBP,76,website_form,Sara Kapoor,2025-11-27,2026-01-14
+cli_0002_dl_0033,cli_0002_ct_0041,Pulse Commerce - annual subscription,qualified,2864.71,GBP,9,website_form,Ava Bhatia,2026-02-24,2026-04-16
+cli_0002_dl_0034,cli_0002_ct_0016,Pulse Commerce - starter plan,qualified,24948.68,GBP,54,email_reply,Leo Mehta,2025-10-18,2025-11-30
+cli_0002_dl_0035,cli_0002_ct_0031,Pulse Commerce - service retainer,won,14082.41,GBP,11,import,Arjun Verma,2026-02-15,2026-02-28
+cli_0002_dl_0036,cli_0002_ct_0046,Pulse Commerce - membership,lost,4037.33,GBP,8,import,Maya Sharma,2025-12-16,2026-02-03
+cli_0002_dl_0037,cli_0002_ct_0037,Pulse Commerce - pro plan,qualified,10097.29,GBP,31,website_form,Ava Sharma,2026-02-22,2026-03-14
+cli_0002_dl_0038,cli_0002_ct_0065,Pulse Commerce - starter plan,qualified,15012.73,GBP,63,import,Liam Gupta,2025-11-18,2025-11-24
+cli_0002_dl_0039,cli_0002_ct_0091,Pulse Commerce - pro plan,negotiation,10966.44,GBP,60,website_form,Maya Mehta,2025-11-07,2025-11-24
+cli_0002_dl_0040,cli_0002_ct_0055,Pulse Commerce - service retainer,negotiation,21122.51,GBP,85,website_form,Maya Mehta,2025-11-10,2025-11-26
+cli_0002_dl_0041,cli_0002_ct_0028,Pulse Commerce - annual subscription,proposal,9941.74,GBP,81,website_form,Sara Reddy,2025-09-19,2025-11-13
+cli_0002_dl_0042,cli_0002_ct_0051,Pulse Commerce - premium bundle,negotiation,9264.22,GBP,41,website_form,Mia Kapoor,2025-11-09,2025-11-15
+cli_0002_dl_0043,cli_0002_ct_0034,Pulse Commerce - service retainer,negotiation,24799.99,GBP,69,website_form,Zara Khan,2025-12-16,2026-02-08
+cli_0002_dl_0044,cli_0002_ct_0001,Pulse Commerce - service retainer,qualified,18744.56,GBP,49,website_form,Mia Bhatia,2026-01-12,2026-02-15
+cli_0002_dl_0045,cli_0002_ct_0035,Pulse Commerce - annual subscription,qualified,23503.86,GBP,92,website_form,Kabir Kapoor,2026-01-27,2026-03-21
+cli_0002_dl_0046,cli_0002_ct_0020,Pulse Commerce - pro plan,qualified,15322.04,GBP,76,referral,Noah Gupta,2025-10-14,2025-11-29
+cli_0002_dl_0047,cli_0002_ct_0039,Pulse Commerce - pro plan,proposal,7579.79,GBP,39,import,Liam Singh,2025-12-17,2026-01-02
+cli_0002_dl_0048,cli_0002_ct_0032,Pulse Commerce - premium bundle,won,18011.3,GBP,12,website_form,Sara Gupta,2026-01-26,2026-03-05
+cli_0002_dl_0049,cli_0002_ct_0046,Pulse Commerce - membership,qualified,6707.99,GBP,22,import,Arjun Khan,2025-12-06,2026-01-29
+cli_0002_dl_0050,cli_0002_ct_0027,Pulse Commerce - audit package,won,14234.6,GBP,84,website_form,Maya Mehta,2026-02-28,2026-03-10
+cli_0002_dl_0051,cli_0002_ct_0024,Pulse Commerce - service retainer,negotiation,23630.62,GBP,50,website_form,Ava Kapoor,2025-11-09,2026-01-04
+cli_0002_dl_0052,cli_0002_ct_0027,Pulse Commerce - pro plan,lost,516.12,GBP,76,website_form,Ava Singh,2025-09-04,2025-10-30
+cli_0002_dl_0053,cli_0002_ct_0075,Pulse Commerce - starter plan,negotiation,5138.89,GBP,55,referral,Leo Bhatia,2025-12-20,2025-12-23
+cli_0002_dl_0054,cli_0002_ct_0052,Pulse Commerce - starter plan,lost,17102.46,GBP,67,website_form,Sara Mehta,2026-01-03,2026-01-06
+cli_0002_dl_0055,cli_0002_ct_0005,Pulse Commerce - starter plan,won,857.62,GBP,82,website_form,Mia Bhatia,2025-10-05,2025-11-13
+cli_0002_dl_0056,cli_0002_ct_0071,Pulse Commerce - audit package,new,8166.43,GBP,9,referral,Leo Khan,2026-02-11,2026-02-24
+cli_0002_dl_0057,cli_0002_ct_0003,Pulse Commerce - starter plan,won,16427.85,GBP,74,website_form,Maya Verma,2026-03-09,2026-04-18
+cli_0002_dl_0058,cli_0002_ct_0002,Pulse Commerce - audit package,proposal,16824.42,GBP,24,website_form,Leo Kapoor,2025-12-21,2026-02-06
+cli_0002_dl_0059,cli_0002_ct_0029,Pulse Commerce - membership,qualified,10464.95,GBP,79,website_form,Kabir Singh,2025-10-14,2025-11-23
+cli_0002_dl_0060,cli_0002_ct_0023,Pulse Commerce - annual subscription,qualified,6260.91,GBP,9,email_reply,Anika Sharma,2026-02-19,2026-04-18
+cli_0002_dl_0061,cli_0002_ct_0034,Pulse Commerce - starter plan,qualified,6660.35,GBP,85,website_form,Sara Mehta,2026-03-12,2026-03-20
+cli_0002_dl_0062,cli_0002_ct_0079,Pulse Commerce - premium bundle,qualified,1714.49,GBP,23,website_form,Noah Kapoor,2025-12-31,2026-01-15
+cli_0002_dl_0063,cli_0002_ct_0066,Pulse Commerce - premium bundle,qualified,3431.93,GBP,80,website_form,Sara Sharma,2026-02-17,2026-04-04
+cli_0002_dl_0064,cli_0002_ct_0053,Pulse Commerce - pro plan,won,22984.82,GBP,56,email_reply,Noah Gupta,2025-10-07,2025-11-08
+cli_0002_dl_0065,cli_0002_ct_0010,Pulse Commerce - annual subscription,new,21749.93,GBP,39,referral,Noah Nair,2026-03-03,2026-04-02
+cli_0002_dl_0066,cli_0002_ct_0047,Pulse Commerce - audit package,new,22348.05,GBP,78,import,Mia Verma,2025-10-18,2025-11-30
+cli_0002_dl_0067,cli_0002_ct_0007,Pulse Commerce - service retainer,won,12277.54,GBP,8,import,Leo Gupta,2026-01-02,2026-01-06
+cli_0002_dl_0068,cli_0002_ct_0071,Pulse Commerce - premium bundle,qualified,2908.35,GBP,11,referral,Kabir Nair,2025-10-09,2025-11-18
+cli_0002_dl_0069,cli_0002_ct_0020,Pulse Commerce - service retainer,negotiation,4623.16,GBP,73,referral,Sara Joshi,2026-03-05,2026-04-15
+cli_0002_dl_0070,cli_0002_ct_0004,Pulse Commerce - audit package,negotiation,11103.34,GBP,60,website_form,Ava Patel,2026-03-03,2026-03-24
+cli_0002_dl_0071,cli_0002_ct_0079,Pulse Commerce - service retainer,negotiation,6238.69,GBP,30,website_form,Mia Sharma,2026-01-07,2026-01-24
+cli_0002_dl_0072,cli_0002_ct_0056,Pulse Commerce - premium bundle,new,546.47,GBP,46,website_form,Ishaan Sharma,2025-12-03,2026-01-23
+cli_0002_dl_0073,cli_0002_ct_0065,Pulse Commerce - pro plan,proposal,10067.67,GBP,87,import,Leo Mehta,2026-01-25,2026-03-25
+cli_0002_dl_0074,cli_0002_ct_0043,Pulse Commerce - pro plan,proposal,8880.28,GBP,74,import,Mia Bhatia,2026-04-02,2026-04-14
+cli_0002_dl_0075,cli_0002_ct_0041,Pulse Commerce - audit package,qualified,15487.95,GBP,47,website_form,Ishaan Patel,2026-01-19,2026-03-19
+cli_0002_dl_0076,cli_0002_ct_0003,Pulse Commerce - service retainer,proposal,10976.18,GBP,78,website_form,Liam Mehta,2025-11-10,2025-11-26
+cli_0002_dl_0077,cli_0002_ct_0092,Pulse Commerce - premium bundle,qualified,12322.21,GBP,80,event,Ishaan Mehta,2025-10-09,2025-11-13
+cli_0002_dl_0078,cli_0002_ct_0027,Pulse Commerce - audit package,won,8910.63,GBP,44,website_form,Noah Singh,2026-02-23,2026-03-23
+cli_0002_dl_0079,cli_0002_ct_0052,Pulse Commerce - premium bundle,qualified,6420.79,GBP,75,website_form,Ishaan Verma,2026-02-15,2026-03-14
+cli_0002_dl_0080,cli_0002_ct_0063,Pulse Commerce - pro plan,lost,20732.77,GBP,11,website_form,Mia Joshi,2025-11-25,2026-01-20
+cli_0002_dl_0081,cli_0002_ct_0069,Pulse Commerce - audit package,negotiation,9466.17,GBP,5,website_form,Sara Gupta,2025-10-12,2025-11-13
+cli_0002_dl_0082,cli_0002_ct_0061,Pulse Commerce - premium bundle,proposal,12095.5,GBP,20,email_reply,Leo Gupta,2025-10-13,2025-11-23
+cli_0002_dl_0083,cli_0002_ct_0052,Pulse Commerce - membership,proposal,19729.37,GBP,65,website_form,Leo Gupta,2026-01-15,2026-02-05
+cli_0002_dl_0084,cli_0002_ct_0037,Pulse Commerce - premium bundle,qualified,6406.1,GBP,28,website_form,Sara Patel,2025-09-28,2025-11-27
+cli_0002_dl_0085,cli_0002_ct_0065,Pulse Commerce - annual subscription,qualified,12654.86,GBP,43,import,Liam Singh,2026-02-26,2026-03-08
+cli_0002_dl_0086,cli_0002_ct_0062,Pulse Commerce - annual subscription,proposal,19477.12,GBP,59,website_form,Ishaan Joshi,2025-11-21,2025-11-30
+cli_0002_dl_0087,cli_0002_ct_0069,Pulse Commerce - membership,qualified,2731.54,GBP,6,website_form,Liam Nair,2025-12-17,2025-12-23
+cli_0002_dl_0088,cli_0002_ct_0079,Pulse Commerce - audit package,negotiation,16553.03,GBP,65,website_form,Ishaan Singh,2025-10-05,2025-11-26
+cli_0002_dl_0089,cli_0002_ct_0006,Pulse Commerce - membership,proposal,19299.29,GBP,60,email_reply,Liam Kapoor,2025-12-27,2026-01-07
+cli_0002_dl_0090,cli_0002_ct_0049,Pulse Commerce - premium bundle,won,17884.17,GBP,61,website_form,Leo Kapoor,2025-11-18,2025-11-21
+cli_0002_dl_0091,cli_0002_ct_0081,Pulse Commerce - starter plan,negotiation,1316.02,GBP,76,website_form,Liam Sharma,2025-09-09,2025-11-04
+cli_0002_dl_0092,cli_0002_ct_0089,Pulse Commerce - audit package,won,5958.92,GBP,20,import,Liam Bhatia,2025-12-31,2026-02-05
+cli_0002_dl_0093,cli_0002_ct_0013,Pulse Commerce - annual subscription,new,2223.29,GBP,83,website_form,Arjun Khan,2026-02-05,2026-03-18
+cli_0002_dl_0094,cli_0002_ct_0042,Pulse Commerce - starter plan,negotiation,20105.4,GBP,26,website_form,Ava Verma,2026-02-02,2026-03-18
+cli_0002_dl_0095,cli_0002_ct_0056,Pulse Commerce - pro plan,negotiation,8306.89,GBP,11,website_form,Liam Kapoor,2026-01-01,2026-01-07
+cli_0002_dl_0096,cli_0002_ct_0041,Pulse Commerce - annual subscription,new,22795.17,GBP,58,website_form,Ishaan Mehta,2026-02-11,2026-04-11
+cli_0002_dl_0097,cli_0002_ct_0035,Pulse Commerce - pro plan,qualified,2525.76,GBP,90,website_form,Liam Mehta,2026-03-02,2026-04-10
+cli_0002_dl_0098,cli_0002_ct_0055,Pulse Commerce - annual subscription,proposal,21671.85,GBP,45,website_form,Anika Verma,2025-12-31,2026-01-17
+cli_0002_dl_0099,cli_0002_ct_0008,Pulse Commerce - audit package,qualified,18278.04,GBP,56,import,Sara Kapoor,2025-11-30,2026-01-12
+cli_0002_dl_0100,cli_0002_ct_0037,Pulse Commerce - annual subscription,qualified,24772.69,GBP,21,website_form,Maya Joshi,2026-03-08,2026-04-15
+cli_0002_dl_0101,cli_0002_ct_0036,Pulse Commerce - membership,qualified,19461.4,GBP,67,import,Ava Patel,2025-12-03,2025-12-18
+cli_0002_dl_0102,cli_0002_ct_0063,Pulse Commerce - pro plan,lost,17222.31,GBP,72,website_form,Arjun Sharma,2026-01-08,2026-02-12
+cli_0002_dl_0103,cli_0002_ct_0008,Pulse Commerce - annual subscription,proposal,829.32,GBP,84,import,Zara Bhatia,2025-12-15,2026-01-22
+cli_0002_dl_0104,cli_0002_ct_0015,Pulse Commerce - service retainer,negotiation,6039.11,GBP,80,website_form,Anika Sharma,2025-10-02,2025-11-06
+cli_0002_dl_0105,cli_0002_ct_0072,Pulse Commerce - audit package,lost,22734.5,GBP,93,referral,Noah Sharma,2026-02-15,2026-02-20
+cli_0002_dl_0106,cli_0002_ct_0015,Pulse Commerce - premium bundle,won,8000.45,GBP,28,website_form,Anika Joshi,2025-10-31,2025-11-03
+cli_0002_dl_0107,cli_0002_ct_0056,Pulse Commerce - audit package,won,3671.83,GBP,91,website_form,Ava Joshi,2025-12-14,2026-02-01
+cli_0002_dl_0108,cli_0002_ct_0081,Pulse Commerce - membership,new,3031.78,GBP,76,website_form,Arjun Khan,2026-01-15,2026-01-19
+cli_0002_dl_0109,cli_0002_ct_0011,Pulse Commerce - service retainer,new,1289.85,GBP,44,import,Leo Reddy,2025-10-25,2025-12-04
+cli_0002_dl_0110,cli_0002_ct_0021,Pulse Commerce - pro plan,proposal,14514.5,GBP,67,import,Maya Mehta,2026-01-14,2026-01-23
+cli_0002_dl_0111,cli_0002_ct_0001,Pulse Commerce - annual subscription,qualified,11420.52,GBP,37,website_form,Sara Sharma,2025-10-16,2025-10-30
+cli_0002_dl_0112,cli_0002_ct_0038,Pulse Commerce - membership,negotiation,1987.56,GBP,81,event,Kabir Mehta,2025-12-23,2026-01-22
+cli_0002_dl_0113,cli_0002_ct_0040,Pulse Commerce - annual subscription,lost,22554.93,GBP,70,event,Liam Mehta,2025-11-04,2025-12-19
+cli_0002_dl_0114,cli_0002_ct_0062,Pulse Commerce - starter plan,proposal,18269.18,GBP,22,website_form,Leo Joshi,2026-02-12,2026-03-19
+cli_0002_dl_0115,cli_0002_ct_0015,Pulse Commerce - membership,proposal,9164.84,GBP,58,website_form,Kabir Sharma,2026-01-04,2026-02-05
+cli_0002_dl_0116,cli_0002_ct_0087,Pulse Commerce - audit package,proposal,2633.24,GBP,6,website_form,Ava Reddy,2026-02-12,2026-02-18
+cli_0002_dl_0117,cli_0002_ct_0070,Pulse Commerce - pro plan,proposal,10337.85,GBP,56,email_reply,Arjun Sharma,2025-12-09,2026-01-13
+cli_0002_dl_0118,cli_0002_ct_0014,Pulse Commerce - starter plan,proposal,24099.64,GBP,95,import,Noah Gupta,2026-01-14,2026-02-26
+cli_0002_dl_0119,cli_0002_ct_0025,Pulse Commerce - pro plan,lost,10687.24,GBP,61,website_form,Sara Nair,2026-03-09,2026-04-21

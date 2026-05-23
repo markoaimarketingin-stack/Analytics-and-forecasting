@@ -1,0 +1,71 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0025_dl_0001,cli_0025_ct_0083,Pulse Finance - annual subscription,proposal,9007.77,CAD,72,import,Kabir Singh,2026-02-15,2026-03-08
+cli_0025_dl_0002,cli_0025_ct_0146,Pulse Finance - service retainer,qualified,11371.83,CAD,42,import,Zara Reddy,2025-12-13,2026-01-03
+cli_0025_dl_0003,cli_0025_ct_0114,Pulse Finance - membership,negotiation,2661.2,CAD,90,email_reply,Liam Mehta,2026-04-12,2026-04-17
+cli_0025_dl_0004,cli_0025_ct_0162,Pulse Finance - starter plan,proposal,20332.48,CAD,17,email_reply,Ava Singh,2026-01-01,2026-01-05
+cli_0025_dl_0005,cli_0025_ct_0015,Pulse Finance - pro plan,negotiation,20550.26,CAD,74,email_reply,Noah Reddy,2026-03-18,2026-04-20
+cli_0025_dl_0006,cli_0025_ct_0165,Pulse Finance - premium bundle,negotiation,7493.06,CAD,25,email_reply,Ava Sharma,2025-10-17,2025-11-30
+cli_0025_dl_0007,cli_0025_ct_0103,Pulse Finance - audit package,lost,14043.01,CAD,39,website_form,Anika Gupta,2026-02-16,2026-03-10
+cli_0025_dl_0008,cli_0025_ct_0009,Pulse Finance - service retainer,new,3986.5,CAD,22,email_reply,Maya Reddy,2026-02-11,2026-02-16
+cli_0025_dl_0009,cli_0025_ct_0140,Pulse Finance - service retainer,qualified,19792.59,CAD,56,website_form,Maya Joshi,2025-09-19,2025-10-28
+cli_0025_dl_0010,cli_0025_ct_0143,Pulse Finance - annual subscription,qualified,7882.21,CAD,77,referral,Anika Joshi,2025-12-30,2026-01-22
+cli_0025_dl_0011,cli_0025_ct_0028,Pulse Finance - premium bundle,qualified,17050.99,CAD,6,event,Maya Sharma,2025-09-18,2025-11-08
+cli_0025_dl_0012,cli_0025_ct_0058,Pulse Finance - audit package,negotiation,7327.37,CAD,44,import,Leo Khan,2026-02-04,2026-02-15
+cli_0025_dl_0013,cli_0025_ct_0034,Pulse Finance - pro plan,negotiation,14908.13,CAD,80,import,Ava Reddy,2025-11-11,2025-11-28
+cli_0025_dl_0014,cli_0025_ct_0018,Pulse Finance - starter plan,won,24627.62,CAD,75,referral,Liam Nair,2025-11-26,2025-12-20
+cli_0025_dl_0015,cli_0025_ct_0018,Pulse Finance - audit package,won,23486.5,CAD,29,referral,Mia Reddy,2025-10-28,2025-11-25
+cli_0025_dl_0016,cli_0025_ct_0082,Pulse Finance - service retainer,qualified,2698.25,CAD,84,referral,Ava Bhatia,2025-11-28,2026-01-24
+cli_0025_dl_0017,cli_0025_ct_0074,Pulse Finance - audit package,proposal,17772.33,CAD,38,email_reply,Maya Mehta,2026-01-07,2026-02-07
+cli_0025_dl_0018,cli_0025_ct_0053,Pulse Finance - starter plan,won,6750.64,CAD,71,event,Zara Mehta,2025-12-11,2026-01-10
+cli_0025_dl_0019,cli_0025_ct_0113,Pulse Finance - starter plan,won,17203.89,CAD,86,referral,Anika Sharma,2026-03-09,2026-04-09
+cli_0025_dl_0020,cli_0025_ct_0018,Pulse Finance - service retainer,lost,6129.26,CAD,17,referral,Arjun Khan,2025-12-08,2026-01-09
+cli_0025_dl_0021,cli_0025_ct_0028,Pulse Finance - audit package,qualified,17627.3,CAD,34,event,Ishaan Sharma,2025-12-06,2025-12-26
+cli_0025_dl_0022,cli_0025_ct_0142,Pulse Finance - annual subscription,negotiation,9736.07,CAD,47,website_form,Kabir Gupta,2026-03-10,2026-04-23
+cli_0025_dl_0023,cli_0025_ct_0107,Pulse Finance - premium bundle,won,1770.98,CAD,60,website_form,Ishaan Kapoor,2025-10-18,2025-12-16
+cli_0025_dl_0024,cli_0025_ct_0012,Pulse Finance - service retainer,qualified,24717.41,CAD,81,email_reply,Mia Singh,2026-02-10,2026-02-16
+cli_0025_dl_0025,cli_0025_ct_0143,Pulse Finance - annual subscription,new,14624.39,CAD,11,referral,Kabir Reddy,2025-11-29,2026-01-08
+cli_0025_dl_0026,cli_0025_ct_0118,Pulse Finance - premium bundle,qualified,2715.33,CAD,63,website_form,Arjun Singh,2025-09-26,2025-11-23
+cli_0025_dl_0027,cli_0025_ct_0071,Pulse Finance - starter plan,won,19052.49,CAD,24,website_form,Ava Sharma,2026-03-27,2026-04-15
+cli_0025_dl_0028,cli_0025_ct_0113,Pulse Finance - premium bundle,proposal,5247.63,CAD,48,referral,Kabir Khan,2026-01-14,2026-03-11
+cli_0025_dl_0029,cli_0025_ct_0109,Pulse Finance - premium bundle,proposal,19890.81,CAD,81,website_form,Maya Sharma,2026-02-20,2026-04-03
+cli_0025_dl_0030,cli_0025_ct_0110,Pulse Finance - service retainer,won,15728.78,CAD,83,email_reply,Anika Gupta,2026-01-21,2026-02-02
+cli_0025_dl_0031,cli_0025_ct_0096,Pulse Finance - service retainer,negotiation,20420.06,CAD,91,website_form,Arjun Bhatia,2025-12-01,2026-01-14
+cli_0025_dl_0032,cli_0025_ct_0113,Pulse Finance - membership,qualified,9348.26,CAD,80,referral,Anika Joshi,2026-03-06,2026-04-10
+cli_0025_dl_0033,cli_0025_ct_0151,Pulse Finance - membership,won,20023.51,CAD,46,event,Mia Joshi,2026-01-06,2026-02-16
+cli_0025_dl_0034,cli_0025_ct_0080,Pulse Finance - pro plan,proposal,8236.67,CAD,85,import,Leo Patel,2025-11-27,2025-12-11
+cli_0025_dl_0035,cli_0025_ct_0044,Pulse Finance - membership,negotiation,995.93,CAD,91,import,Zara Sharma,2025-09-18,2025-10-30
+cli_0025_dl_0036,cli_0025_ct_0163,Pulse Finance - service retainer,negotiation,4342.48,CAD,65,referral,Zara Patel,2026-02-01,2026-02-15
+cli_0025_dl_0037,cli_0025_ct_0134,Pulse Finance - service retainer,qualified,9681.88,CAD,64,import,Maya Reddy,2025-12-11,2026-02-03
+cli_0025_dl_0038,cli_0025_ct_0128,Pulse Finance - audit package,qualified,12767.75,CAD,42,email_reply,Anika Gupta,2025-09-29,2025-11-13
+cli_0025_dl_0039,cli_0025_ct_0023,Pulse Finance - premium bundle,qualified,3699.46,CAD,58,website_form,Leo Bhatia,2026-01-11,2026-03-05
+cli_0025_dl_0040,cli_0025_ct_0103,Pulse Finance - service retainer,qualified,5912.59,CAD,50,website_form,Leo Bhatia,2025-10-20,2025-11-17
+cli_0025_dl_0041,cli_0025_ct_0132,Pulse Finance - service retainer,qualified,2392.05,CAD,46,email_reply,Arjun Verma,2026-02-09,2026-03-24
+cli_0025_dl_0042,cli_0025_ct_0072,Pulse Finance - starter plan,qualified,16240.6,CAD,9,website_form,Ava Patel,2026-03-31,2026-04-04
+cli_0025_dl_0043,cli_0025_ct_0016,Pulse Finance - pro plan,negotiation,22804.83,CAD,68,import,Leo Joshi,2026-02-19,2026-03-18
+cli_0025_dl_0044,cli_0025_ct_0050,Pulse Finance - pro plan,negotiation,16028.16,CAD,63,website_form,Ishaan Sharma,2026-01-24,2026-02-16
+cli_0025_dl_0045,cli_0025_ct_0023,Pulse Finance - pro plan,negotiation,17815.51,CAD,26,website_form,Ishaan Mehta,2025-11-26,2026-01-07
+cli_0025_dl_0046,cli_0025_ct_0046,Pulse Finance - pro plan,proposal,12089.36,CAD,30,import,Leo Gupta,2025-10-09,2025-11-18
+cli_0025_dl_0047,cli_0025_ct_0060,Pulse Finance - pro plan,qualified,8519.89,CAD,78,import,Sara Bhatia,2026-02-23,2026-04-19
+cli_0025_dl_0048,cli_0025_ct_0127,Pulse Finance - audit package,new,21851.02,CAD,88,referral,Zara Sharma,2025-11-27,2026-01-08
+cli_0025_dl_0049,cli_0025_ct_0054,Pulse Finance - premium bundle,proposal,10590.96,CAD,82,import,Ishaan Singh,2025-11-15,2025-12-13
+cli_0025_dl_0050,cli_0025_ct_0161,Pulse Finance - audit package,qualified,5856.33,CAD,19,website_form,Arjun Mehta,2025-10-23,2025-12-09
+cli_0025_dl_0051,cli_0025_ct_0147,Pulse Finance - audit package,qualified,3974.77,CAD,91,website_form,Zara Verma,2026-01-25,2026-02-06
+cli_0025_dl_0052,cli_0025_ct_0165,Pulse Finance - premium bundle,lost,7410.35,CAD,11,email_reply,Kabir Gupta,2026-01-22,2026-02-03
+cli_0025_dl_0053,cli_0025_ct_0073,Pulse Finance - pro plan,qualified,17986.04,CAD,43,email_reply,Ava Nair,2026-01-29,2026-02-10
+cli_0025_dl_0054,cli_0025_ct_0106,Pulse Finance - pro plan,proposal,22576.31,CAD,43,website_form,Mia Reddy,2026-02-05,2026-02-17
+cli_0025_dl_0055,cli_0025_ct_0103,Pulse Finance - service retainer,negotiation,15514.72,CAD,28,website_form,Maya Sharma,2025-09-22,2025-10-27
+cli_0025_dl_0056,cli_0025_ct_0071,Pulse Finance - premium bundle,qualified,12702.53,CAD,70,website_form,Mia Nair,2026-01-02,2026-02-15
+cli_0025_dl_0057,cli_0025_ct_0162,Pulse Finance - pro plan,proposal,23774.87,CAD,79,email_reply,Anika Joshi,2025-12-23,2026-02-14
+cli_0025_dl_0058,cli_0025_ct_0055,Pulse Finance - membership,negotiation,5652.83,CAD,29,website_form,Leo Joshi,2025-12-18,2026-01-10
+cli_0025_dl_0059,cli_0025_ct_0031,Pulse Finance - pro plan,won,13794.91,CAD,74,referral,Maya Mehta,2025-10-20,2025-12-06
+cli_0025_dl_0060,cli_0025_ct_0162,Pulse Finance - pro plan,negotiation,3596.16,CAD,75,email_reply,Liam Singh,2025-10-04,2025-11-24
+cli_0025_dl_0061,cli_0025_ct_0127,Pulse Finance - pro plan,proposal,13928.15,CAD,30,referral,Maya Nair,2025-10-05,2025-11-16
+cli_0025_dl_0062,cli_0025_ct_0084,Pulse Finance - premium bundle,proposal,2405.09,CAD,64,website_form,Kabir Verma,2025-11-18,2025-12-23
+cli_0025_dl_0063,cli_0025_ct_0163,Pulse Finance - pro plan,proposal,23010.35,CAD,64,referral,Maya Khan,2026-03-06,2026-03-17
+cli_0025_dl_0064,cli_0025_ct_0089,Pulse Finance - annual subscription,new,16404.66,CAD,47,email_reply,Ishaan Khan,2025-11-07,2025-12-02
+cli_0025_dl_0065,cli_0025_ct_0131,Pulse Finance - service retainer,proposal,20816.67,CAD,41,website_form,Noah Joshi,2026-03-11,2026-04-21
+cli_0025_dl_0066,cli_0025_ct_0070,Pulse Finance - service retainer,won,953.86,CAD,60,referral,Arjun Khan,2026-01-18,2026-01-24
+cli_0025_dl_0067,cli_0025_ct_0046,Pulse Finance - premium bundle,proposal,15388.13,CAD,18,import,Arjun Khan,2026-01-30,2026-03-29
+cli_0025_dl_0068,cli_0025_ct_0059,Pulse Finance - pro plan,proposal,12567.16,CAD,83,event,Liam Gupta,2025-12-06,2026-01-29
+cli_0025_dl_0069,cli_0025_ct_0129,Pulse Finance - premium bundle,proposal,6754.42,CAD,46,event,Anika Kapoor,2025-10-21,2025-11-05
+cli_0025_dl_0070,cli_0025_ct_0014,Pulse Finance - membership,negotiation,12085.55,CAD,79,email_reply,Arjun Joshi,2025-11-08,2025-12-15

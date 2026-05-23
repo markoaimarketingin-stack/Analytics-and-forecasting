@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0014",
+  "company_name": "Signal Studio",
+  "industry": "ecommerce",
+  "region": "IN",
+  "generated_at": "2026-04-23T20:56:14.618505Z",
+  "counts": {
+    "contacts": 81,
+    "deals": 51,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 4,
+    "uploads": 9,
+    "marketing_rows": 180,
+    "email_campaigns": 48,
+    "posts": 64,
+    "comments": 128,
+    "tickets": 107,
+    "transcripts": 74,
+    "sessions": 27236,
+    "events": 136304,
+    "orders": 92,
+    "refunds": 7,
+    "invoices": 49,
+    "payments": 25,
+    "feedback": 138,
+    "feature_requests": 67,
+    "meeting_notes": 11,
+    "raw_observations": 45
+  }
+}

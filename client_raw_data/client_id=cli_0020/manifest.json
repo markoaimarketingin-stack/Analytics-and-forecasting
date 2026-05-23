@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0020",
+  "company_name": "Prime Market",
+  "industry": "hospitality",
+  "region": "SG",
+  "generated_at": "2026-04-23T20:56:24.976752Z",
+  "counts": {
+    "contacts": 150,
+    "deals": 70,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 7,
+    "uploads": 7,
+    "marketing_rows": 180,
+    "email_campaigns": 45,
+    "posts": 60,
+    "comments": 120,
+    "tickets": 103,
+    "transcripts": 41,
+    "sessions": 26362,
+    "events": 132078,
+    "orders": 225,
+    "refunds": 20,
+    "invoices": 50,
+    "payments": 35,
+    "feedback": 62,
+    "feature_requests": 62,
+    "meeting_notes": 15,
+    "raw_observations": 47
+  }
+}

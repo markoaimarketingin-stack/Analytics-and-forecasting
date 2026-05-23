@@ -1,0 +1,56 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0008_em_0001,Re-engagement,A quick update on Blue Commerce,33881,33583,14592,1804,266,0,2026-01-16
+cli_0008_em_0002,Launch,Last chance for Blue Commerce,35533,34870,14511,1673,118,0,2025-12-27
+cli_0008_em_0003,Newsletter,A quick update on Blue Commerce,18844,17932,10316,1843,67,1,2026-04-17
+cli_0008_em_0004,Education,New Blue Commerce,49642,47505,22527,2419,274,2,2026-01-12
+cli_0008_em_0005,Education,Last chance for Blue Commerce,12798,12780,5622,929,63,3,2025-11-01
+cli_0008_em_0006,Re-engagement,How to improve Blue Commerce,26263,24975,9135,1462,39,4,2026-03-12
+cli_0008_em_0007,Newsletter,A quick update on Blue Commerce,37232,35953,12847,1624,228,4,2026-02-13
+cli_0008_em_0008,Education,A quick update on Blue Commerce,40732,40117,12463,981,316,2,2025-11-25
+cli_0008_em_0009,Winback,New Blue Commerce,28606,27390,13893,1403,67,4,2026-01-26
+cli_0008_em_0010,Education,New Blue Commerce,47490,45758,7942,664,125,3,2026-04-15
+cli_0008_em_0011,Newsletter,New Blue Commerce,44740,42594,18884,2313,245,3,2026-01-29
+cli_0008_em_0012,Newsletter,How to improve Blue Commerce,48496,46773,25625,1575,160,2,2026-03-04
+cli_0008_em_0013,Re-engagement,A quick update on Blue Commerce,46746,44868,6307,1357,265,0,2026-02-12
+cli_0008_em_0014,Launch,A quick update on Blue Commerce,36381,35051,12592,1504,120,0,2025-12-13
+cli_0008_em_0015,Offer,How to improve Blue Commerce,49190,47625,5918,1082,27,3,2026-01-05
+cli_0008_em_0016,Offer,How to improve Blue Commerce,29928,28969,15966,3302,215,1,2026-02-26
+cli_0008_em_0017,Launch,A quick update on Blue Commerce,5894,5833,1529,124,15,5,2025-12-14
+cli_0008_em_0018,Education,New Blue Commerce,19538,19308,7237,1425,80,5,2026-02-06
+cli_0008_em_0019,Re-engagement,Last chance for Blue Commerce,40507,38942,18364,3522,151,2,2025-12-26
+cli_0008_em_0020,Winback,A quick update on Blue Commerce,35448,34343,13618,2846,190,4,2026-01-20
+cli_0008_em_0021,Offer,Last chance for Blue Commerce,28644,27318,5373,1004,252,0,2025-11-05
+cli_0008_em_0022,Winback,New Blue Commerce,44600,44368,9550,948,359,1,2026-04-03
+cli_0008_em_0023,Education,How to improve Blue Commerce,22010,21744,6859,1183,75,1,2025-12-14
+cli_0008_em_0024,Launch,New Blue Commerce,32976,31641,9325,1272,318,5,2026-02-12
+cli_0008_em_0025,Education,How to improve Blue Commerce,24494,23705,7408,693,134,1,2026-02-19
+cli_0008_em_0026,Education,How to improve Blue Commerce,15964,15538,6323,300,45,0,2025-12-09
+cli_0008_em_0027,Launch,A quick update on Blue Commerce,49323,47286,19241,2485,105,4,2026-04-05
+cli_0008_em_0028,Offer,A quick update on Blue Commerce,16474,16165,2834,486,72,5,2026-02-26
+cli_0008_em_0029,Newsletter,A quick update on Blue Commerce,32540,30981,5824,879,121,0,2026-03-20
+cli_0008_em_0030,Newsletter,New Blue Commerce,12464,12389,5470,971,68,5,2026-03-21
+cli_0008_em_0031,Newsletter,A quick update on Blue Commerce,20761,19746,9161,556,106,1,2025-12-14
+cli_0008_em_0032,Newsletter,Last chance for Blue Commerce,42277,41657,22555,4399,293,1,2025-12-19
+cli_0008_em_0033,Offer,New Blue Commerce,25179,24651,7120,635,179,4,2026-01-17
+cli_0008_em_0034,Offer,A quick update on Blue Commerce,14979,14286,7826,1370,52,5,2025-12-10
+cli_0008_em_0035,Winback,Last chance for Blue Commerce,14395,13925,4002,622,94,5,2025-11-08
+cli_0008_em_0036,Launch,Last chance for Blue Commerce,47113,45398,17507,2555,8,5,2025-12-27
+cli_0008_em_0037,Re-engagement,New Blue Commerce,2358,2244,616,29,0,0,2026-01-21
+cli_0008_em_0038,Launch,Last chance for Blue Commerce,16075,15863,8643,1184,41,0,2026-02-06
+cli_0008_em_0039,Re-engagement,A quick update on Blue Commerce,11613,11497,3231,589,63,3,2026-04-22
+cli_0008_em_0040,Re-engagement,Last chance for Blue Commerce,28535,28136,15595,1315,94,3,2026-03-26
+cli_0008_em_0041,Winback,New Blue Commerce,31720,30951,8054,927,249,0,2025-12-16
+cli_0008_em_0042,Offer,A quick update on Blue Commerce,4381,4361,547,97,20,0,2025-11-18
+cli_0008_em_0043,Re-engagement,New Blue Commerce,7544,7452,4086,223,69,5,2026-02-09
+cli_0008_em_0044,Offer,Last chance for Blue Commerce,47029,46441,20329,4129,259,5,2025-11-14
+cli_0008_em_0045,Newsletter,New Blue Commerce,33489,32452,11902,1057,181,3,2026-03-17
+cli_0008_em_0046,Launch,New Blue Commerce,41318,40296,18935,1580,54,2,2026-04-19
+cli_0008_em_0047,Re-engagement,How to improve Blue Commerce,20477,19652,4386,768,103,4,2025-11-28
+cli_0008_em_0048,Winback,Last chance for Blue Commerce,19890,19702,9899,455,28,1,2025-12-31
+cli_0008_em_0049,Education,How to improve Blue Commerce,18161,17707,7387,1427,93,1,2025-12-10
+cli_0008_em_0050,Winback,How to improve Blue Commerce,21601,20622,10895,868,6,3,2026-03-03
+cli_0008_em_0051,Winback,How to improve Blue Commerce,31155,29992,12212,1425,85,2,2026-02-26
+cli_0008_em_0052,Offer,Last chance for Blue Commerce,18116,17444,7908,1632,134,5,2026-03-27
+cli_0008_em_0053,Education,How to improve Blue Commerce,19264,18961,3593,701,22,4,2026-01-23
+cli_0008_em_0054,Launch,How to improve Blue Commerce,19128,18982,4301,835,186,4,2025-12-03
+cli_0008_em_0055,Launch,How to improve Blue Commerce,17530,17329,2421,522,96,5,2026-04-03

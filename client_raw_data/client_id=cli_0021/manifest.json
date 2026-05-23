@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0021",
+  "company_name": "Blue Commerce",
+  "industry": "ecommerce",
+  "region": "US",
+  "generated_at": "2026-04-23T20:56:26.752745Z",
+  "counts": {
+    "contacts": 151,
+    "deals": 69,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 8,
+    "uploads": 11,
+    "marketing_rows": 240,
+    "email_campaigns": 29,
+    "posts": 63,
+    "comments": 126,
+    "tickets": 105,
+    "transcripts": 73,
+    "sessions": 25860,
+    "events": 129100,
+    "orders": 80,
+    "refunds": 12,
+    "invoices": 76,
+    "payments": 61,
+    "feedback": 75,
+    "feature_requests": 36,
+    "meeting_notes": 16,
+    "raw_observations": 38
+  }
+}

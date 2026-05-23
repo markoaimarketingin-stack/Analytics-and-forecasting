@@ -1,0 +1,120 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0017_dl_0001,cli_0017_ct_0013,Pulse Studio - audit package,qualified,1727.3,USD,85,website_form,Kabir Patel,2025-11-22,2025-12-16
+cli_0017_dl_0002,cli_0017_ct_0005,Pulse Studio - annual subscription,qualified,15475.19,USD,11,referral,Arjun Verma,2026-01-28,2026-02-03
+cli_0017_dl_0003,cli_0017_ct_0059,Pulse Studio - audit package,lost,14178.14,USD,53,website_form,Arjun Kapoor,2025-10-20,2025-11-18
+cli_0017_dl_0004,cli_0017_ct_0057,Pulse Studio - audit package,won,4482.93,USD,89,website_form,Maya Gupta,2026-02-17,2026-03-12
+cli_0017_dl_0005,cli_0017_ct_0068,Pulse Studio - annual subscription,proposal,6644.61,USD,43,website_form,Zara Gupta,2026-02-20,2026-04-07
+cli_0017_dl_0006,cli_0017_ct_0014,Pulse Studio - membership,won,11687.9,USD,37,import,Zara Verma,2025-09-04,2025-10-28
+cli_0017_dl_0007,cli_0017_ct_0045,Pulse Studio - annual subscription,negotiation,2712.59,USD,73,email_reply,Ava Kapoor,2025-10-04,2025-11-11
+cli_0017_dl_0008,cli_0017_ct_0060,Pulse Studio - starter plan,new,5419.8,USD,35,website_form,Sara Kapoor,2025-10-25,2025-12-06
+cli_0017_dl_0009,cli_0017_ct_0069,Pulse Studio - membership,won,24445.32,USD,84,event,Mia Patel,2025-11-17,2025-11-22
+cli_0017_dl_0010,cli_0017_ct_0052,Pulse Studio - membership,proposal,21311.75,USD,91,email_reply,Kabir Joshi,2025-11-04,2025-11-14
+cli_0017_dl_0011,cli_0017_ct_0021,Pulse Studio - pro plan,won,20730.11,USD,80,event,Sara Nair,2026-03-17,2026-04-17
+cli_0017_dl_0012,cli_0017_ct_0075,Pulse Studio - pro plan,won,9357.69,USD,82,email_reply,Ishaan Bhatia,2025-12-26,2026-01-14
+cli_0017_dl_0013,cli_0017_ct_0037,Pulse Studio - service retainer,lost,13562.26,USD,68,website_form,Zara Gupta,2025-12-25,2026-01-27
+cli_0017_dl_0014,cli_0017_ct_0048,Pulse Studio - premium bundle,proposal,14512.72,USD,7,website_form,Ava Verma,2025-12-26,2026-02-01
+cli_0017_dl_0015,cli_0017_ct_0065,Pulse Studio - starter plan,new,20578.82,USD,11,import,Anika Bhatia,2026-02-02,2026-03-06
+cli_0017_dl_0016,cli_0017_ct_0062,Pulse Studio - starter plan,qualified,21471.18,USD,20,import,Anika Singh,2025-11-10,2026-01-03
+cli_0017_dl_0017,cli_0017_ct_0004,Pulse Studio - annual subscription,qualified,21468.76,USD,36,event,Leo Joshi,2026-03-20,2026-04-07
+cli_0017_dl_0018,cli_0017_ct_0077,Pulse Studio - starter plan,qualified,13244.83,USD,28,import,Anika Mehta,2025-10-18,2025-11-19
+cli_0017_dl_0019,cli_0017_ct_0078,Pulse Studio - pro plan,qualified,15049.81,USD,89,referral,Ava Mehta,2025-12-17,2026-01-11
+cli_0017_dl_0020,cli_0017_ct_0075,Pulse Studio - service retainer,negotiation,9871.5,USD,76,email_reply,Arjun Joshi,2026-01-09,2026-03-06
+cli_0017_dl_0021,cli_0017_ct_0028,Pulse Studio - audit package,won,21749.57,USD,45,website_form,Arjun Sharma,2025-10-01,2025-11-23
+cli_0017_dl_0022,cli_0017_ct_0007,Pulse Studio - annual subscription,proposal,19959.93,USD,61,import,Leo Singh,2026-02-27,2026-04-19
+cli_0017_dl_0023,cli_0017_ct_0051,Pulse Studio - premium bundle,proposal,7964.83,USD,19,email_reply,Ishaan Kapoor,2025-12-09,2025-12-16
+cli_0017_dl_0024,cli_0017_ct_0043,Pulse Studio - premium bundle,qualified,8033.36,USD,51,import,Ava Khan,2026-01-31,2026-03-11
+cli_0017_dl_0025,cli_0017_ct_0004,Pulse Studio - starter plan,negotiation,18168.47,USD,44,event,Arjun Khan,2025-10-04,2025-10-26
+cli_0017_dl_0026,cli_0017_ct_0053,Pulse Studio - membership,proposal,8461.8,USD,78,import,Leo Kapoor,2025-10-01,2025-11-24
+cli_0017_dl_0027,cli_0017_ct_0022,Pulse Studio - membership,new,14501.59,USD,86,event,Zara Sharma,2026-02-03,2026-02-17
+cli_0017_dl_0028,cli_0017_ct_0082,Pulse Studio - annual subscription,lost,20188.66,USD,93,email_reply,Noah Kapoor,2025-09-16,2025-11-13
+cli_0017_dl_0029,cli_0017_ct_0061,Pulse Studio - starter plan,lost,21970.59,USD,29,import,Mia Verma,2025-12-28,2026-02-18
+cli_0017_dl_0030,cli_0017_ct_0027,Pulse Studio - premium bundle,proposal,8647.0,USD,95,event,Mia Khan,2025-12-18,2026-01-19
+cli_0017_dl_0031,cli_0017_ct_0005,Pulse Studio - premium bundle,proposal,14417.56,USD,62,referral,Maya Bhatia,2025-11-01,2025-12-12
+cli_0017_dl_0032,cli_0017_ct_0028,Pulse Studio - pro plan,qualified,13067.51,USD,89,website_form,Maya Sharma,2025-10-19,2025-12-05
+cli_0017_dl_0033,cli_0017_ct_0015,Pulse Studio - pro plan,lost,3643.2,USD,86,website_form,Leo Joshi,2025-09-09,2025-11-07
+cli_0017_dl_0034,cli_0017_ct_0073,Pulse Studio - membership,qualified,12439.47,USD,22,email_reply,Liam Patel,2025-09-19,2025-11-06
+cli_0017_dl_0035,cli_0017_ct_0048,Pulse Studio - premium bundle,qualified,3338.47,USD,20,website_form,Zara Mehta,2026-01-14,2026-01-29
+cli_0017_dl_0036,cli_0017_ct_0082,Pulse Studio - premium bundle,lost,20731.17,USD,73,email_reply,Zara Patel,2026-02-13,2026-03-26
+cli_0017_dl_0037,cli_0017_ct_0068,Pulse Studio - audit package,won,328.12,USD,85,website_form,Sara Sharma,2026-03-01,2026-04-19
+cli_0017_dl_0038,cli_0017_ct_0020,Pulse Studio - audit package,negotiation,16097.61,USD,80,email_reply,Kabir Singh,2025-10-02,2025-11-25
+cli_0017_dl_0039,cli_0017_ct_0003,Pulse Studio - membership,qualified,20390.14,USD,81,referral,Ishaan Kapoor,2025-09-06,2025-10-26
+cli_0017_dl_0040,cli_0017_ct_0045,Pulse Studio - membership,negotiation,24066.35,USD,28,email_reply,Sara Patel,2025-11-20,2025-11-30
+cli_0017_dl_0041,cli_0017_ct_0053,Pulse Studio - annual subscription,lost,1114.48,USD,94,import,Zara Gupta,2025-10-08,2025-12-04
+cli_0017_dl_0042,cli_0017_ct_0067,Pulse Studio - pro plan,qualified,9651.33,USD,79,website_form,Noah Patel,2025-09-30,2025-10-31
+cli_0017_dl_0043,cli_0017_ct_0074,Pulse Studio - starter plan,qualified,6785.58,USD,54,website_form,Ishaan Patel,2026-02-12,2026-03-26
+cli_0017_dl_0044,cli_0017_ct_0068,Pulse Studio - membership,negotiation,16643.55,USD,61,website_form,Noah Verma,2026-01-15,2026-03-13
+cli_0017_dl_0045,cli_0017_ct_0072,Pulse Studio - service retainer,won,2897.94,USD,53,email_reply,Kabir Bhatia,2025-09-25,2025-11-24
+cli_0017_dl_0046,cli_0017_ct_0074,Pulse Studio - membership,qualified,4268.86,USD,45,website_form,Leo Reddy,2025-11-22,2026-01-21
+cli_0017_dl_0047,cli_0017_ct_0018,Pulse Studio - audit package,qualified,8098.92,USD,58,website_form,Mia Gupta,2025-12-30,2026-01-22
+cli_0017_dl_0048,cli_0017_ct_0024,Pulse Studio - pro plan,won,10172.73,USD,12,website_form,Liam Mehta,2025-12-11,2025-12-15
+cli_0017_dl_0049,cli_0017_ct_0016,Pulse Studio - premium bundle,qualified,22877.54,USD,94,referral,Zara Nair,2026-01-20,2026-01-27
+cli_0017_dl_0050,cli_0017_ct_0058,Pulse Studio - audit package,qualified,11976.16,USD,53,event,Mia Nair,2025-10-26,2025-12-11
+cli_0017_dl_0051,cli_0017_ct_0045,Pulse Studio - audit package,lost,517.64,USD,7,email_reply,Sara Verma,2026-04-07,2026-04-19
+cli_0017_dl_0052,cli_0017_ct_0082,Pulse Studio - annual subscription,won,2777.76,USD,74,email_reply,Anika Khan,2025-12-27,2026-01-02
+cli_0017_dl_0053,cli_0017_ct_0033,Pulse Studio - annual subscription,proposal,9447.49,USD,20,event,Noah Khan,2026-03-11,2026-04-20
+cli_0017_dl_0054,cli_0017_ct_0064,Pulse Studio - service retainer,new,1810.59,USD,45,import,Arjun Patel,2026-01-30,2026-02-23
+cli_0017_dl_0055,cli_0017_ct_0014,Pulse Studio - service retainer,qualified,24602.94,USD,94,import,Maya Reddy,2025-11-28,2025-12-03
+cli_0017_dl_0056,cli_0017_ct_0029,Pulse Studio - service retainer,won,3534.66,USD,27,email_reply,Sara Verma,2025-09-26,2025-11-14
+cli_0017_dl_0057,cli_0017_ct_0025,Pulse Studio - service retainer,new,14530.75,USD,50,website_form,Kabir Khan,2026-02-06,2026-03-27
+cli_0017_dl_0058,cli_0017_ct_0002,Pulse Studio - membership,proposal,13634.7,USD,20,email_reply,Leo Patel,2026-01-21,2026-01-30
+cli_0017_dl_0059,cli_0017_ct_0068,Pulse Studio - premium bundle,qualified,13727.58,USD,94,website_form,Arjun Nair,2025-10-22,2025-12-14
+cli_0017_dl_0060,cli_0017_ct_0043,Pulse Studio - premium bundle,won,8179.02,USD,57,import,Liam Patel,2025-12-02,2026-01-20
+cli_0017_dl_0061,cli_0017_ct_0076,Pulse Studio - annual subscription,proposal,9648.08,USD,94,import,Kabir Verma,2025-10-05,2025-11-20
+cli_0017_dl_0062,cli_0017_ct_0048,Pulse Studio - annual subscription,qualified,804.7,USD,82,website_form,Ava Nair,2026-03-17,2026-04-17
+cli_0017_dl_0063,cli_0017_ct_0001,Pulse Studio - service retainer,lost,9365.31,USD,31,import,Sara Mehta,2025-11-06,2026-01-05
+cli_0017_dl_0064,cli_0017_ct_0027,Pulse Studio - annual subscription,lost,4484.41,USD,5,event,Arjun Singh,2025-11-21,2025-12-10
+cli_0017_dl_0065,cli_0017_ct_0028,Pulse Studio - premium bundle,negotiation,12144.97,USD,35,website_form,Liam Kapoor,2025-10-03,2025-11-05
+cli_0017_dl_0066,cli_0017_ct_0080,Pulse Studio - premium bundle,lost,21744.79,USD,89,event,Maya Bhatia,2026-02-24,2026-04-05
+cli_0017_dl_0067,cli_0017_ct_0024,Pulse Studio - membership,lost,3346.67,USD,19,website_form,Zara Reddy,2026-01-21,2026-03-03
+cli_0017_dl_0068,cli_0017_ct_0012,Pulse Studio - membership,proposal,7210.41,USD,51,import,Kabir Reddy,2026-03-26,2026-04-15
+cli_0017_dl_0069,cli_0017_ct_0041,Pulse Studio - premium bundle,won,23207.03,USD,83,website_form,Sara Patel,2026-01-29,2026-03-04
+cli_0017_dl_0070,cli_0017_ct_0007,Pulse Studio - service retainer,proposal,5680.78,USD,85,import,Kabir Bhatia,2026-02-28,2026-03-17
+cli_0017_dl_0071,cli_0017_ct_0054,Pulse Studio - service retainer,lost,11863.08,USD,86,website_form,Kabir Reddy,2026-01-24,2026-03-23
+cli_0017_dl_0072,cli_0017_ct_0063,Pulse Studio - starter plan,won,7249.7,USD,66,import,Kabir Patel,2025-11-27,2025-12-31
+cli_0017_dl_0073,cli_0017_ct_0016,Pulse Studio - pro plan,new,4071.43,USD,61,referral,Arjun Reddy,2026-03-27,2026-04-09
+cli_0017_dl_0074,cli_0017_ct_0030,Pulse Studio - premium bundle,proposal,14672.68,USD,81,email_reply,Arjun Kapoor,2026-02-09,2026-03-14
+cli_0017_dl_0075,cli_0017_ct_0010,Pulse Studio - pro plan,negotiation,14865.55,USD,81,email_reply,Mia Singh,2025-11-27,2026-01-06
+cli_0017_dl_0076,cli_0017_ct_0072,Pulse Studio - starter plan,lost,7913.87,USD,56,email_reply,Liam Nair,2025-10-30,2025-11-20
+cli_0017_dl_0077,cli_0017_ct_0028,Pulse Studio - service retainer,qualified,8132.95,USD,83,website_form,Mia Khan,2026-01-24,2026-03-20
+cli_0017_dl_0078,cli_0017_ct_0028,Pulse Studio - starter plan,lost,9622.74,USD,86,website_form,Liam Singh,2026-01-25,2026-03-07
+cli_0017_dl_0079,cli_0017_ct_0013,Pulse Studio - pro plan,qualified,11420.67,USD,87,website_form,Kabir Bhatia,2026-03-21,2026-04-04
+cli_0017_dl_0080,cli_0017_ct_0063,Pulse Studio - starter plan,won,6728.8,USD,57,import,Noah Gupta,2025-10-25,2025-12-20
+cli_0017_dl_0081,cli_0017_ct_0066,Pulse Studio - premium bundle,negotiation,6662.52,USD,49,event,Noah Mehta,2025-12-17,2026-02-12
+cli_0017_dl_0082,cli_0017_ct_0056,Pulse Studio - audit package,qualified,812.25,USD,50,import,Kabir Sharma,2025-12-07,2026-01-06
+cli_0017_dl_0083,cli_0017_ct_0046,Pulse Studio - annual subscription,qualified,18888.78,USD,78,website_form,Anika Reddy,2026-02-11,2026-02-22
+cli_0017_dl_0084,cli_0017_ct_0005,Pulse Studio - membership,won,14026.14,USD,58,referral,Ava Joshi,2026-02-10,2026-03-29
+cli_0017_dl_0085,cli_0017_ct_0035,Pulse Studio - membership,proposal,6901.37,USD,37,website_form,Maya Joshi,2025-12-01,2025-12-28
+cli_0017_dl_0086,cli_0017_ct_0047,Pulse Studio - pro plan,lost,22200.9,USD,20,import,Kabir Nair,2025-12-29,2026-01-11
+cli_0017_dl_0087,cli_0017_ct_0072,Pulse Studio - premium bundle,qualified,3097.95,USD,53,email_reply,Kabir Patel,2025-10-14,2025-11-23
+cli_0017_dl_0088,cli_0017_ct_0027,Pulse Studio - service retainer,new,4222.4,USD,57,event,Ava Bhatia,2026-01-19,2026-02-05
+cli_0017_dl_0089,cli_0017_ct_0058,Pulse Studio - pro plan,negotiation,11381.99,USD,61,event,Noah Joshi,2025-12-21,2026-01-08
+cli_0017_dl_0090,cli_0017_ct_0070,Pulse Studio - membership,won,22704.99,USD,87,import,Sara Nair,2026-03-24,2026-04-22
+cli_0017_dl_0091,cli_0017_ct_0023,Pulse Studio - annual subscription,proposal,18326.62,USD,75,website_form,Anika Khan,2025-12-06,2025-12-20
+cli_0017_dl_0092,cli_0017_ct_0007,Pulse Studio - audit package,negotiation,21262.53,USD,90,import,Liam Mehta,2026-02-18,2026-04-19
+cli_0017_dl_0093,cli_0017_ct_0062,Pulse Studio - pro plan,lost,16620.98,USD,43,import,Noah Patel,2025-09-19,2025-10-31
+cli_0017_dl_0094,cli_0017_ct_0051,Pulse Studio - service retainer,qualified,15357.0,USD,92,email_reply,Arjun Bhatia,2026-01-20,2026-03-12
+cli_0017_dl_0095,cli_0017_ct_0076,Pulse Studio - pro plan,qualified,20945.26,USD,18,import,Leo Joshi,2025-12-19,2026-01-07
+cli_0017_dl_0096,cli_0017_ct_0071,Pulse Studio - audit package,qualified,19834.56,USD,57,event,Noah Singh,2025-11-01,2025-12-21
+cli_0017_dl_0097,cli_0017_ct_0077,Pulse Studio - annual subscription,lost,21044.6,USD,14,import,Zara Gupta,2025-09-28,2025-11-19
+cli_0017_dl_0098,cli_0017_ct_0012,Pulse Studio - service retainer,won,22843.6,USD,33,import,Ava Mehta,2026-01-20,2026-02-06
+cli_0017_dl_0099,cli_0017_ct_0043,Pulse Studio - premium bundle,qualified,3327.38,USD,57,import,Arjun Joshi,2026-03-29,2026-04-14
+cli_0017_dl_0100,cli_0017_ct_0034,Pulse Studio - premium bundle,qualified,9176.64,USD,28,event,Ava Bhatia,2025-10-08,2025-10-31
+cli_0017_dl_0101,cli_0017_ct_0057,Pulse Studio - premium bundle,lost,10895.5,USD,23,website_form,Anika Nair,2026-01-13,2026-01-19
+cli_0017_dl_0102,cli_0017_ct_0019,Pulse Studio - audit package,proposal,4502.64,USD,75,email_reply,Liam Singh,2026-01-24,2026-03-25
+cli_0017_dl_0103,cli_0017_ct_0021,Pulse Studio - service retainer,new,16139.61,USD,5,event,Sara Reddy,2025-11-21,2025-12-04
+cli_0017_dl_0104,cli_0017_ct_0061,Pulse Studio - premium bundle,negotiation,10983.7,USD,27,import,Sara Reddy,2026-02-11,2026-03-31
+cli_0017_dl_0105,cli_0017_ct_0032,Pulse Studio - annual subscription,qualified,3093.01,USD,22,import,Ishaan Sharma,2026-02-11,2026-02-26
+cli_0017_dl_0106,cli_0017_ct_0005,Pulse Studio - annual subscription,qualified,2133.71,USD,15,referral,Sara Kapoor,2025-11-09,2025-12-06
+cli_0017_dl_0107,cli_0017_ct_0079,Pulse Studio - membership,won,23827.82,USD,89,email_reply,Maya Gupta,2026-01-23,2026-02-18
+cli_0017_dl_0108,cli_0017_ct_0032,Pulse Studio - service retainer,proposal,13174.88,USD,84,import,Noah Reddy,2026-01-27,2026-02-23
+cli_0017_dl_0109,cli_0017_ct_0037,Pulse Studio - pro plan,new,8313.04,USD,78,website_form,Ava Mehta,2025-09-23,2025-11-02
+cli_0017_dl_0110,cli_0017_ct_0021,Pulse Studio - audit package,proposal,16825.0,USD,12,event,Zara Khan,2025-12-27,2026-01-06
+cli_0017_dl_0111,cli_0017_ct_0007,Pulse Studio - audit package,qualified,21551.15,USD,74,import,Leo Joshi,2026-02-24,2026-04-20
+cli_0017_dl_0112,cli_0017_ct_0033,Pulse Studio - membership,qualified,19009.66,USD,42,event,Noah Bhatia,2025-12-17,2025-12-22
+cli_0017_dl_0113,cli_0017_ct_0081,Pulse Studio - pro plan,new,18253.72,USD,48,import,Ava Joshi,2026-01-22,2026-02-28
+cli_0017_dl_0114,cli_0017_ct_0056,Pulse Studio - membership,won,1431.11,USD,75,import,Sara Verma,2025-11-03,2025-12-17
+cli_0017_dl_0115,cli_0017_ct_0001,Pulse Studio - service retainer,new,3503.07,USD,75,import,Sara Patel,2025-09-10,2025-11-03
+cli_0017_dl_0116,cli_0017_ct_0020,Pulse Studio - premium bundle,won,11127.57,USD,62,email_reply,Noah Khan,2025-10-10,2025-11-03
+cli_0017_dl_0117,cli_0017_ct_0047,Pulse Studio - starter plan,lost,19252.15,USD,54,import,Ishaan Singh,2026-03-31,2026-04-22
+cli_0017_dl_0118,cli_0017_ct_0067,Pulse Studio - membership,negotiation,13331.86,USD,59,website_form,Maya Bhatia,2026-02-24,2026-03-05
+cli_0017_dl_0119,cli_0017_ct_0042,Pulse Studio - starter plan,new,12249.67,USD,87,website_form,Zara Kapoor,2026-01-20,2026-02-27

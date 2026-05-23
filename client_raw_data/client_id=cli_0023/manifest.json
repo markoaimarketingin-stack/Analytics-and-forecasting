@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0023",
+  "company_name": "Nova Labs",
+  "industry": "subscription",
+  "region": "US",
+  "generated_at": "2026-04-23T20:56:30.088861Z",
+  "counts": {
+    "contacts": 174,
+    "deals": 63,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 8,
+    "uploads": 10,
+    "marketing_rows": 300,
+    "email_campaigns": 45,
+    "posts": 58,
+    "comments": 116,
+    "tickets": 91,
+    "transcripts": 48,
+    "sessions": 29634,
+    "events": 147906,
+    "orders": 229,
+    "refunds": 15,
+    "invoices": 43,
+    "payments": 35,
+    "feedback": 158,
+    "feature_requests": 21,
+    "meeting_notes": 21,
+    "raw_observations": 21
+  }
+}

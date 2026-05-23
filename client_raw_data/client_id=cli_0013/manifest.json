@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0013",
+  "company_name": "Urban Works",
+  "industry": "healthcare",
+  "region": "EU",
+  "generated_at": "2026-04-23T20:56:12.820693Z",
+  "counts": {
+    "contacts": 164,
+    "deals": 65,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 15,
+    "marketing_rows": 240,
+    "email_campaigns": 23,
+    "posts": 59,
+    "comments": 118,
+    "tickets": 107,
+    "transcripts": 85,
+    "sessions": 26470,
+    "events": 131827,
+    "orders": 193,
+    "refunds": 21,
+    "invoices": 55,
+    "payments": 40,
+    "feedback": 67,
+    "feature_requests": 23,
+    "meeting_notes": 18,
+    "raw_observations": 41
+  }
+}

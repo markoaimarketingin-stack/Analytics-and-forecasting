@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0024",
+  "company_name": "Pulse Market",
+  "industry": "subscription",
+  "region": "UK",
+  "currency": "GBP",
+  "website": "https://pulse-market.example.com",
+  "business_model": "b2c",
+  "employee_band": "51-200",
+  "objective": "traffic",
+  "budget_monthly": 8000,
+  "voice": "friendly",
+  "channels": [
+    "google_ads",
+    "email",
+    "direct",
+    "linkedin_ads",
+    "tiktok_ads"
+  ],
+  "created_at": "2026-04-23T20:56:30.112486Z"
+}

@@ -1,0 +1,12 @@
+refund_id,order_id,refund_date,reason,amount
+cli_0003_rf_00067,cli_0003_ord_00067,2026-02-10,shipping_delay,948.76
+cli_0003_rf_00090,cli_0003_ord_00090,2026-03-14,other,1194.03
+cli_0003_rf_00125,cli_0003_ord_00125,2026-03-13,duplicate_charge,577.27
+cli_0003_rf_00134,cli_0003_ord_00134,2026-04-12,customer_request,1393.75
+cli_0003_rf_00137,cli_0003_ord_00137,2026-03-16,customer_request,1505.54
+cli_0003_rf_00143,cli_0003_ord_00143,2026-03-09,shipping_delay,1510.02
+cli_0003_rf_00161,cli_0003_ord_00161,2026-01-27,shipping_delay,217.0
+cli_0003_rf_00162,cli_0003_ord_00162,2026-01-02,product_issue,1037.96
+cli_0003_rf_00184,cli_0003_ord_00184,2026-03-09,product_issue,577.74
+cli_0003_rf_00187,cli_0003_ord_00187,2026-01-09,customer_request,862.0
+cli_0003_rf_00195,cli_0003_ord_00195,2026-03-29,other,58.36

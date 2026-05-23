@@ -1,0 +1,120 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0019_ct_0001,Liam Gupta,liam.gupta0@examplemail.com,Bright Labs,Head of Growth,mql,website_form,United Kingdom,2025-10-22,2026-01-06
+cli_0019_ct_0002,Kabir Verma,kabir.verma1@examplemail.com,Bright Labs,Founder,lead,email_reply,Canada,2025-09-11,2026-03-09
+cli_0019_ct_0003,Arjun Nair,arjun.nair2@examplemail.com,Zen LLC,Founder,sql,referral,United Kingdom,2026-01-16,2026-01-15
+cli_0019_ct_0004,Anika Nair,anika.nair3@examplemail.com,Peak LLC,Marketing Manager,mql,website_form,United States,2025-08-18,2026-04-17
+cli_0019_ct_0005,Arjun Singh,arjun.singh4@examplemail.com,Bright Labs,Marketing Manager,sql,email_reply,United Kingdom,2026-04-21,2026-04-04
+cli_0019_ct_0006,Zara Khan,zara.khan5@examplemail.com,Bright Labs,Marketing Manager,churn_risk,import,Canada,2025-08-25,2025-12-26
+cli_0019_ct_0007,Liam Kapoor,liam.kapoor6@examplemail.com,Metro Inc,Head of Growth,lead,email_reply,UAE,2025-02-06,2026-03-15
+cli_0019_ct_0008,Kabir Verma,kabir.verma7@examplemail.com,Bright Labs,Head of Growth,mql,website_form,Canada,2025-12-28,2026-02-17
+cli_0019_ct_0009,Ava Patel,ava.patel8@examplemail.com,Metro LLC,Sales Lead,churn_risk,email_reply,India,2025-11-08,2026-01-10
+cli_0019_ct_0010,Liam Singh,liam.singh9@examplemail.com,Bright Labs,Marketing Manager,mql,website_form,United States,2025-07-07,2026-03-12
+cli_0019_ct_0011,Noah Verma,noah.verma10@examplemail.com,Bright Labs,Founder,customer,import,United States,2024-12-01,2026-01-18
+cli_0019_ct_0012,Anika Verma,anika.verma11@examplemail.com,Zen Group,Founder,mql,event,United Kingdom,2024-12-08,2026-01-13
+cli_0019_ct_0013,Ava Joshi,ava.joshi12@examplemail.com,Bright Labs,Sales Lead,mql,import,Australia,2025-12-21,2026-03-31
+cli_0019_ct_0014,Sara Kapoor,sara.kapoor13@examplemail.com,Bright Labs,Marketing Manager,lead,website_form,Australia,2026-01-13,2026-04-17
+cli_0019_ct_0015,Noah Bhatia,noah.bhatia14@examplemail.com,Bright Labs,Head of Growth,lead,email_reply,Australia,2025-04-12,2025-12-25
+cli_0019_ct_0016,Noah Sharma,noah.sharma15@examplemail.com,Orbit LLC,Marketing Manager,lead,import,United Kingdom,2025-09-15,2025-12-31
+cli_0019_ct_0017,Anika Kapoor,anika.kapoor16@examplemail.com,Bright Labs,Sales Lead,churn_risk,referral,India,2025-03-02,2026-03-24
+cli_0019_ct_0018,Arjun Sharma,arjun.sharma17@examplemail.com,Bright Labs,RevOps Manager,mql,import,India,2026-02-08,2026-03-04
+cli_0019_ct_0019,Zara Khan,zara.khan18@examplemail.com,Acme Ltd,Founder,customer,import,United Kingdom,2025-10-07,2026-02-14
+cli_0019_ct_0020,Arjun Sharma,arjun.sharma19@examplemail.com,Bright Labs,Head of Growth,mql,import,United States,2026-02-17,2026-03-16
+cli_0019_ct_0021,Ishaan Joshi,ishaan.joshi20@examplemail.com,Bright Labs,Sales Lead,mql,import,India,2026-04-18,2026-03-28
+cli_0019_ct_0022,Zara Reddy,zara.reddy21@examplemail.com,Zen Group,Head of Growth,customer,website_form,Canada,2026-03-17,2026-02-12
+cli_0019_ct_0023,Arjun Patel,arjun.patel22@examplemail.com,Bright Labs,Head of Growth,mql,event,UAE,2025-02-16,2025-12-26
+cli_0019_ct_0024,Anika Singh,anika.singh23@examplemail.com,Bright Labs,Head of Growth,lead,email_reply,UAE,2025-07-07,2026-01-10
+cli_0019_ct_0025,Arjun Khan,arjun.khan24@examplemail.com,Bright Labs,Founder,lead,website_form,United Kingdom,2026-01-27,2026-02-04
+cli_0019_ct_0026,Leo Bhatia,leo.bhatia25@examplemail.com,Acme Group,Head of Growth,lead,import,United Kingdom,2025-05-01,2026-01-15
+cli_0019_ct_0027,Ava Verma,ava.verma26@examplemail.com,Bright Labs,Marketing Manager,lead,referral,UAE,2025-04-11,2026-01-17
+cli_0019_ct_0028,Arjun Reddy,arjun.reddy27@examplemail.com,Zen Group,Marketing Manager,lead,website_form,United States,2026-02-27,2026-01-13
+cli_0019_ct_0029,Liam Khan,liam.khan28@examplemail.com,Orbit LLC,Marketing Manager,lead,email_reply,India,2025-02-16,2026-04-08
+cli_0019_ct_0030,Arjun Nair,arjun.nair29@examplemail.com,Bright Labs,RevOps Manager,mql,website_form,India,2025-09-10,2026-03-20
+cli_0019_ct_0031,Zara Mehta,zara.mehta30@examplemail.com,Peak LLC,Marketing Manager,lead,email_reply,United Kingdom,2025-05-24,2025-12-25
+cli_0019_ct_0032,Maya Patel,maya.patel31@examplemail.com,Orbit Inc,Sales Lead,mql,referral,Australia,2026-01-09,2026-01-09
+cli_0019_ct_0033,Kabir Reddy,kabir.reddy32@examplemail.com,Bright Labs,Head of Growth,sql,import,Australia,2025-10-31,2026-01-24
+cli_0019_ct_0034,Zara Reddy,zara.reddy33@examplemail.com,Bright Labs,Head of Growth,mql,event,Canada,2025-10-28,2026-02-12
+cli_0019_ct_0035,Ishaan Khan,ishaan.khan34@examplemail.com,Peak LLC,Sales Lead,lead,website_form,India,2026-01-23,2025-12-28
+cli_0019_ct_0036,Sara Patel,sara.patel35@examplemail.com,Zen Group,RevOps Manager,sql,referral,United Kingdom,2025-09-03,2026-04-07
+cli_0019_ct_0037,Kabir Khan,kabir.khan36@examplemail.com,Orbit Ltd,Head of Growth,lead,referral,United Kingdom,2025-01-01,2026-04-06
+cli_0019_ct_0038,Zara Verma,zara.verma37@examplemail.com,Bright Labs,Sales Lead,lead,import,Australia,2026-01-23,2026-04-03
+cli_0019_ct_0039,Liam Patel,liam.patel38@examplemail.com,Bright Labs,Head of Growth,customer,event,UAE,2026-04-21,2026-04-20
+cli_0019_ct_0040,Mia Verma,mia.verma39@examplemail.com,Bright Labs,Marketing Manager,mql,email_reply,United Kingdom,2024-11-18,2026-02-19
+cli_0019_ct_0041,Ava Verma,ava.verma40@examplemail.com,Bright Labs,Founder,customer,import,Australia,2025-08-30,2026-03-02
+cli_0019_ct_0042,Liam Gupta,liam.gupta41@examplemail.com,Bright Labs,RevOps Manager,mql,email_reply,United States,2025-12-27,2026-04-01
+cli_0019_ct_0043,Maya Kapoor,maya.kapoor42@examplemail.com,Bright Labs,Head of Growth,mql,event,Australia,2025-04-27,2026-04-19
+cli_0019_ct_0044,Sara Khan,sara.khan43@examplemail.com,Acme Group,Founder,sql,email_reply,Canada,2025-01-05,2026-04-15
+cli_0019_ct_0045,Noah Sharma,noah.sharma44@examplemail.com,Metro Group,Sales Lead,mql,event,UAE,2026-01-31,2026-03-31
+cli_0019_ct_0046,Sara Mehta,sara.mehta45@examplemail.com,Peak Ltd,Sales Lead,lead,import,United Kingdom,2025-08-16,2026-03-10
+cli_0019_ct_0047,Ishaan Nair,ishaan.nair46@examplemail.com,Peak Inc,Marketing Manager,customer,email_reply,Australia,2025-10-10,2026-04-19
+cli_0019_ct_0048,Arjun Patel,arjun.patel47@examplemail.com,Zen Group,Marketing Manager,lead,import,Canada,2026-01-27,2026-03-10
+cli_0019_ct_0049,Zara Verma,zara.verma48@examplemail.com,Orbit LLC,RevOps Manager,customer,website_form,United Kingdom,2024-12-24,2026-02-27
+cli_0019_ct_0050,Ishaan Reddy,ishaan.reddy49@examplemail.com,Zen Inc,Sales Lead,lead,event,United States,2025-08-13,2026-01-06
+cli_0019_ct_0051,Leo Reddy,leo.reddy50@examplemail.com,Peak Inc,Marketing Manager,churn_risk,event,Australia,2025-01-04,2026-03-31
+cli_0019_ct_0052,Kabir Nair,kabir.nair51@examplemail.com,Bright Labs,Marketing Manager,mql,import,India,2025-02-16,2026-03-15
+cli_0019_ct_0053,Sara Joshi,sara.joshi52@examplemail.com,Bright Labs,Marketing Manager,sql,referral,Canada,2025-06-17,2026-04-11
+cli_0019_ct_0054,Leo Singh,leo.singh53@examplemail.com,Metro LLC,Founder,sql,referral,United Kingdom,2025-01-11,2026-01-27
+cli_0019_ct_0055,Ava Singh,ava.singh54@examplemail.com,Bright Labs,Sales Lead,customer,event,United States,2026-02-06,2026-02-23
+cli_0019_ct_0056,Maya Sharma,maya.sharma55@examplemail.com,Peak Group,Marketing Manager,lead,import,United Kingdom,2025-09-08,2026-02-17
+cli_0019_ct_0057,Zara Joshi,zara.joshi56@examplemail.com,Bright Labs,Head of Growth,sql,event,Australia,2025-12-05,2026-01-07
+cli_0019_ct_0058,Maya Sharma,maya.sharma57@examplemail.com,Peak Inc,Marketing Manager,lead,email_reply,UAE,2025-07-31,2026-04-23
+cli_0019_ct_0059,Zara Gupta,zara.gupta58@examplemail.com,Orbit LLC,RevOps Manager,sql,email_reply,Canada,2025-06-03,2026-03-18
+cli_0019_ct_0060,Anika Bhatia,anika.bhatia59@examplemail.com,Bright Labs,Head of Growth,lead,website_form,Australia,2025-07-11,2026-04-24
+cli_0019_ct_0061,Ishaan Singh,ishaan.singh60@examplemail.com,Bright Labs,RevOps Manager,lead,website_form,India,2024-11-15,2026-03-06
+cli_0019_ct_0062,Zara Verma,zara.verma61@examplemail.com,Orbit Inc,Sales Lead,customer,event,Australia,2024-11-16,2026-01-22
+cli_0019_ct_0063,Anika Singh,anika.singh62@examplemail.com,Bright Labs,Founder,mql,email_reply,Australia,2025-09-27,2026-01-07
+cli_0019_ct_0064,Maya Patel,maya.patel63@examplemail.com,Bright Labs,Head of Growth,mql,import,United Kingdom,2025-09-18,2026-04-11
+cli_0019_ct_0065,Ishaan Joshi,ishaan.joshi64@examplemail.com,Bright Labs,Marketing Manager,sql,email_reply,India,2025-10-13,2026-04-03
+cli_0019_ct_0066,Noah Mehta,noah.mehta65@examplemail.com,Bright Labs,Sales Lead,lead,import,UAE,2024-11-27,2026-03-01
+cli_0019_ct_0067,Leo Bhatia,leo.bhatia66@examplemail.com,Bright Labs,Marketing Manager,lead,event,Canada,2026-03-11,2026-02-02
+cli_0019_ct_0068,Noah Sharma,noah.sharma67@examplemail.com,Bright Labs,RevOps Manager,mql,import,Canada,2026-03-13,2026-02-25
+cli_0019_ct_0069,Leo Singh,leo.singh68@examplemail.com,Metro Group,Founder,churn_risk,referral,United States,2025-04-27,2026-03-26
+cli_0019_ct_0070,Sara Patel,sara.patel69@examplemail.com,Zen Ltd,RevOps Manager,lead,event,Australia,2025-12-22,2026-03-29
+cli_0019_ct_0071,Kabir Sharma,kabir.sharma70@examplemail.com,Bright Labs,Founder,sql,import,United Kingdom,2025-04-04,2026-02-23
+cli_0019_ct_0072,Arjun Verma,arjun.verma71@examplemail.com,Orbit Ltd,RevOps Manager,lead,import,United States,2025-12-25,2026-03-14
+cli_0019_ct_0073,Sara Gupta,sara.gupta72@examplemail.com,Bright Labs,Founder,lead,website_form,United Kingdom,2026-03-18,2026-01-31
+cli_0019_ct_0074,Liam Gupta,liam.gupta73@examplemail.com,Bright Labs,RevOps Manager,lead,website_form,Canada,2026-04-03,2026-02-22
+cli_0019_ct_0075,Kabir Verma,kabir.verma74@examplemail.com,Bright Labs,Marketing Manager,mql,website_form,India,2025-04-18,2026-03-16
+cli_0019_ct_0076,Zara Gupta,zara.gupta75@examplemail.com,Bright Labs,Marketing Manager,mql,import,United States,2025-05-14,2026-02-21
+cli_0019_ct_0077,Liam Khan,liam.khan76@examplemail.com,Acme LLC,Marketing Manager,mql,website_form,United Kingdom,2025-06-15,2026-02-19
+cli_0019_ct_0078,Noah Gupta,noah.gupta77@examplemail.com,Bright Labs,Marketing Manager,lead,email_reply,Canada,2025-01-14,2026-02-17
+cli_0019_ct_0079,Ishaan Mehta,ishaan.mehta78@examplemail.com,Bright Labs,Sales Lead,lead,website_form,UAE,2025-06-21,2026-04-23
+cli_0019_ct_0080,Zara Bhatia,zara.bhatia79@examplemail.com,Zen Group,Marketing Manager,sql,website_form,Australia,2025-01-14,2026-02-21
+cli_0019_ct_0081,Sara Kapoor,sara.kapoor80@examplemail.com,Orbit Inc,Head of Growth,mql,website_form,India,2025-11-14,2026-01-08
+cli_0019_ct_0082,Liam Nair,liam.nair81@examplemail.com,Bright Labs,Head of Growth,customer,website_form,Canada,2025-04-01,2026-01-24
+cli_0019_ct_0083,Ishaan Singh,ishaan.singh82@examplemail.com,Bright Labs,Sales Lead,sql,import,United States,2025-12-14,2026-02-06
+cli_0019_ct_0084,Noah Khan,noah.khan83@examplemail.com,Orbit Ltd,Sales Lead,lead,event,UAE,2025-10-04,2026-04-09
+cli_0019_ct_0085,Leo Reddy,leo.reddy84@examplemail.com,Metro Ltd,Founder,lead,email_reply,Australia,2025-06-30,2026-02-17
+cli_0019_ct_0086,Leo Mehta,leo.mehta85@examplemail.com,Bright Labs,Marketing Manager,sql,email_reply,United Kingdom,2026-04-04,2026-02-23
+cli_0019_ct_0087,Sara Verma,sara.verma86@examplemail.com,Bright Labs,Head of Growth,mql,website_form,United States,2025-06-19,2026-04-07
+cli_0019_ct_0088,Noah Joshi,noah.joshi87@examplemail.com,Bright Labs,Founder,mql,website_form,United Kingdom,2025-05-16,2026-04-04
+cli_0019_ct_0089,Leo Kapoor,leo.kapoor88@examplemail.com,Zen LLC,Head of Growth,mql,email_reply,Canada,2025-02-07,2026-03-16
+cli_0019_ct_0090,Ishaan Patel,ishaan.patel89@examplemail.com,Bright Labs,Marketing Manager,lead,import,Australia,2025-10-15,2025-12-25
+cli_0019_ct_0091,Sara Reddy,sara.reddy90@examplemail.com,Bright Labs,Head of Growth,mql,website_form,Canada,2026-03-03,2026-03-13
+cli_0019_ct_0092,Liam Bhatia,liam.bhatia91@examplemail.com,Bright Labs,RevOps Manager,lead,website_form,UAE,2024-11-13,2026-03-25
+cli_0019_ct_0093,Maya Joshi,maya.joshi92@examplemail.com,Bright Labs,Sales Lead,churn_risk,import,Canada,2026-02-03,2025-12-25
+cli_0019_ct_0094,Kabir Joshi,kabir.joshi93@examplemail.com,Bright Labs,Sales Lead,sql,website_form,UAE,2025-02-16,2026-02-18
+cli_0019_ct_0095,Ava Singh,ava.singh94@examplemail.com,Metro LLC,Sales Lead,sql,email_reply,Australia,2025-10-24,2026-03-27
+cli_0019_ct_0096,Noah Sharma,noah.sharma95@examplemail.com,Bright Labs,Head of Growth,mql,email_reply,UAE,2025-09-03,2026-03-30
+cli_0019_ct_0097,Liam Gupta,liam.gupta96@examplemail.com,Orbit Inc,Head of Growth,sql,website_form,United States,2025-09-03,2026-04-22
+cli_0019_ct_0098,Anika Singh,anika.singh97@examplemail.com,Bright Labs,Head of Growth,lead,email_reply,Canada,2025-05-14,2026-03-02
+cli_0019_ct_0099,Sara Gupta,sara.gupta98@examplemail.com,Bright Labs,Head of Growth,mql,referral,United Kingdom,2026-01-07,2026-04-04
+cli_0019_ct_0100,Liam Gupta,liam.gupta99@examplemail.com,Bright Labs,Marketing Manager,mql,referral,United Kingdom,2025-03-11,2026-01-14
+cli_0019_ct_0101,Liam Singh,liam.singh100@examplemail.com,Peak Ltd,Marketing Manager,mql,import,India,2025-01-19,2026-03-30
+cli_0019_ct_0102,Ishaan Kapoor,ishaan.kapoor101@examplemail.com,Bright Labs,Marketing Manager,customer,email_reply,United Kingdom,2024-12-11,2026-02-08
+cli_0019_ct_0103,Zara Nair,zara.nair102@examplemail.com,Acme LLC,Head of Growth,mql,event,India,2025-05-12,2026-02-15
+cli_0019_ct_0104,Ava Mehta,ava.mehta103@examplemail.com,Bright Labs,RevOps Manager,mql,website_form,India,2025-03-05,2026-01-15
+cli_0019_ct_0105,Liam Singh,liam.singh104@examplemail.com,Orbit Group,Head of Growth,mql,email_reply,UAE,2025-03-15,2026-01-29
+cli_0019_ct_0106,Arjun Joshi,arjun.joshi105@examplemail.com,Bright Labs,Marketing Manager,lead,import,Canada,2025-10-04,2026-03-05
+cli_0019_ct_0107,Liam Joshi,liam.joshi106@examplemail.com,Bright Labs,RevOps Manager,lead,website_form,Australia,2025-07-12,2026-01-08
+cli_0019_ct_0108,Noah Patel,noah.patel107@examplemail.com,Bright Labs,Marketing Manager,mql,import,UAE,2025-08-18,2026-03-12
+cli_0019_ct_0109,Kabir Sharma,kabir.sharma108@examplemail.com,Orbit Group,Marketing Manager,sql,website_form,United States,2025-11-18,2026-03-02
+cli_0019_ct_0110,Mia Joshi,mia.joshi109@examplemail.com,Peak Inc,Head of Growth,lead,referral,Canada,2025-01-08,2026-01-25
+cli_0019_ct_0111,Leo Gupta,leo.gupta110@examplemail.com,Peak Ltd,Marketing Manager,churn_risk,email_reply,Australia,2025-10-08,2026-02-08
+cli_0019_ct_0112,Arjun Singh,arjun.singh111@examplemail.com,Bright Labs,RevOps Manager,lead,email_reply,Canada,2025-05-01,2026-02-08
+cli_0019_ct_0113,Kabir Kapoor,kabir.kapoor112@examplemail.com,Bright Labs,Head of Growth,lead,referral,Canada,2025-03-10,2026-03-31
+cli_0019_ct_0114,Sara Gupta,sara.gupta113@examplemail.com,Bright Labs,Sales Lead,lead,referral,Canada,2024-12-21,2026-03-12
+cli_0019_ct_0115,Sara Mehta,sara.mehta114@examplemail.com,Peak Inc,Sales Lead,churn_risk,event,India,2025-06-19,2026-04-07
+cli_0019_ct_0116,Maya Bhatia,maya.bhatia115@examplemail.com,Peak LLC,Marketing Manager,lead,website_form,United Kingdom,2025-05-21,2026-03-24
+cli_0019_ct_0117,Arjun Kapoor,arjun.kapoor116@examplemail.com,Bright Labs,Marketing Manager,mql,website_form,UAE,2025-07-10,2026-04-13
+cli_0019_ct_0118,Liam Bhatia,liam.bhatia117@examplemail.com,Bright Labs,RevOps Manager,lead,email_reply,United States,2024-11-27,2026-03-23
+cli_0019_ct_0119,Leo Bhatia,leo.bhatia118@examplemail.com,Bright Labs,Founder,lead,email_reply,India,2025-02-07,2026-02-18

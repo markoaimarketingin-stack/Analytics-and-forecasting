@@ -1,0 +1,86 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0019_ord_00001,2026-01-10,c09e386e84df,premium bundle,AUD,2450.81,15,google_ads,paid,card
+cli_0019_ord_00002,2025-11-28,4bda25ac3119,annual subscription,AUD,1048.45,5,referral,paid,paypal
+cli_0019_ord_00003,2025-12-27,29755d2f44ec,annual subscription,AUD,416.22,15,google_ads,paid,paypal
+cli_0019_ord_00004,2025-12-01,477fe0d8030b,membership,AUD,623.36,0,referral,paid,paypal
+cli_0019_ord_00005,2025-12-22,8fedb1d64c3a,membership,AUD,2304.97,10,meta_ads,paid,wallet
+cli_0019_ord_00006,2025-12-23,620066307f19,membership,AUD,2406.15,5,email,paid,upi
+cli_0019_ord_00007,2025-11-08,ca3c3d941d2d,pro plan,AUD,1249.17,5,meta_ads,paid,card
+cli_0019_ord_00008,2026-04-05,596934839985,starter plan,AUD,826.03,10,email,paid,wallet
+cli_0019_ord_00009,2025-12-07,95f8a771e09d,annual subscription,AUD,1336.0,0,meta_ads,paid,card
+cli_0019_ord_00010,2026-01-24,39300ab5d5c4,premium bundle,AUD,128.58,5,meta_ads,paid,paypal
+cli_0019_ord_00011,2025-12-21,4eb7ff60542f,membership,AUD,1382.1,5,google_ads,paid,upi
+cli_0019_ord_00012,2025-11-02,480d5f962572,starter plan,AUD,781.27,20,google_ads,paid,wallet
+cli_0019_ord_00013,2025-12-07,2ef1d3474f49,premium bundle,AUD,61.3,5,meta_ads,paid,paypal
+cli_0019_ord_00014,2026-01-10,3aad3ffa45f6,membership,AUD,275.4,10,email,pending,bank_transfer
+cli_0019_ord_00015,2026-04-02,d1b01394463d,pro plan,AUD,1230.51,5,meta_ads,paid,wallet
+cli_0019_ord_00016,2026-01-21,c7f25ab8ccbe,audit package,AUD,1800.22,15,meta_ads,paid,card
+cli_0019_ord_00017,2026-02-13,362f49e2ee3b,annual subscription,AUD,533.2,20,google_ads,pending,bank_transfer
+cli_0019_ord_00018,2026-01-02,5e40a649bdf9,service retainer,AUD,1002.6,5,referral,paid,upi
+cli_0019_ord_00019,2026-02-13,74f0ca72c2a2,annual subscription,AUD,2092.1,25,meta_ads,paid,paypal
+cli_0019_ord_00020,2025-12-22,60adb1614872,service retainer,AUD,1176.82,25,referral,paid,wallet
+cli_0019_ord_00021,2025-12-03,9e5a8d7ea51a,annual subscription,AUD,1386.75,0,email,paid,card
+cli_0019_ord_00022,2025-12-24,17bcebb429fc,starter plan,AUD,1177.16,15,referral,paid,paypal
+cli_0019_ord_00023,2025-12-04,05033cdc0d38,audit package,AUD,1735.82,5,google_ads,paid,upi
+cli_0019_ord_00024,2026-01-24,d82b06d404b1,service retainer,AUD,2069.7,20,email,paid,paypal
+cli_0019_ord_00025,2025-10-26,a547cc48dea3,starter plan,AUD,2234.53,0,google_ads,pending,upi
+cli_0019_ord_00026,2026-03-04,e3d26cfce38a,starter plan,AUD,186.18,15,google_ads,paid,card
+cli_0019_ord_00027,2026-02-16,1fd73e18c202,annual subscription,AUD,1955.91,20,meta_ads,paid,card
+cli_0019_ord_00028,2026-04-03,a3212574a53c,starter plan,AUD,52.91,25,referral,paid,paypal
+cli_0019_ord_00029,2026-01-11,f41ad059920e,service retainer,AUD,675.35,10,organic,paid,bank_transfer
+cli_0019_ord_00030,2026-04-07,825e12fc4c6a,starter plan,AUD,1725.7,15,referral,pending,paypal
+cli_0019_ord_00031,2026-04-02,feb306b16e82,premium bundle,AUD,1227.09,20,google_ads,paid,wallet
+cli_0019_ord_00032,2026-04-10,e9db53f57a02,audit package,AUD,517.45,0,organic,paid,upi
+cli_0019_ord_00033,2026-04-23,5b1a6ae0f7c4,annual subscription,AUD,1741.26,20,meta_ads,paid,bank_transfer
+cli_0019_ord_00034,2026-03-15,866372e00b95,service retainer,AUD,2041.8,5,google_ads,paid,upi
+cli_0019_ord_00035,2026-03-23,2561b91be9a2,starter plan,AUD,1889.51,10,referral,paid,card
+cli_0019_ord_00036,2025-12-26,1e80bff35d95,premium bundle,AUD,449.92,5,email,paid,paypal
+cli_0019_ord_00037,2026-03-01,8dd359f2e224,premium bundle,AUD,1046.56,10,organic,paid,card
+cli_0019_ord_00038,2025-12-25,3f726bf75484,pro plan,AUD,2082.36,20,referral,paid,paypal
+cli_0019_ord_00039,2025-12-30,f554e3bf266a,premium bundle,AUD,1253.5,10,email,paid,upi
+cli_0019_ord_00040,2026-03-03,af69a3790527,membership,AUD,1429.6,20,organic,pending,paypal
+cli_0019_ord_00041,2026-01-19,0b8d6d6b0f00,premium bundle,AUD,2061.31,5,referral,paid,card
+cli_0019_ord_00042,2025-11-18,6208d096be02,membership,AUD,2357.83,10,organic,paid,upi
+cli_0019_ord_00043,2026-04-15,6d257af54285,pro plan,AUD,2108.28,25,referral,paid,card
+cli_0019_ord_00044,2026-03-29,1f58881dffd4,audit package,AUD,918.46,0,google_ads,paid,wallet
+cli_0019_ord_00045,2026-01-09,64e8cc423c33,membership,AUD,318.92,20,meta_ads,paid,paypal
+cli_0019_ord_00046,2025-12-08,31bcfb679800,starter plan,AUD,1096.97,25,meta_ads,paid,card
+cli_0019_ord_00047,2026-04-08,ce6c0548c2ee,membership,AUD,1013.1,0,meta_ads,paid,card
+cli_0019_ord_00048,2026-02-17,4a67487f9202,audit package,AUD,698.3,25,referral,paid,bank_transfer
+cli_0019_ord_00049,2026-01-30,7323532d8558,annual subscription,AUD,1348.92,25,google_ads,paid,card
+cli_0019_ord_00050,2025-12-26,e2103c217af1,audit package,AUD,1709.38,10,meta_ads,paid,bank_transfer
+cli_0019_ord_00051,2026-03-03,c7716f199de8,premium bundle,AUD,1744.39,5,google_ads,paid,card
+cli_0019_ord_00052,2026-01-31,034bee0561e6,pro plan,AUD,1966.4,10,google_ads,paid,bank_transfer
+cli_0019_ord_00053,2025-11-19,84158e4379db,audit package,AUD,1361.43,10,email,paid,card
+cli_0019_ord_00054,2025-11-16,133ba07efc99,service retainer,AUD,1382.58,15,organic,paid,paypal
+cli_0019_ord_00055,2026-01-08,9eb307619faf,audit package,AUD,1941.36,20,google_ads,pending,card
+cli_0019_ord_00056,2026-04-03,864e0aa9b61c,pro plan,AUD,691.54,10,google_ads,pending,upi
+cli_0019_ord_00057,2025-11-06,1466c5c10de9,service retainer,AUD,1360.05,25,google_ads,paid,card
+cli_0019_ord_00058,2025-12-22,724757f7b52c,annual subscription,AUD,639.59,20,organic,paid,bank_transfer
+cli_0019_ord_00059,2026-04-05,0804df582175,service retainer,AUD,1123.02,0,meta_ads,paid,bank_transfer
+cli_0019_ord_00060,2026-04-05,90f404cbb966,service retainer,AUD,1836.22,0,meta_ads,paid,wallet
+cli_0019_ord_00061,2026-02-20,7c21e9733169,starter plan,AUD,1154.59,10,google_ads,paid,upi
+cli_0019_ord_00062,2025-12-28,a4b5c3493aef,pro plan,AUD,1207.37,15,meta_ads,paid,upi
+cli_0019_ord_00063,2026-02-07,4376e124db8e,service retainer,AUD,615.9,5,meta_ads,paid,paypal
+cli_0019_ord_00064,2026-01-22,0d5c6f418ffc,pro plan,AUD,1063.42,25,organic,paid,upi
+cli_0019_ord_00065,2025-11-17,8d710ad1e074,membership,AUD,949.76,10,meta_ads,paid,bank_transfer
+cli_0019_ord_00066,2026-04-22,56238bbcc639,pro plan,AUD,502.8,15,meta_ads,paid,bank_transfer
+cli_0019_ord_00067,2025-12-20,dd22c0a881e6,annual subscription,AUD,2405.76,25,meta_ads,paid,bank_transfer
+cli_0019_ord_00068,2026-03-19,d968488f66b4,pro plan,AUD,687.53,25,meta_ads,paid,bank_transfer
+cli_0019_ord_00069,2026-03-03,8b2ddf28fb87,membership,AUD,1166.42,20,meta_ads,paid,paypal
+cli_0019_ord_00070,2026-01-26,a6b5db057b1b,annual subscription,AUD,1731.56,10,referral,paid,card
+cli_0019_ord_00071,2026-01-02,69a3ec2774ff,premium bundle,AUD,2476.59,15,email,paid,card
+cli_0019_ord_00072,2025-12-20,be801a482a78,starter plan,AUD,500.19,10,email,paid,bank_transfer
+cli_0019_ord_00073,2026-02-11,79d062a1d2cb,annual subscription,AUD,1245.85,0,meta_ads,paid,bank_transfer
+cli_0019_ord_00074,2025-11-27,5d5e9df11bdd,service retainer,AUD,797.61,0,referral,paid,card
+cli_0019_ord_00075,2026-01-16,685703a5a5e7,service retainer,AUD,1155.17,15,referral,paid,wallet
+cli_0019_ord_00076,2026-01-18,5a1b77f5b79c,membership,AUD,2390.43,0,referral,paid,wallet
+cli_0019_ord_00077,2026-04-19,3b16a0d6a2e3,audit package,AUD,1840.22,25,meta_ads,refunded,paypal
+cli_0019_ord_00078,2026-04-01,83b0ef17b83c,membership,AUD,1427.18,0,google_ads,paid,paypal
+cli_0019_ord_00079,2026-03-10,40ab2c86677d,premium bundle,AUD,481.24,5,email,paid,wallet
+cli_0019_ord_00080,2025-11-27,a4dacf3b8a80,pro plan,AUD,2266.9,5,organic,paid,wallet
+cli_0019_ord_00081,2026-04-15,8925bb71e444,starter plan,AUD,1542.88,15,email,pending,wallet
+cli_0019_ord_00082,2026-04-18,a20c87697d29,membership,AUD,1831.87,20,email,paid,paypal
+cli_0019_ord_00083,2026-03-23,1e5eab68eb96,annual subscription,AUD,49.32,20,meta_ads,paid,upi
+cli_0019_ord_00084,2026-03-02,794b41050e81,annual subscription,AUD,157.22,5,referral,refunded,wallet
+cli_0019_ord_00085,2025-11-12,82782ef48978,membership,AUD,228.69,0,email,paid,card

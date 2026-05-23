@@ -1,0 +1,20 @@
+{
+  "client_id": "cli_0013",
+  "company_name": "Urban Works",
+  "industry": "healthcare",
+  "region": "EU",
+  "currency": "EUR",
+  "website": "https://urban-works.example.com",
+  "business_model": "b2b",
+  "employee_band": "201-500",
+  "objective": "traffic",
+  "budget_monthly": 5000,
+  "voice": "premium",
+  "channels": [
+    "google_ads",
+    "direct",
+    "tiktok_ads",
+    "organic"
+  ],
+  "created_at": "2026-04-23T20:56:11.221673Z"
+}

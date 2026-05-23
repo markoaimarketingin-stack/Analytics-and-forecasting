@@ -1,0 +1,15 @@
+payment_id,invoice_id,payment_date,currency,amount,method,status
+cli_0010_pay_0001,cli_0010_inv_0001,2026-01-15,GBP,11018.47,upi,settled
+cli_0010_pay_0005,cli_0010_inv_0005,2026-01-18,GBP,4653.2,bank_transfer,settled
+cli_0010_pay_0008,cli_0010_inv_0008,2026-01-13,GBP,2004.4,upi,settled
+cli_0010_pay_0010,cli_0010_inv_0010,2026-01-15,GBP,10331.94,paypal,settled
+cli_0010_pay_0013,cli_0010_inv_0013,2025-12-09,GBP,9950.47,card,settled
+cli_0010_pay_0015,cli_0010_inv_0015,2026-04-12,GBP,3725.51,card,settled
+cli_0010_pay_0016,cli_0010_inv_0016,2026-02-22,GBP,278.53,paypal,settled
+cli_0010_pay_0019,cli_0010_inv_0019,2026-03-26,GBP,6856.42,paypal,settled
+cli_0010_pay_0020,cli_0010_inv_0020,2025-12-09,GBP,10988.22,paypal,settled
+cli_0010_pay_0023,cli_0010_inv_0023,2026-03-27,GBP,8219.76,card,settled
+cli_0010_pay_0024,cli_0010_inv_0024,2025-12-18,GBP,5099.66,paypal,settled
+cli_0010_pay_0025,cli_0010_inv_0025,2026-03-31,GBP,11720.39,bank_transfer,settled
+cli_0010_pay_0026,cli_0010_inv_0026,2026-02-18,GBP,7346.13,bank_transfer,settled
+cli_0010_pay_0027,cli_0010_inv_0027,2026-01-27,GBP,8642.68,paypal,settled

@@ -1,0 +1,29 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0010_inv_0001,2026-03-07,2026-03-29,GBP,11018.47,paid,Mia Reddy,strategy work
+cli_0010_inv_0002,2025-12-10,2026-04-11,GBP,11440.88,open,Anika Khan,consulting; creative work
+cli_0010_inv_0003,2025-10-30,2026-04-21,GBP,4768.56,open,Arjun Bhatia,strategy work; consulting; setup fee
+cli_0010_inv_0004,2026-01-16,2026-04-07,GBP,2066.19,open,Liam Kapoor,consulting; media spend
+cli_0010_inv_0005,2026-03-16,2026-04-06,GBP,4653.2,paid,Leo Kapoor,consulting
+cli_0010_inv_0006,2026-01-01,2026-06-04,GBP,500.05,open,Zara Patel,creative work; strategy work; setup fee
+cli_0010_inv_0007,2026-04-21,2026-04-24,GBP,1893.21,overdue,Arjun Joshi,consulting; strategy work
+cli_0010_inv_0008,2026-03-24,2026-06-03,GBP,2004.4,paid,Zara Sharma,support
+cli_0010_inv_0009,2026-01-26,2026-05-02,GBP,5478.67,overdue,Ishaan Joshi,setup fee; support
+cli_0010_inv_0010,2026-01-02,2026-04-16,GBP,10331.94,paid,Ishaan Reddy,strategy work; creative work; setup fee
+cli_0010_inv_0011,2026-03-16,2026-05-20,GBP,1908.77,open,Arjun Patel,creative work; consulting; media spend
+cli_0010_inv_0012,2025-11-06,2026-04-07,GBP,11260.66,open,Mia Reddy,support; strategy work
+cli_0010_inv_0013,2026-04-14,2026-06-08,GBP,9950.47,paid,Arjun Bhatia,support; setup fee
+cli_0010_inv_0014,2026-04-11,2026-04-12,GBP,8118.2,open,Leo Singh,support; setup fee
+cli_0010_inv_0015,2026-02-12,2026-04-28,GBP,3725.51,paid,Sara Verma,strategy work; support
+cli_0010_inv_0016,2025-10-28,2026-04-23,GBP,278.53,paid,Zara Kapoor,strategy work
+cli_0010_inv_0017,2025-11-08,2026-05-15,GBP,3674.84,open,Arjun Singh,consulting; setup fee
+cli_0010_inv_0018,2025-11-10,2026-04-25,GBP,7921.47,overdue,Maya Nair,media spend
+cli_0010_inv_0019,2026-01-02,2026-04-13,GBP,6856.42,paid,Anika Verma,setup fee; media spend; creative work
+cli_0010_inv_0020,2026-02-02,2026-04-22,GBP,10988.22,paid,Maya Bhatia,setup fee
+cli_0010_inv_0021,2026-03-07,2026-04-06,GBP,5987.13,open,Ishaan Reddy,creative work; media spend
+cli_0010_inv_0022,2025-12-07,2026-05-25,GBP,3035.1,overdue,Kabir Singh,support; setup fee
+cli_0010_inv_0023,2026-04-22,2026-05-26,GBP,8219.76,paid,Ava Reddy,creative work
+cli_0010_inv_0024,2026-03-29,2026-04-14,GBP,5099.66,paid,Zara Sharma,strategy work; creative work
+cli_0010_inv_0025,2025-12-06,2026-04-02,GBP,11720.39,paid,Maya Joshi,setup fee; creative work; strategy work
+cli_0010_inv_0026,2025-11-11,2026-05-13,GBP,7346.13,paid,Ava Singh,creative work; support; consulting
+cli_0010_inv_0027,2026-04-13,2026-04-04,GBP,8642.68,paid,Noah Singh,support; setup fee; creative work
+cli_0010_inv_0028,2026-02-16,2026-05-21,GBP,5553.62,open,Sara Reddy,setup fee

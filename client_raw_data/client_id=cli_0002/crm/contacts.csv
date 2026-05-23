@@ -1,0 +1,93 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0002_ct_0001,Anika Joshi,anika.joshi0@examplemail.com,Pulse Commerce,RevOps Manager,mql,website_form,United Kingdom,2025-05-05,2026-03-23
+cli_0002_ct_0002,Kabir Joshi,kabir.joshi1@examplemail.com,Metro Group,RevOps Manager,mql,website_form,UAE,2025-07-16,2026-02-08
+cli_0002_ct_0003,Leo Sharma,leo.sharma2@examplemail.com,Orbit Inc,Marketing Manager,lead,website_form,Canada,2025-05-13,2026-03-15
+cli_0002_ct_0004,Ishaan Khan,ishaan.khan3@examplemail.com,Acme LLC,Marketing Manager,sql,website_form,UAE,2026-04-13,2026-01-18
+cli_0002_ct_0005,Maya Sharma,maya.sharma4@examplemail.com,Acme Inc,Marketing Manager,lead,website_form,UAE,2025-03-03,2026-03-05
+cli_0002_ct_0006,Anika Sharma,anika.sharma5@examplemail.com,Acme LLC,Marketing Manager,mql,email_reply,Canada,2024-11-08,2026-03-10
+cli_0002_ct_0007,Ishaan Verma,ishaan.verma6@examplemail.com,Zen LLC,Sales Lead,customer,import,India,2026-02-15,2026-02-03
+cli_0002_ct_0008,Anika Nair,anika.nair7@examplemail.com,Acme Inc,Marketing Manager,sql,import,India,2025-09-25,2026-01-17
+cli_0002_ct_0009,Sara Sharma,sara.sharma8@examplemail.com,Pulse Commerce,Sales Lead,lead,referral,United Kingdom,2025-05-16,2026-02-24
+cli_0002_ct_0010,Sara Bhatia,sara.bhatia9@examplemail.com,Metro Inc,Head of Growth,lead,referral,India,2025-01-27,2026-03-07
+cli_0002_ct_0011,Maya Nair,maya.nair10@examplemail.com,Pulse Commerce,Marketing Manager,sql,import,United States,2025-12-21,2026-01-09
+cli_0002_ct_0012,Zara Bhatia,zara.bhatia11@examplemail.com,Zen Inc,Marketing Manager,sql,email_reply,United States,2025-10-19,2026-01-01
+cli_0002_ct_0013,Kabir Bhatia,kabir.bhatia12@examplemail.com,Metro Group,RevOps Manager,lead,website_form,India,2025-07-12,2026-04-03
+cli_0002_ct_0014,Mia Patel,mia.patel13@examplemail.com,Peak Ltd,Head of Growth,lead,import,United States,2025-10-27,2026-01-23
+cli_0002_ct_0015,Noah Mehta,noah.mehta14@examplemail.com,Acme LLC,Head of Growth,lead,website_form,India,2025-08-11,2026-01-10
+cli_0002_ct_0016,Zara Reddy,zara.reddy15@examplemail.com,Zen Group,Sales Lead,lead,email_reply,Canada,2026-01-10,2026-02-12
+cli_0002_ct_0017,Zara Reddy,zara.reddy16@examplemail.com,Pulse Commerce,Sales Lead,mql,import,Canada,2025-02-17,2026-01-27
+cli_0002_ct_0018,Zara Reddy,zara.reddy17@examplemail.com,Peak Group,Sales Lead,churn_risk,email_reply,UAE,2026-04-18,2026-01-25
+cli_0002_ct_0019,Liam Joshi,liam.joshi18@examplemail.com,Pulse Commerce,Head of Growth,lead,import,United Kingdom,2025-07-03,2025-12-26
+cli_0002_ct_0020,Ava Khan,ava.khan19@examplemail.com,Zen LLC,Sales Lead,lead,referral,Australia,2025-10-09,2026-02-09
+cli_0002_ct_0021,Mia Sharma,mia.sharma20@examplemail.com,Pulse Commerce,Sales Lead,customer,import,India,2025-06-27,2026-04-13
+cli_0002_ct_0022,Maya Singh,maya.singh21@examplemail.com,Orbit Inc,Marketing Manager,lead,import,United States,2025-06-15,2026-03-17
+cli_0002_ct_0023,Kabir Joshi,kabir.joshi22@examplemail.com,Pulse Commerce,Marketing Manager,mql,email_reply,India,2026-01-22,2026-03-25
+cli_0002_ct_0024,Kabir Joshi,kabir.joshi23@examplemail.com,Zen Group,RevOps Manager,lead,website_form,Australia,2024-12-26,2026-04-23
+cli_0002_ct_0025,Anika Joshi,anika.joshi24@examplemail.com,Acme Inc,Founder,lead,website_form,Canada,2025-02-15,2026-02-11
+cli_0002_ct_0026,Zara Bhatia,zara.bhatia25@examplemail.com,Orbit LLC,Marketing Manager,lead,website_form,United Kingdom,2026-04-13,2026-01-31
+cli_0002_ct_0027,Leo Nair,leo.nair26@examplemail.com,Acme LLC,Founder,sql,website_form,United States,2025-12-11,2026-01-02
+cli_0002_ct_0028,Anika Nair,anika.nair27@examplemail.com,Pulse Commerce,Sales Lead,lead,website_form,UAE,2025-04-19,2026-03-24
+cli_0002_ct_0029,Leo Nair,leo.nair28@examplemail.com,Pulse Commerce,Marketing Manager,lead,website_form,United Kingdom,2026-02-16,2026-01-26
+cli_0002_ct_0030,Arjun Mehta,arjun.mehta29@examplemail.com,Pulse Commerce,Marketing Manager,mql,website_form,United Kingdom,2025-12-07,2026-02-19
+cli_0002_ct_0031,Liam Khan,liam.khan30@examplemail.com,Peak Ltd,Head of Growth,customer,import,United States,2025-05-09,2026-03-26
+cli_0002_ct_0032,Zara Gupta,zara.gupta31@examplemail.com,Pulse Commerce,Founder,sql,website_form,Canada,2025-02-24,2026-03-23
+cli_0002_ct_0033,Maya Gupta,maya.gupta32@examplemail.com,Acme Ltd,Sales Lead,lead,referral,UAE,2025-09-13,2026-04-03
+cli_0002_ct_0034,Kabir Joshi,kabir.joshi33@examplemail.com,Pulse Commerce,Head of Growth,customer,website_form,UAE,2025-12-22,2026-04-13
+cli_0002_ct_0035,Noah Bhatia,noah.bhatia34@examplemail.com,Pulse Commerce,Marketing Manager,sql,website_form,United States,2025-09-29,2026-04-23
+cli_0002_ct_0036,Maya Mehta,maya.mehta35@examplemail.com,Zen Group,Marketing Manager,customer,import,India,2024-12-31,2026-01-24
+cli_0002_ct_0037,Sara Reddy,sara.reddy36@examplemail.com,Pulse Commerce,Head of Growth,lead,website_form,UAE,2025-06-21,2026-04-11
+cli_0002_ct_0038,Mia Gupta,mia.gupta37@examplemail.com,Zen LLC,RevOps Manager,mql,event,Canada,2025-05-14,2026-01-26
+cli_0002_ct_0039,Anika Reddy,anika.reddy38@examplemail.com,Pulse Commerce,Sales Lead,lead,import,Australia,2024-11-27,2026-03-03
+cli_0002_ct_0040,Ava Reddy,ava.reddy39@examplemail.com,Zen Group,Marketing Manager,sql,event,Canada,2025-06-08,2026-04-05
+cli_0002_ct_0041,Noah Gupta,noah.gupta40@examplemail.com,Pulse Commerce,Marketing Manager,lead,website_form,United States,2024-12-06,2026-03-18
+cli_0002_ct_0042,Leo Bhatia,leo.bhatia41@examplemail.com,Pulse Commerce,Sales Lead,sql,website_form,UAE,2025-08-15,2026-02-24
+cli_0002_ct_0043,Liam Joshi,liam.joshi42@examplemail.com,Zen Inc,Sales Lead,lead,import,United States,2025-05-11,2026-02-15
+cli_0002_ct_0044,Noah Reddy,noah.reddy43@examplemail.com,Metro Inc,Sales Lead,mql,website_form,India,2025-08-07,2026-01-06
+cli_0002_ct_0045,Ishaan Verma,ishaan.verma44@examplemail.com,Metro Inc,RevOps Manager,lead,website_form,Canada,2025-11-05,2026-02-07
+cli_0002_ct_0046,Ava Joshi,ava.joshi45@examplemail.com,Acme Group,Marketing Manager,lead,import,United States,2025-04-25,2026-02-18
+cli_0002_ct_0047,Sara Sharma,sara.sharma46@examplemail.com,Pulse Commerce,Sales Lead,mql,import,UAE,2025-06-21,2026-03-13
+cli_0002_ct_0048,Noah Sharma,noah.sharma47@examplemail.com,Pulse Commerce,RevOps Manager,lead,import,Australia,2025-11-03,2026-02-13
+cli_0002_ct_0049,Mia Mehta,mia.mehta48@examplemail.com,Zen Group,RevOps Manager,churn_risk,website_form,India,2025-12-24,2026-01-08
+cli_0002_ct_0050,Noah Verma,noah.verma49@examplemail.com,Peak LLC,RevOps Manager,mql,import,India,2025-06-11,2026-04-20
+cli_0002_ct_0051,Zara Khan,zara.khan50@examplemail.com,Orbit Group,Sales Lead,sql,website_form,Canada,2025-12-20,2026-01-07
+cli_0002_ct_0052,Kabir Sharma,kabir.sharma51@examplemail.com,Pulse Commerce,Head of Growth,customer,website_form,United Kingdom,2024-11-28,2026-03-24
+cli_0002_ct_0053,Ishaan Mehta,ishaan.mehta52@examplemail.com,Pulse Commerce,Head of Growth,lead,email_reply,United States,2025-01-24,2026-03-14
+cli_0002_ct_0054,Ishaan Gupta,ishaan.gupta53@examplemail.com,Pulse Commerce,Founder,lead,event,Australia,2025-05-28,2026-01-30
+cli_0002_ct_0055,Noah Reddy,noah.reddy54@examplemail.com,Pulse Commerce,Sales Lead,lead,website_form,UAE,2026-01-13,2026-03-14
+cli_0002_ct_0056,Kabir Khan,kabir.khan55@examplemail.com,Metro Inc,Head of Growth,churn_risk,website_form,Australia,2026-03-27,2026-03-25
+cli_0002_ct_0057,Sara Patel,sara.patel56@examplemail.com,Pulse Commerce,Marketing Manager,sql,import,Canada,2025-08-01,2026-04-23
+cli_0002_ct_0058,Sara Joshi,sara.joshi57@examplemail.com,Pulse Commerce,Marketing Manager,lead,website_form,Canada,2025-04-15,2026-01-01
+cli_0002_ct_0059,Liam Gupta,liam.gupta58@examplemail.com,Pulse Commerce,Sales Lead,churn_risk,import,Australia,2025-04-23,2026-01-12
+cli_0002_ct_0060,Sara Singh,sara.singh59@examplemail.com,Metro Group,Sales Lead,sql,website_form,UAE,2026-01-01,2026-01-22
+cli_0002_ct_0061,Anika Sharma,anika.sharma60@examplemail.com,Metro Inc,RevOps Manager,customer,email_reply,United States,2026-03-30,2025-12-27
+cli_0002_ct_0062,Maya Khan,maya.khan61@examplemail.com,Pulse Commerce,Founder,sql,website_form,United States,2025-02-02,2026-03-16
+cli_0002_ct_0063,Noah Singh,noah.singh62@examplemail.com,Metro Inc,RevOps Manager,customer,website_form,Australia,2025-10-28,2026-02-26
+cli_0002_ct_0064,Mia Singh,mia.singh63@examplemail.com,Pulse Commerce,RevOps Manager,customer,import,UAE,2025-06-23,2026-01-16
+cli_0002_ct_0065,Arjun Joshi,arjun.joshi64@examplemail.com,Pulse Commerce,Marketing Manager,sql,import,India,2025-01-07,2026-02-20
+cli_0002_ct_0066,Anika Verma,anika.verma65@examplemail.com,Acme Group,Head of Growth,lead,website_form,Australia,2024-12-18,2026-03-27
+cli_0002_ct_0067,Ava Nair,ava.nair66@examplemail.com,Pulse Commerce,Head of Growth,lead,email_reply,UAE,2025-08-14,2026-04-10
+cli_0002_ct_0068,Liam Khan,liam.khan67@examplemail.com,Orbit Inc,Founder,mql,website_form,Australia,2025-12-14,2026-01-09
+cli_0002_ct_0069,Maya Joshi,maya.joshi68@examplemail.com,Metro Inc,Sales Lead,churn_risk,website_form,India,2025-12-22,2026-01-01
+cli_0002_ct_0070,Liam Bhatia,liam.bhatia69@examplemail.com,Peak LLC,Founder,sql,email_reply,United States,2025-02-16,2026-04-21
+cli_0002_ct_0071,Kabir Joshi,kabir.joshi70@examplemail.com,Acme Ltd,Marketing Manager,lead,referral,United Kingdom,2026-01-25,2026-01-21
+cli_0002_ct_0072,Noah Singh,noah.singh71@examplemail.com,Acme Ltd,Founder,lead,referral,United States,2026-02-28,2026-01-05
+cli_0002_ct_0073,Noah Patel,noah.patel72@examplemail.com,Acme LLC,Marketing Manager,customer,email_reply,UAE,2025-11-29,2026-01-31
+cli_0002_ct_0074,Leo Mehta,leo.mehta73@examplemail.com,Pulse Commerce,Marketing Manager,mql,import,United States,2025-01-03,2026-01-28
+cli_0002_ct_0075,Anika Verma,anika.verma74@examplemail.com,Pulse Commerce,RevOps Manager,mql,referral,Australia,2025-03-30,2026-01-20
+cli_0002_ct_0076,Anika Khan,anika.khan75@examplemail.com,Pulse Commerce,RevOps Manager,customer,event,United Kingdom,2025-03-01,2026-02-02
+cli_0002_ct_0077,Sara Kapoor,sara.kapoor76@examplemail.com,Metro Group,Founder,lead,email_reply,United States,2024-11-23,2026-01-20
+cli_0002_ct_0078,Maya Bhatia,maya.bhatia77@examplemail.com,Pulse Commerce,Marketing Manager,lead,event,United States,2025-11-08,2026-02-20
+cli_0002_ct_0079,Maya Mehta,maya.mehta78@examplemail.com,Acme Ltd,Founder,mql,website_form,UAE,2025-05-14,2026-03-23
+cli_0002_ct_0080,Ishaan Mehta,ishaan.mehta79@examplemail.com,Pulse Commerce,Marketing Manager,lead,website_form,UAE,2025-10-14,2026-02-07
+cli_0002_ct_0081,Arjun Bhatia,arjun.bhatia80@examplemail.com,Peak Ltd,RevOps Manager,mql,website_form,India,2025-05-20,2026-03-10
+cli_0002_ct_0082,Liam Joshi,liam.joshi81@examplemail.com,Peak Ltd,Marketing Manager,sql,event,UAE,2026-02-14,2026-04-15
+cli_0002_ct_0083,Maya Mehta,maya.mehta82@examplemail.com,Pulse Commerce,Marketing Manager,lead,website_form,United States,2025-12-31,2026-01-12
+cli_0002_ct_0084,Maya Singh,maya.singh83@examplemail.com,Pulse Commerce,Sales Lead,mql,website_form,United Kingdom,2025-01-07,2025-12-27
+cli_0002_ct_0085,Liam Bhatia,liam.bhatia84@examplemail.com,Metro Inc,Sales Lead,mql,email_reply,India,2025-01-14,2026-03-27
+cli_0002_ct_0086,Anika Khan,anika.khan85@examplemail.com,Pulse Commerce,Head of Growth,customer,website_form,Canada,2026-01-26,2026-01-20
+cli_0002_ct_0087,Ishaan Bhatia,ishaan.bhatia86@examplemail.com,Orbit Group,Marketing Manager,lead,website_form,United Kingdom,2025-07-01,2026-04-24
+cli_0002_ct_0088,Liam Singh,liam.singh87@examplemail.com,Pulse Commerce,Marketing Manager,customer,event,United States,2025-10-24,2026-04-12
+cli_0002_ct_0089,Maya Reddy,maya.reddy88@examplemail.com,Pulse Commerce,Head of Growth,mql,import,Canada,2025-10-14,2026-03-10
+cli_0002_ct_0090,Maya Gupta,maya.gupta89@examplemail.com,Pulse Commerce,RevOps Manager,lead,email_reply,United Kingdom,2025-05-24,2025-12-31
+cli_0002_ct_0091,Noah Gupta,noah.gupta90@examplemail.com,Pulse Commerce,Head of Growth,lead,website_form,United Kingdom,2026-02-09,2026-02-08
+cli_0002_ct_0092,Zara Kapoor,zara.kapoor91@examplemail.com,Pulse Commerce,Marketing Manager,mql,event,United Kingdom,2025-11-04,2026-01-06

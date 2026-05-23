@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0017",
+  "company_name": "Pulse Studio",
+  "industry": "saas",
+  "region": "US",
+  "generated_at": "2026-04-23T20:56:19.683834Z",
+  "counts": {
+    "contacts": 82,
+    "deals": 119,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 4,
+    "uploads": 15,
+    "marketing_rows": 180,
+    "email_campaigns": 55,
+    "posts": 59,
+    "comments": 118,
+    "tickets": 105,
+    "transcripts": 85,
+    "sessions": 28060,
+    "events": 140060,
+    "orders": 123,
+    "refunds": 12,
+    "invoices": 46,
+    "payments": 28,
+    "feedback": 165,
+    "feature_requests": 49,
+    "meeting_notes": 19,
+    "raw_observations": 34
+  }
+}

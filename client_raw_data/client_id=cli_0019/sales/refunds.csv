@@ -1,0 +1,3 @@
+refund_id,order_id,refund_date,reason,amount
+cli_0019_rf_00077,cli_0019_ord_00077,2026-02-26,customer_request,1788.54
+cli_0019_rf_00084,cli_0019_ord_00084,2026-04-16,other,78.8

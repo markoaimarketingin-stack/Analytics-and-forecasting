@@ -1,0 +1,219 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0011_ord_00001,2026-04-01,9609ef266f80,pro plan,AED,2052.6,10,google_ads,pending,paypal
+cli_0011_ord_00002,2026-03-28,72320eb0a54c,pro plan,AED,1277.51,25,tiktok_ads,paid,card
+cli_0011_ord_00003,2025-12-10,625f0b5029ba,premium bundle,AED,866.47,15,google_ads,refunded,bank_transfer
+cli_0011_ord_00004,2026-04-21,35701fb1dbb8,membership,AED,2319.84,25,organic,paid,wallet
+cli_0011_ord_00005,2025-11-26,4247377824e5,pro plan,AED,2200.94,10,linkedin_ads,refunded,wallet
+cli_0011_ord_00006,2025-10-31,76106b1de548,audit package,AED,1505.12,15,linkedin_ads,paid,upi
+cli_0011_ord_00007,2026-03-12,3ee0c5e20fc8,service retainer,AED,506.46,0,google_ads,paid,paypal
+cli_0011_ord_00008,2026-01-02,cdd115718bc2,service retainer,AED,493.08,25,linkedin_ads,paid,upi
+cli_0011_ord_00009,2026-03-31,341d4b6a8df8,premium bundle,AED,691.23,0,linkedin_ads,paid,upi
+cli_0011_ord_00010,2026-02-12,0fcfa302ee0a,premium bundle,AED,346.59,20,organic,paid,upi
+cli_0011_ord_00011,2025-12-02,b3557e4ce863,pro plan,AED,2040.24,5,google_ads,paid,bank_transfer
+cli_0011_ord_00012,2025-12-18,d8f61560c4d5,pro plan,AED,1707.15,0,google_ads,paid,wallet
+cli_0011_ord_00013,2025-12-23,ae6fa99eb25a,audit package,AED,971.63,25,linkedin_ads,paid,paypal
+cli_0011_ord_00014,2025-12-20,4b3567363f56,starter plan,AED,1672.16,20,linkedin_ads,pending,bank_transfer
+cli_0011_ord_00015,2026-01-07,e9f021b997f2,service retainer,AED,1450.02,20,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00016,2026-03-04,aee6bf7f09e7,membership,AED,624.3,0,organic,paid,wallet
+cli_0011_ord_00017,2025-12-21,ee5e513d6272,audit package,AED,1589.91,15,google_ads,paid,card
+cli_0011_ord_00018,2025-11-17,ba1e81e59397,annual subscription,AED,338.7,10,organic,paid,upi
+cli_0011_ord_00019,2026-04-13,693e8692fca2,service retainer,AED,183.38,15,google_ads,paid,paypal
+cli_0011_ord_00020,2025-12-30,66609681b4d3,membership,AED,716.02,10,linkedin_ads,paid,upi
+cli_0011_ord_00021,2026-01-12,562bf0ff6abc,membership,AED,1695.21,20,linkedin_ads,refunded,wallet
+cli_0011_ord_00022,2025-12-13,43600a5dcaad,starter plan,AED,2486.79,5,organic,pending,wallet
+cli_0011_ord_00023,2026-04-07,ccb214cd70f0,premium bundle,AED,1767.28,20,google_ads,paid,bank_transfer
+cli_0011_ord_00024,2026-04-17,d81889908fda,premium bundle,AED,2449.11,10,linkedin_ads,paid,upi
+cli_0011_ord_00025,2026-03-28,f86526e1637c,premium bundle,AED,2298.86,5,organic,paid,wallet
+cli_0011_ord_00026,2026-03-17,29e27d045ee0,membership,AED,1108.66,25,organic,paid,wallet
+cli_0011_ord_00027,2026-03-18,09b5c7cb9da2,annual subscription,AED,2171.63,25,tiktok_ads,paid,paypal
+cli_0011_ord_00028,2026-02-16,660086746ce2,membership,AED,1928.01,5,organic,paid,wallet
+cli_0011_ord_00029,2025-11-06,e47cf77f92fa,starter plan,AED,1089.03,0,google_ads,paid,wallet
+cli_0011_ord_00030,2026-02-26,d5ffe2ab1e88,audit package,AED,744.44,15,linkedin_ads,paid,card
+cli_0011_ord_00031,2026-01-15,646ad44f83a2,audit package,AED,536.11,20,organic,paid,upi
+cli_0011_ord_00032,2025-11-19,f3fc80d78e08,premium bundle,AED,2336.75,5,tiktok_ads,pending,bank_transfer
+cli_0011_ord_00033,2026-02-02,c821e5fc440d,audit package,AED,1850.9,10,tiktok_ads,paid,upi
+cli_0011_ord_00034,2026-03-10,c292a2e3f1af,premium bundle,AED,926.53,25,organic,pending,card
+cli_0011_ord_00035,2025-12-24,e62feae38569,membership,AED,860.79,10,linkedin_ads,paid,card
+cli_0011_ord_00036,2025-11-16,2e16c94787fd,audit package,AED,2155.05,25,organic,paid,paypal
+cli_0011_ord_00037,2026-04-09,ac167f431670,starter plan,AED,1938.98,5,tiktok_ads,paid,paypal
+cli_0011_ord_00038,2026-03-21,75c517eb4d5e,starter plan,AED,2108.06,20,google_ads,paid,card
+cli_0011_ord_00039,2025-11-26,37ece5d04a34,audit package,AED,642.85,10,linkedin_ads,paid,paypal
+cli_0011_ord_00040,2026-03-24,6ef36074ad3e,annual subscription,AED,1002.42,20,google_ads,paid,paypal
+cli_0011_ord_00041,2026-04-24,673912bc63b6,audit package,AED,1175.44,0,linkedin_ads,refunded,bank_transfer
+cli_0011_ord_00042,2025-11-01,846fa01cda58,starter plan,AED,1048.29,5,organic,paid,card
+cli_0011_ord_00043,2026-03-20,ede6e36e2e56,membership,AED,1427.34,5,organic,paid,paypal
+cli_0011_ord_00044,2025-11-12,82257ae84575,audit package,AED,2007.03,15,tiktok_ads,paid,card
+cli_0011_ord_00045,2026-04-04,20e782cda36a,annual subscription,AED,663.57,15,tiktok_ads,paid,paypal
+cli_0011_ord_00046,2025-11-15,d1b692e982d9,premium bundle,AED,1231.96,10,tiktok_ads,paid,upi
+cli_0011_ord_00047,2025-12-30,5e6a4e948244,audit package,AED,820.16,25,organic,paid,upi
+cli_0011_ord_00048,2026-02-26,130a1568f275,pro plan,AED,1641.85,10,linkedin_ads,paid,card
+cli_0011_ord_00049,2026-02-17,ea0e3e539472,premium bundle,AED,1913.43,10,organic,paid,wallet
+cli_0011_ord_00050,2026-01-30,25bdefe33693,audit package,AED,2043.97,0,google_ads,paid,card
+cli_0011_ord_00051,2025-12-15,7d443fd6e236,membership,AED,683.96,15,google_ads,paid,upi
+cli_0011_ord_00052,2025-12-14,27c2bb379891,premium bundle,AED,2182.44,0,linkedin_ads,paid,paypal
+cli_0011_ord_00053,2025-11-08,d24743d21561,membership,AED,204.68,20,google_ads,paid,wallet
+cli_0011_ord_00054,2026-04-06,538fbf94274c,annual subscription,AED,872.68,20,google_ads,paid,upi
+cli_0011_ord_00055,2026-01-24,1197bbd5c995,starter plan,AED,855.04,25,organic,paid,bank_transfer
+cli_0011_ord_00056,2026-01-13,475ba0e4fcb3,starter plan,AED,1169.48,5,organic,paid,upi
+cli_0011_ord_00057,2025-12-07,6d502233a3e4,membership,AED,1481.38,25,google_ads,paid,paypal
+cli_0011_ord_00058,2026-01-17,c4e42facb11b,service retainer,AED,455.72,25,google_ads,pending,paypal
+cli_0011_ord_00059,2026-03-09,3e5449f9e5ca,annual subscription,AED,108.82,15,google_ads,paid,upi
+cli_0011_ord_00060,2025-11-20,9bf72bdb4687,premium bundle,AED,1598.79,25,organic,paid,paypal
+cli_0011_ord_00061,2026-02-21,e64f94ee393a,audit package,AED,692.09,25,google_ads,pending,wallet
+cli_0011_ord_00062,2025-11-30,45905a55124b,membership,AED,1656.27,20,organic,paid,upi
+cli_0011_ord_00063,2026-04-16,b11198262a99,service retainer,AED,466.03,5,linkedin_ads,paid,upi
+cli_0011_ord_00064,2026-03-18,ced7914c93cb,pro plan,AED,861.53,0,linkedin_ads,refunded,card
+cli_0011_ord_00065,2026-03-06,590d8d50f61f,annual subscription,AED,1009.6,15,tiktok_ads,paid,wallet
+cli_0011_ord_00066,2025-11-22,d29470a48353,starter plan,AED,762.78,20,organic,paid,wallet
+cli_0011_ord_00067,2025-12-25,fb6b8a7e2cfb,pro plan,AED,1900.2,5,google_ads,pending,wallet
+cli_0011_ord_00068,2025-12-17,c4902f6eab46,audit package,AED,393.41,0,organic,paid,card
+cli_0011_ord_00069,2025-12-19,ad4d5f0e2e3d,starter plan,AED,547.87,20,google_ads,paid,paypal
+cli_0011_ord_00070,2026-01-10,4ad86ca0d58e,service retainer,AED,1003.21,5,linkedin_ads,paid,upi
+cli_0011_ord_00071,2025-12-24,b9f00a29fe70,service retainer,AED,1922.13,0,organic,refunded,upi
+cli_0011_ord_00072,2025-12-11,66676a1f6119,audit package,AED,2126.04,15,organic,paid,upi
+cli_0011_ord_00073,2026-03-21,3fe83234b4d4,annual subscription,AED,295.99,20,google_ads,paid,bank_transfer
+cli_0011_ord_00074,2026-01-02,3442a3af4032,service retainer,AED,842.81,5,linkedin_ads,pending,card
+cli_0011_ord_00075,2025-11-06,04583dffb557,membership,AED,1698.18,25,tiktok_ads,paid,paypal
+cli_0011_ord_00076,2025-11-05,d1f3947b71a1,starter plan,AED,1065.36,5,google_ads,paid,card
+cli_0011_ord_00077,2025-11-13,d4ead7482e33,membership,AED,2067.52,10,google_ads,paid,paypal
+cli_0011_ord_00078,2026-03-28,cbe632d3449e,starter plan,AED,2257.58,15,organic,paid,paypal
+cli_0011_ord_00079,2026-02-02,d44e5770c89e,pro plan,AED,400.02,25,organic,paid,card
+cli_0011_ord_00080,2026-01-02,30dfe0b834f4,premium bundle,AED,2146.33,20,google_ads,paid,paypal
+cli_0011_ord_00081,2026-02-21,beabe13e345e,annual subscription,AED,1557.47,20,tiktok_ads,paid,upi
+cli_0011_ord_00082,2026-02-19,a94392a62f60,membership,AED,1388.97,25,organic,paid,bank_transfer
+cli_0011_ord_00083,2025-12-18,2921f679ff62,annual subscription,AED,759.23,15,linkedin_ads,paid,paypal
+cli_0011_ord_00084,2026-01-04,e94ab51c6e58,starter plan,AED,263.29,5,google_ads,paid,wallet
+cli_0011_ord_00085,2026-03-07,dad2c4b9ab95,starter plan,AED,951.87,10,google_ads,paid,paypal
+cli_0011_ord_00086,2026-03-28,3d93ba86b121,pro plan,AED,1041.09,5,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00087,2025-11-20,e934258e2ce7,service retainer,AED,2305.06,20,tiktok_ads,pending,paypal
+cli_0011_ord_00088,2026-03-06,e26426a1cbfc,pro plan,AED,1647.8,0,linkedin_ads,paid,wallet
+cli_0011_ord_00089,2026-04-08,490abf28decb,audit package,AED,2310.89,5,organic,paid,paypal
+cli_0011_ord_00090,2026-03-28,f6dca9daec2a,pro plan,AED,382.12,10,linkedin_ads,paid,upi
+cli_0011_ord_00091,2025-12-18,4b174c1ade96,starter plan,AED,1429.3,25,google_ads,refunded,upi
+cli_0011_ord_00092,2026-04-01,15951513cf45,starter plan,AED,2362.95,5,tiktok_ads,paid,bank_transfer
+cli_0011_ord_00093,2025-12-26,0971117b3e47,audit package,AED,332.51,15,organic,paid,card
+cli_0011_ord_00094,2026-03-06,a18371742482,service retainer,AED,2492.91,15,organic,paid,bank_transfer
+cli_0011_ord_00095,2026-04-04,e55fd64f80a5,service retainer,AED,991.01,20,linkedin_ads,paid,paypal
+cli_0011_ord_00096,2026-03-16,de8cc4743a2b,starter plan,AED,989.35,10,organic,paid,card
+cli_0011_ord_00097,2026-03-24,94c094cff6a1,service retainer,AED,1962.91,5,linkedin_ads,paid,card
+cli_0011_ord_00098,2025-11-30,58e346b51596,audit package,AED,1468.3,20,google_ads,paid,upi
+cli_0011_ord_00099,2025-11-02,b3d51ddb8a53,membership,AED,502.11,15,organic,paid,wallet
+cli_0011_ord_00100,2026-04-11,a47298f42ff3,service retainer,AED,946.44,25,google_ads,paid,paypal
+cli_0011_ord_00101,2026-01-07,8c718ae5afd7,audit package,AED,1347.46,0,organic,paid,bank_transfer
+cli_0011_ord_00102,2025-12-12,db36ac845435,annual subscription,AED,639.64,5,organic,paid,bank_transfer
+cli_0011_ord_00103,2025-12-24,980376500199,audit package,AED,2331.1,5,organic,paid,upi
+cli_0011_ord_00104,2025-11-20,e70abf659331,service retainer,AED,2477.59,15,google_ads,paid,upi
+cli_0011_ord_00105,2026-04-20,8453f464eb73,annual subscription,AED,972.36,25,google_ads,pending,paypal
+cli_0011_ord_00106,2026-04-22,4cf3c10b5185,audit package,AED,2391.75,0,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00107,2025-12-01,bd9b0d9769c4,pro plan,AED,2130.83,15,linkedin_ads,paid,card
+cli_0011_ord_00108,2026-02-19,78310d6b11d9,starter plan,AED,1261.6,5,linkedin_ads,paid,upi
+cli_0011_ord_00109,2026-02-05,2f0051d08d6b,audit package,AED,2259.56,20,tiktok_ads,paid,upi
+cli_0011_ord_00110,2026-03-25,525787b6f68a,membership,AED,2102.09,25,tiktok_ads,paid,wallet
+cli_0011_ord_00111,2026-02-03,f0bcc2cad24c,premium bundle,AED,1027.36,10,organic,paid,bank_transfer
+cli_0011_ord_00112,2026-02-19,b088cdad163a,starter plan,AED,342.72,20,google_ads,paid,paypal
+cli_0011_ord_00113,2026-03-08,a329878ddba1,audit package,AED,1235.84,5,tiktok_ads,paid,card
+cli_0011_ord_00114,2026-02-24,b80031198c38,premium bundle,AED,1817.81,10,organic,pending,paypal
+cli_0011_ord_00115,2026-03-31,aa8306afec45,service retainer,AED,1893.75,0,tiktok_ads,paid,upi
+cli_0011_ord_00116,2026-01-17,8030a13a685c,audit package,AED,2261.18,20,linkedin_ads,paid,card
+cli_0011_ord_00117,2025-11-10,5b7f8aad3336,annual subscription,AED,850.02,0,organic,paid,paypal
+cli_0011_ord_00118,2025-12-05,e4c25788da46,starter plan,AED,559.82,5,organic,paid,upi
+cli_0011_ord_00119,2026-03-07,b73bae198c71,annual subscription,AED,1827.32,15,google_ads,paid,upi
+cli_0011_ord_00120,2026-02-24,dec6db87c83d,premium bundle,AED,2488.84,25,google_ads,pending,paypal
+cli_0011_ord_00121,2026-04-05,de4d69c684c4,service retainer,AED,151.15,25,tiktok_ads,paid,card
+cli_0011_ord_00122,2026-03-14,89e90e43a5be,audit package,AED,2110.6,10,organic,paid,card
+cli_0011_ord_00123,2026-02-23,1cd9fbbc35a7,starter plan,AED,2386.5,15,google_ads,paid,upi
+cli_0011_ord_00124,2026-03-31,3ffc057d184c,starter plan,AED,396.13,20,organic,paid,wallet
+cli_0011_ord_00125,2025-11-01,c83e44e76022,membership,AED,2358.89,0,google_ads,paid,card
+cli_0011_ord_00126,2025-11-11,8679bf59a77f,membership,AED,348.03,25,tiktok_ads,paid,card
+cli_0011_ord_00127,2025-12-07,0069d7ed8f18,pro plan,AED,2020.31,10,google_ads,paid,wallet
+cli_0011_ord_00128,2026-01-09,2395243f99b5,premium bundle,AED,1840.34,25,linkedin_ads,paid,upi
+cli_0011_ord_00129,2026-03-26,7929ed3aab48,audit package,AED,121.8,15,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00130,2026-01-17,2928772e3186,service retainer,AED,484.91,25,google_ads,paid,bank_transfer
+cli_0011_ord_00131,2025-11-28,89248377df7c,audit package,AED,140.35,25,tiktok_ads,pending,wallet
+cli_0011_ord_00132,2026-01-14,aed553922bd5,membership,AED,1786.11,10,google_ads,paid,wallet
+cli_0011_ord_00133,2025-11-25,9f8e31003a2d,audit package,AED,363.76,25,organic,paid,card
+cli_0011_ord_00134,2026-04-14,134f72cc39be,audit package,AED,1589.79,0,tiktok_ads,paid,bank_transfer
+cli_0011_ord_00135,2026-01-12,2d43be2c6353,pro plan,AED,317.16,0,tiktok_ads,paid,wallet
+cli_0011_ord_00136,2025-11-24,940741490f93,membership,AED,1508.29,20,tiktok_ads,pending,upi
+cli_0011_ord_00137,2026-02-17,60613242ecd0,annual subscription,AED,1960.12,25,linkedin_ads,refunded,bank_transfer
+cli_0011_ord_00138,2025-12-26,fff267c23901,annual subscription,AED,161.28,10,tiktok_ads,paid,upi
+cli_0011_ord_00139,2025-12-11,98683b45ac76,audit package,AED,1407.19,25,linkedin_ads,pending,paypal
+cli_0011_ord_00140,2026-01-08,b09dd42fd246,annual subscription,AED,938.62,10,google_ads,paid,bank_transfer
+cli_0011_ord_00141,2025-10-30,dc59e4a90162,audit package,AED,490.09,20,google_ads,refunded,card
+cli_0011_ord_00142,2026-01-15,0da91fc522ab,membership,AED,2304.33,25,google_ads,paid,wallet
+cli_0011_ord_00143,2026-01-03,9f398bfb9005,service retainer,AED,385.38,5,tiktok_ads,pending,card
+cli_0011_ord_00144,2026-03-11,c93a3c92fffb,pro plan,AED,550.73,0,organic,paid,card
+cli_0011_ord_00145,2026-01-10,bd6ae20db3af,service retainer,AED,2284.11,5,google_ads,paid,upi
+cli_0011_ord_00146,2026-04-10,3b3f527ca4fa,pro plan,AED,1217.36,15,linkedin_ads,refunded,bank_transfer
+cli_0011_ord_00147,2026-02-03,352282a4b60e,pro plan,AED,1968.15,20,linkedin_ads,paid,upi
+cli_0011_ord_00148,2025-12-17,4d21f39bec30,audit package,AED,1104.61,25,tiktok_ads,paid,wallet
+cli_0011_ord_00149,2025-11-20,3214ab1a1d3a,pro plan,AED,1717.45,5,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00150,2026-03-01,234d40d18c84,starter plan,AED,711.35,25,organic,paid,card
+cli_0011_ord_00151,2025-12-28,0f6165a57114,membership,AED,1347.33,25,organic,pending,wallet
+cli_0011_ord_00152,2025-11-27,3d8df561461f,premium bundle,AED,310.73,25,tiktok_ads,paid,card
+cli_0011_ord_00153,2025-11-03,f8995b77114e,service retainer,AED,730.3,15,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00154,2026-03-02,86a115ee1365,service retainer,AED,989.42,5,google_ads,paid,paypal
+cli_0011_ord_00155,2026-03-10,a2504f14938d,starter plan,AED,1959.3,10,organic,paid,bank_transfer
+cli_0011_ord_00156,2026-04-19,2fab0825de69,pro plan,AED,1514.89,15,google_ads,paid,paypal
+cli_0011_ord_00157,2026-02-23,79807d609489,pro plan,AED,1361.41,0,tiktok_ads,pending,upi
+cli_0011_ord_00158,2025-12-11,ae6c74929be2,starter plan,AED,1209.56,10,linkedin_ads,paid,paypal
+cli_0011_ord_00159,2026-02-16,dd2f01657c68,service retainer,AED,472.49,25,google_ads,paid,wallet
+cli_0011_ord_00160,2026-03-26,d95dcffc9338,audit package,AED,493.82,0,organic,paid,bank_transfer
+cli_0011_ord_00161,2025-11-05,6c6e2385321b,audit package,AED,1056.04,0,linkedin_ads,paid,card
+cli_0011_ord_00162,2026-02-08,c5f7c701cc03,pro plan,AED,2421.95,15,google_ads,paid,card
+cli_0011_ord_00163,2026-03-05,51cea22d3565,audit package,AED,1047.27,5,google_ads,paid,bank_transfer
+cli_0011_ord_00164,2026-02-10,000689e7a384,premium bundle,AED,822.53,20,google_ads,paid,paypal
+cli_0011_ord_00165,2026-02-28,9ce9977308aa,starter plan,AED,2127.34,25,organic,pending,paypal
+cli_0011_ord_00166,2026-02-22,80134e712770,audit package,AED,1612.43,15,google_ads,pending,paypal
+cli_0011_ord_00167,2025-12-07,4f5f6bf77f18,membership,AED,471.45,5,google_ads,paid,wallet
+cli_0011_ord_00168,2026-03-14,71fd1f85a703,service retainer,AED,1420.82,20,linkedin_ads,paid,paypal
+cli_0011_ord_00169,2026-03-25,198dc80233a4,service retainer,AED,1234.41,0,tiktok_ads,paid,upi
+cli_0011_ord_00170,2026-03-25,439a5653a12a,audit package,AED,2097.22,20,organic,paid,bank_transfer
+cli_0011_ord_00171,2025-10-28,f456118dbb46,premium bundle,AED,473.17,0,organic,refunded,bank_transfer
+cli_0011_ord_00172,2026-01-20,f538d5629230,pro plan,AED,378.0,20,organic,paid,wallet
+cli_0011_ord_00173,2026-03-22,eff6e7ea26b8,premium bundle,AED,904.06,25,google_ads,paid,bank_transfer
+cli_0011_ord_00174,2025-11-02,deaa5d47a529,pro plan,AED,544.56,10,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00175,2026-03-17,67a428c6c694,membership,AED,1720.55,15,tiktok_ads,paid,upi
+cli_0011_ord_00176,2025-10-30,e2a194cab007,pro plan,AED,2115.3,5,organic,pending,bank_transfer
+cli_0011_ord_00177,2026-04-24,41952f2bdd63,service retainer,AED,635.76,10,linkedin_ads,pending,wallet
+cli_0011_ord_00178,2026-04-19,2617a9cce220,premium bundle,AED,409.88,15,organic,refunded,bank_transfer
+cli_0011_ord_00179,2026-04-15,088a39bee668,membership,AED,749.25,0,organic,refunded,wallet
+cli_0011_ord_00180,2025-12-22,0132ecea2170,service retainer,AED,193.79,20,google_ads,paid,card
+cli_0011_ord_00181,2026-04-22,d0833b8ace33,audit package,AED,84.77,10,google_ads,paid,bank_transfer
+cli_0011_ord_00182,2025-12-07,6f1d0ccf9cb8,annual subscription,AED,1411.09,5,google_ads,paid,bank_transfer
+cli_0011_ord_00183,2025-11-04,472629edb16b,annual subscription,AED,1266.69,10,linkedin_ads,paid,card
+cli_0011_ord_00184,2026-04-16,acda34dcb7f2,pro plan,AED,1750.42,5,tiktok_ads,paid,bank_transfer
+cli_0011_ord_00185,2026-02-24,b122963e8b96,pro plan,AED,1307.76,5,tiktok_ads,pending,upi
+cli_0011_ord_00186,2026-03-23,47abdd14e45e,starter plan,AED,970.4,20,linkedin_ads,paid,card
+cli_0011_ord_00187,2026-02-03,11a9da9949ce,membership,AED,1437.29,10,organic,paid,paypal
+cli_0011_ord_00188,2025-12-01,72d0ce39d376,annual subscription,AED,265.06,10,linkedin_ads,pending,wallet
+cli_0011_ord_00189,2025-12-17,18a8eb578401,premium bundle,AED,1095.71,25,google_ads,paid,bank_transfer
+cli_0011_ord_00190,2025-11-20,8384be466b1a,membership,AED,269.9,20,google_ads,paid,upi
+cli_0011_ord_00191,2025-12-03,40b2cdb5f4fb,premium bundle,AED,1737.31,0,google_ads,paid,bank_transfer
+cli_0011_ord_00192,2026-02-19,f34a330d7884,service retainer,AED,1860.88,20,tiktok_ads,paid,wallet
+cli_0011_ord_00193,2025-12-04,a317fd5820d5,premium bundle,AED,1746.16,5,organic,paid,paypal
+cli_0011_ord_00194,2026-03-03,4d679ebeb67c,premium bundle,AED,901.34,5,organic,paid,bank_transfer
+cli_0011_ord_00195,2026-01-08,87e6594ee1d4,starter plan,AED,2193.02,10,google_ads,paid,paypal
+cli_0011_ord_00196,2026-04-21,f959040a26bc,premium bundle,AED,1153.26,15,linkedin_ads,paid,upi
+cli_0011_ord_00197,2025-12-31,f1230d4c5fcf,annual subscription,AED,2235.31,25,linkedin_ads,paid,bank_transfer
+cli_0011_ord_00198,2025-12-04,adc0b8492557,pro plan,AED,706.3,10,organic,paid,paypal
+cli_0011_ord_00199,2026-03-26,865b28efab09,pro plan,AED,1950.46,20,organic,paid,paypal
+cli_0011_ord_00200,2025-12-23,b06924e457ed,starter plan,AED,2351.89,10,organic,paid,wallet
+cli_0011_ord_00201,2025-11-13,c8c35c769397,premium bundle,AED,756.49,0,google_ads,paid,paypal
+cli_0011_ord_00202,2025-11-18,b9ebc5fe039e,audit package,AED,2009.97,15,google_ads,paid,bank_transfer
+cli_0011_ord_00203,2026-02-20,eb59221951bd,service retainer,AED,716.51,20,tiktok_ads,paid,paypal
+cli_0011_ord_00204,2025-11-07,e3c7a112b418,pro plan,AED,1210.05,0,tiktok_ads,paid,paypal
+cli_0011_ord_00205,2026-03-13,c2b3a4060589,starter plan,AED,1302.33,15,tiktok_ads,pending,card
+cli_0011_ord_00206,2025-12-10,5cfcf7e19925,premium bundle,AED,66.37,0,google_ads,refunded,wallet
+cli_0011_ord_00207,2026-01-07,b33a3557b37d,starter plan,AED,418.86,5,organic,paid,paypal
+cli_0011_ord_00208,2026-01-31,2340921f8143,premium bundle,AED,1352.48,20,organic,paid,paypal
+cli_0011_ord_00209,2025-10-28,d1eb2f9d7131,starter plan,AED,2403.46,5,linkedin_ads,refunded,upi
+cli_0011_ord_00210,2026-01-01,62fed095ef19,starter plan,AED,1942.52,20,tiktok_ads,paid,upi
+cli_0011_ord_00211,2025-11-14,a564ab9a5a74,premium bundle,AED,1999.28,10,organic,refunded,upi
+cli_0011_ord_00212,2026-01-16,e608b0e899bf,premium bundle,AED,2254.45,25,google_ads,paid,card
+cli_0011_ord_00213,2025-12-11,da03a1ae40cd,membership,AED,103.01,25,linkedin_ads,paid,card
+cli_0011_ord_00214,2026-03-31,1cba2acd3697,annual subscription,AED,1485.18,5,organic,paid,paypal
+cli_0011_ord_00215,2026-01-24,44171c87b12e,premium bundle,AED,1928.61,25,linkedin_ads,pending,bank_transfer
+cli_0011_ord_00216,2025-11-19,8026631c96e2,pro plan,AED,468.4,10,tiktok_ads,paid,wallet
+cli_0011_ord_00217,2026-01-09,4a1c31ed1c9e,membership,AED,666.13,10,linkedin_ads,paid,upi
+cli_0011_ord_00218,2026-01-20,5266e2c07087,audit package,AED,1870.46,20,google_ads,paid,upi

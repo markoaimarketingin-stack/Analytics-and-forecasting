@@ -1,0 +1,32 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0011_em_0001,Winback,New Urban Labs,47357,47266,9296,1041,98,5,2025-11-17
+cli_0011_em_0002,Newsletter,New Urban Labs,34512,33469,16890,2529,210,1,2026-03-17
+cli_0011_em_0003,Offer,New Urban Labs,27207,26128,12980,1552,264,0,2026-03-27
+cli_0011_em_0004,Education,Last chance for Urban Labs,18004,17637,3970,339,110,3,2026-03-24
+cli_0011_em_0005,Re-engagement,Last chance for Urban Labs,15880,15691,3242,701,70,0,2025-11-17
+cli_0011_em_0006,Offer,Last chance for Urban Labs,28245,26928,10621,1299,40,0,2025-11-07
+cli_0011_em_0007,Launch,A quick update on Urban Labs,16124,16080,2248,184,139,3,2026-03-04
+cli_0011_em_0008,Offer,A quick update on Urban Labs,19900,18923,9172,1370,165,4,2025-12-07
+cli_0011_em_0009,Newsletter,New Urban Labs,28111,27459,7066,729,261,0,2026-03-08
+cli_0011_em_0010,Offer,New Urban Labs,31323,31246,11327,532,118,0,2026-02-16
+cli_0011_em_0011,Launch,A quick update on Urban Labs,39888,39257,17159,1658,225,0,2025-10-31
+cli_0011_em_0012,Re-engagement,New Urban Labs,18127,17720,2367,153,3,2,2026-04-04
+cli_0011_em_0013,Education,New Urban Labs,42873,40952,15922,1863,303,3,2025-12-28
+cli_0011_em_0014,Launch,New Urban Labs,29577,28477,11765,2199,55,4,2025-10-30
+cli_0011_em_0015,Offer,A quick update on Urban Labs,38084,36772,8611,1493,312,4,2025-11-23
+cli_0011_em_0016,Offer,How to improve Urban Labs,2167,2073,373,24,9,0,2025-11-24
+cli_0011_em_0017,Winback,Last chance for Urban Labs,8427,8395,3264,716,5,0,2026-02-04
+cli_0011_em_0018,Launch,A quick update on Urban Labs,12734,12250,3047,664,65,4,2026-02-05
+cli_0011_em_0019,Offer,New Urban Labs,32674,32025,16738,3168,23,1,2026-04-22
+cli_0011_em_0020,Newsletter,New Urban Labs,28830,27717,5961,499,25,2,2025-12-01
+cli_0011_em_0021,Launch,New Urban Labs,27241,26555,6996,530,197,2,2026-03-16
+cli_0011_em_0022,Winback,Last chance for Urban Labs,25317,25002,12364,671,161,0,2026-02-13
+cli_0011_em_0023,Offer,How to improve Urban Labs,10482,10275,2313,183,55,3,2025-11-03
+cli_0011_em_0024,Education,How to improve Urban Labs,24825,23731,6553,1390,158,5,2026-03-20
+cli_0011_em_0025,Offer,How to improve Urban Labs,42231,40294,11948,882,263,0,2026-02-04
+cli_0011_em_0026,Education,New Urban Labs,22610,21940,7725,1122,32,4,2025-11-24
+cli_0011_em_0027,Re-engagement,New Urban Labs,29742,28801,12403,2208,84,2,2026-02-10
+cli_0011_em_0028,Newsletter,New Urban Labs,35135,34481,14326,804,248,4,2026-02-20
+cli_0011_em_0029,Education,Last chance for Urban Labs,28957,27667,4335,855,69,1,2026-02-16
+cli_0011_em_0030,Re-engagement,New Urban Labs,33820,32278,17272,1623,195,2,2026-03-28
+cli_0011_em_0031,Launch,How to improve Urban Labs,25822,25045,12346,1738,174,2,2025-12-01

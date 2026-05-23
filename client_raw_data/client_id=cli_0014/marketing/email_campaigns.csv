@@ -1,0 +1,49 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0014_em_0001,Winback,A quick update on Signal Studio,27022,26084,11908,1558,7,1,2026-02-06
+cli_0014_em_0002,Education,How to improve Signal Studio,43566,42436,6031,317,27,3,2025-10-27
+cli_0014_em_0003,Launch,A quick update on Signal Studio,26883,26342,4621,866,158,2,2026-01-03
+cli_0014_em_0004,Re-engagement,A quick update on Signal Studio,11857,11417,5089,421,38,5,2026-03-17
+cli_0014_em_0005,Winback,A quick update on Signal Studio,4872,4847,1569,161,35,4,2025-11-05
+cli_0014_em_0006,Re-engagement,A quick update on Signal Studio,37532,36125,13990,1282,341,5,2025-12-24
+cli_0014_em_0007,Launch,How to improve Signal Studio,28782,27487,10884,2390,213,2,2025-11-16
+cli_0014_em_0008,Education,Last chance for Signal Studio,3899,3819,632,106,33,1,2026-01-08
+cli_0014_em_0009,Offer,Last chance for Signal Studio,43415,41864,16605,2701,384,3,2025-12-02
+cli_0014_em_0010,Offer,A quick update on Signal Studio,1956,1952,360,76,9,4,2026-02-21
+cli_0014_em_0011,Re-engagement,How to improve Signal Studio,6013,5725,2408,411,39,2,2026-03-28
+cli_0014_em_0012,Winback,Last chance for Signal Studio,21076,20793,7384,1032,196,2,2025-11-01
+cli_0014_em_0013,Winback,A quick update on Signal Studio,8565,8299,3706,795,3,2,2025-12-20
+cli_0014_em_0014,Launch,Last chance for Signal Studio,38896,38481,9984,408,276,3,2026-02-17
+cli_0014_em_0015,Offer,New Signal Studio,45637,44770,5828,246,370,2,2025-11-23
+cli_0014_em_0016,Winback,A quick update on Signal Studio,9973,9860,3908,360,46,4,2026-01-06
+cli_0014_em_0017,Launch,How to improve Signal Studio,45247,43098,8638,1235,388,3,2025-11-05
+cli_0014_em_0018,Education,How to improve Signal Studio,7722,7404,930,199,76,4,2025-12-02
+cli_0014_em_0019,Offer,New Signal Studio,16504,16272,5540,803,144,1,2026-01-07
+cli_0014_em_0020,Education,Last chance for Signal Studio,39774,38674,19197,1471,348,5,2026-04-09
+cli_0014_em_0021,Re-engagement,How to improve Signal Studio,19783,19654,2521,414,123,2,2026-03-05
+cli_0014_em_0022,Newsletter,Last chance for Signal Studio,19224,18971,10522,484,180,5,2026-03-30
+cli_0014_em_0023,Winback,A quick update on Signal Studio,9068,8843,4630,334,5,2,2026-03-08
+cli_0014_em_0024,Newsletter,How to improve Signal Studio,16408,15919,8912,1706,0,5,2025-12-30
+cli_0014_em_0025,Launch,How to improve Signal Studio,28336,27005,9574,747,121,1,2025-12-11
+cli_0014_em_0026,Education,New Signal Studio,5382,5161,1998,421,47,4,2026-01-06
+cli_0014_em_0027,Winback,How to improve Signal Studio,44500,43914,6901,1293,190,0,2025-12-29
+cli_0014_em_0028,Winback,Last chance for Signal Studio,28949,28638,7521,1379,68,5,2026-04-20
+cli_0014_em_0029,Education,New Signal Studio,40184,38934,9694,555,213,4,2026-03-15
+cli_0014_em_0030,Newsletter,A quick update on Signal Studio,10960,10688,3042,566,36,2,2025-12-17
+cli_0014_em_0031,Newsletter,New Signal Studio,17934,17439,7975,978,24,1,2026-02-10
+cli_0014_em_0032,Education,New Signal Studio,42101,41775,21159,2277,369,5,2026-01-19
+cli_0014_em_0033,Winback,A quick update on Signal Studio,18522,17879,8370,925,173,2,2026-03-05
+cli_0014_em_0034,Newsletter,A quick update on Signal Studio,12975,12479,6665,651,89,1,2026-03-02
+cli_0014_em_0035,Winback,New Signal Studio,47444,46269,16497,1445,224,1,2026-03-12
+cli_0014_em_0036,Winback,A quick update on Signal Studio,25077,24550,10864,877,156,0,2026-04-24
+cli_0014_em_0037,Launch,How to improve Signal Studio,11328,10974,5276,932,106,3,2026-03-29
+cli_0014_em_0038,Re-engagement,New Signal Studio,42344,42106,6976,517,404,0,2026-03-01
+cli_0014_em_0039,Re-engagement,New Signal Studio,41869,41649,21669,4192,53,3,2026-02-07
+cli_0014_em_0040,Newsletter,New Signal Studio,44650,44272,15258,825,71,0,2026-02-21
+cli_0014_em_0041,Offer,How to improve Signal Studio,46559,45748,23240,1144,376,5,2025-11-25
+cli_0014_em_0042,Newsletter,New Signal Studio,36602,35746,13679,1586,252,3,2026-01-11
+cli_0014_em_0043,Offer,A quick update on Signal Studio,1232,1177,581,124,0,0,2026-03-14
+cli_0014_em_0044,Launch,New Signal Studio,13056,12710,2392,290,64,3,2026-03-14
+cli_0014_em_0045,Winback,New Signal Studio,14909,14691,4805,884,34,5,2025-11-03
+cli_0014_em_0046,Launch,A quick update on Signal Studio,2662,2569,1086,233,14,1,2025-12-14
+cli_0014_em_0047,Education,New Signal Studio,49030,46926,25909,3977,387,3,2026-02-13
+cli_0014_em_0048,Newsletter,New Signal Studio,26489,25588,9111,1085,177,5,2026-02-06

@@ -1,0 +1,159 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0005_ct_0001,Kabir Nair,kabir.nair0@examplemail.com,Metro Ltd,Head of Growth,lead,website_form,Canada,2025-11-01,2026-02-10
+cli_0005_ct_0002,Maya Joshi,maya.joshi1@examplemail.com,Orbit Inc,Sales Lead,mql,referral,Australia,2025-09-08,2026-03-24
+cli_0005_ct_0003,Noah Bhatia,noah.bhatia2@examplemail.com,Acme Ltd,Sales Lead,sql,website_form,United States,2025-11-11,2026-02-12
+cli_0005_ct_0004,Kabir Nair,kabir.nair3@examplemail.com,North Commerce,Head of Growth,lead,website_form,Australia,2025-07-19,2026-04-24
+cli_0005_ct_0005,Ishaan Mehta,ishaan.mehta4@examplemail.com,Acme Group,Founder,lead,website_form,India,2025-02-04,2026-03-01
+cli_0005_ct_0006,Liam Bhatia,liam.bhatia5@examplemail.com,Peak Inc,Sales Lead,lead,import,Australia,2025-02-02,2026-02-04
+cli_0005_ct_0007,Noah Verma,noah.verma6@examplemail.com,Orbit Group,Sales Lead,lead,event,United States,2026-02-11,2026-01-30
+cli_0005_ct_0008,Mia Bhatia,mia.bhatia7@examplemail.com,North Commerce,Founder,mql,import,India,2025-08-08,2026-01-25
+cli_0005_ct_0009,Zara Nair,zara.nair8@examplemail.com,Orbit Inc,Head of Growth,lead,referral,United States,2025-06-14,2025-12-27
+cli_0005_ct_0010,Ava Verma,ava.verma9@examplemail.com,North Commerce,Founder,lead,website_form,Australia,2025-05-07,2026-02-23
+cli_0005_ct_0011,Liam Sharma,liam.sharma10@examplemail.com,Metro LLC,RevOps Manager,mql,email_reply,Australia,2024-11-08,2026-02-01
+cli_0005_ct_0012,Kabir Nair,kabir.nair11@examplemail.com,Metro Group,Founder,mql,website_form,Australia,2025-01-02,2026-02-13
+cli_0005_ct_0013,Sara Khan,sara.khan12@examplemail.com,North Commerce,Head of Growth,mql,website_form,UAE,2025-07-26,2026-04-12
+cli_0005_ct_0014,Sara Patel,sara.patel13@examplemail.com,North Commerce,Head of Growth,mql,import,UAE,2026-02-16,2026-03-08
+cli_0005_ct_0015,Anika Singh,anika.singh14@examplemail.com,Orbit LLC,Sales Lead,customer,website_form,India,2025-07-07,2026-04-15
+cli_0005_ct_0016,Liam Reddy,liam.reddy15@examplemail.com,North Commerce,Head of Growth,sql,email_reply,Australia,2026-03-29,2026-03-20
+cli_0005_ct_0017,Mia Reddy,mia.reddy16@examplemail.com,North Commerce,RevOps Manager,lead,import,United States,2025-08-06,2026-01-05
+cli_0005_ct_0018,Leo Kapoor,leo.kapoor17@examplemail.com,Metro Group,Head of Growth,sql,import,Australia,2025-10-19,2026-03-08
+cli_0005_ct_0019,Ava Sharma,ava.sharma18@examplemail.com,North Commerce,Head of Growth,mql,import,United Kingdom,2025-11-10,2026-03-12
+cli_0005_ct_0020,Noah Verma,noah.verma19@examplemail.com,North Commerce,Sales Lead,lead,email_reply,UAE,2025-08-14,2026-02-26
+cli_0005_ct_0021,Kabir Joshi,kabir.joshi20@examplemail.com,Peak Inc,RevOps Manager,lead,email_reply,United Kingdom,2026-03-06,2026-02-15
+cli_0005_ct_0022,Arjun Nair,arjun.nair21@examplemail.com,North Commerce,Head of Growth,lead,website_form,United Kingdom,2025-01-17,2026-01-15
+cli_0005_ct_0023,Leo Bhatia,leo.bhatia22@examplemail.com,North Commerce,Sales Lead,sql,website_form,United Kingdom,2025-08-24,2026-02-15
+cli_0005_ct_0024,Arjun Gupta,arjun.gupta23@examplemail.com,North Commerce,Head of Growth,lead,website_form,UAE,2025-05-28,2026-01-08
+cli_0005_ct_0025,Sara Patel,sara.patel24@examplemail.com,Orbit Ltd,RevOps Manager,churn_risk,website_form,United States,2025-11-01,2026-03-05
+cli_0005_ct_0026,Ava Nair,ava.nair25@examplemail.com,North Commerce,Sales Lead,lead,import,UAE,2025-07-05,2026-01-12
+cli_0005_ct_0027,Anika Verma,anika.verma26@examplemail.com,Acme Ltd,Marketing Manager,sql,website_form,Australia,2025-08-17,2026-03-06
+cli_0005_ct_0028,Ava Patel,ava.patel27@examplemail.com,North Commerce,Sales Lead,lead,website_form,UAE,2026-04-04,2026-01-13
+cli_0005_ct_0029,Zara Joshi,zara.joshi28@examplemail.com,North Commerce,RevOps Manager,lead,email_reply,UAE,2026-04-09,2026-01-27
+cli_0005_ct_0030,Anika Singh,anika.singh29@examplemail.com,North Commerce,Marketing Manager,customer,website_form,Canada,2025-06-19,2026-01-20
+cli_0005_ct_0031,Anika Bhatia,anika.bhatia30@examplemail.com,North Commerce,RevOps Manager,lead,event,Canada,2025-10-23,2026-03-26
+cli_0005_ct_0032,Kabir Verma,kabir.verma31@examplemail.com,Zen LLC,Head of Growth,churn_risk,import,India,2025-04-14,2026-03-26
+cli_0005_ct_0033,Zara Joshi,zara.joshi32@examplemail.com,North Commerce,RevOps Manager,lead,import,United States,2025-01-27,2026-04-15
+cli_0005_ct_0034,Mia Gupta,mia.gupta33@examplemail.com,North Commerce,RevOps Manager,mql,website_form,United States,2025-09-07,2026-04-08
+cli_0005_ct_0035,Zara Kapoor,zara.kapoor34@examplemail.com,Acme Inc,Head of Growth,lead,import,India,2025-12-02,2026-03-07
+cli_0005_ct_0036,Anika Singh,anika.singh35@examplemail.com,Orbit LLC,Sales Lead,mql,import,United States,2025-07-26,2026-03-20
+cli_0005_ct_0037,Zara Verma,zara.verma36@examplemail.com,Metro LLC,Head of Growth,customer,website_form,Australia,2025-02-28,2026-02-28
+cli_0005_ct_0038,Noah Gupta,noah.gupta37@examplemail.com,Zen Group,Head of Growth,customer,website_form,UAE,2025-01-29,2026-04-20
+cli_0005_ct_0039,Mia Bhatia,mia.bhatia38@examplemail.com,North Commerce,Marketing Manager,mql,website_form,Australia,2025-04-29,2026-01-02
+cli_0005_ct_0040,Sara Bhatia,sara.bhatia39@examplemail.com,North Commerce,Founder,customer,email_reply,Canada,2025-06-15,2026-03-24
+cli_0005_ct_0041,Noah Sharma,noah.sharma40@examplemail.com,North Commerce,Marketing Manager,mql,referral,Canada,2026-03-09,2026-04-15
+cli_0005_ct_0042,Arjun Gupta,arjun.gupta41@examplemail.com,Orbit Ltd,Marketing Manager,lead,website_form,Canada,2025-01-27,2026-01-24
+cli_0005_ct_0043,Maya Gupta,maya.gupta42@examplemail.com,Zen Ltd,Marketing Manager,lead,email_reply,UAE,2025-05-05,2026-01-31
+cli_0005_ct_0044,Mia Sharma,mia.sharma43@examplemail.com,Peak Ltd,RevOps Manager,lead,website_form,United States,2025-09-29,2026-04-06
+cli_0005_ct_0045,Ishaan Mehta,ishaan.mehta44@examplemail.com,North Commerce,Founder,lead,import,UAE,2025-12-06,2026-02-26
+cli_0005_ct_0046,Leo Verma,leo.verma45@examplemail.com,Acme Ltd,Founder,lead,import,United Kingdom,2025-06-04,2026-02-14
+cli_0005_ct_0047,Sara Mehta,sara.mehta46@examplemail.com,North Commerce,Head of Growth,lead,referral,India,2024-12-29,2026-01-02
+cli_0005_ct_0048,Sara Khan,sara.khan47@examplemail.com,North Commerce,Marketing Manager,mql,import,United States,2025-04-15,2026-03-06
+cli_0005_ct_0049,Mia Joshi,mia.joshi48@examplemail.com,North Commerce,RevOps Manager,customer,website_form,United Kingdom,2026-03-28,2026-04-22
+cli_0005_ct_0050,Arjun Singh,arjun.singh49@examplemail.com,Zen Ltd,Marketing Manager,mql,website_form,Canada,2026-03-21,2025-12-27
+cli_0005_ct_0051,Kabir Kapoor,kabir.kapoor50@examplemail.com,Metro LLC,Marketing Manager,churn_risk,email_reply,Canada,2026-04-07,2026-04-01
+cli_0005_ct_0052,Ava Reddy,ava.reddy51@examplemail.com,North Commerce,Marketing Manager,sql,event,UAE,2026-02-21,2026-04-03
+cli_0005_ct_0053,Sara Mehta,sara.mehta52@examplemail.com,North Commerce,Head of Growth,customer,referral,India,2025-05-14,2026-02-07
+cli_0005_ct_0054,Liam Sharma,liam.sharma53@examplemail.com,Orbit Ltd,Marketing Manager,lead,import,India,2026-02-23,2026-03-24
+cli_0005_ct_0055,Kabir Kapoor,kabir.kapoor54@examplemail.com,Metro Inc,Marketing Manager,lead,event,Canada,2024-12-09,2026-02-06
+cli_0005_ct_0056,Mia Singh,mia.singh55@examplemail.com,North Commerce,Head of Growth,customer,referral,United Kingdom,2026-03-09,2026-03-15
+cli_0005_ct_0057,Anika Joshi,anika.joshi56@examplemail.com,Acme Inc,Sales Lead,churn_risk,website_form,Australia,2025-05-18,2026-04-18
+cli_0005_ct_0058,Zara Mehta,zara.mehta57@examplemail.com,Zen Inc,Marketing Manager,mql,event,United Kingdom,2025-10-02,2025-12-29
+cli_0005_ct_0059,Leo Singh,leo.singh58@examplemail.com,North Commerce,Head of Growth,lead,import,India,2025-11-28,2026-02-26
+cli_0005_ct_0060,Sara Verma,sara.verma59@examplemail.com,North Commerce,Head of Growth,mql,website_form,United States,2025-05-08,2026-04-12
+cli_0005_ct_0061,Anika Bhatia,anika.bhatia60@examplemail.com,North Commerce,Marketing Manager,sql,event,Australia,2024-12-22,2026-03-11
+cli_0005_ct_0062,Zara Kapoor,zara.kapoor61@examplemail.com,North Commerce,Head of Growth,sql,email_reply,Canada,2025-05-20,2026-02-20
+cli_0005_ct_0063,Ava Verma,ava.verma62@examplemail.com,Zen Group,Marketing Manager,mql,import,Australia,2026-04-02,2025-12-26
+cli_0005_ct_0064,Maya Verma,maya.verma63@examplemail.com,North Commerce,Founder,mql,website_form,United States,2026-04-02,2026-04-19
+cli_0005_ct_0065,Zara Nair,zara.nair64@examplemail.com,North Commerce,RevOps Manager,lead,website_form,UAE,2025-04-29,2026-01-29
+cli_0005_ct_0066,Arjun Reddy,arjun.reddy65@examplemail.com,Acme Group,Founder,mql,event,Canada,2025-07-31,2026-01-10
+cli_0005_ct_0067,Kabir Nair,kabir.nair66@examplemail.com,Acme Group,Founder,mql,email_reply,United Kingdom,2025-06-17,2026-04-22
+cli_0005_ct_0068,Ishaan Kapoor,ishaan.kapoor67@examplemail.com,North Commerce,RevOps Manager,mql,event,United Kingdom,2026-01-15,2026-02-20
+cli_0005_ct_0069,Sara Khan,sara.khan68@examplemail.com,North Commerce,Head of Growth,mql,email_reply,UAE,2025-05-09,2026-03-28
+cli_0005_ct_0070,Anika Sharma,anika.sharma69@examplemail.com,Acme Inc,Head of Growth,churn_risk,website_form,United Kingdom,2024-11-02,2026-04-01
+cli_0005_ct_0071,Ava Kapoor,ava.kapoor70@examplemail.com,Acme LLC,Founder,sql,website_form,UAE,2026-02-26,2026-01-13
+cli_0005_ct_0072,Ava Joshi,ava.joshi71@examplemail.com,North Commerce,RevOps Manager,churn_risk,email_reply,India,2025-11-28,2026-02-15
+cli_0005_ct_0073,Arjun Mehta,arjun.mehta72@examplemail.com,North Commerce,Marketing Manager,mql,website_form,United States,2025-06-14,2026-01-19
+cli_0005_ct_0074,Zara Verma,zara.verma73@examplemail.com,North Commerce,Head of Growth,mql,import,Australia,2025-01-14,2026-04-24
+cli_0005_ct_0075,Mia Mehta,mia.mehta74@examplemail.com,North Commerce,Head of Growth,mql,referral,Canada,2025-01-29,2026-01-30
+cli_0005_ct_0076,Sara Singh,sara.singh75@examplemail.com,North Commerce,RevOps Manager,sql,website_form,Australia,2025-09-12,2026-03-09
+cli_0005_ct_0077,Anika Reddy,anika.reddy76@examplemail.com,Zen Ltd,Marketing Manager,sql,referral,UAE,2025-10-16,2026-01-12
+cli_0005_ct_0078,Liam Joshi,liam.joshi77@examplemail.com,Acme Inc,Head of Growth,lead,import,United Kingdom,2025-02-27,2025-12-31
+cli_0005_ct_0079,Anika Verma,anika.verma78@examplemail.com,North Commerce,RevOps Manager,lead,referral,Australia,2026-03-03,2026-04-20
+cli_0005_ct_0080,Zara Khan,zara.khan79@examplemail.com,Orbit Inc,Head of Growth,customer,import,United States,2024-12-21,2026-02-08
+cli_0005_ct_0081,Ishaan Bhatia,ishaan.bhatia80@examplemail.com,North Commerce,Marketing Manager,sql,email_reply,United States,2024-11-05,2026-03-22
+cli_0005_ct_0082,Leo Khan,leo.khan81@examplemail.com,North Commerce,Sales Lead,customer,import,Canada,2025-05-14,2026-02-22
+cli_0005_ct_0083,Arjun Patel,arjun.patel82@examplemail.com,North Commerce,Head of Growth,lead,import,United States,2025-03-15,2025-12-25
+cli_0005_ct_0084,Mia Reddy,mia.reddy83@examplemail.com,North Commerce,Head of Growth,customer,import,United States,2025-03-27,2026-03-16
+cli_0005_ct_0085,Ishaan Sharma,ishaan.sharma84@examplemail.com,North Commerce,Sales Lead,sql,website_form,India,2025-11-22,2026-02-04
+cli_0005_ct_0086,Leo Kapoor,leo.kapoor85@examplemail.com,North Commerce,Marketing Manager,sql,email_reply,Canada,2026-02-21,2026-04-05
+cli_0005_ct_0087,Mia Sharma,mia.sharma86@examplemail.com,Peak Ltd,Sales Lead,lead,referral,United States,2024-11-28,2026-01-14
+cli_0005_ct_0088,Ava Kapoor,ava.kapoor87@examplemail.com,Peak Ltd,RevOps Manager,customer,website_form,Australia,2025-08-02,2026-01-25
+cli_0005_ct_0089,Leo Nair,leo.nair88@examplemail.com,Metro Inc,Marketing Manager,sql,email_reply,Canada,2025-07-23,2026-04-16
+cli_0005_ct_0090,Liam Reddy,liam.reddy89@examplemail.com,North Commerce,Head of Growth,customer,website_form,United Kingdom,2024-12-31,2026-04-18
+cli_0005_ct_0091,Ishaan Bhatia,ishaan.bhatia90@examplemail.com,North Commerce,Marketing Manager,lead,website_form,United Kingdom,2024-12-12,2026-01-04
+cli_0005_ct_0092,Arjun Khan,arjun.khan91@examplemail.com,North Commerce,Marketing Manager,lead,event,UAE,2024-11-16,2026-03-05
+cli_0005_ct_0093,Ishaan Reddy,ishaan.reddy92@examplemail.com,North Commerce,Sales Lead,mql,import,United Kingdom,2025-10-03,2026-02-19
+cli_0005_ct_0094,Maya Bhatia,maya.bhatia93@examplemail.com,North Commerce,Marketing Manager,customer,event,United Kingdom,2025-05-19,2026-02-04
+cli_0005_ct_0095,Arjun Gupta,arjun.gupta94@examplemail.com,North Commerce,RevOps Manager,churn_risk,import,United States,2026-02-12,2026-03-28
+cli_0005_ct_0096,Anika Khan,anika.khan95@examplemail.com,Zen Inc,Marketing Manager,mql,email_reply,UAE,2026-02-17,2026-04-03
+cli_0005_ct_0097,Liam Kapoor,liam.kapoor96@examplemail.com,Metro Ltd,Marketing Manager,churn_risk,email_reply,India,2026-02-20,2026-01-16
+cli_0005_ct_0098,Ishaan Reddy,ishaan.reddy97@examplemail.com,North Commerce,Founder,mql,referral,United Kingdom,2026-01-20,2026-04-19
+cli_0005_ct_0099,Sara Reddy,sara.reddy98@examplemail.com,North Commerce,Sales Lead,lead,website_form,United Kingdom,2025-10-21,2026-02-15
+cli_0005_ct_0100,Ishaan Gupta,ishaan.gupta99@examplemail.com,North Commerce,Sales Lead,customer,event,India,2025-09-11,2026-04-05
+cli_0005_ct_0101,Zara Sharma,zara.sharma100@examplemail.com,Orbit Group,Sales Lead,mql,email_reply,India,2025-01-16,2026-02-14
+cli_0005_ct_0102,Maya Gupta,maya.gupta101@examplemail.com,Peak Ltd,RevOps Manager,customer,website_form,Australia,2024-11-11,2026-02-12
+cli_0005_ct_0103,Maya Bhatia,maya.bhatia102@examplemail.com,North Commerce,Head of Growth,customer,import,Canada,2026-01-13,2026-02-17
+cli_0005_ct_0104,Zara Sharma,zara.sharma103@examplemail.com,Metro LLC,Marketing Manager,lead,website_form,United Kingdom,2025-07-18,2026-04-07
+cli_0005_ct_0105,Sara Gupta,sara.gupta104@examplemail.com,Acme Ltd,Marketing Manager,lead,import,United Kingdom,2025-07-01,2026-02-03
+cli_0005_ct_0106,Liam Khan,liam.khan105@examplemail.com,North Commerce,Head of Growth,customer,event,Australia,2025-11-18,2026-01-15
+cli_0005_ct_0107,Ishaan Kapoor,ishaan.kapoor106@examplemail.com,Orbit Group,Head of Growth,lead,event,United States,2024-12-16,2026-02-27
+cli_0005_ct_0108,Liam Patel,liam.patel107@examplemail.com,North Commerce,Founder,sql,referral,Australia,2025-08-21,2026-03-15
+cli_0005_ct_0109,Liam Reddy,liam.reddy108@examplemail.com,Peak Inc,Founder,sql,import,United States,2025-10-05,2025-12-26
+cli_0005_ct_0110,Ava Gupta,ava.gupta109@examplemail.com,Orbit Ltd,Head of Growth,customer,website_form,Canada,2026-01-20,2026-01-23
+cli_0005_ct_0111,Ishaan Kapoor,ishaan.kapoor110@examplemail.com,Metro Inc,RevOps Manager,sql,import,UAE,2025-05-20,2026-01-31
+cli_0005_ct_0112,Ava Gupta,ava.gupta111@examplemail.com,Acme LLC,Marketing Manager,lead,import,United States,2025-07-08,2026-02-16
+cli_0005_ct_0113,Noah Patel,noah.patel112@examplemail.com,Orbit Group,Founder,sql,import,United States,2026-01-12,2026-02-24
+cli_0005_ct_0114,Zara Verma,zara.verma113@examplemail.com,Metro Inc,Head of Growth,lead,website_form,United Kingdom,2025-06-01,2026-02-26
+cli_0005_ct_0115,Ishaan Patel,ishaan.patel114@examplemail.com,Zen LLC,Marketing Manager,sql,email_reply,United States,2025-11-07,2026-01-25
+cli_0005_ct_0116,Anika Mehta,anika.mehta115@examplemail.com,North Commerce,Founder,lead,website_form,United States,2025-12-03,2026-01-08
+cli_0005_ct_0117,Ava Gupta,ava.gupta116@examplemail.com,North Commerce,Sales Lead,mql,event,United Kingdom,2025-01-18,2026-02-06
+cli_0005_ct_0118,Anika Patel,anika.patel117@examplemail.com,North Commerce,RevOps Manager,lead,import,United Kingdom,2025-11-06,2026-01-08
+cli_0005_ct_0119,Sara Sharma,sara.sharma118@examplemail.com,North Commerce,Founder,mql,event,Australia,2025-08-21,2026-04-16
+cli_0005_ct_0120,Maya Verma,maya.verma119@examplemail.com,Acme Inc,Sales Lead,sql,website_form,Australia,2025-03-25,2026-04-14
+cli_0005_ct_0121,Ava Joshi,ava.joshi120@examplemail.com,North Commerce,Head of Growth,lead,event,UAE,2025-07-05,2026-03-08
+cli_0005_ct_0122,Ava Singh,ava.singh121@examplemail.com,Metro Inc,Sales Lead,mql,import,United States,2026-04-22,2026-01-10
+cli_0005_ct_0123,Sara Reddy,sara.reddy122@examplemail.com,North Commerce,Head of Growth,sql,import,Canada,2025-05-28,2026-01-29
+cli_0005_ct_0124,Noah Gupta,noah.gupta123@examplemail.com,Acme Inc,Marketing Manager,lead,import,United States,2024-12-06,2026-03-10
+cli_0005_ct_0125,Liam Kapoor,liam.kapoor124@examplemail.com,Peak LLC,RevOps Manager,customer,import,United States,2025-12-13,2026-02-28
+cli_0005_ct_0126,Leo Singh,leo.singh125@examplemail.com,Acme Ltd,Founder,lead,import,India,2025-05-08,2025-12-29
+cli_0005_ct_0127,Mia Joshi,mia.joshi126@examplemail.com,North Commerce,Sales Lead,lead,website_form,UAE,2025-03-06,2026-01-16
+cli_0005_ct_0128,Ava Joshi,ava.joshi127@examplemail.com,Acme Ltd,Marketing Manager,lead,website_form,United States,2024-11-01,2026-01-05
+cli_0005_ct_0129,Zara Gupta,zara.gupta128@examplemail.com,North Commerce,RevOps Manager,customer,email_reply,United States,2025-03-27,2026-01-12
+cli_0005_ct_0130,Maya Bhatia,maya.bhatia129@examplemail.com,Peak LLC,Sales Lead,sql,referral,Canada,2026-02-27,2025-12-27
+cli_0005_ct_0131,Sara Sharma,sara.sharma130@examplemail.com,North Commerce,Sales Lead,sql,website_form,United States,2025-07-27,2026-03-14
+cli_0005_ct_0132,Liam Khan,liam.khan131@examplemail.com,Metro LLC,Founder,mql,referral,United States,2025-04-15,2026-03-13
+cli_0005_ct_0133,Maya Kapoor,maya.kapoor132@examplemail.com,North Commerce,Marketing Manager,mql,referral,UAE,2025-11-26,2026-01-16
+cli_0005_ct_0134,Ishaan Khan,ishaan.khan133@examplemail.com,North Commerce,RevOps Manager,sql,email_reply,India,2025-03-17,2026-01-31
+cli_0005_ct_0135,Mia Khan,mia.khan134@examplemail.com,Orbit Inc,Marketing Manager,sql,email_reply,UAE,2025-09-18,2026-01-19
+cli_0005_ct_0136,Arjun Khan,arjun.khan135@examplemail.com,Peak LLC,Head of Growth,lead,website_form,United Kingdom,2025-10-05,2026-01-30
+cli_0005_ct_0137,Mia Joshi,mia.joshi136@examplemail.com,Acme LLC,Sales Lead,customer,referral,UAE,2025-03-28,2026-04-24
+cli_0005_ct_0138,Ava Sharma,ava.sharma137@examplemail.com,Peak LLC,Marketing Manager,customer,website_form,Australia,2025-09-16,2026-03-05
+cli_0005_ct_0139,Noah Sharma,noah.sharma138@examplemail.com,North Commerce,Head of Growth,lead,email_reply,India,2026-03-16,2026-01-18
+cli_0005_ct_0140,Noah Kapoor,noah.kapoor139@examplemail.com,Peak LLC,Head of Growth,lead,referral,Canada,2024-12-28,2026-04-05
+cli_0005_ct_0141,Ishaan Mehta,ishaan.mehta140@examplemail.com,North Commerce,Marketing Manager,sql,event,India,2025-01-18,2026-01-05
+cli_0005_ct_0142,Sara Verma,sara.verma141@examplemail.com,North Commerce,RevOps Manager,customer,referral,United States,2025-12-06,2026-03-07
+cli_0005_ct_0143,Arjun Mehta,arjun.mehta142@examplemail.com,Peak LLC,Founder,lead,import,Australia,2025-08-02,2026-01-21
+cli_0005_ct_0144,Arjun Verma,arjun.verma143@examplemail.com,Peak Ltd,Head of Growth,sql,website_form,UAE,2025-10-13,2026-03-31
+cli_0005_ct_0145,Kabir Nair,kabir.nair144@examplemail.com,North Commerce,Sales Lead,churn_risk,referral,Canada,2025-08-11,2026-02-12
+cli_0005_ct_0146,Anika Reddy,anika.reddy145@examplemail.com,North Commerce,Marketing Manager,mql,website_form,United Kingdom,2026-03-13,2025-12-28
+cli_0005_ct_0147,Liam Nair,liam.nair146@examplemail.com,North Commerce,Sales Lead,churn_risk,import,Canada,2025-08-31,2026-03-16
+cli_0005_ct_0148,Ava Bhatia,ava.bhatia147@examplemail.com,Metro Inc,RevOps Manager,mql,website_form,India,2025-06-01,2026-01-16
+cli_0005_ct_0149,Arjun Khan,arjun.khan148@examplemail.com,North Commerce,Marketing Manager,mql,event,UAE,2025-07-25,2026-01-31
+cli_0005_ct_0150,Ava Sharma,ava.sharma149@examplemail.com,North Commerce,RevOps Manager,customer,event,UAE,2026-03-24,2026-01-07
+cli_0005_ct_0151,Ishaan Joshi,ishaan.joshi150@examplemail.com,Peak Inc,Founder,sql,event,UAE,2025-11-18,2026-02-17
+cli_0005_ct_0152,Anika Kapoor,anika.kapoor151@examplemail.com,North Commerce,Marketing Manager,customer,event,India,2025-11-12,2026-02-20
+cli_0005_ct_0153,Sara Reddy,sara.reddy152@examplemail.com,Acme Group,Head of Growth,lead,website_form,United Kingdom,2025-03-02,2025-12-27
+cli_0005_ct_0154,Liam Gupta,liam.gupta153@examplemail.com,North Commerce,RevOps Manager,sql,import,Australia,2025-08-06,2026-02-12
+cli_0005_ct_0155,Kabir Nair,kabir.nair154@examplemail.com,Orbit Group,Sales Lead,lead,import,Australia,2025-03-19,2026-01-23
+cli_0005_ct_0156,Ava Verma,ava.verma155@examplemail.com,Peak Inc,Marketing Manager,mql,website_form,United States,2026-01-28,2026-03-25
+cli_0005_ct_0157,Leo Sharma,leo.sharma156@examplemail.com,Peak Group,Marketing Manager,mql,website_form,United States,2025-12-18,2026-02-12
+cli_0005_ct_0158,Zara Verma,zara.verma157@examplemail.com,Peak Ltd,Head of Growth,sql,event,UAE,2025-02-01,2026-04-22

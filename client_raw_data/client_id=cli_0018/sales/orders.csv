@@ -1,0 +1,143 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0018_ord_00001,2026-04-05,0aab5c093dd5,premium bundle,EUR,1687.8,0,referral,paid,paypal
+cli_0018_ord_00002,2026-03-26,34cadbde980e,annual subscription,EUR,1592.72,0,direct,paid,bank_transfer
+cli_0018_ord_00003,2025-11-26,36941ef74083,pro plan,EUR,685.35,20,referral,paid,upi
+cli_0018_ord_00004,2026-03-06,b4bfb2f44e83,service retainer,EUR,517.63,5,linkedin_ads,refunded,card
+cli_0018_ord_00005,2026-03-18,12b287afcfa7,annual subscription,EUR,2283.61,15,google_ads,paid,upi
+cli_0018_ord_00006,2026-03-07,1f7cc74be385,service retainer,EUR,669.46,15,referral,paid,wallet
+cli_0018_ord_00007,2026-02-26,22adca08d8ed,premium bundle,EUR,1840.87,25,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00008,2026-01-10,cbde6f6943db,service retainer,EUR,92.73,10,linkedin_ads,pending,wallet
+cli_0018_ord_00009,2026-04-10,0d0b4a852df8,annual subscription,EUR,2055.69,20,linkedin_ads,refunded,card
+cli_0018_ord_00010,2026-04-23,d2d575a6fef2,starter plan,EUR,2335.17,20,google_ads,pending,wallet
+cli_0018_ord_00011,2025-12-12,16de90cfc58d,service retainer,EUR,383.27,25,referral,paid,upi
+cli_0018_ord_00012,2025-11-09,d4f287c5ef0a,starter plan,EUR,2148.01,0,linkedin_ads,paid,upi
+cli_0018_ord_00013,2025-12-30,b6030056d5f8,annual subscription,EUR,2248.58,0,linkedin_ads,pending,bank_transfer
+cli_0018_ord_00014,2026-01-20,621cdb98d742,annual subscription,EUR,621.13,5,linkedin_ads,paid,paypal
+cli_0018_ord_00015,2025-11-12,552961b067a2,premium bundle,EUR,1576.37,10,linkedin_ads,refunded,paypal
+cli_0018_ord_00016,2026-04-17,755e07452ead,service retainer,EUR,1216.49,15,google_ads,paid,upi
+cli_0018_ord_00017,2026-02-08,bd8789bf9e14,starter plan,EUR,2094.18,5,referral,refunded,paypal
+cli_0018_ord_00018,2026-01-29,eb768b986e89,annual subscription,EUR,257.47,10,direct,paid,upi
+cli_0018_ord_00019,2026-01-27,5d0c1c41af82,membership,EUR,2092.62,5,google_ads,refunded,wallet
+cli_0018_ord_00020,2026-01-06,47728593e457,service retainer,EUR,1825.67,5,google_ads,paid,wallet
+cli_0018_ord_00021,2026-02-14,d9f055db2731,premium bundle,EUR,2408.97,0,referral,paid,wallet
+cli_0018_ord_00022,2026-02-26,19f19fd0ba83,membership,EUR,1885.95,25,referral,paid,upi
+cli_0018_ord_00023,2026-03-03,244dc532db96,service retainer,EUR,2426.71,0,referral,paid,card
+cli_0018_ord_00024,2025-10-27,9c400f1d1ac0,service retainer,EUR,2413.38,15,linkedin_ads,paid,paypal
+cli_0018_ord_00025,2026-01-26,9e2195304cd0,starter plan,EUR,1728.34,20,linkedin_ads,paid,wallet
+cli_0018_ord_00026,2026-02-05,50adf4d072cb,pro plan,EUR,1934.65,10,linkedin_ads,paid,paypal
+cli_0018_ord_00027,2026-03-02,6fd9d1f9c8c0,annual subscription,EUR,712.89,5,google_ads,paid,upi
+cli_0018_ord_00028,2026-03-20,2dbf6da56c18,membership,EUR,1650.11,20,google_ads,paid,wallet
+cli_0018_ord_00029,2026-03-09,187416b5671f,membership,EUR,1890.53,15,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00030,2026-01-07,0d8ef44a8459,premium bundle,EUR,90.77,25,referral,paid,upi
+cli_0018_ord_00031,2025-11-19,b1ebbbdd372e,annual subscription,EUR,177.63,25,linkedin_ads,paid,paypal
+cli_0018_ord_00032,2025-11-25,cb07015d3ce0,starter plan,EUR,256.48,25,google_ads,pending,card
+cli_0018_ord_00033,2026-02-09,32b634b33b66,premium bundle,EUR,894.35,25,google_ads,paid,upi
+cli_0018_ord_00034,2025-11-25,aedd1ea60727,service retainer,EUR,1305.07,20,referral,paid,upi
+cli_0018_ord_00035,2026-03-23,7eb54bfb6f75,service retainer,EUR,1891.06,15,linkedin_ads,paid,paypal
+cli_0018_ord_00036,2026-02-21,819dc697763c,pro plan,EUR,1880.89,0,direct,pending,wallet
+cli_0018_ord_00037,2025-12-19,f2d9705e33ef,service retainer,EUR,765.07,5,direct,paid,upi
+cli_0018_ord_00038,2026-02-09,9f8a2cfb9043,audit package,EUR,1556.64,15,google_ads,refunded,paypal
+cli_0018_ord_00039,2025-11-20,fa106e86cb16,premium bundle,EUR,1081.26,5,linkedin_ads,paid,upi
+cli_0018_ord_00040,2025-12-08,fc6aaa286bde,annual subscription,EUR,1017.01,25,google_ads,paid,bank_transfer
+cli_0018_ord_00041,2025-12-08,dde423607803,premium bundle,EUR,2491.95,20,direct,paid,wallet
+cli_0018_ord_00042,2026-04-21,c694528cd8fe,pro plan,EUR,397.99,0,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00043,2026-01-24,a915e86b9df0,membership,EUR,154.24,20,google_ads,pending,paypal
+cli_0018_ord_00044,2026-04-06,4f509441f9af,premium bundle,EUR,1769.55,25,linkedin_ads,paid,paypal
+cli_0018_ord_00045,2026-03-25,a07637b557cb,annual subscription,EUR,1471.52,10,direct,paid,upi
+cli_0018_ord_00046,2026-04-17,6b30fbb7518c,membership,EUR,1909.73,15,google_ads,refunded,card
+cli_0018_ord_00047,2026-01-04,0fdb608df465,annual subscription,EUR,751.14,15,linkedin_ads,paid,paypal
+cli_0018_ord_00048,2026-03-27,c7fe11583725,premium bundle,EUR,993.55,0,linkedin_ads,paid,wallet
+cli_0018_ord_00049,2025-10-27,9ca9ec2f3639,premium bundle,EUR,1436.64,0,direct,paid,bank_transfer
+cli_0018_ord_00050,2025-12-04,f7705ee29285,pro plan,EUR,1151.64,20,referral,refunded,paypal
+cli_0018_ord_00051,2026-01-02,02e9ebbc71c5,annual subscription,EUR,655.84,20,linkedin_ads,paid,wallet
+cli_0018_ord_00052,2026-03-29,aef35fadb5b9,premium bundle,EUR,1077.74,10,direct,refunded,card
+cli_0018_ord_00053,2026-02-28,992dbe00feb3,annual subscription,EUR,1260.22,15,referral,paid,bank_transfer
+cli_0018_ord_00054,2026-01-08,7898645caf99,membership,EUR,217.77,5,linkedin_ads,paid,paypal
+cli_0018_ord_00055,2026-01-03,05d5b55d0382,starter plan,EUR,1439.31,15,direct,paid,wallet
+cli_0018_ord_00056,2025-11-28,18f6def87bee,service retainer,EUR,1708.71,0,referral,paid,wallet
+cli_0018_ord_00057,2026-01-23,bc8c6eb23914,membership,EUR,61.86,25,linkedin_ads,pending,bank_transfer
+cli_0018_ord_00058,2026-03-29,8c3cf7ae9d81,membership,EUR,2366.48,10,direct,refunded,bank_transfer
+cli_0018_ord_00059,2026-01-14,8939e3ed9a87,service retainer,EUR,1480.9,5,referral,paid,paypal
+cli_0018_ord_00060,2026-03-29,ab384f112bf4,audit package,EUR,1685.6,10,google_ads,paid,wallet
+cli_0018_ord_00061,2026-02-18,f2038e0159eb,service retainer,EUR,1095.75,25,direct,paid,card
+cli_0018_ord_00062,2026-02-11,ce423444e73d,premium bundle,EUR,1380.99,10,direct,paid,paypal
+cli_0018_ord_00063,2026-02-16,302049093a61,service retainer,EUR,1278.8,0,linkedin_ads,paid,upi
+cli_0018_ord_00064,2026-03-17,47aa760865c7,service retainer,EUR,2139.77,25,google_ads,paid,paypal
+cli_0018_ord_00065,2026-03-15,0e940772b928,premium bundle,EUR,2407.32,25,direct,refunded,card
+cli_0018_ord_00066,2026-03-28,913184b620ca,pro plan,EUR,660.16,0,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00067,2025-10-29,c6895df73d1c,premium bundle,EUR,998.33,20,google_ads,paid,bank_transfer
+cli_0018_ord_00068,2026-04-12,cbee7dd39ffd,pro plan,EUR,1372.63,10,referral,pending,paypal
+cli_0018_ord_00069,2026-01-28,80f285e31120,audit package,EUR,1613.74,5,google_ads,pending,card
+cli_0018_ord_00070,2026-02-28,d72a8e7dca54,membership,EUR,717.51,0,referral,pending,card
+cli_0018_ord_00071,2025-12-22,ce22193dc2cc,starter plan,EUR,1028.58,10,referral,paid,card
+cli_0018_ord_00072,2026-03-26,b24d5f43cedf,service retainer,EUR,935.76,5,google_ads,refunded,upi
+cli_0018_ord_00073,2025-11-06,809774b53b75,pro plan,EUR,2255.23,0,referral,paid,upi
+cli_0018_ord_00074,2026-01-13,c5d6ee845e3b,audit package,EUR,387.2,25,linkedin_ads,paid,wallet
+cli_0018_ord_00075,2026-02-07,f9315cffbe0e,premium bundle,EUR,1403.35,5,google_ads,paid,paypal
+cli_0018_ord_00076,2026-04-18,37dc6c41a75a,membership,EUR,1186.66,15,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00077,2026-03-02,6c6d603e41a1,annual subscription,EUR,2341.66,20,direct,paid,bank_transfer
+cli_0018_ord_00078,2026-03-05,28092de4a8df,starter plan,EUR,1789.09,15,referral,paid,card
+cli_0018_ord_00079,2026-02-17,568bf29adb2d,premium bundle,EUR,1269.15,10,google_ads,paid,paypal
+cli_0018_ord_00080,2025-11-15,517f780d77b8,service retainer,EUR,282.98,20,google_ads,paid,bank_transfer
+cli_0018_ord_00081,2026-04-23,af82818572b9,membership,EUR,684.84,20,direct,paid,card
+cli_0018_ord_00082,2025-11-12,a223b0a8a1fd,service retainer,EUR,532.06,0,linkedin_ads,paid,upi
+cli_0018_ord_00083,2026-02-14,5ba294d3d49b,annual subscription,EUR,2498.81,0,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00084,2025-11-09,1d2725565fd6,starter plan,EUR,2466.73,10,linkedin_ads,paid,paypal
+cli_0018_ord_00085,2026-01-24,d58cede55ecc,premium bundle,EUR,1256.71,0,referral,paid,paypal
+cli_0018_ord_00086,2025-11-30,e2532521da80,service retainer,EUR,117.8,25,google_ads,paid,wallet
+cli_0018_ord_00087,2026-02-03,ff0ae1fb9b1c,pro plan,EUR,952.03,5,referral,paid,paypal
+cli_0018_ord_00088,2026-02-09,0fc74a3cdba3,service retainer,EUR,2373.2,20,referral,paid,upi
+cli_0018_ord_00089,2025-11-07,9c0d6d8350a1,pro plan,EUR,1843.08,15,referral,paid,upi
+cli_0018_ord_00090,2025-12-10,e883a3b02390,starter plan,EUR,2091.98,20,direct,paid,card
+cli_0018_ord_00091,2026-01-23,8fb236ee3209,service retainer,EUR,2045.11,25,direct,paid,paypal
+cli_0018_ord_00092,2026-04-15,67e545887cd6,premium bundle,EUR,1842.91,20,referral,paid,upi
+cli_0018_ord_00093,2026-03-24,77769beea83a,pro plan,EUR,1828.88,15,google_ads,paid,card
+cli_0018_ord_00094,2025-12-13,7d68c6fb185a,pro plan,EUR,441.2,15,direct,paid,wallet
+cli_0018_ord_00095,2025-11-26,d4542ec5fd5b,membership,EUR,1777.01,25,referral,paid,bank_transfer
+cli_0018_ord_00096,2025-11-27,47e80ae4d1d7,service retainer,EUR,657.96,0,direct,refunded,upi
+cli_0018_ord_00097,2025-11-10,cefbbe27a0e9,membership,EUR,2493.07,10,linkedin_ads,paid,paypal
+cli_0018_ord_00098,2026-04-11,430305f136b1,membership,EUR,772.12,15,linkedin_ads,pending,bank_transfer
+cli_0018_ord_00099,2025-11-18,9d8602c910ff,membership,EUR,1912.34,25,google_ads,pending,paypal
+cli_0018_ord_00100,2026-01-31,7214d5050968,annual subscription,EUR,414.04,20,google_ads,paid,upi
+cli_0018_ord_00101,2026-01-22,986c161fac11,service retainer,EUR,1733.16,25,linkedin_ads,paid,wallet
+cli_0018_ord_00102,2026-03-06,fc4896fed4d7,starter plan,EUR,562.89,20,linkedin_ads,paid,card
+cli_0018_ord_00103,2026-01-24,2cc9262f80da,membership,EUR,2178.93,20,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00104,2026-01-04,27119c3b7880,audit package,EUR,958.91,10,direct,paid,bank_transfer
+cli_0018_ord_00105,2026-02-26,21beed5f1848,membership,EUR,2399.8,10,referral,paid,bank_transfer
+cli_0018_ord_00106,2025-11-25,c0b18b15db67,pro plan,EUR,186.92,5,referral,paid,upi
+cli_0018_ord_00107,2026-04-05,0f13b92984d5,annual subscription,EUR,825.45,0,direct,paid,bank_transfer
+cli_0018_ord_00108,2025-11-09,beaec2260693,premium bundle,EUR,517.79,15,google_ads,paid,upi
+cli_0018_ord_00109,2026-03-05,c2870c68d72e,service retainer,EUR,522.51,10,google_ads,paid,upi
+cli_0018_ord_00110,2025-12-18,b017f678a912,premium bundle,EUR,408.12,5,linkedin_ads,refunded,upi
+cli_0018_ord_00111,2026-03-20,40b2fffa0ec5,pro plan,EUR,2288.61,25,direct,paid,card
+cli_0018_ord_00112,2025-12-01,fd92bd43272f,membership,EUR,1053.88,10,direct,paid,wallet
+cli_0018_ord_00113,2026-01-19,e9266de6e647,premium bundle,EUR,1577.62,10,referral,paid,bank_transfer
+cli_0018_ord_00114,2026-01-12,e6c087a849a4,pro plan,EUR,2417.42,5,direct,paid,wallet
+cli_0018_ord_00115,2025-12-02,b0466200b77b,membership,EUR,753.16,5,direct,paid,bank_transfer
+cli_0018_ord_00116,2025-12-11,8897a3394232,audit package,EUR,1409.67,5,referral,paid,paypal
+cli_0018_ord_00117,2026-03-19,98db99db7f26,membership,EUR,848.54,10,direct,pending,upi
+cli_0018_ord_00118,2026-03-23,6e87089aa103,premium bundle,EUR,708.47,25,referral,paid,bank_transfer
+cli_0018_ord_00119,2026-01-14,1cc539abe4f2,membership,EUR,74.46,10,linkedin_ads,paid,card
+cli_0018_ord_00120,2026-01-11,4942d79297d5,annual subscription,EUR,906.29,25,referral,paid,paypal
+cli_0018_ord_00121,2025-12-08,a496a9787b52,premium bundle,EUR,1931.47,20,google_ads,refunded,card
+cli_0018_ord_00122,2026-01-29,2fe2171ed857,premium bundle,EUR,1131.22,20,referral,paid,upi
+cli_0018_ord_00123,2026-04-14,ff45a8de691c,starter plan,EUR,184.32,15,linkedin_ads,paid,wallet
+cli_0018_ord_00124,2025-11-29,ad56495051ac,starter plan,EUR,909.57,15,referral,paid,bank_transfer
+cli_0018_ord_00125,2026-02-04,03a7f80bb1b1,premium bundle,EUR,2191.31,20,referral,paid,wallet
+cli_0018_ord_00126,2026-03-18,afe264d92774,audit package,EUR,640.85,5,direct,paid,bank_transfer
+cli_0018_ord_00127,2025-12-07,f315074886b3,annual subscription,EUR,796.61,10,direct,paid,upi
+cli_0018_ord_00128,2026-04-24,67b8de0fc6fc,service retainer,EUR,2375.29,0,linkedin_ads,paid,card
+cli_0018_ord_00129,2026-02-10,4d5b29928597,membership,EUR,2324.03,10,google_ads,paid,paypal
+cli_0018_ord_00130,2026-02-12,bfc2fed1c95d,audit package,EUR,538.32,5,linkedin_ads,paid,upi
+cli_0018_ord_00131,2026-03-22,26bc226a3c9b,audit package,EUR,542.51,15,referral,paid,card
+cli_0018_ord_00132,2026-04-18,834a013d4c6d,membership,EUR,1194.7,0,linkedin_ads,refunded,wallet
+cli_0018_ord_00133,2026-01-13,621cc7401f55,membership,EUR,1553.06,15,referral,paid,card
+cli_0018_ord_00134,2026-02-25,fec9a33c4319,pro plan,EUR,1258.29,0,direct,paid,bank_transfer
+cli_0018_ord_00135,2026-02-07,46230390a2b1,service retainer,EUR,442.07,25,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00136,2026-01-29,003ed24528b6,premium bundle,EUR,1419.08,20,google_ads,pending,paypal
+cli_0018_ord_00137,2025-11-17,1fbe3b693875,membership,EUR,970.23,20,linkedin_ads,pending,wallet
+cli_0018_ord_00138,2025-12-23,ac3c4ae65a26,starter plan,EUR,1547.79,5,linkedin_ads,paid,bank_transfer
+cli_0018_ord_00139,2025-10-29,1e6fc286bc36,service retainer,EUR,1261.51,15,direct,paid,bank_transfer
+cli_0018_ord_00140,2026-04-18,f75ef35e3c70,annual subscription,EUR,294.83,10,linkedin_ads,paid,paypal
+cli_0018_ord_00141,2025-12-21,5efe9a4913c2,starter plan,EUR,1301.27,0,linkedin_ads,paid,wallet
+cli_0018_ord_00142,2026-01-06,0e3c2681bb5e,starter plan,EUR,777.96,0,google_ads,paid,card

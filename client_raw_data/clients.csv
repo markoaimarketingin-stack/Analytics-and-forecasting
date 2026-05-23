@@ -1,0 +1,26 @@
+client_id,company_name,company_slug,industry,region,currency,objective,budget_monthly,voice,primary_channels,website,seed
+cli_0001,Vertex Commerce,vertex-commerce,saas,US,USD,purchase,15000,playful,"['meta_ads', 'email', 'linkedin_ads']",https://vertex-commerce.example.com,533225
+cli_0002,Pulse Commerce,pulse-commerce,ecommerce,UK,GBP,traffic,5000,friendly,"['referral', 'meta_ads', 'linkedin_ads', 'email', 'tiktok_ads']",https://pulse-commerce.example.com,109032
+cli_0003,Nova Finance,nova-finance,d2c,AU,AUD,purchase,12000,premium,"['meta_ads', 'linkedin_ads', 'google_ads']",https://nova-finance.example.com,6022675
+cli_0004,North Growth,north-growth,healthcare,UAE,AED,app_install,8000,professional,"['email', 'referral', 'organic', 'direct', 'tiktok_ads']",https://north-growth.example.com,9686362
+cli_0005,North Commerce,north-commerce,education,UK,GBP,lead_gen,25000,friendly,"['referral', 'tiktok_ads', 'linkedin_ads']",https://north-commerce.example.com,6120869
+cli_0006,Nova Commerce,nova-commerce,d2c,CA,CAD,retention,25000,playful,"['meta_ads', 'email', 'organic', 'direct', 'referral']",https://nova-commerce.example.com,2741439
+cli_0007,Vertex Works,vertex-works,marketplace,AU,AUD,retention,15000,premium,"['linkedin_ads', 'referral', 'google_ads']",https://vertex-works.example.com,5292424
+cli_0008,Blue Commerce,blue-commerce,local_services,UAE,AED,purchase,40000,playful,"['referral', 'organic', 'linkedin_ads', 'meta_ads']",https://blue-commerce.example.com,4443952
+cli_0009,Urban Works,urban-works,d2c,IN,INR,retention,25000,educational,"['referral', 'tiktok_ads', 'meta_ads', 'organic']",https://urban-works.example.com,8548433
+cli_0010,North Studio,north-studio,marketplace,UK,GBP,retention,12000,friendly,"['referral', 'email', 'google_ads', 'linkedin_ads', 'direct']",https://north-studio.example.com,9997349
+cli_0011,Urban Labs,urban-labs,marketplace,UAE,AED,retention,8000,educational,"['organic', 'google_ads', 'tiktok_ads', 'linkedin_ads']",https://urban-labs.example.com,2653447
+cli_0012,Vertex Works,vertex-works,marketplace,US,USD,traffic,12000,professional,"['email', 'referral', 'organic', 'direct', 'meta_ads']",https://vertex-works.example.com,2564218
+cli_0013,Urban Works,urban-works,healthcare,EU,EUR,traffic,5000,premium,"['google_ads', 'direct', 'tiktok_ads', 'organic']",https://urban-works.example.com,4017344
+cli_0014,Signal Studio,signal-studio,ecommerce,IN,INR,retention,8000,direct,"['tiktok_ads', 'meta_ads', 'organic']",https://signal-studio.example.com,7973916
+cli_0015,Vertex Works,vertex-works,hospitality,EU,EUR,purchase,60000,educational,"['linkedin_ads', 'organic', 'tiktok_ads', 'direct', 'referral']",https://vertex-works.example.com,7350100
+cli_0016,Blue Commerce,blue-commerce,hospitality,SG,SGD,lead_gen,15000,premium,"['linkedin_ads', 'email', 'meta_ads']",https://blue-commerce.example.com,120643
+cli_0017,Pulse Studio,pulse-studio,saas,US,USD,book_demo,5000,premium,"['linkedin_ads', 'tiktok_ads', 'organic']",https://pulse-studio.example.com,8143904
+cli_0018,Signal Collective,signal-collective,education,EU,EUR,purchase,90000,direct,"['linkedin_ads', 'google_ads', 'referral', 'direct']",https://signal-collective.example.com,5944127
+cli_0019,Bright Labs,bright-labs,local_services,AU,AUD,lead_gen,8000,direct,"['organic', 'referral', 'google_ads', 'meta_ads', 'email']",https://bright-labs.example.com,3191176
+cli_0020,Prime Market,prime-market,hospitality,SG,SGD,signup,12000,direct,"['meta_ads', 'linkedin_ads', 'email']",https://prime-market.example.com,1642636
+cli_0021,Blue Commerce,blue-commerce,ecommerce,US,USD,app_install,12000,direct,"['linkedin_ads', 'referral', 'direct', 'google_ads']",https://blue-commerce.example.com,2762153
+cli_0022,Summit Finance,summit-finance,local_services,US,USD,signup,90000,direct,"['direct', 'meta_ads', 'referral', 'tiktok_ads', 'organic']",https://summit-finance.example.com,981187
+cli_0023,Nova Labs,nova-labs,subscription,US,USD,traffic,5000,direct,"['tiktok_ads', 'google_ads', 'email', 'referral', 'meta_ads']",https://nova-labs.example.com,1149598
+cli_0024,Pulse Market,pulse-market,subscription,UK,GBP,traffic,8000,friendly,"['google_ads', 'email', 'direct', 'linkedin_ads', 'tiktok_ads']",https://pulse-market.example.com,4374923
+cli_0025,Pulse Finance,pulse-finance,education,CA,CAD,purchase,60000,playful,"['email', 'linkedin_ads', 'tiktok_ads', 'google_ads', 'direct']",https://pulse-finance.example.com,7688756

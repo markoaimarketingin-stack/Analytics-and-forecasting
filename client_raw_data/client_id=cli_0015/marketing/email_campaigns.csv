@@ -1,0 +1,44 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0015_em_0001,Newsletter,New Vertex Works,31249,31049,16738,1367,57,1,2026-01-02
+cli_0015_em_0002,Re-engagement,A quick update on Vertex Works,45741,45121,5623,391,352,0,2025-11-23
+cli_0015_em_0003,Winback,How to improve Vertex Works,45195,43769,12603,1929,147,5,2025-12-21
+cli_0015_em_0004,Re-engagement,Last chance for Vertex Works,38406,37688,18969,1721,121,5,2026-01-17
+cli_0015_em_0005,Re-engagement,How to improve Vertex Works,28207,27281,10963,1430,18,5,2026-02-09
+cli_0015_em_0006,Newsletter,New Vertex Works,38042,36622,16343,3272,36,3,2026-01-15
+cli_0015_em_0007,Launch,How to improve Vertex Works,2380,2295,314,51,3,4,2026-03-12
+cli_0015_em_0008,Winback,Last chance for Vertex Works,34854,33499,4843,756,316,1,2026-02-11
+cli_0015_em_0009,Newsletter,How to improve Vertex Works,9010,8614,2200,304,27,0,2025-12-01
+cli_0015_em_0010,Re-engagement,How to improve Vertex Works,4259,4058,2028,302,38,4,2026-03-15
+cli_0015_em_0011,Education,How to improve Vertex Works,24500,23896,7651,1587,16,1,2025-12-13
+cli_0015_em_0012,Winback,Last chance for Vertex Works,40285,39364,21218,2466,52,2,2026-02-03
+cli_0015_em_0013,Education,A quick update on Vertex Works,34971,34032,9074,1561,263,2,2026-01-02
+cli_0015_em_0014,Education,How to improve Vertex Works,10202,10121,2993,652,97,5,2026-04-04
+cli_0015_em_0015,Launch,A quick update on Vertex Works,29053,28782,11901,2498,52,0,2025-11-03
+cli_0015_em_0016,Offer,A quick update on Vertex Works,46888,45125,23357,1648,76,3,2026-01-01
+cli_0015_em_0017,Newsletter,A quick update on Vertex Works,48084,46209,22610,4860,155,1,2026-03-01
+cli_0015_em_0018,Re-engagement,New Vertex Works,37609,36734,12018,1204,17,5,2025-12-04
+cli_0015_em_0019,Education,How to improve Vertex Works,33933,33372,6606,955,202,1,2026-04-12
+cli_0015_em_0020,Launch,A quick update on Vertex Works,14057,13724,6366,521,73,3,2025-12-02
+cli_0015_em_0021,Offer,How to improve Vertex Works,37741,36211,13629,1460,310,5,2026-01-23
+cli_0015_em_0022,Newsletter,A quick update on Vertex Works,48332,46911,20290,2920,456,4,2025-11-25
+cli_0015_em_0023,Offer,How to improve Vertex Works,44328,42522,22402,2078,252,0,2026-03-10
+cli_0015_em_0024,Launch,A quick update on Vertex Works,9842,9739,3290,156,87,5,2026-03-08
+cli_0015_em_0025,Launch,Last chance for Vertex Works,4608,4382,1315,159,22,1,2026-01-08
+cli_0015_em_0026,Launch,New Vertex Works,35584,34884,9579,1503,338,1,2025-12-21
+cli_0015_em_0027,Education,Last chance for Vertex Works,10722,10188,1308,59,100,1,2026-01-31
+cli_0015_em_0028,Winback,A quick update on Vertex Works,40727,40244,8296,530,52,0,2025-12-21
+cli_0015_em_0029,Offer,How to improve Vertex Works,21572,21373,2633,323,23,2,2026-03-16
+cli_0015_em_0030,Education,New Vertex Works,4749,4577,2207,210,36,4,2026-01-08
+cli_0015_em_0031,Launch,Last chance for Vertex Works,23803,23431,12775,2374,123,3,2026-01-31
+cli_0015_em_0032,Re-engagement,How to improve Vertex Works,32693,31640,5951,941,202,3,2026-01-27
+cli_0015_em_0033,Winback,New Vertex Works,43034,41567,17288,1620,253,5,2025-12-28
+cli_0015_em_0034,Launch,New Vertex Works,47446,45557,10217,1677,127,4,2026-02-03
+cli_0015_em_0035,Offer,Last chance for Vertex Works,14943,14653,3075,231,85,3,2026-01-30
+cli_0015_em_0036,Newsletter,A quick update on Vertex Works,42255,40488,20774,3963,195,2,2026-01-17
+cli_0015_em_0037,Education,New Vertex Works,25848,24751,4940,692,177,2,2025-12-19
+cli_0015_em_0038,Winback,How to improve Vertex Works,11424,11246,2924,224,47,5,2026-04-10
+cli_0015_em_0039,Re-engagement,How to improve Vertex Works,1858,1790,765,43,9,2,2026-04-01
+cli_0015_em_0040,Education,A quick update on Vertex Works,45114,44807,12089,2351,443,5,2026-02-26
+cli_0015_em_0041,Launch,Last chance for Vertex Works,48647,46898,17909,1699,281,2,2026-03-29
+cli_0015_em_0042,Education,A quick update on Vertex Works,12879,12725,4674,900,22,0,2026-01-01
+cli_0015_em_0043,Education,New Vertex Works,17223,16809,2799,480,115,2,2026-02-01

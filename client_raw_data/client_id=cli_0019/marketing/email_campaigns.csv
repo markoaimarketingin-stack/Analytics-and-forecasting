@@ -1,0 +1,46 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0019_em_0001,Education,How to improve Bright Labs,8315,8072,2317,190,5,5,2026-02-26
+cli_0019_em_0002,Re-engagement,A quick update on Bright Labs,31141,30679,8676,984,24,0,2026-04-08
+cli_0019_em_0003,Education,A quick update on Bright Labs,782,756,283,30,6,1,2025-11-28
+cli_0019_em_0004,Newsletter,How to improve Bright Labs,41443,40100,22472,3601,158,2,2026-04-21
+cli_0019_em_0005,Education,How to improve Bright Labs,33153,33097,14166,1368,227,2,2026-01-29
+cli_0019_em_0006,Education,Last chance for Bright Labs,37370,36864,14683,1062,54,5,2026-04-15
+cli_0019_em_0007,Newsletter,How to improve Bright Labs,840,813,266,37,0,1,2025-11-26
+cli_0019_em_0008,Offer,Last chance for Bright Labs,41290,39724,16653,2758,62,2,2026-01-21
+cli_0019_em_0009,Education,A quick update on Bright Labs,4307,4179,1872,232,30,0,2026-04-05
+cli_0019_em_0010,Launch,New Bright Labs,7221,6901,2483,180,38,4,2026-02-17
+cli_0019_em_0011,Re-engagement,Last chance for Bright Labs,29350,28935,4674,752,66,5,2026-04-02
+cli_0019_em_0012,Launch,How to improve Bright Labs,25523,25399,4779,887,55,0,2026-04-16
+cli_0019_em_0013,Newsletter,New Bright Labs,5176,5058,1285,246,25,1,2026-02-21
+cli_0019_em_0014,Re-engagement,How to improve Bright Labs,41417,41287,9459,2005,256,0,2025-11-17
+cli_0019_em_0015,Re-engagement,New Bright Labs,39683,38024,16177,3019,95,5,2026-01-04
+cli_0019_em_0016,Education,A quick update on Bright Labs,14977,14513,4045,425,114,5,2026-01-03
+cli_0019_em_0017,Launch,New Bright Labs,26930,25804,12653,1355,236,4,2025-10-27
+cli_0019_em_0018,Offer,A quick update on Bright Labs,47584,47034,17331,1419,328,0,2026-03-16
+cli_0019_em_0019,Launch,Last chance for Bright Labs,14215,14045,4186,203,44,4,2026-02-23
+cli_0019_em_0020,Newsletter,New Bright Labs,4475,4463,1000,149,33,3,2026-04-18
+cli_0019_em_0021,Launch,A quick update on Bright Labs,29948,29570,5029,782,82,4,2026-01-05
+cli_0019_em_0022,Winback,How to improve Bright Labs,43582,41593,10864,1409,305,2,2025-11-05
+cli_0019_em_0023,Education,How to improve Bright Labs,12159,11629,4663,1014,63,0,2026-04-07
+cli_0019_em_0024,Newsletter,New Bright Labs,37471,37349,8116,695,34,1,2026-03-11
+cli_0019_em_0025,Offer,New Bright Labs,43065,42818,15097,1246,341,5,2026-04-05
+cli_0019_em_0026,Winback,How to improve Bright Labs,27671,26937,11127,2356,245,3,2025-12-22
+cli_0019_em_0027,Winback,How to improve Bright Labs,7549,7355,2652,362,74,1,2026-02-09
+cli_0019_em_0028,Education,New Bright Labs,8163,7859,2269,408,32,4,2025-12-05
+cli_0019_em_0029,Launch,New Bright Labs,4879,4774,1509,125,36,2,2025-12-30
+cli_0019_em_0030,Education,Last chance for Bright Labs,38730,36822,15944,1121,90,4,2025-12-20
+cli_0019_em_0031,Launch,Last chance for Bright Labs,33648,32215,15908,1868,131,4,2026-01-26
+cli_0019_em_0032,Education,How to improve Bright Labs,10606,10478,2757,428,19,4,2026-04-20
+cli_0019_em_0033,Re-engagement,New Bright Labs,46660,45781,19475,2914,351,5,2026-03-03
+cli_0019_em_0034,Newsletter,A quick update on Bright Labs,47333,45800,24752,2245,83,0,2025-12-02
+cli_0019_em_0035,Launch,How to improve Bright Labs,11541,11066,2251,481,87,1,2026-02-19
+cli_0019_em_0036,Offer,Last chance for Bright Labs,20900,20430,3902,254,51,5,2026-01-18
+cli_0019_em_0037,Launch,New Bright Labs,30780,29370,14911,1473,208,1,2025-12-26
+cli_0019_em_0038,Launch,A quick update on Bright Labs,17314,16865,4818,799,15,3,2026-01-19
+cli_0019_em_0039,Offer,Last chance for Bright Labs,5574,5315,1351,238,19,4,2026-04-11
+cli_0019_em_0040,Education,A quick update on Bright Labs,12303,11904,4514,553,95,3,2026-03-06
+cli_0019_em_0041,Launch,How to improve Bright Labs,7193,6844,2613,265,57,3,2025-11-27
+cli_0019_em_0042,Newsletter,A quick update on Bright Labs,14753,14578,6522,1116,21,0,2026-02-17
+cli_0019_em_0043,Launch,A quick update on Bright Labs,17665,17214,2507,115,1,2,2026-01-29
+cli_0019_em_0044,Winback,Last chance for Bright Labs,3692,3577,1052,158,8,1,2026-01-01
+cli_0019_em_0045,Launch,A quick update on Bright Labs,32327,31124,11055,2259,211,5,2026-02-28

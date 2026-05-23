@@ -1,0 +1,64 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0023_dl_0001,cli_0023_ct_0018,Nova Labs - premium bundle,proposal,15198.82,USD,65,import,Arjun Singh,2026-02-07,2026-02-12
+cli_0023_dl_0002,cli_0023_ct_0096,Nova Labs - pro plan,new,1324.89,USD,22,import,Noah Mehta,2025-11-11,2025-12-24
+cli_0023_dl_0003,cli_0023_ct_0081,Nova Labs - pro plan,qualified,9707.72,USD,28,referral,Maya Singh,2026-02-20,2026-02-25
+cli_0023_dl_0004,cli_0023_ct_0170,Nova Labs - starter plan,qualified,13488.27,USD,15,import,Maya Sharma,2025-11-14,2025-11-21
+cli_0023_dl_0005,cli_0023_ct_0120,Nova Labs - premium bundle,negotiation,13004.65,USD,33,email_reply,Zara Kapoor,2026-01-20,2026-01-28
+cli_0023_dl_0006,cli_0023_ct_0150,Nova Labs - membership,new,1913.08,USD,34,website_form,Zara Verma,2026-03-14,2026-03-23
+cli_0023_dl_0007,cli_0023_ct_0167,Nova Labs - premium bundle,qualified,20279.03,USD,81,website_form,Ava Khan,2026-03-18,2026-04-04
+cli_0023_dl_0008,cli_0023_ct_0023,Nova Labs - service retainer,new,8402.22,USD,15,website_form,Ava Mehta,2026-01-17,2026-01-20
+cli_0023_dl_0009,cli_0023_ct_0081,Nova Labs - premium bundle,qualified,14518.99,USD,89,referral,Anika Patel,2026-02-07,2026-03-31
+cli_0023_dl_0010,cli_0023_ct_0148,Nova Labs - starter plan,won,7349.98,USD,47,email_reply,Mia Bhatia,2026-01-24,2026-03-09
+cli_0023_dl_0011,cli_0023_ct_0007,Nova Labs - audit package,proposal,1951.09,USD,35,website_form,Leo Mehta,2025-12-15,2026-01-13
+cli_0023_dl_0012,cli_0023_ct_0046,Nova Labs - pro plan,qualified,6006.19,USD,19,event,Sara Gupta,2025-12-02,2026-01-10
+cli_0023_dl_0013,cli_0023_ct_0119,Nova Labs - starter plan,new,13716.73,USD,80,website_form,Mia Patel,2025-12-12,2026-01-26
+cli_0023_dl_0014,cli_0023_ct_0036,Nova Labs - annual subscription,lost,16052.55,USD,42,referral,Ava Bhatia,2025-10-24,2025-12-01
+cli_0023_dl_0015,cli_0023_ct_0069,Nova Labs - starter plan,won,20732.17,USD,49,email_reply,Ishaan Patel,2025-10-04,2025-10-28
+cli_0023_dl_0016,cli_0023_ct_0174,Nova Labs - membership,proposal,16589.16,USD,46,website_form,Zara Joshi,2025-09-15,2025-11-11
+cli_0023_dl_0017,cli_0023_ct_0126,Nova Labs - premium bundle,proposal,12763.46,USD,20,website_form,Zara Joshi,2026-02-01,2026-03-16
+cli_0023_dl_0018,cli_0023_ct_0082,Nova Labs - audit package,proposal,9044.46,USD,65,email_reply,Mia Reddy,2026-04-01,2026-04-14
+cli_0023_dl_0019,cli_0023_ct_0132,Nova Labs - annual subscription,negotiation,9626.82,USD,88,website_form,Anika Singh,2025-11-04,2025-11-21
+cli_0023_dl_0020,cli_0023_ct_0157,Nova Labs - starter plan,negotiation,8338.97,USD,58,website_form,Ishaan Singh,2026-03-16,2026-03-26
+cli_0023_dl_0021,cli_0023_ct_0092,Nova Labs - starter plan,proposal,10819.99,USD,33,website_form,Maya Verma,2026-03-24,2026-03-27
+cli_0023_dl_0022,cli_0023_ct_0055,Nova Labs - service retainer,negotiation,9248.59,USD,22,import,Liam Khan,2025-12-06,2026-01-14
+cli_0023_dl_0023,cli_0023_ct_0018,Nova Labs - starter plan,won,20285.24,USD,58,import,Anika Khan,2026-01-16,2026-01-23
+cli_0023_dl_0024,cli_0023_ct_0165,Nova Labs - membership,proposal,21679.71,USD,81,website_form,Ishaan Verma,2026-02-27,2026-03-02
+cli_0023_dl_0025,cli_0023_ct_0002,Nova Labs - pro plan,qualified,13497.65,USD,74,website_form,Ishaan Nair,2026-04-05,2026-04-22
+cli_0023_dl_0026,cli_0023_ct_0143,Nova Labs - membership,qualified,22362.88,USD,63,website_form,Liam Reddy,2026-04-05,2026-04-23
+cli_0023_dl_0027,cli_0023_ct_0059,Nova Labs - annual subscription,negotiation,2190.73,USD,5,email_reply,Maya Kapoor,2025-11-28,2025-12-05
+cli_0023_dl_0028,cli_0023_ct_0133,Nova Labs - service retainer,proposal,1241.21,USD,59,website_form,Mia Sharma,2026-03-09,2026-03-18
+cli_0023_dl_0029,cli_0023_ct_0091,Nova Labs - membership,lost,2611.9,USD,13,website_form,Arjun Patel,2026-01-18,2026-03-19
+cli_0023_dl_0030,cli_0023_ct_0079,Nova Labs - membership,proposal,947.28,USD,91,website_form,Arjun Joshi,2025-11-23,2025-12-29
+cli_0023_dl_0031,cli_0023_ct_0002,Nova Labs - service retainer,lost,12639.05,USD,25,website_form,Anika Verma,2026-03-15,2026-04-06
+cli_0023_dl_0032,cli_0023_ct_0019,Nova Labs - starter plan,proposal,9397.62,USD,60,event,Mia Mehta,2025-11-17,2025-12-07
+cli_0023_dl_0033,cli_0023_ct_0123,Nova Labs - premium bundle,won,21393.26,USD,29,import,Arjun Bhatia,2025-11-22,2026-01-02
+cli_0023_dl_0034,cli_0023_ct_0053,Nova Labs - membership,new,7895.69,USD,12,website_form,Ishaan Verma,2026-01-13,2026-02-06
+cli_0023_dl_0035,cli_0023_ct_0054,Nova Labs - premium bundle,won,15146.43,USD,12,email_reply,Zara Patel,2025-11-05,2025-12-02
+cli_0023_dl_0036,cli_0023_ct_0015,Nova Labs - membership,new,1075.93,USD,75,import,Maya Singh,2025-10-03,2025-11-04
+cli_0023_dl_0037,cli_0023_ct_0086,Nova Labs - starter plan,negotiation,8239.08,USD,30,email_reply,Anika Sharma,2026-04-04,2026-04-10
+cli_0023_dl_0038,cli_0023_ct_0074,Nova Labs - service retainer,qualified,7103.59,USD,71,website_form,Ishaan Nair,2025-09-24,2025-11-09
+cli_0023_dl_0039,cli_0023_ct_0123,Nova Labs - audit package,negotiation,9431.81,USD,15,import,Arjun Patel,2026-01-12,2026-01-23
+cli_0023_dl_0040,cli_0023_ct_0130,Nova Labs - pro plan,lost,15479.63,USD,59,website_form,Maya Mehta,2025-12-02,2025-12-21
+cli_0023_dl_0041,cli_0023_ct_0008,Nova Labs - service retainer,negotiation,21752.64,USD,55,website_form,Liam Sharma,2025-11-14,2025-12-04
+cli_0023_dl_0042,cli_0023_ct_0114,Nova Labs - annual subscription,proposal,14661.1,USD,38,referral,Arjun Sharma,2025-10-18,2025-11-18
+cli_0023_dl_0043,cli_0023_ct_0049,Nova Labs - audit package,proposal,15695.68,USD,28,website_form,Ava Kapoor,2026-03-08,2026-03-26
+cli_0023_dl_0044,cli_0023_ct_0064,Nova Labs - premium bundle,qualified,22671.67,USD,63,website_form,Zara Khan,2025-12-03,2025-12-09
+cli_0023_dl_0045,cli_0023_ct_0100,Nova Labs - annual subscription,lost,22834.38,USD,54,referral,Leo Singh,2026-03-19,2026-04-03
+cli_0023_dl_0046,cli_0023_ct_0026,Nova Labs - membership,lost,6733.09,USD,22,website_form,Anika Bhatia,2026-01-14,2026-02-15
+cli_0023_dl_0047,cli_0023_ct_0136,Nova Labs - membership,negotiation,23046.49,USD,89,import,Maya Bhatia,2025-11-22,2025-12-25
+cli_0023_dl_0048,cli_0023_ct_0099,Nova Labs - pro plan,proposal,6293.82,USD,72,email_reply,Liam Kapoor,2025-10-03,2025-11-12
+cli_0023_dl_0049,cli_0023_ct_0013,Nova Labs - premium bundle,negotiation,20189.63,USD,21,website_form,Anika Verma,2025-11-14,2026-01-07
+cli_0023_dl_0050,cli_0023_ct_0048,Nova Labs - starter plan,proposal,12082.63,USD,82,website_form,Kabir Gupta,2025-10-02,2025-11-12
+cli_0023_dl_0051,cli_0023_ct_0090,Nova Labs - membership,new,10270.92,USD,90,website_form,Zara Khan,2026-01-10,2026-03-08
+cli_0023_dl_0052,cli_0023_ct_0169,Nova Labs - audit package,qualified,11700.06,USD,14,website_form,Sara Verma,2026-01-04,2026-02-07
+cli_0023_dl_0053,cli_0023_ct_0174,Nova Labs - annual subscription,proposal,14972.87,USD,58,website_form,Maya Singh,2025-12-09,2026-01-15
+cli_0023_dl_0054,cli_0023_ct_0085,Nova Labs - audit package,qualified,24436.0,USD,82,import,Mia Verma,2025-11-12,2025-12-03
+cli_0023_dl_0055,cli_0023_ct_0103,Nova Labs - service retainer,negotiation,2260.19,USD,56,website_form,Ishaan Bhatia,2025-11-30,2026-01-10
+cli_0023_dl_0056,cli_0023_ct_0088,Nova Labs - annual subscription,qualified,6087.63,USD,87,import,Kabir Khan,2025-12-14,2026-01-26
+cli_0023_dl_0057,cli_0023_ct_0163,Nova Labs - service retainer,qualified,20441.45,USD,52,website_form,Noah Reddy,2025-11-15,2025-12-29
+cli_0023_dl_0058,cli_0023_ct_0113,Nova Labs - pro plan,won,14622.54,USD,14,website_form,Arjun Reddy,2026-04-01,2026-04-22
+cli_0023_dl_0059,cli_0023_ct_0126,Nova Labs - audit package,proposal,21104.66,USD,23,website_form,Ishaan Joshi,2025-12-07,2026-02-03
+cli_0023_dl_0060,cli_0023_ct_0115,Nova Labs - starter plan,won,15478.78,USD,56,website_form,Zara Gupta,2025-11-07,2025-11-13
+cli_0023_dl_0061,cli_0023_ct_0065,Nova Labs - membership,qualified,10452.74,USD,13,website_form,Noah Mehta,2026-02-26,2026-03-21
+cli_0023_dl_0062,cli_0023_ct_0138,Nova Labs - service retainer,new,4533.81,USD,55,import,Liam Patel,2026-02-10,2026-03-01
+cli_0023_dl_0063,cli_0023_ct_0047,Nova Labs - starter plan,qualified,17787.85,USD,51,website_form,Anika Nair,2026-03-18,2026-04-09

@@ -112,3 +112,10 @@ class AnalyticsLog(Base):
     message: Mapped[str] = mapped_column(Text)
     context: Mapped[dict] = mapped_column(JSON)
     at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+
+class User(Base):
+    __tablename__ = "app_users"
+    email: Mapped[str] = mapped_column(String(255), primary_key=True)
+    password_hash: Mapped[str] = mapped_column(String(512), nullable=False)
+    client_id: Mapped[str] = mapped_column(String(255), nullable=False)

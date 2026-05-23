@@ -1,0 +1,46 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0023_em_0001,Launch,How to improve Nova Labs,5967,5897,919,77,7,5,2026-02-03
+cli_0023_em_0002,Offer,New Nova Labs,40302,39946,12635,851,266,3,2026-02-19
+cli_0023_em_0003,Offer,Last chance for Nova Labs,13392,12804,6581,788,107,2,2026-04-10
+cli_0023_em_0004,Winback,A quick update on Nova Labs,25567,24638,13845,940,229,5,2025-12-20
+cli_0023_em_0005,Newsletter,New Nova Labs,35325,33920,7060,605,172,3,2025-12-15
+cli_0023_em_0006,Launch,New Nova Labs,4183,4109,2011,330,32,4,2026-03-29
+cli_0023_em_0007,Education,How to improve Nova Labs,47253,45899,11256,1851,199,1,2025-12-11
+cli_0023_em_0008,Winback,New Nova Labs,9419,9020,3422,376,71,1,2026-01-27
+cli_0023_em_0009,Launch,How to improve Nova Labs,6953,6817,1105,239,17,1,2025-11-02
+cli_0023_em_0010,Winback,A quick update on Nova Labs,33658,32522,15564,2153,314,1,2025-12-12
+cli_0023_em_0011,Winback,Last chance for Nova Labs,10246,9948,5500,919,73,1,2025-12-10
+cli_0023_em_0012,Education,A quick update on Nova Labs,30534,30193,12866,1841,253,0,2026-03-02
+cli_0023_em_0013,Education,How to improve Nova Labs,19449,18605,6373,866,76,2,2026-04-11
+cli_0023_em_0014,Education,New Nova Labs,21152,20376,3255,626,168,0,2025-12-15
+cli_0023_em_0015,Re-engagement,Last chance for Nova Labs,48377,47073,18017,3505,188,5,2026-03-12
+cli_0023_em_0016,Winback,New Nova Labs,9255,9055,4147,721,7,5,2026-01-18
+cli_0023_em_0017,Offer,New Nova Labs,1364,1296,394,15,3,5,2026-01-19
+cli_0023_em_0018,Launch,New Nova Labs,49279,47419,8715,958,346,4,2025-11-23
+cli_0023_em_0019,Education,A quick update on Nova Labs,34692,33466,13073,2717,338,0,2025-11-04
+cli_0023_em_0020,Newsletter,How to improve Nova Labs,22863,22088,11358,1607,71,0,2025-12-19
+cli_0023_em_0021,Re-engagement,A quick update on Nova Labs,21203,20578,9136,526,111,3,2025-11-18
+cli_0023_em_0022,Re-engagement,Last chance for Nova Labs,5673,5471,1147,53,3,4,2025-12-16
+cli_0023_em_0023,Education,A quick update on Nova Labs,46422,45562,9770,1632,418,3,2026-03-01
+cli_0023_em_0024,Launch,Last chance for Nova Labs,14075,13849,2228,154,63,5,2026-03-19
+cli_0023_em_0025,Offer,New Nova Labs,25204,25034,12003,1924,100,1,2026-04-23
+cli_0023_em_0026,Launch,New Nova Labs,38687,36860,5992,396,0,1,2026-02-10
+cli_0023_em_0027,Education,Last chance for Nova Labs,16821,16193,9119,1135,29,3,2026-04-17
+cli_0023_em_0028,Winback,How to improve Nova Labs,48611,47502,7172,587,211,3,2026-01-12
+cli_0023_em_0029,Offer,A quick update on Nova Labs,41640,41529,13978,1672,172,2,2025-11-25
+cli_0023_em_0030,Launch,A quick update on Nova Labs,33213,32884,7691,592,70,5,2026-03-08
+cli_0023_em_0031,Launch,How to improve Nova Labs,41315,41020,21757,2806,245,1,2026-04-21
+cli_0023_em_0032,Newsletter,How to improve Nova Labs,16113,15475,2141,187,82,4,2026-01-03
+cli_0023_em_0033,Re-engagement,Last chance for Nova Labs,36405,35856,17495,1289,64,1,2025-12-18
+cli_0023_em_0034,Re-engagement,A quick update on Nova Labs,2314,2308,835,165,12,5,2025-12-12
+cli_0023_em_0035,Education,New Nova Labs,5094,5069,2750,524,50,4,2025-12-09
+cli_0023_em_0036,Winback,Last chance for Nova Labs,17049,17030,8741,1892,131,5,2026-02-17
+cli_0023_em_0037,Education,A quick update on Nova Labs,9054,8807,1778,260,79,4,2026-02-08
+cli_0023_em_0038,Newsletter,Last chance for Nova Labs,47716,46077,23231,3728,149,3,2026-03-20
+cli_0023_em_0039,Re-engagement,Last chance for Nova Labs,29166,27798,11238,772,283,3,2026-01-13
+cli_0023_em_0040,Re-engagement,New Nova Labs,24365,24294,4180,611,185,5,2026-02-23
+cli_0023_em_0041,Education,How to improve Nova Labs,11094,10780,4106,776,3,5,2026-03-15
+cli_0023_em_0042,Education,New Nova Labs,49920,47540,15557,2439,170,0,2025-12-13
+cli_0023_em_0043,Offer,New Nova Labs,27066,26566,7834,924,27,4,2026-02-10
+cli_0023_em_0044,Education,How to improve Nova Labs,34251,33483,6883,715,7,2,2026-02-13
+cli_0023_em_0045,Winback,How to improve Nova Labs,45148,43348,12214,1424,29,2,2025-11-26

@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0011",
+  "company_name": "Urban Labs",
+  "industry": "marketplace",
+  "region": "UAE",
+  "generated_at": "2026-04-23T20:56:09.571886Z",
+  "counts": {
+    "contacts": 164,
+    "deals": 95,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 8,
+    "uploads": 15,
+    "marketing_rows": 240,
+    "email_campaigns": 31,
+    "posts": 66,
+    "comments": 132,
+    "tickets": 97,
+    "transcripts": 32,
+    "sessions": 25593,
+    "events": 128074,
+    "orders": 218,
+    "refunds": 16,
+    "invoices": 59,
+    "payments": 39,
+    "feedback": 129,
+    "feature_requests": 33,
+    "meeting_notes": 25,
+    "raw_observations": 42
+  }
+}

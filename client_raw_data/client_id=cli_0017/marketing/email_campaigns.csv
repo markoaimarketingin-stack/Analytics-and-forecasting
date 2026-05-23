@@ -1,0 +1,56 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0017_em_0001,Launch,Last chance for Pulse Studio,47980,47642,6280,781,194,4,2025-11-01
+cli_0017_em_0002,Offer,Last chance for Pulse Studio,5704,5693,2220,128,4,3,2025-12-09
+cli_0017_em_0003,Offer,A quick update on Pulse Studio,1325,1295,710,64,6,4,2025-12-20
+cli_0017_em_0004,Offer,Last chance for Pulse Studio,24533,23890,5942,704,187,3,2026-01-12
+cli_0017_em_0005,Offer,A quick update on Pulse Studio,16651,16338,4152,191,5,2,2025-11-13
+cli_0017_em_0006,Education,A quick update on Pulse Studio,18315,18034,6653,439,103,2,2025-12-11
+cli_0017_em_0007,Winback,How to improve Pulse Studio,25452,24539,12722,1017,3,5,2025-11-28
+cli_0017_em_0008,Re-engagement,How to improve Pulse Studio,41065,40957,10910,1115,318,1,2026-01-19
+cli_0017_em_0009,Offer,New Pulse Studio,31746,31367,13434,1005,204,0,2026-02-09
+cli_0017_em_0010,Offer,New Pulse Studio,31700,31108,14238,2482,20,4,2026-02-21
+cli_0017_em_0011,Re-engagement,Last chance for Pulse Studio,9207,8969,3900,205,80,3,2025-12-26
+cli_0017_em_0012,Launch,How to improve Pulse Studio,23819,22930,7893,1237,175,1,2026-02-06
+cli_0017_em_0013,Offer,New Pulse Studio,5078,4885,1981,258,41,2,2026-03-18
+cli_0017_em_0014,Re-engagement,New Pulse Studio,12083,11490,5760,247,89,2,2026-03-30
+cli_0017_em_0015,Winback,Last chance for Pulse Studio,1246,1197,306,62,0,5,2025-11-23
+cli_0017_em_0016,Launch,How to improve Pulse Studio,36535,36401,7085,826,21,4,2025-11-15
+cli_0017_em_0017,Winback,New Pulse Studio,31002,29813,4448,237,222,4,2026-04-16
+cli_0017_em_0018,Offer,A quick update on Pulse Studio,23077,22234,7966,1441,153,4,2026-02-01
+cli_0017_em_0019,Re-engagement,A quick update on Pulse Studio,44562,44165,10463,1292,432,4,2025-12-07
+cli_0017_em_0020,Newsletter,New Pulse Studio,25929,24643,9349,1537,7,4,2026-01-15
+cli_0017_em_0021,Offer,How to improve Pulse Studio,9852,9367,1538,127,63,5,2026-04-14
+cli_0017_em_0022,Education,Last chance for Pulse Studio,42653,42090,8887,973,390,5,2026-04-17
+cli_0017_em_0023,Launch,New Pulse Studio,14102,13484,2899,413,31,0,2025-12-22
+cli_0017_em_0024,Re-engagement,How to improve Pulse Studio,29556,29008,15836,2876,253,3,2025-10-27
+cli_0017_em_0025,Re-engagement,Last chance for Pulse Studio,25838,25423,10794,1549,213,3,2026-01-05
+cli_0017_em_0026,Re-engagement,How to improve Pulse Studio,31825,31721,10673,1494,4,4,2026-02-18
+cli_0017_em_0027,Re-engagement,New Pulse Studio,10661,10216,2883,281,14,3,2026-02-14
+cli_0017_em_0028,Newsletter,Last chance for Pulse Studio,13644,13013,2177,105,70,1,2026-03-17
+cli_0017_em_0029,Offer,New Pulse Studio,27759,26502,9831,1739,82,0,2026-04-06
+cli_0017_em_0030,Re-engagement,Last chance for Pulse Studio,48800,47074,15583,966,351,2,2026-03-14
+cli_0017_em_0031,Launch,How to improve Pulse Studio,37955,36980,5990,1299,87,3,2025-11-21
+cli_0017_em_0032,Offer,New Pulse Studio,8641,8304,1275,125,17,4,2026-03-20
+cli_0017_em_0033,Newsletter,How to improve Pulse Studio,15418,15259,5115,275,88,3,2026-04-02
+cli_0017_em_0034,Winback,A quick update on Pulse Studio,31052,30001,8649,1504,301,3,2026-04-17
+cli_0017_em_0035,Offer,How to improve Pulse Studio,15605,15013,7963,1615,133,3,2026-01-02
+cli_0017_em_0036,Offer,New Pulse Studio,18120,17818,6830,1457,136,2,2025-11-02
+cli_0017_em_0037,Winback,Last chance for Pulse Studio,26959,25743,6936,1212,41,5,2025-12-08
+cli_0017_em_0038,Winback,Last chance for Pulse Studio,41711,41492,6859,794,290,4,2025-11-05
+cli_0017_em_0039,Newsletter,How to improve Pulse Studio,29130,28318,15655,1069,74,4,2025-11-28
+cli_0017_em_0040,Winback,Last chance for Pulse Studio,25888,24625,7274,490,205,2,2025-11-21
+cli_0017_em_0041,Offer,Last chance for Pulse Studio,32359,31116,6618,319,239,0,2026-04-09
+cli_0017_em_0042,Winback,How to improve Pulse Studio,6493,6414,2644,418,17,3,2025-11-27
+cli_0017_em_0043,Education,New Pulse Studio,13770,13658,2459,512,76,2,2026-03-27
+cli_0017_em_0044,Education,How to improve Pulse Studio,44130,43515,10805,1703,250,3,2026-03-24
+cli_0017_em_0045,Offer,A quick update on Pulse Studio,36769,35909,6027,559,335,4,2025-12-07
+cli_0017_em_0046,Offer,A quick update on Pulse Studio,14767,14556,4984,1048,74,3,2026-02-04
+cli_0017_em_0047,Winback,A quick update on Pulse Studio,5264,5214,2146,238,47,4,2026-04-16
+cli_0017_em_0048,Winback,How to improve Pulse Studio,13560,13543,7298,1340,123,2,2026-02-16
+cli_0017_em_0049,Launch,New Pulse Studio,42616,41994,8534,597,296,3,2025-11-08
+cli_0017_em_0050,Education,New Pulse Studio,43715,43537,17589,3695,402,1,2025-11-05
+cli_0017_em_0051,Re-engagement,How to improve Pulse Studio,38756,38261,15239,2371,193,0,2025-11-06
+cli_0017_em_0052,Re-engagement,New Pulse Studio,10590,10072,4557,769,41,5,2026-02-21
+cli_0017_em_0053,Re-engagement,Last chance for Pulse Studio,8717,8343,2618,397,54,4,2025-11-29
+cli_0017_em_0054,Education,A quick update on Pulse Studio,9324,9146,2644,124,61,2,2026-03-21
+cli_0017_em_0055,Newsletter,Last chance for Pulse Studio,8713,8347,2607,309,55,2,2025-12-18

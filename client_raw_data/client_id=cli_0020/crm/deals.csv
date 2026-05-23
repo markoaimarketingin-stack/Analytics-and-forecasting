@@ -1,0 +1,71 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0020_dl_0001,cli_0020_ct_0031,Prime Market - starter plan,new,21190.3,SGD,36,website_form,Anika Singh,2026-03-13,2026-04-12
+cli_0020_dl_0002,cli_0020_ct_0049,Prime Market - premium bundle,qualified,20956.47,SGD,90,import,Ava Patel,2025-10-04,2025-12-03
+cli_0020_dl_0003,cli_0020_ct_0095,Prime Market - annual subscription,qualified,2477.63,SGD,54,referral,Sara Bhatia,2026-02-24,2026-04-13
+cli_0020_dl_0004,cli_0020_ct_0146,Prime Market - annual subscription,proposal,12044.5,SGD,19,website_form,Arjun Gupta,2025-11-30,2025-12-14
+cli_0020_dl_0005,cli_0020_ct_0107,Prime Market - annual subscription,negotiation,3205.8,SGD,87,website_form,Kabir Patel,2025-12-23,2026-02-19
+cli_0020_dl_0006,cli_0020_ct_0121,Prime Market - audit package,negotiation,3063.31,SGD,33,import,Anika Kapoor,2025-10-26,2025-10-29
+cli_0020_dl_0007,cli_0020_ct_0128,Prime Market - premium bundle,proposal,22912.9,SGD,10,email_reply,Noah Bhatia,2026-02-09,2026-03-23
+cli_0020_dl_0008,cli_0020_ct_0137,Prime Market - premium bundle,lost,4180.65,SGD,65,import,Leo Bhatia,2026-03-13,2026-03-29
+cli_0020_dl_0009,cli_0020_ct_0127,Prime Market - pro plan,proposal,14393.37,SGD,7,website_form,Ishaan Singh,2025-12-27,2026-01-10
+cli_0020_dl_0010,cli_0020_ct_0137,Prime Market - starter plan,qualified,20343.39,SGD,51,import,Anika Singh,2026-03-11,2026-03-17
+cli_0020_dl_0011,cli_0020_ct_0132,Prime Market - service retainer,won,14470.05,SGD,32,import,Arjun Mehta,2025-11-03,2025-11-10
+cli_0020_dl_0012,cli_0020_ct_0147,Prime Market - annual subscription,lost,9740.38,SGD,5,import,Sara Khan,2025-12-15,2026-01-18
+cli_0020_dl_0013,cli_0020_ct_0120,Prime Market - service retainer,lost,4757.69,SGD,85,email_reply,Mia Gupta,2026-02-25,2026-03-06
+cli_0020_dl_0014,cli_0020_ct_0133,Prime Market - annual subscription,proposal,6374.95,SGD,94,email_reply,Leo Reddy,2025-10-20,2025-11-27
+cli_0020_dl_0015,cli_0020_ct_0052,Prime Market - annual subscription,won,22661.53,SGD,10,website_form,Liam Joshi,2025-11-25,2025-12-15
+cli_0020_dl_0016,cli_0020_ct_0080,Prime Market - service retainer,qualified,8999.88,SGD,31,referral,Sara Joshi,2025-12-30,2026-02-02
+cli_0020_dl_0017,cli_0020_ct_0041,Prime Market - pro plan,new,5835.52,SGD,53,email_reply,Ishaan Nair,2026-02-09,2026-03-28
+cli_0020_dl_0018,cli_0020_ct_0069,Prime Market - membership,proposal,14910.6,SGD,61,email_reply,Mia Reddy,2025-09-18,2025-11-02
+cli_0020_dl_0019,cli_0020_ct_0057,Prime Market - pro plan,new,8060.57,SGD,47,referral,Sara Kapoor,2025-11-15,2026-01-09
+cli_0020_dl_0020,cli_0020_ct_0082,Prime Market - premium bundle,proposal,2917.79,SGD,19,website_form,Kabir Khan,2026-02-13,2026-02-28
+cli_0020_dl_0021,cli_0020_ct_0147,Prime Market - starter plan,negotiation,24490.89,SGD,43,import,Maya Gupta,2026-01-10,2026-02-21
+cli_0020_dl_0022,cli_0020_ct_0061,Prime Market - service retainer,proposal,10058.78,SGD,66,import,Anika Khan,2025-10-29,2025-12-15
+cli_0020_dl_0023,cli_0020_ct_0106,Prime Market - membership,won,11024.54,SGD,8,email_reply,Ava Bhatia,2025-09-08,2025-10-29
+cli_0020_dl_0024,cli_0020_ct_0112,Prime Market - pro plan,proposal,5099.6,SGD,46,website_form,Kabir Mehta,2025-09-09,2025-11-03
+cli_0020_dl_0025,cli_0020_ct_0038,Prime Market - service retainer,lost,10784.19,SGD,76,website_form,Sara Reddy,2026-01-26,2026-03-26
+cli_0020_dl_0026,cli_0020_ct_0107,Prime Market - annual subscription,new,24882.09,SGD,65,website_form,Liam Singh,2025-10-25,2025-11-30
+cli_0020_dl_0027,cli_0020_ct_0048,Prime Market - premium bundle,won,11001.42,SGD,76,website_form,Leo Reddy,2026-01-05,2026-02-05
+cli_0020_dl_0028,cli_0020_ct_0035,Prime Market - premium bundle,negotiation,3185.84,SGD,87,website_form,Arjun Verma,2025-09-20,2025-11-10
+cli_0020_dl_0029,cli_0020_ct_0126,Prime Market - membership,negotiation,20643.14,SGD,33,email_reply,Leo Sharma,2026-01-04,2026-02-15
+cli_0020_dl_0030,cli_0020_ct_0147,Prime Market - audit package,won,9254.88,SGD,34,import,Mia Gupta,2026-03-14,2026-04-16
+cli_0020_dl_0031,cli_0020_ct_0051,Prime Market - starter plan,qualified,766.87,SGD,70,import,Noah Singh,2025-09-07,2025-10-26
+cli_0020_dl_0032,cli_0020_ct_0040,Prime Market - service retainer,proposal,5105.86,SGD,81,website_form,Kabir Reddy,2025-10-27,2025-12-18
+cli_0020_dl_0033,cli_0020_ct_0047,Prime Market - membership,proposal,24890.19,SGD,74,website_form,Zara Verma,2025-11-28,2026-01-12
+cli_0020_dl_0034,cli_0020_ct_0089,Prime Market - premium bundle,won,16884.97,SGD,43,website_form,Zara Khan,2025-12-16,2026-01-04
+cli_0020_dl_0035,cli_0020_ct_0022,Prime Market - audit package,qualified,5162.63,SGD,7,import,Kabir Joshi,2025-12-15,2026-01-02
+cli_0020_dl_0036,cli_0020_ct_0063,Prime Market - premium bundle,new,6121.67,SGD,35,website_form,Mia Sharma,2025-12-22,2026-01-09
+cli_0020_dl_0037,cli_0020_ct_0031,Prime Market - annual subscription,proposal,16120.94,SGD,32,website_form,Maya Sharma,2025-12-11,2025-12-29
+cli_0020_dl_0038,cli_0020_ct_0017,Prime Market - annual subscription,proposal,13903.05,SGD,26,referral,Sara Kapoor,2026-03-28,2026-04-02
+cli_0020_dl_0039,cli_0020_ct_0140,Prime Market - starter plan,qualified,10576.61,SGD,85,import,Liam Reddy,2026-03-27,2026-04-17
+cli_0020_dl_0040,cli_0020_ct_0092,Prime Market - audit package,won,15274.05,SGD,62,import,Ava Singh,2026-02-27,2026-03-21
+cli_0020_dl_0041,cli_0020_ct_0144,Prime Market - starter plan,qualified,8746.51,SGD,81,website_form,Zara Gupta,2026-02-15,2026-03-14
+cli_0020_dl_0042,cli_0020_ct_0126,Prime Market - premium bundle,proposal,20550.73,SGD,72,email_reply,Anika Reddy,2025-10-30,2025-12-27
+cli_0020_dl_0043,cli_0020_ct_0137,Prime Market - starter plan,proposal,3221.51,SGD,49,import,Liam Kapoor,2026-02-04,2026-03-06
+cli_0020_dl_0044,cli_0020_ct_0086,Prime Market - audit package,qualified,20416.37,SGD,72,website_form,Noah Kapoor,2026-02-08,2026-03-10
+cli_0020_dl_0045,cli_0020_ct_0010,Prime Market - starter plan,won,23599.0,SGD,58,email_reply,Kabir Singh,2025-12-29,2026-02-09
+cli_0020_dl_0046,cli_0020_ct_0032,Prime Market - starter plan,qualified,14109.71,SGD,85,website_form,Kabir Khan,2026-03-04,2026-03-16
+cli_0020_dl_0047,cli_0020_ct_0061,Prime Market - premium bundle,negotiation,24338.62,SGD,66,import,Maya Sharma,2025-10-03,2025-11-03
+cli_0020_dl_0048,cli_0020_ct_0041,Prime Market - audit package,negotiation,3256.8,SGD,69,email_reply,Noah Bhatia,2025-11-11,2025-12-31
+cli_0020_dl_0049,cli_0020_ct_0029,Prime Market - pro plan,qualified,11970.6,SGD,19,website_form,Noah Khan,2025-11-25,2026-01-12
+cli_0020_dl_0050,cli_0020_ct_0056,Prime Market - premium bundle,new,16668.55,SGD,47,website_form,Leo Verma,2026-02-11,2026-04-08
+cli_0020_dl_0051,cli_0020_ct_0127,Prime Market - premium bundle,won,17541.4,SGD,35,website_form,Kabir Gupta,2026-01-13,2026-02-23
+cli_0020_dl_0052,cli_0020_ct_0053,Prime Market - starter plan,new,21739.48,SGD,92,referral,Sara Nair,2026-02-12,2026-02-18
+cli_0020_dl_0053,cli_0020_ct_0097,Prime Market - premium bundle,lost,23583.61,SGD,14,website_form,Mia Sharma,2025-12-25,2026-01-22
+cli_0020_dl_0054,cli_0020_ct_0014,Prime Market - pro plan,proposal,18682.68,SGD,64,event,Liam Gupta,2025-10-23,2025-11-02
+cli_0020_dl_0055,cli_0020_ct_0136,Prime Market - annual subscription,proposal,1906.78,SGD,47,email_reply,Liam Bhatia,2026-01-07,2026-02-11
+cli_0020_dl_0056,cli_0020_ct_0140,Prime Market - annual subscription,lost,24021.07,SGD,45,import,Zara Verma,2025-12-15,2025-12-24
+cli_0020_dl_0057,cli_0020_ct_0071,Prime Market - premium bundle,proposal,23197.99,SGD,24,referral,Ishaan Patel,2025-10-23,2025-11-19
+cli_0020_dl_0058,cli_0020_ct_0117,Prime Market - starter plan,proposal,17590.28,SGD,39,referral,Noah Verma,2025-10-28,2025-12-19
+cli_0020_dl_0059,cli_0020_ct_0100,Prime Market - starter plan,negotiation,14041.56,SGD,66,email_reply,Noah Mehta,2025-11-16,2026-01-07
+cli_0020_dl_0060,cli_0020_ct_0057,Prime Market - starter plan,won,13677.89,SGD,19,referral,Noah Joshi,2026-02-06,2026-02-28
+cli_0020_dl_0061,cli_0020_ct_0150,Prime Market - starter plan,qualified,4553.95,SGD,58,import,Mia Reddy,2026-01-05,2026-01-30
+cli_0020_dl_0062,cli_0020_ct_0028,Prime Market - audit package,qualified,20796.88,SGD,50,event,Kabir Reddy,2025-11-23,2025-12-05
+cli_0020_dl_0063,cli_0020_ct_0015,Prime Market - audit package,won,19116.82,SGD,31,import,Anika Mehta,2025-10-22,2025-12-05
+cli_0020_dl_0064,cli_0020_ct_0012,Prime Market - pro plan,qualified,915.5,SGD,26,email_reply,Kabir Nair,2025-12-02,2025-12-31
+cli_0020_dl_0065,cli_0020_ct_0027,Prime Market - starter plan,proposal,8464.1,SGD,6,email_reply,Ava Khan,2025-11-06,2025-11-09
+cli_0020_dl_0066,cli_0020_ct_0101,Prime Market - premium bundle,proposal,1909.47,SGD,74,event,Mia Bhatia,2026-01-21,2026-02-01
+cli_0020_dl_0067,cli_0020_ct_0123,Prime Market - service retainer,negotiation,14055.16,SGD,59,referral,Anika Gupta,2025-10-11,2025-11-03
+cli_0020_dl_0068,cli_0020_ct_0071,Prime Market - membership,proposal,16751.36,SGD,43,referral,Liam Kapoor,2025-11-05,2025-12-18
+cli_0020_dl_0069,cli_0020_ct_0034,Prime Market - service retainer,won,10521.77,SGD,74,website_form,Sara Khan,2025-11-17,2026-01-10
+cli_0020_dl_0070,cli_0020_ct_0124,Prime Market - premium bundle,negotiation,17913.06,SGD,48,import,Leo Kapoor,2026-03-21,2026-04-08

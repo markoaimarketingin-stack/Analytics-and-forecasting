@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0015",
+  "company_name": "Vertex Works",
+  "industry": "hospitality",
+  "region": "EU",
+  "currency": "EUR",
+  "website": "https://vertex-works.example.com",
+  "business_model": "b2b",
+  "employee_band": "11-50",
+  "objective": "purchase",
+  "budget_monthly": 60000,
+  "voice": "educational",
+  "channels": [
+    "linkedin_ads",
+    "organic",
+    "tiktok_ads",
+    "direct",
+    "referral"
+  ],
+  "created_at": "2026-04-23T20:56:14.642321Z"
+}

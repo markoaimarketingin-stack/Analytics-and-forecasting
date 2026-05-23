@@ -1,0 +1,82 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0010_dl_0001,cli_0010_ct_0118,North Studio - annual subscription,negotiation,19157.68,GBP,26,website_form,Leo Mehta,2026-01-31,2026-02-15
+cli_0010_dl_0002,cli_0010_ct_0078,North Studio - audit package,qualified,20297.32,GBP,72,website_form,Arjun Gupta,2026-01-13,2026-01-31
+cli_0010_dl_0003,cli_0010_ct_0107,North Studio - service retainer,negotiation,24155.72,GBP,9,referral,Sara Khan,2025-12-07,2025-12-29
+cli_0010_dl_0004,cli_0010_ct_0060,North Studio - premium bundle,lost,13899.76,GBP,17,email_reply,Arjun Sharma,2025-09-16,2025-10-27
+cli_0010_dl_0005,cli_0010_ct_0074,North Studio - starter plan,new,5963.81,GBP,89,website_form,Ishaan Mehta,2026-01-24,2026-03-01
+cli_0010_dl_0006,cli_0010_ct_0037,North Studio - premium bundle,qualified,23403.3,GBP,85,import,Ishaan Gupta,2026-02-01,2026-03-16
+cli_0010_dl_0007,cli_0010_ct_0020,North Studio - starter plan,qualified,22549.41,GBP,55,referral,Anika Kapoor,2026-03-13,2026-04-20
+cli_0010_dl_0008,cli_0010_ct_0112,North Studio - membership,qualified,12803.01,GBP,65,referral,Liam Reddy,2026-01-03,2026-02-10
+cli_0010_dl_0009,cli_0010_ct_0070,North Studio - pro plan,won,3817.11,GBP,9,event,Ava Mehta,2026-02-25,2026-03-16
+cli_0010_dl_0010,cli_0010_ct_0057,North Studio - membership,qualified,11655.67,GBP,64,referral,Maya Khan,2025-12-04,2025-12-13
+cli_0010_dl_0011,cli_0010_ct_0092,North Studio - audit package,won,2895.94,GBP,94,event,Kabir Khan,2025-12-08,2026-01-15
+cli_0010_dl_0012,cli_0010_ct_0003,North Studio - pro plan,proposal,625.57,GBP,48,website_form,Liam Singh,2026-02-05,2026-03-13
+cli_0010_dl_0013,cli_0010_ct_0048,North Studio - membership,new,20730.18,GBP,87,email_reply,Noah Gupta,2026-02-02,2026-02-08
+cli_0010_dl_0014,cli_0010_ct_0079,North Studio - starter plan,negotiation,15098.78,GBP,39,event,Anika Bhatia,2026-03-25,2026-04-03
+cli_0010_dl_0015,cli_0010_ct_0104,North Studio - audit package,negotiation,16379.87,GBP,10,event,Arjun Sharma,2025-10-22,2025-11-08
+cli_0010_dl_0016,cli_0010_ct_0033,North Studio - service retainer,proposal,15310.17,GBP,72,website_form,Sara Singh,2026-01-20,2026-02-25
+cli_0010_dl_0017,cli_0010_ct_0016,North Studio - membership,lost,10441.92,GBP,92,import,Kabir Patel,2025-12-27,2026-01-08
+cli_0010_dl_0018,cli_0010_ct_0077,North Studio - service retainer,negotiation,18412.62,GBP,22,website_form,Noah Verma,2025-10-09,2025-11-01
+cli_0010_dl_0019,cli_0010_ct_0024,North Studio - service retainer,lost,18911.73,GBP,74,referral,Sara Nair,2026-02-26,2026-04-12
+cli_0010_dl_0020,cli_0010_ct_0021,North Studio - service retainer,new,17587.34,GBP,20,event,Maya Patel,2025-12-25,2026-01-14
+cli_0010_dl_0021,cli_0010_ct_0010,North Studio - pro plan,qualified,20362.29,GBP,14,website_form,Anika Joshi,2025-12-10,2026-01-08
+cli_0010_dl_0022,cli_0010_ct_0095,North Studio - premium bundle,negotiation,6560.25,GBP,39,import,Maya Sharma,2025-12-12,2026-01-07
+cli_0010_dl_0023,cli_0010_ct_0065,North Studio - service retainer,won,8282.31,GBP,29,import,Liam Singh,2025-12-24,2026-01-05
+cli_0010_dl_0024,cli_0010_ct_0026,North Studio - annual subscription,won,18629.47,GBP,80,website_form,Anika Mehta,2026-01-16,2026-01-26
+cli_0010_dl_0025,cli_0010_ct_0051,North Studio - annual subscription,negotiation,10836.97,GBP,56,email_reply,Mia Khan,2025-11-19,2025-11-30
+cli_0010_dl_0026,cli_0010_ct_0097,North Studio - pro plan,proposal,3303.18,GBP,11,event,Leo Reddy,2025-12-07,2025-12-20
+cli_0010_dl_0027,cli_0010_ct_0088,North Studio - pro plan,qualified,9955.29,GBP,23,referral,Liam Kapoor,2026-02-12,2026-03-01
+cli_0010_dl_0028,cli_0010_ct_0041,North Studio - audit package,proposal,13976.78,GBP,95,website_form,Liam Singh,2025-11-19,2026-01-06
+cli_0010_dl_0029,cli_0010_ct_0020,North Studio - annual subscription,negotiation,1118.38,GBP,72,referral,Sara Nair,2026-01-09,2026-02-28
+cli_0010_dl_0030,cli_0010_ct_0116,North Studio - annual subscription,proposal,12835.25,GBP,40,import,Leo Gupta,2026-02-14,2026-03-26
+cli_0010_dl_0031,cli_0010_ct_0001,North Studio - premium bundle,negotiation,11499.73,GBP,41,email_reply,Leo Verma,2025-12-27,2026-02-01
+cli_0010_dl_0032,cli_0010_ct_0047,North Studio - service retainer,lost,13468.34,GBP,52,import,Ava Nair,2026-01-12,2026-02-03
+cli_0010_dl_0033,cli_0010_ct_0040,North Studio - pro plan,won,9510.17,GBP,39,email_reply,Sara Bhatia,2026-03-24,2026-04-13
+cli_0010_dl_0034,cli_0010_ct_0113,North Studio - audit package,won,724.86,GBP,79,email_reply,Sara Singh,2026-01-31,2026-03-19
+cli_0010_dl_0035,cli_0010_ct_0098,North Studio - service retainer,qualified,19665.79,GBP,47,referral,Kabir Patel,2025-11-09,2026-01-08
+cli_0010_dl_0036,cli_0010_ct_0031,North Studio - annual subscription,lost,13498.87,GBP,78,import,Zara Singh,2025-09-21,2025-11-05
+cli_0010_dl_0037,cli_0010_ct_0095,North Studio - annual subscription,proposal,24073.37,GBP,32,import,Anika Bhatia,2025-11-11,2025-12-28
+cli_0010_dl_0038,cli_0010_ct_0013,North Studio - pro plan,proposal,24118.83,GBP,9,event,Anika Kapoor,2026-01-02,2026-02-05
+cli_0010_dl_0039,cli_0010_ct_0099,North Studio - membership,won,10560.94,GBP,43,event,Leo Khan,2026-01-23,2026-02-21
+cli_0010_dl_0040,cli_0010_ct_0123,North Studio - membership,proposal,16562.01,GBP,76,website_form,Noah Reddy,2026-02-07,2026-02-24
+cli_0010_dl_0041,cli_0010_ct_0094,North Studio - pro plan,qualified,3102.15,GBP,36,event,Sara Sharma,2025-09-08,2025-11-05
+cli_0010_dl_0042,cli_0010_ct_0061,North Studio - annual subscription,qualified,8407.89,GBP,13,event,Ishaan Patel,2025-12-23,2026-01-01
+cli_0010_dl_0043,cli_0010_ct_0017,North Studio - membership,qualified,11272.39,GBP,34,website_form,Anika Nair,2025-10-25,2025-12-21
+cli_0010_dl_0044,cli_0010_ct_0123,North Studio - audit package,negotiation,22817.18,GBP,38,website_form,Kabir Gupta,2026-02-14,2026-03-25
+cli_0010_dl_0045,cli_0010_ct_0108,North Studio - premium bundle,qualified,6464.55,GBP,5,event,Zara Sharma,2025-12-14,2026-01-26
+cli_0010_dl_0046,cli_0010_ct_0090,North Studio - annual subscription,proposal,3433.05,GBP,48,referral,Sara Mehta,2026-01-06,2026-01-14
+cli_0010_dl_0047,cli_0010_ct_0085,North Studio - annual subscription,qualified,11738.06,GBP,84,email_reply,Ava Gupta,2026-01-11,2026-01-22
+cli_0010_dl_0048,cli_0010_ct_0095,North Studio - annual subscription,lost,4791.5,GBP,37,import,Maya Reddy,2026-02-14,2026-04-08
+cli_0010_dl_0049,cli_0010_ct_0080,North Studio - premium bundle,new,21478.03,GBP,68,import,Arjun Patel,2025-10-27,2025-12-17
+cli_0010_dl_0050,cli_0010_ct_0061,North Studio - annual subscription,qualified,24295.4,GBP,68,event,Kabir Patel,2025-12-11,2026-01-11
+cli_0010_dl_0051,cli_0010_ct_0109,North Studio - premium bundle,proposal,15500.32,GBP,45,import,Noah Verma,2025-11-05,2025-12-07
+cli_0010_dl_0052,cli_0010_ct_0123,North Studio - pro plan,qualified,1256.8,GBP,15,website_form,Noah Patel,2025-12-23,2026-01-31
+cli_0010_dl_0053,cli_0010_ct_0090,North Studio - annual subscription,proposal,2441.85,GBP,13,referral,Leo Reddy,2025-10-28,2025-12-01
+cli_0010_dl_0054,cli_0010_ct_0064,North Studio - premium bundle,qualified,18603.51,GBP,62,website_form,Leo Verma,2026-01-26,2026-02-09
+cli_0010_dl_0055,cli_0010_ct_0026,North Studio - audit package,qualified,23779.85,GBP,68,website_form,Zara Reddy,2025-10-19,2025-12-18
+cli_0010_dl_0056,cli_0010_ct_0089,North Studio - premium bundle,proposal,10880.67,GBP,37,website_form,Maya Nair,2026-01-10,2026-03-03
+cli_0010_dl_0057,cli_0010_ct_0094,North Studio - premium bundle,negotiation,2717.88,GBP,7,event,Noah Nair,2025-12-27,2026-02-04
+cli_0010_dl_0058,cli_0010_ct_0107,North Studio - membership,qualified,8136.54,GBP,59,referral,Ava Nair,2025-12-07,2026-01-03
+cli_0010_dl_0059,cli_0010_ct_0095,North Studio - membership,qualified,4196.13,GBP,52,import,Sara Gupta,2026-02-13,2026-03-26
+cli_0010_dl_0060,cli_0010_ct_0119,North Studio - membership,lost,20080.13,GBP,24,website_form,Anika Joshi,2026-04-06,2026-04-16
+cli_0010_dl_0061,cli_0010_ct_0119,North Studio - starter plan,proposal,9216.9,GBP,37,website_form,Leo Nair,2025-10-01,2025-11-26
+cli_0010_dl_0062,cli_0010_ct_0055,North Studio - membership,won,15770.97,GBP,75,website_form,Arjun Verma,2026-03-11,2026-04-22
+cli_0010_dl_0063,cli_0010_ct_0117,North Studio - audit package,proposal,9856.38,GBP,74,website_form,Zara Verma,2026-02-01,2026-02-25
+cli_0010_dl_0064,cli_0010_ct_0053,North Studio - membership,qualified,18053.85,GBP,22,event,Kabir Nair,2025-10-26,2025-11-15
+cli_0010_dl_0065,cli_0010_ct_0100,North Studio - pro plan,qualified,7974.07,GBP,68,email_reply,Ishaan Kapoor,2025-10-27,2025-11-20
+cli_0010_dl_0066,cli_0010_ct_0091,North Studio - audit package,qualified,16162.09,GBP,67,website_form,Noah Gupta,2025-12-20,2025-12-25
+cli_0010_dl_0067,cli_0010_ct_0120,North Studio - annual subscription,new,1524.17,GBP,73,email_reply,Kabir Nair,2026-01-11,2026-01-22
+cli_0010_dl_0068,cli_0010_ct_0127,North Studio - membership,won,6766.72,GBP,39,website_form,Ishaan Patel,2026-01-23,2026-01-26
+cli_0010_dl_0069,cli_0010_ct_0098,North Studio - annual subscription,qualified,9747.17,GBP,20,referral,Sara Singh,2026-01-20,2026-01-28
+cli_0010_dl_0070,cli_0010_ct_0124,North Studio - annual subscription,proposal,12022.39,GBP,58,website_form,Maya Nair,2026-02-02,2026-03-04
+cli_0010_dl_0071,cli_0010_ct_0058,North Studio - membership,negotiation,9121.46,GBP,88,email_reply,Mia Sharma,2025-11-05,2025-12-21
+cli_0010_dl_0072,cli_0010_ct_0081,North Studio - audit package,won,19432.01,GBP,43,import,Leo Khan,2026-02-11,2026-04-02
+cli_0010_dl_0073,cli_0010_ct_0062,North Studio - annual subscription,negotiation,14111.62,GBP,68,event,Maya Kapoor,2026-02-13,2026-03-27
+cli_0010_dl_0074,cli_0010_ct_0082,North Studio - service retainer,new,1109.31,GBP,68,website_form,Ishaan Sharma,2026-02-18,2026-03-03
+cli_0010_dl_0075,cli_0010_ct_0032,North Studio - starter plan,proposal,13195.25,GBP,89,website_form,Arjun Gupta,2026-03-20,2026-04-14
+cli_0010_dl_0076,cli_0010_ct_0120,North Studio - annual subscription,lost,12974.59,GBP,20,email_reply,Sara Gupta,2026-03-17,2026-03-26
+cli_0010_dl_0077,cli_0010_ct_0051,North Studio - starter plan,proposal,15730.55,GBP,19,email_reply,Leo Patel,2025-12-27,2026-01-26
+cli_0010_dl_0078,cli_0010_ct_0058,North Studio - membership,negotiation,11633.62,GBP,80,email_reply,Noah Sharma,2025-09-12,2025-11-06
+cli_0010_dl_0079,cli_0010_ct_0104,North Studio - annual subscription,negotiation,5623.01,GBP,14,event,Zara Verma,2025-11-05,2025-12-04
+cli_0010_dl_0080,cli_0010_ct_0029,North Studio - premium bundle,negotiation,4934.82,GBP,86,website_form,Liam Singh,2025-12-18,2026-01-16
+cli_0010_dl_0081,cli_0010_ct_0049,North Studio - pro plan,proposal,1541.29,GBP,76,website_form,Anika Gupta,2025-12-25,2026-01-16

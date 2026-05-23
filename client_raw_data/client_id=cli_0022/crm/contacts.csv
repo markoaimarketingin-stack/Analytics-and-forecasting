@@ -1,0 +1,81 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0022_ct_0001,Liam Reddy,liam.reddy0@examplemail.com,Zen Ltd,Marketing Manager,lead,import,Australia,2025-08-06,2026-03-23
+cli_0022_ct_0002,Arjun Mehta,arjun.mehta1@examplemail.com,Summit Finance,Marketing Manager,sql,website_form,Canada,2026-02-24,2026-01-29
+cli_0022_ct_0003,Anika Sharma,anika.sharma2@examplemail.com,Peak Ltd,RevOps Manager,mql,import,India,2025-07-11,2026-03-12
+cli_0022_ct_0004,Mia Gupta,mia.gupta3@examplemail.com,Summit Finance,Marketing Manager,lead,event,United Kingdom,2026-04-24,2026-02-28
+cli_0022_ct_0005,Noah Patel,noah.patel4@examplemail.com,Summit Finance,RevOps Manager,mql,import,United Kingdom,2025-09-11,2026-01-27
+cli_0022_ct_0006,Leo Verma,leo.verma5@examplemail.com,Acme Inc,Sales Lead,mql,event,Canada,2025-10-15,2026-03-03
+cli_0022_ct_0007,Ishaan Singh,ishaan.singh6@examplemail.com,Summit Finance,Marketing Manager,sql,email_reply,Canada,2025-06-19,2026-02-13
+cli_0022_ct_0008,Maya Patel,maya.patel7@examplemail.com,Summit Finance,Sales Lead,sql,event,India,2026-03-13,2026-01-24
+cli_0022_ct_0009,Ishaan Bhatia,ishaan.bhatia8@examplemail.com,Zen LLC,Founder,sql,website_form,United States,2024-12-28,2026-04-01
+cli_0022_ct_0010,Zara Khan,zara.khan9@examplemail.com,Peak Group,Sales Lead,lead,event,United Kingdom,2025-05-15,2026-01-16
+cli_0022_ct_0011,Noah Joshi,noah.joshi10@examplemail.com,Zen Group,Sales Lead,sql,website_form,India,2025-08-22,2025-12-25
+cli_0022_ct_0012,Leo Nair,leo.nair11@examplemail.com,Summit Finance,Marketing Manager,lead,website_form,Australia,2025-07-09,2026-04-06
+cli_0022_ct_0013,Ishaan Patel,ishaan.patel12@examplemail.com,Peak Ltd,Head of Growth,lead,import,United Kingdom,2025-07-04,2026-04-04
+cli_0022_ct_0014,Ava Kapoor,ava.kapoor13@examplemail.com,Summit Finance,Founder,sql,website_form,Canada,2024-12-16,2026-01-20
+cli_0022_ct_0015,Kabir Sharma,kabir.sharma14@examplemail.com,Zen Ltd,Founder,lead,website_form,India,2025-09-19,2026-02-10
+cli_0022_ct_0016,Arjun Gupta,arjun.gupta15@examplemail.com,Summit Finance,Sales Lead,lead,event,Australia,2025-03-24,2026-02-22
+cli_0022_ct_0017,Leo Joshi,leo.joshi16@examplemail.com,Peak Ltd,Marketing Manager,mql,import,India,2026-02-06,2026-04-04
+cli_0022_ct_0018,Ishaan Nair,ishaan.nair17@examplemail.com,Peak LLC,Founder,lead,referral,UAE,2026-03-16,2026-04-15
+cli_0022_ct_0019,Arjun Reddy,arjun.reddy18@examplemail.com,Summit Finance,Head of Growth,lead,website_form,Australia,2025-07-21,2026-02-01
+cli_0022_ct_0020,Leo Kapoor,leo.kapoor19@examplemail.com,Zen LLC,RevOps Manager,lead,email_reply,Australia,2025-10-20,2026-02-27
+cli_0022_ct_0021,Ava Patel,ava.patel20@examplemail.com,Peak Inc,Sales Lead,churn_risk,website_form,India,2025-01-01,2026-02-20
+cli_0022_ct_0022,Noah Bhatia,noah.bhatia21@examplemail.com,Acme LLC,Founder,mql,import,Canada,2025-08-06,2026-03-09
+cli_0022_ct_0023,Ishaan Verma,ishaan.verma22@examplemail.com,Peak LLC,Marketing Manager,sql,email_reply,United Kingdom,2024-12-09,2026-02-06
+cli_0022_ct_0024,Noah Joshi,noah.joshi23@examplemail.com,Summit Finance,Head of Growth,lead,import,UAE,2025-10-30,2026-02-03
+cli_0022_ct_0025,Noah Kapoor,noah.kapoor24@examplemail.com,Metro Group,Head of Growth,lead,website_form,Canada,2025-06-20,2026-03-08
+cli_0022_ct_0026,Arjun Nair,arjun.nair25@examplemail.com,Summit Finance,Head of Growth,lead,import,India,2025-10-18,2026-04-06
+cli_0022_ct_0027,Zara Kapoor,zara.kapoor26@examplemail.com,Summit Finance,Sales Lead,lead,referral,United States,2025-09-30,2026-01-09
+cli_0022_ct_0028,Liam Reddy,liam.reddy27@examplemail.com,Zen LLC,Head of Growth,sql,email_reply,UAE,2025-11-22,2026-01-27
+cli_0022_ct_0029,Kabir Singh,kabir.singh28@examplemail.com,Summit Finance,Marketing Manager,churn_risk,website_form,United States,2026-02-22,2026-03-25
+cli_0022_ct_0030,Zara Bhatia,zara.bhatia29@examplemail.com,Acme Inc,Head of Growth,sql,import,United Kingdom,2026-01-01,2026-04-06
+cli_0022_ct_0031,Leo Reddy,leo.reddy30@examplemail.com,Summit Finance,Sales Lead,churn_risk,website_form,Canada,2026-01-19,2026-03-02
+cli_0022_ct_0032,Ava Bhatia,ava.bhatia31@examplemail.com,Peak LLC,Founder,mql,website_form,United Kingdom,2025-04-16,2026-02-07
+cli_0022_ct_0033,Arjun Sharma,arjun.sharma32@examplemail.com,Summit Finance,Head of Growth,lead,email_reply,United Kingdom,2026-04-19,2026-04-04
+cli_0022_ct_0034,Ishaan Mehta,ishaan.mehta33@examplemail.com,Orbit Ltd,Sales Lead,lead,website_form,United States,2025-11-14,2025-12-30
+cli_0022_ct_0035,Arjun Verma,arjun.verma34@examplemail.com,Metro LLC,Marketing Manager,customer,email_reply,Australia,2025-05-27,2026-01-11
+cli_0022_ct_0036,Mia Singh,mia.singh35@examplemail.com,Summit Finance,Marketing Manager,mql,website_form,Australia,2025-10-03,2026-01-03
+cli_0022_ct_0037,Ava Singh,ava.singh36@examplemail.com,Metro Group,RevOps Manager,customer,import,India,2025-05-09,2026-03-29
+cli_0022_ct_0038,Leo Gupta,leo.gupta37@examplemail.com,Summit Finance,Marketing Manager,lead,import,United States,2024-11-21,2026-03-10
+cli_0022_ct_0039,Mia Nair,mia.nair38@examplemail.com,Summit Finance,Founder,lead,import,UAE,2025-11-30,2026-02-26
+cli_0022_ct_0040,Kabir Kapoor,kabir.kapoor39@examplemail.com,Acme LLC,Marketing Manager,mql,website_form,India,2025-05-27,2026-01-16
+cli_0022_ct_0041,Liam Joshi,liam.joshi40@examplemail.com,Summit Finance,Founder,lead,website_form,United Kingdom,2025-04-15,2025-12-28
+cli_0022_ct_0042,Liam Joshi,liam.joshi41@examplemail.com,Orbit Inc,Head of Growth,mql,import,India,2026-01-28,2025-12-31
+cli_0022_ct_0043,Maya Mehta,maya.mehta42@examplemail.com,Summit Finance,Sales Lead,sql,email_reply,Australia,2025-01-10,2026-03-24
+cli_0022_ct_0044,Sara Sharma,sara.sharma43@examplemail.com,Summit Finance,Sales Lead,lead,website_form,UAE,2026-03-15,2026-01-17
+cli_0022_ct_0045,Maya Gupta,maya.gupta44@examplemail.com,Summit Finance,Sales Lead,lead,referral,United Kingdom,2025-07-26,2026-02-13
+cli_0022_ct_0046,Anika Patel,anika.patel45@examplemail.com,Zen LLC,Head of Growth,lead,referral,United Kingdom,2026-02-20,2026-03-12
+cli_0022_ct_0047,Noah Verma,noah.verma46@examplemail.com,Zen Ltd,RevOps Manager,mql,website_form,United Kingdom,2025-03-26,2026-02-02
+cli_0022_ct_0048,Leo Joshi,leo.joshi47@examplemail.com,Peak Inc,Marketing Manager,lead,website_form,Australia,2026-04-04,2026-03-02
+cli_0022_ct_0049,Kabir Bhatia,kabir.bhatia48@examplemail.com,Acme Ltd,Head of Growth,sql,website_form,Canada,2025-08-10,2026-03-13
+cli_0022_ct_0050,Arjun Kapoor,arjun.kapoor49@examplemail.com,Orbit Group,Marketing Manager,lead,email_reply,Canada,2026-02-28,2026-01-11
+cli_0022_ct_0051,Noah Patel,noah.patel50@examplemail.com,Summit Finance,Marketing Manager,sql,email_reply,India,2025-12-25,2026-03-14
+cli_0022_ct_0052,Zara Kapoor,zara.kapoor51@examplemail.com,Summit Finance,Head of Growth,mql,website_form,United Kingdom,2024-12-12,2026-04-22
+cli_0022_ct_0053,Arjun Verma,arjun.verma52@examplemail.com,Metro Ltd,Marketing Manager,sql,website_form,Canada,2025-02-27,2026-02-15
+cli_0022_ct_0054,Mia Sharma,mia.sharma53@examplemail.com,Acme Inc,Head of Growth,mql,event,Canada,2025-10-10,2026-01-31
+cli_0022_ct_0055,Arjun Nair,arjun.nair54@examplemail.com,Summit Finance,Marketing Manager,lead,import,Canada,2025-06-24,2026-03-21
+cli_0022_ct_0056,Ishaan Singh,ishaan.singh55@examplemail.com,Metro Inc,Sales Lead,churn_risk,import,Canada,2025-03-30,2026-03-03
+cli_0022_ct_0057,Noah Kapoor,noah.kapoor56@examplemail.com,Orbit LLC,Head of Growth,sql,website_form,United Kingdom,2025-02-07,2026-03-06
+cli_0022_ct_0058,Zara Verma,zara.verma57@examplemail.com,Summit Finance,Head of Growth,sql,import,India,2026-02-13,2026-02-06
+cli_0022_ct_0059,Noah Bhatia,noah.bhatia58@examplemail.com,Summit Finance,Founder,lead,import,India,2024-12-29,2026-04-08
+cli_0022_ct_0060,Sara Kapoor,sara.kapoor59@examplemail.com,Zen Inc,Marketing Manager,lead,import,India,2025-05-30,2026-01-10
+cli_0022_ct_0061,Noah Gupta,noah.gupta60@examplemail.com,Acme LLC,RevOps Manager,customer,import,UAE,2025-12-09,2026-01-22
+cli_0022_ct_0062,Ishaan Mehta,ishaan.mehta61@examplemail.com,Peak Inc,Sales Lead,sql,import,Australia,2026-02-09,2026-03-13
+cli_0022_ct_0063,Ishaan Sharma,ishaan.sharma62@examplemail.com,Metro Group,RevOps Manager,customer,website_form,United Kingdom,2025-08-09,2026-02-01
+cli_0022_ct_0064,Leo Patel,leo.patel63@examplemail.com,Summit Finance,Head of Growth,lead,event,United Kingdom,2025-06-21,2026-03-03
+cli_0022_ct_0065,Zara Nair,zara.nair64@examplemail.com,Summit Finance,Marketing Manager,sql,event,India,2025-03-10,2026-03-08
+cli_0022_ct_0066,Anika Gupta,anika.gupta65@examplemail.com,Summit Finance,Founder,lead,email_reply,UAE,2025-10-03,2026-02-05
+cli_0022_ct_0067,Kabir Reddy,kabir.reddy66@examplemail.com,Summit Finance,Founder,lead,website_form,United Kingdom,2024-12-23,2026-03-05
+cli_0022_ct_0068,Noah Joshi,noah.joshi67@examplemail.com,Summit Finance,Head of Growth,lead,website_form,United Kingdom,2025-03-09,2026-03-18
+cli_0022_ct_0069,Anika Verma,anika.verma68@examplemail.com,Metro Ltd,Marketing Manager,sql,import,India,2024-11-07,2026-02-01
+cli_0022_ct_0070,Ishaan Gupta,ishaan.gupta69@examplemail.com,Summit Finance,Head of Growth,customer,website_form,Australia,2025-02-16,2026-02-19
+cli_0022_ct_0071,Noah Khan,noah.khan70@examplemail.com,Zen Group,Head of Growth,customer,website_form,Australia,2025-04-12,2026-03-25
+cli_0022_ct_0072,Arjun Khan,arjun.khan71@examplemail.com,Summit Finance,Marketing Manager,churn_risk,referral,Australia,2025-10-19,2026-01-11
+cli_0022_ct_0073,Maya Gupta,maya.gupta72@examplemail.com,Summit Finance,Sales Lead,churn_risk,website_form,United States,2024-11-05,2026-01-25
+cli_0022_ct_0074,Liam Patel,liam.patel73@examplemail.com,Summit Finance,Head of Growth,lead,referral,Australia,2025-07-15,2026-02-23
+cli_0022_ct_0075,Zara Mehta,zara.mehta74@examplemail.com,Summit Finance,Marketing Manager,sql,website_form,United Kingdom,2025-08-28,2026-01-03
+cli_0022_ct_0076,Ava Mehta,ava.mehta75@examplemail.com,Summit Finance,Sales Lead,lead,event,UAE,2026-01-03,2026-03-19
+cli_0022_ct_0077,Liam Singh,liam.singh76@examplemail.com,Summit Finance,Head of Growth,lead,website_form,UAE,2025-04-07,2026-04-10
+cli_0022_ct_0078,Liam Bhatia,liam.bhatia77@examplemail.com,Summit Finance,Marketing Manager,lead,referral,UAE,2025-06-20,2026-02-18
+cli_0022_ct_0079,Mia Mehta,mia.mehta78@examplemail.com,Acme Ltd,Sales Lead,lead,website_form,UAE,2026-03-12,2026-01-02
+cli_0022_ct_0080,Sara Sharma,sara.sharma79@examplemail.com,Orbit LLC,Head of Growth,customer,event,United States,2025-07-14,2026-03-14

@@ -1,0 +1,46 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0020_em_0001,Re-engagement,A quick update on Prime Market,6058,6039,1642,345,41,1,2025-12-07
+cli_0020_em_0002,Offer,Last chance for Prime Market,34624,33645,13501,1303,31,5,2026-03-24
+cli_0020_em_0003,Winback,A quick update on Prime Market,34288,34102,16330,3443,89,0,2026-01-15
+cli_0020_em_0004,Newsletter,How to improve Prime Market,33078,32803,10357,1996,322,4,2025-12-12
+cli_0020_em_0005,Winback,A quick update on Prime Market,5558,5387,1220,60,47,4,2025-11-10
+cli_0020_em_0006,Education,A quick update on Prime Market,35780,35711,8127,1162,219,5,2026-02-13
+cli_0020_em_0007,Newsletter,How to improve Prime Market,10761,10564,4896,919,75,0,2025-12-08
+cli_0020_em_0008,Education,A quick update on Prime Market,30009,28633,9433,546,203,4,2025-10-28
+cli_0020_em_0009,Winback,A quick update on Prime Market,19776,19008,10458,1509,85,3,2026-03-02
+cli_0020_em_0010,Winback,How to improve Prime Market,7312,7027,3478,278,73,5,2026-04-18
+cli_0020_em_0011,Newsletter,Last chance for Prime Market,46626,46463,24088,2125,244,5,2026-04-17
+cli_0020_em_0012,Newsletter,How to improve Prime Market,8956,8687,2371,345,60,1,2025-11-28
+cli_0020_em_0013,Winback,A quick update on Prime Market,11767,11343,3351,330,46,5,2026-02-24
+cli_0020_em_0014,Education,A quick update on Prime Market,30717,29864,4458,860,32,0,2025-11-05
+cli_0020_em_0015,Re-engagement,How to improve Prime Market,47758,46166,9212,747,320,5,2026-04-24
+cli_0020_em_0016,Launch,Last chance for Prime Market,31891,31460,6891,597,15,3,2026-03-11
+cli_0020_em_0017,Re-engagement,A quick update on Prime Market,5996,5861,2675,547,14,3,2026-01-14
+cli_0020_em_0018,Winback,New Prime Market,9525,9229,1854,170,52,5,2025-11-05
+cli_0020_em_0019,Re-engagement,Last chance for Prime Market,3969,3810,964,174,20,5,2025-12-03
+cli_0020_em_0020,Offer,How to improve Prime Market,8295,7909,1357,168,32,0,2025-12-15
+cli_0020_em_0021,Newsletter,New Prime Market,19033,18822,3460,637,50,0,2026-03-03
+cli_0020_em_0022,Launch,A quick update on Prime Market,3648,3641,1594,131,0,4,2026-02-18
+cli_0020_em_0023,Winback,How to improve Prime Market,39684,38640,11875,2575,282,2,2026-03-22
+cli_0020_em_0024,Education,Last chance for Prime Market,26938,25740,13879,2797,181,1,2026-02-19
+cli_0020_em_0025,Education,A quick update on Prime Market,3858,3783,963,86,5,5,2026-02-24
+cli_0020_em_0026,Offer,A quick update on Prime Market,38184,36878,15320,1999,308,3,2026-01-28
+cli_0020_em_0027,Launch,How to improve Prime Market,16998,16478,8134,1012,17,3,2025-11-27
+cli_0020_em_0028,Newsletter,How to improve Prime Market,5018,4840,2551,158,18,4,2025-12-25
+cli_0020_em_0029,Winback,A quick update on Prime Market,1926,1867,273,33,9,3,2026-01-09
+cli_0020_em_0030,Winback,How to improve Prime Market,16375,15651,8496,1399,32,3,2026-01-27
+cli_0020_em_0031,Winback,Last chance for Prime Market,23330,22432,10502,824,80,1,2026-04-20
+cli_0020_em_0032,Launch,Last chance for Prime Market,27037,25871,6254,363,182,5,2026-02-11
+cli_0020_em_0033,Re-engagement,Last chance for Prime Market,17685,17548,6132,625,60,0,2025-11-01
+cli_0020_em_0034,Launch,How to improve Prime Market,33538,31906,12783,1159,301,3,2026-04-12
+cli_0020_em_0035,Re-engagement,Last chance for Prime Market,26088,25630,8391,1502,228,3,2026-02-13
+cli_0020_em_0036,Re-engagement,New Prime Market,9225,8981,3578,500,67,5,2026-03-12
+cli_0020_em_0037,Re-engagement,Last chance for Prime Market,11764,11742,6160,521,66,5,2026-02-23
+cli_0020_em_0038,Offer,How to improve Prime Market,14559,13874,2792,287,94,5,2026-02-05
+cli_0020_em_0039,Newsletter,A quick update on Prime Market,32148,31829,14820,1394,199,3,2026-02-13
+cli_0020_em_0040,Offer,New Prime Market,44580,43678,15331,1602,437,3,2026-03-20
+cli_0020_em_0041,Re-engagement,How to improve Prime Market,20457,20349,7606,1196,91,0,2025-12-01
+cli_0020_em_0042,Newsletter,A quick update on Prime Market,4314,4265,757,109,17,4,2026-02-05
+cli_0020_em_0043,Offer,New Prime Market,32624,32214,8608,1397,271,0,2025-12-10
+cli_0020_em_0044,Winback,A quick update on Prime Market,21491,20803,3091,584,122,2,2025-12-20
+cli_0020_em_0045,Newsletter,A quick update on Prime Market,7678,7555,3937,166,76,3,2025-11-26

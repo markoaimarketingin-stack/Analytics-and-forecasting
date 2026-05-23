@@ -1,0 +1,45 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0009_inv_0001,2026-02-07,2026-04-08,INR,10016.75,open,Liam Bhatia,support; strategy work; consulting
+cli_0009_inv_0002,2025-12-21,2026-05-06,INR,4299.14,paid,Anika Mehta,media spend; consulting; strategy work
+cli_0009_inv_0003,2025-12-13,2026-05-27,INR,1565.87,open,Anika Sharma,creative work; setup fee; support
+cli_0009_inv_0004,2026-03-13,2026-06-04,INR,7212.36,paid,Kabir Gupta,consulting; setup fee; support
+cli_0009_inv_0005,2026-02-03,2026-05-20,INR,11624.91,paid,Noah Sharma,strategy work; creative work
+cli_0009_inv_0006,2025-12-11,2026-04-21,INR,6078.84,paid,Ava Gupta,creative work; setup fee
+cli_0009_inv_0007,2026-01-30,2026-05-28,INR,6009.62,paid,Mia Mehta,creative work
+cli_0009_inv_0008,2025-11-10,2026-04-14,INR,3872.08,paid,Kabir Bhatia,media spend; creative work; consulting
+cli_0009_inv_0009,2025-11-04,2026-06-02,INR,1353.16,paid,Noah Bhatia,setup fee; media spend; strategy work
+cli_0009_inv_0010,2026-03-27,2026-04-16,INR,1090.51,paid,Kabir Reddy,setup fee
+cli_0009_inv_0011,2025-12-09,2026-05-31,INR,3399.92,paid,Leo Joshi,strategy work; support
+cli_0009_inv_0012,2025-12-08,2026-03-29,INR,9599.26,paid,Ishaan Sharma,support; consulting
+cli_0009_inv_0013,2026-03-04,2026-03-25,INR,8466.42,paid,Ava Bhatia,strategy work
+cli_0009_inv_0014,2026-04-01,2026-04-10,INR,3162.33,overdue,Noah Reddy,support; strategy work
+cli_0009_inv_0015,2026-01-16,2026-03-28,INR,8886.06,open,Arjun Patel,creative work
+cli_0009_inv_0016,2026-02-19,2026-05-23,INR,7027.32,paid,Arjun Kapoor,consulting; setup fee
+cli_0009_inv_0017,2025-11-20,2026-05-25,INR,7457.05,paid,Mia Bhatia,media spend; setup fee
+cli_0009_inv_0018,2026-01-07,2026-03-25,INR,10033.38,overdue,Noah Gupta,creative work
+cli_0009_inv_0019,2026-01-21,2026-05-22,INR,8313.57,paid,Ava Sharma,strategy work; media spend
+cli_0009_inv_0020,2025-11-08,2026-05-11,INR,5735.76,open,Kabir Khan,support; setup fee; strategy work
+cli_0009_inv_0021,2026-03-04,2026-05-03,INR,7385.31,paid,Mia Bhatia,support
+cli_0009_inv_0022,2026-02-01,2026-05-25,INR,6286.39,paid,Mia Singh,setup fee; creative work
+cli_0009_inv_0023,2026-02-26,2026-05-27,INR,1724.7,paid,Sara Kapoor,support; setup fee
+cli_0009_inv_0024,2026-03-29,2026-05-13,INR,4054.16,open,Sara Gupta,media spend; consulting
+cli_0009_inv_0025,2025-12-13,2026-03-31,INR,3693.26,overdue,Anika Singh,support
+cli_0009_inv_0026,2026-01-08,2026-04-20,INR,6376.84,paid,Anika Singh,consulting
+cli_0009_inv_0027,2026-03-21,2026-04-28,INR,7158.54,paid,Mia Kapoor,support; strategy work; consulting
+cli_0009_inv_0028,2025-10-31,2026-06-01,INR,823.2,paid,Maya Joshi,strategy work; media spend; creative work
+cli_0009_inv_0029,2025-12-25,2026-05-19,INR,8201.29,paid,Noah Singh,setup fee
+cli_0009_inv_0030,2025-11-21,2026-06-01,INR,9826.13,paid,Ishaan Khan,strategy work; creative work; setup fee
+cli_0009_inv_0031,2026-02-27,2026-03-30,INR,11031.96,paid,Arjun Patel,setup fee; media spend
+cli_0009_inv_0032,2026-01-08,2026-03-30,INR,9065.14,overdue,Arjun Patel,creative work; setup fee
+cli_0009_inv_0033,2026-01-25,2026-05-22,INR,6162.64,paid,Sara Verma,consulting; strategy work; media spend
+cli_0009_inv_0034,2025-12-17,2026-04-29,INR,3800.41,paid,Arjun Mehta,media spend; creative work
+cli_0009_inv_0035,2026-03-07,2026-04-18,INR,9676.17,paid,Maya Patel,strategy work; setup fee; support
+cli_0009_inv_0036,2026-01-08,2026-05-06,INR,9020.78,paid,Noah Verma,consulting
+cli_0009_inv_0037,2025-11-04,2026-04-12,INR,6578.94,open,Ava Patel,setup fee
+cli_0009_inv_0038,2026-01-09,2026-05-07,INR,2258.59,paid,Arjun Sharma,support; creative work; setup fee
+cli_0009_inv_0039,2026-02-02,2026-06-03,INR,9268.31,paid,Arjun Kapoor,creative work
+cli_0009_inv_0040,2025-12-09,2026-04-19,INR,10400.28,paid,Mia Mehta,creative work
+cli_0009_inv_0041,2025-12-07,2026-03-29,INR,4703.18,paid,Mia Nair,support; creative work; media spend
+cli_0009_inv_0042,2026-01-04,2026-03-28,INR,8567.3,paid,Noah Khan,creative work; setup fee; media spend
+cli_0009_inv_0043,2025-11-08,2026-04-14,INR,10085.31,paid,Noah Nair,setup fee; creative work; media spend
+cli_0009_inv_0044,2025-12-18,2026-06-07,INR,1577.23,overdue,Zara Sharma,media spend; consulting

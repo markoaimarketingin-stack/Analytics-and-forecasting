@@ -1,0 +1,19 @@
+{
+  "client_id": "cli_0016",
+  "company_name": "Blue Commerce",
+  "industry": "hospitality",
+  "region": "SG",
+  "currency": "SGD",
+  "website": "https://blue-commerce.example.com",
+  "business_model": "subscription",
+  "employee_band": "1-10",
+  "objective": "lead_gen",
+  "budget_monthly": 15000,
+  "voice": "premium",
+  "channels": [
+    "linkedin_ads",
+    "email",
+    "meta_ads"
+  ],
+  "created_at": "2026-04-23T20:56:16.398586Z"
+}

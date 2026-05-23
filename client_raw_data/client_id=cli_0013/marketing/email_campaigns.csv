@@ -1,0 +1,24 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0013_em_0001,Newsletter,How to improve Urban Works,14673,14440,3726,654,26,3,2025-12-21
+cli_0013_em_0002,Education,New Urban Works,18771,18263,7505,1053,175,0,2026-02-21
+cli_0013_em_0003,Newsletter,Last chance for Urban Works,47142,46382,9069,397,391,5,2026-01-09
+cli_0013_em_0004,Newsletter,Last chance for Urban Works,40257,40170,16916,3351,385,3,2025-12-08
+cli_0013_em_0005,Offer,How to improve Urban Works,40021,38870,14344,1374,241,5,2026-03-24
+cli_0013_em_0006,Re-engagement,A quick update on Urban Works,22175,22003,10240,715,73,2,2026-04-09
+cli_0013_em_0007,Newsletter,How to improve Urban Works,9334,9209,4808,702,56,3,2025-12-16
+cli_0013_em_0008,Newsletter,How to improve Urban Works,20284,19523,9817,1576,80,3,2025-11-19
+cli_0013_em_0009,Newsletter,How to improve Urban Works,46274,45160,13157,2435,36,3,2026-02-07
+cli_0013_em_0010,Newsletter,Last chance for Urban Works,11400,11057,3038,331,54,5,2026-04-10
+cli_0013_em_0011,Newsletter,A quick update on Urban Works,21986,21364,8289,1288,29,4,2026-01-19
+cli_0013_em_0012,Offer,How to improve Urban Works,2074,2004,679,64,0,3,2026-01-05
+cli_0013_em_0013,Launch,New Urban Works,32307,31638,17415,1428,294,1,2025-12-05
+cli_0013_em_0014,Newsletter,A quick update on Urban Works,32643,31241,6864,488,45,4,2026-03-07
+cli_0013_em_0015,Newsletter,A quick update on Urban Works,22795,21840,6219,307,189,4,2026-01-27
+cli_0013_em_0016,Offer,How to improve Urban Works,23030,22791,11533,1541,83,2,2026-03-03
+cli_0013_em_0017,Education,New Urban Works,43414,42955,20119,3651,176,4,2025-11-12
+cli_0013_em_0018,Launch,Last chance for Urban Works,26416,25186,13481,2257,133,0,2026-01-05
+cli_0013_em_0019,Re-engagement,A quick update on Urban Works,17700,17158,9142,967,165,1,2026-01-03
+cli_0013_em_0020,Launch,A quick update on Urban Works,28897,28375,7532,657,217,2,2025-11-24
+cli_0013_em_0021,Education,New Urban Works,33275,31853,11633,2273,83,5,2025-11-02
+cli_0013_em_0022,Launch,How to improve Urban Works,19779,19710,3992,830,35,2,2025-11-07
+cli_0013_em_0023,Offer,Last chance for Urban Works,47873,47511,8855,1942,369,4,2026-01-20

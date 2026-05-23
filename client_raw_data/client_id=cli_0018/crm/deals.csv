@@ -1,0 +1,82 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0018_dl_0001,cli_0018_ct_0030,Signal Collective - service retainer,won,4367.66,EUR,63,event,Liam Verma,2026-02-13,2026-03-18
+cli_0018_dl_0002,cli_0018_ct_0095,Signal Collective - pro plan,new,12295.95,EUR,61,event,Maya Sharma,2025-12-03,2026-01-20
+cli_0018_dl_0003,cli_0018_ct_0095,Signal Collective - audit package,qualified,4632.71,EUR,91,event,Zara Joshi,2026-01-31,2026-02-07
+cli_0018_dl_0004,cli_0018_ct_0095,Signal Collective - starter plan,lost,13532.83,EUR,88,event,Mia Kapoor,2025-12-28,2025-12-31
+cli_0018_dl_0005,cli_0018_ct_0086,Signal Collective - audit package,qualified,12584.5,EUR,93,website_form,Leo Sharma,2026-03-05,2026-03-09
+cli_0018_dl_0006,cli_0018_ct_0049,Signal Collective - audit package,proposal,24097.99,EUR,65,import,Mia Kapoor,2025-11-24,2025-12-01
+cli_0018_dl_0007,cli_0018_ct_0134,Signal Collective - annual subscription,qualified,21030.17,EUR,14,referral,Kabir Patel,2026-03-15,2026-03-22
+cli_0018_dl_0008,cli_0018_ct_0003,Signal Collective - premium bundle,qualified,17943.11,EUR,75,event,Liam Patel,2026-03-22,2026-04-22
+cli_0018_dl_0009,cli_0018_ct_0042,Signal Collective - pro plan,new,1993.76,EUR,39,import,Mia Kapoor,2026-02-17,2026-04-15
+cli_0018_dl_0010,cli_0018_ct_0066,Signal Collective - membership,proposal,10571.73,EUR,65,referral,Arjun Gupta,2026-01-21,2026-03-10
+cli_0018_dl_0011,cli_0018_ct_0111,Signal Collective - starter plan,proposal,11935.31,EUR,44,email_reply,Zara Patel,2026-02-19,2026-04-05
+cli_0018_dl_0012,cli_0018_ct_0087,Signal Collective - audit package,negotiation,3361.21,EUR,42,import,Leo Joshi,2026-02-13,2026-03-17
+cli_0018_dl_0013,cli_0018_ct_0065,Signal Collective - pro plan,proposal,17713.36,EUR,51,website_form,Zara Reddy,2025-12-23,2026-01-24
+cli_0018_dl_0014,cli_0018_ct_0141,Signal Collective - service retainer,proposal,9713.42,EUR,11,referral,Ava Gupta,2025-11-13,2025-11-22
+cli_0018_dl_0015,cli_0018_ct_0032,Signal Collective - audit package,lost,18353.86,EUR,16,website_form,Ava Verma,2026-01-10,2026-02-23
+cli_0018_dl_0016,cli_0018_ct_0057,Signal Collective - annual subscription,negotiation,23798.35,EUR,46,email_reply,Ishaan Nair,2026-01-24,2026-03-02
+cli_0018_dl_0017,cli_0018_ct_0061,Signal Collective - starter plan,lost,16395.36,EUR,40,website_form,Anika Mehta,2025-12-22,2026-02-13
+cli_0018_dl_0018,cli_0018_ct_0036,Signal Collective - starter plan,proposal,19658.28,EUR,89,import,Liam Nair,2026-01-09,2026-01-28
+cli_0018_dl_0019,cli_0018_ct_0078,Signal Collective - membership,qualified,270.2,EUR,84,import,Zara Khan,2026-02-02,2026-03-15
+cli_0018_dl_0020,cli_0018_ct_0147,Signal Collective - starter plan,won,1578.2,EUR,81,email_reply,Mia Reddy,2026-03-06,2026-03-14
+cli_0018_dl_0021,cli_0018_ct_0097,Signal Collective - audit package,qualified,10083.75,EUR,13,event,Ishaan Reddy,2025-12-23,2026-02-07
+cli_0018_dl_0022,cli_0018_ct_0111,Signal Collective - annual subscription,qualified,9742.41,EUR,16,email_reply,Sara Nair,2026-02-05,2026-02-26
+cli_0018_dl_0023,cli_0018_ct_0118,Signal Collective - membership,qualified,972.04,EUR,10,email_reply,Mia Bhatia,2026-01-09,2026-01-24
+cli_0018_dl_0024,cli_0018_ct_0027,Signal Collective - premium bundle,qualified,14725.34,EUR,21,email_reply,Mia Joshi,2025-12-27,2026-01-15
+cli_0018_dl_0025,cli_0018_ct_0102,Signal Collective - audit package,negotiation,10523.27,EUR,46,website_form,Mia Singh,2025-12-01,2025-12-12
+cli_0018_dl_0026,cli_0018_ct_0008,Signal Collective - starter plan,lost,14323.72,EUR,51,event,Liam Khan,2025-10-23,2025-12-09
+cli_0018_dl_0027,cli_0018_ct_0033,Signal Collective - pro plan,new,22458.23,EUR,72,website_form,Maya Singh,2025-09-25,2025-11-05
+cli_0018_dl_0028,cli_0018_ct_0115,Signal Collective - membership,qualified,23086.04,EUR,78,website_form,Ava Gupta,2025-12-11,2025-12-25
+cli_0018_dl_0029,cli_0018_ct_0106,Signal Collective - premium bundle,qualified,14310.05,EUR,85,website_form,Ava Nair,2025-11-06,2025-11-18
+cli_0018_dl_0030,cli_0018_ct_0113,Signal Collective - audit package,lost,4776.53,EUR,50,website_form,Maya Singh,2025-12-01,2025-12-05
+cli_0018_dl_0031,cli_0018_ct_0097,Signal Collective - membership,proposal,7690.0,EUR,87,event,Maya Patel,2025-12-26,2026-02-15
+cli_0018_dl_0032,cli_0018_ct_0061,Signal Collective - service retainer,lost,11664.87,EUR,71,website_form,Kabir Kapoor,2026-02-25,2026-03-06
+cli_0018_dl_0033,cli_0018_ct_0095,Signal Collective - audit package,lost,6259.68,EUR,28,event,Arjun Mehta,2026-02-16,2026-03-22
+cli_0018_dl_0034,cli_0018_ct_0071,Signal Collective - premium bundle,new,16545.36,EUR,10,website_form,Arjun Patel,2026-01-20,2026-03-12
+cli_0018_dl_0035,cli_0018_ct_0065,Signal Collective - audit package,new,18436.48,EUR,82,website_form,Sara Bhatia,2025-11-01,2025-11-11
+cli_0018_dl_0036,cli_0018_ct_0036,Signal Collective - service retainer,qualified,1979.72,EUR,23,import,Arjun Verma,2025-11-22,2026-01-04
+cli_0018_dl_0037,cli_0018_ct_0067,Signal Collective - annual subscription,negotiation,21531.71,EUR,17,email_reply,Maya Kapoor,2026-01-11,2026-02-18
+cli_0018_dl_0038,cli_0018_ct_0141,Signal Collective - service retainer,won,516.84,EUR,48,referral,Ishaan Verma,2026-04-01,2026-04-11
+cli_0018_dl_0039,cli_0018_ct_0053,Signal Collective - membership,won,11061.02,EUR,47,website_form,Mia Reddy,2026-02-16,2026-04-08
+cli_0018_dl_0040,cli_0018_ct_0005,Signal Collective - pro plan,qualified,18477.98,EUR,68,event,Liam Singh,2026-03-06,2026-04-23
+cli_0018_dl_0041,cli_0018_ct_0085,Signal Collective - audit package,negotiation,11156.53,EUR,33,import,Mia Sharma,2026-03-14,2026-04-06
+cli_0018_dl_0042,cli_0018_ct_0071,Signal Collective - starter plan,qualified,19711.1,EUR,47,website_form,Ishaan Joshi,2025-11-28,2026-01-21
+cli_0018_dl_0043,cli_0018_ct_0025,Signal Collective - pro plan,won,13297.37,EUR,9,referral,Arjun Bhatia,2026-01-30,2026-02-13
+cli_0018_dl_0044,cli_0018_ct_0130,Signal Collective - service retainer,new,3724.58,EUR,91,referral,Sara Patel,2025-12-26,2026-01-19
+cli_0018_dl_0045,cli_0018_ct_0019,Signal Collective - starter plan,lost,12383.92,EUR,20,website_form,Sara Nair,2025-11-25,2025-12-29
+cli_0018_dl_0046,cli_0018_ct_0092,Signal Collective - membership,qualified,18449.5,EUR,64,website_form,Zara Patel,2026-01-08,2026-02-18
+cli_0018_dl_0047,cli_0018_ct_0086,Signal Collective - membership,negotiation,1851.89,EUR,59,website_form,Leo Reddy,2025-11-28,2026-01-23
+cli_0018_dl_0048,cli_0018_ct_0057,Signal Collective - audit package,new,8713.57,EUR,87,email_reply,Anika Kapoor,2026-03-25,2026-04-13
+cli_0018_dl_0049,cli_0018_ct_0027,Signal Collective - premium bundle,qualified,17467.33,EUR,11,email_reply,Kabir Singh,2025-10-24,2025-12-09
+cli_0018_dl_0050,cli_0018_ct_0056,Signal Collective - pro plan,proposal,23766.07,EUR,89,import,Arjun Joshi,2026-01-17,2026-02-18
+cli_0018_dl_0051,cli_0018_ct_0072,Signal Collective - service retainer,lost,10226.45,EUR,34,event,Noah Kapoor,2025-10-11,2025-11-03
+cli_0018_dl_0052,cli_0018_ct_0141,Signal Collective - pro plan,qualified,1516.75,EUR,52,referral,Ava Singh,2025-11-10,2025-12-29
+cli_0018_dl_0053,cli_0018_ct_0032,Signal Collective - membership,qualified,6022.59,EUR,76,website_form,Zara Gupta,2025-11-23,2026-01-09
+cli_0018_dl_0054,cli_0018_ct_0147,Signal Collective - premium bundle,negotiation,2611.11,EUR,42,email_reply,Maya Bhatia,2025-12-12,2026-01-03
+cli_0018_dl_0055,cli_0018_ct_0028,Signal Collective - pro plan,qualified,4193.66,EUR,16,import,Kabir Gupta,2026-04-02,2026-04-20
+cli_0018_dl_0056,cli_0018_ct_0055,Signal Collective - pro plan,qualified,13641.96,EUR,44,referral,Arjun Nair,2026-01-07,2026-02-15
+cli_0018_dl_0057,cli_0018_ct_0068,Signal Collective - premium bundle,qualified,12391.48,EUR,52,event,Zara Gupta,2025-11-21,2025-12-26
+cli_0018_dl_0058,cli_0018_ct_0008,Signal Collective - audit package,qualified,2643.77,EUR,61,event,Maya Joshi,2025-10-24,2025-12-18
+cli_0018_dl_0059,cli_0018_ct_0039,Signal Collective - audit package,proposal,389.53,EUR,24,import,Mia Mehta,2026-02-15,2026-03-31
+cli_0018_dl_0060,cli_0018_ct_0080,Signal Collective - starter plan,qualified,4078.03,EUR,44,import,Zara Gupta,2026-03-18,2026-04-20
+cli_0018_dl_0061,cli_0018_ct_0019,Signal Collective - starter plan,proposal,4260.45,EUR,78,website_form,Anika Khan,2025-11-28,2025-12-17
+cli_0018_dl_0062,cli_0018_ct_0089,Signal Collective - audit package,negotiation,7813.76,EUR,79,import,Ava Nair,2025-11-24,2025-12-03
+cli_0018_dl_0063,cli_0018_ct_0054,Signal Collective - pro plan,qualified,21977.78,EUR,73,website_form,Maya Bhatia,2026-02-08,2026-04-02
+cli_0018_dl_0064,cli_0018_ct_0047,Signal Collective - service retainer,qualified,3616.73,EUR,40,website_form,Sara Joshi,2025-12-12,2025-12-18
+cli_0018_dl_0065,cli_0018_ct_0055,Signal Collective - starter plan,qualified,17364.6,EUR,30,referral,Leo Singh,2025-11-20,2026-01-08
+cli_0018_dl_0066,cli_0018_ct_0065,Signal Collective - annual subscription,proposal,6207.83,EUR,28,website_form,Sara Gupta,2026-01-05,2026-01-08
+cli_0018_dl_0067,cli_0018_ct_0129,Signal Collective - service retainer,negotiation,22658.58,EUR,12,import,Ishaan Reddy,2025-12-21,2026-01-29
+cli_0018_dl_0068,cli_0018_ct_0081,Signal Collective - service retainer,negotiation,21934.84,EUR,76,email_reply,Mia Singh,2025-11-29,2026-01-20
+cli_0018_dl_0069,cli_0018_ct_0001,Signal Collective - pro plan,qualified,18374.85,EUR,62,referral,Mia Verma,2025-10-21,2025-11-01
+cli_0018_dl_0070,cli_0018_ct_0052,Signal Collective - pro plan,negotiation,13696.63,EUR,84,email_reply,Anika Singh,2025-11-06,2025-12-23
+cli_0018_dl_0071,cli_0018_ct_0033,Signal Collective - premium bundle,lost,4004.12,EUR,71,website_form,Mia Sharma,2025-12-20,2026-02-10
+cli_0018_dl_0072,cli_0018_ct_0040,Signal Collective - annual subscription,qualified,11519.28,EUR,6,website_form,Noah Joshi,2025-10-22,2025-11-23
+cli_0018_dl_0073,cli_0018_ct_0145,Signal Collective - pro plan,won,14963.68,EUR,93,event,Maya Sharma,2026-03-21,2026-04-10
+cli_0018_dl_0074,cli_0018_ct_0091,Signal Collective - starter plan,qualified,6245.91,EUR,64,email_reply,Sara Kapoor,2025-10-19,2025-11-05
+cli_0018_dl_0075,cli_0018_ct_0143,Signal Collective - starter plan,proposal,1629.9,EUR,5,referral,Arjun Mehta,2025-10-27,2025-12-23
+cli_0018_dl_0076,cli_0018_ct_0007,Signal Collective - membership,won,4482.24,EUR,7,import,Zara Joshi,2025-10-23,2025-12-20
+cli_0018_dl_0077,cli_0018_ct_0025,Signal Collective - premium bundle,qualified,12301.09,EUR,77,referral,Sara Singh,2026-03-25,2026-04-03
+cli_0018_dl_0078,cli_0018_ct_0052,Signal Collective - membership,negotiation,4552.41,EUR,84,email_reply,Liam Kapoor,2026-01-31,2026-03-30
+cli_0018_dl_0079,cli_0018_ct_0075,Signal Collective - membership,won,12016.79,EUR,71,referral,Kabir Kapoor,2026-03-27,2026-04-23
+cli_0018_dl_0080,cli_0018_ct_0061,Signal Collective - annual subscription,new,17614.13,EUR,26,website_form,Sara Khan,2025-12-18,2026-01-26
+cli_0018_dl_0081,cli_0018_ct_0132,Signal Collective - service retainer,negotiation,8515.5,EUR,78,import,Maya Gupta,2026-01-16,2026-02-13

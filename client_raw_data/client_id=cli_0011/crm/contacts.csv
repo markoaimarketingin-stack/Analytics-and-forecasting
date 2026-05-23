@@ -1,0 +1,165 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0011_ct_0001,Ava Khan,ava.khan0@examplemail.com,Urban Labs,Marketing Manager,churn_risk,email_reply,UAE,2025-10-10,2026-01-16
+cli_0011_ct_0002,Kabir Joshi,kabir.joshi1@examplemail.com,Urban Labs,RevOps Manager,sql,website_form,Australia,2026-01-23,2026-02-07
+cli_0011_ct_0003,Mia Bhatia,mia.bhatia2@examplemail.com,Urban Labs,Head of Growth,lead,email_reply,Australia,2024-11-30,2026-02-22
+cli_0011_ct_0004,Maya Mehta,maya.mehta3@examplemail.com,Urban Labs,Sales Lead,churn_risk,email_reply,UAE,2025-12-30,2026-04-03
+cli_0011_ct_0005,Mia Mehta,mia.mehta4@examplemail.com,Acme LLC,RevOps Manager,churn_risk,website_form,India,2025-08-07,2026-02-27
+cli_0011_ct_0006,Ava Joshi,ava.joshi5@examplemail.com,Metro Group,RevOps Manager,lead,website_form,Australia,2025-06-11,2026-03-04
+cli_0011_ct_0007,Zara Patel,zara.patel6@examplemail.com,Peak Inc,Head of Growth,churn_risk,website_form,India,2026-04-22,2026-02-15
+cli_0011_ct_0008,Arjun Kapoor,arjun.kapoor7@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,Canada,2025-04-14,2026-02-17
+cli_0011_ct_0009,Liam Bhatia,liam.bhatia8@examplemail.com,Orbit Inc,Marketing Manager,lead,email_reply,Canada,2025-10-08,2026-02-19
+cli_0011_ct_0010,Sara Patel,sara.patel9@examplemail.com,Acme Ltd,Founder,churn_risk,email_reply,United Kingdom,2025-10-08,2026-01-07
+cli_0011_ct_0011,Ishaan Mehta,ishaan.mehta10@examplemail.com,Urban Labs,Head of Growth,lead,import,United States,2025-02-26,2026-03-06
+cli_0011_ct_0012,Anika Mehta,anika.mehta11@examplemail.com,Zen Group,RevOps Manager,lead,event,Australia,2025-07-24,2026-01-03
+cli_0011_ct_0013,Sara Patel,sara.patel12@examplemail.com,Zen Group,Head of Growth,customer,website_form,India,2025-03-12,2026-02-24
+cli_0011_ct_0014,Ava Nair,ava.nair13@examplemail.com,Acme Ltd,Marketing Manager,lead,referral,United Kingdom,2026-03-24,2026-03-29
+cli_0011_ct_0015,Sara Sharma,sara.sharma14@examplemail.com,Urban Labs,Head of Growth,lead,event,UAE,2024-12-22,2026-03-17
+cli_0011_ct_0016,Mia Nair,mia.nair15@examplemail.com,Urban Labs,Sales Lead,mql,referral,India,2026-04-20,2026-02-17
+cli_0011_ct_0017,Liam Reddy,liam.reddy16@examplemail.com,Metro LLC,Marketing Manager,sql,import,United States,2024-12-22,2026-01-31
+cli_0011_ct_0018,Noah Sharma,noah.sharma17@examplemail.com,Zen LLC,Marketing Manager,mql,website_form,India,2026-04-18,2026-03-05
+cli_0011_ct_0019,Noah Verma,noah.verma18@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,United Kingdom,2024-11-27,2026-04-10
+cli_0011_ct_0020,Ava Patel,ava.patel19@examplemail.com,Urban Labs,Head of Growth,customer,import,Canada,2025-06-19,2025-12-28
+cli_0011_ct_0021,Zara Singh,zara.singh20@examplemail.com,Metro Group,Marketing Manager,lead,website_form,United Kingdom,2024-11-12,2026-03-21
+cli_0011_ct_0022,Ishaan Nair,ishaan.nair21@examplemail.com,Acme Ltd,Founder,sql,referral,India,2025-07-12,2026-04-09
+cli_0011_ct_0023,Arjun Singh,arjun.singh22@examplemail.com,Orbit LLC,Marketing Manager,lead,website_form,United Kingdom,2025-09-27,2026-02-23
+cli_0011_ct_0024,Sara Kapoor,sara.kapoor23@examplemail.com,Urban Labs,Founder,lead,import,United Kingdom,2025-01-21,2026-04-15
+cli_0011_ct_0025,Zara Khan,zara.khan24@examplemail.com,Orbit LLC,Sales Lead,lead,website_form,Australia,2025-09-19,2026-02-22
+cli_0011_ct_0026,Mia Gupta,mia.gupta25@examplemail.com,Metro Group,Founder,mql,email_reply,Canada,2024-12-01,2026-02-24
+cli_0011_ct_0027,Sara Sharma,sara.sharma26@examplemail.com,Peak Ltd,Marketing Manager,mql,import,India,2026-02-24,2026-01-09
+cli_0011_ct_0028,Ava Nair,ava.nair27@examplemail.com,Urban Labs,Sales Lead,lead,import,India,2025-05-08,2026-01-07
+cli_0011_ct_0029,Ava Patel,ava.patel28@examplemail.com,Urban Labs,Marketing Manager,sql,referral,India,2025-04-18,2026-02-10
+cli_0011_ct_0030,Zara Sharma,zara.sharma29@examplemail.com,Peak Ltd,Marketing Manager,customer,import,Canada,2025-12-03,2026-04-21
+cli_0011_ct_0031,Anika Joshi,anika.joshi30@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,Canada,2025-10-05,2026-03-01
+cli_0011_ct_0032,Anika Sharma,anika.sharma31@examplemail.com,Urban Labs,Marketing Manager,mql,event,Canada,2025-08-07,2026-04-06
+cli_0011_ct_0033,Ishaan Reddy,ishaan.reddy32@examplemail.com,Acme Inc,Sales Lead,lead,import,Canada,2026-02-02,2026-03-06
+cli_0011_ct_0034,Ishaan Nair,ishaan.nair33@examplemail.com,Zen Ltd,Head of Growth,sql,website_form,United States,2025-01-02,2026-04-17
+cli_0011_ct_0035,Leo Verma,leo.verma34@examplemail.com,Urban Labs,Sales Lead,customer,import,Canada,2025-03-01,2026-04-03
+cli_0011_ct_0036,Mia Patel,mia.patel35@examplemail.com,Urban Labs,Head of Growth,lead,website_form,UAE,2025-09-07,2026-02-02
+cli_0011_ct_0037,Mia Joshi,mia.joshi36@examplemail.com,Peak LLC,Head of Growth,lead,import,Australia,2025-03-31,2026-01-30
+cli_0011_ct_0038,Ava Reddy,ava.reddy37@examplemail.com,Urban Labs,Marketing Manager,lead,email_reply,United Kingdom,2026-02-10,2026-03-02
+cli_0011_ct_0039,Maya Gupta,maya.gupta38@examplemail.com,Urban Labs,Head of Growth,lead,referral,Canada,2026-04-10,2025-12-30
+cli_0011_ct_0040,Sara Reddy,sara.reddy39@examplemail.com,Urban Labs,Marketing Manager,mql,website_form,Canada,2025-06-12,2026-04-22
+cli_0011_ct_0041,Maya Verma,maya.verma40@examplemail.com,Urban Labs,Marketing Manager,customer,website_form,India,2025-05-28,2026-04-01
+cli_0011_ct_0042,Kabir Verma,kabir.verma41@examplemail.com,Urban Labs,Founder,churn_risk,import,United States,2025-06-13,2026-04-22
+cli_0011_ct_0043,Mia Mehta,mia.mehta42@examplemail.com,Orbit LLC,RevOps Manager,lead,website_form,Canada,2025-10-16,2026-02-15
+cli_0011_ct_0044,Noah Reddy,noah.reddy43@examplemail.com,Metro Inc,Marketing Manager,sql,import,UAE,2025-09-15,2026-03-15
+cli_0011_ct_0045,Liam Verma,liam.verma44@examplemail.com,Urban Labs,Head of Growth,customer,event,Canada,2026-02-09,2026-03-22
+cli_0011_ct_0046,Liam Nair,liam.nair45@examplemail.com,Metro Group,Founder,sql,event,United States,2026-04-03,2026-02-18
+cli_0011_ct_0047,Noah Sharma,noah.sharma46@examplemail.com,Orbit Ltd,RevOps Manager,customer,import,UAE,2025-10-22,2026-04-18
+cli_0011_ct_0048,Ava Nair,ava.nair47@examplemail.com,Zen Inc,Founder,lead,event,Australia,2025-02-10,2026-03-12
+cli_0011_ct_0049,Mia Reddy,mia.reddy48@examplemail.com,Urban Labs,RevOps Manager,lead,event,Australia,2025-11-07,2026-02-24
+cli_0011_ct_0050,Ava Joshi,ava.joshi49@examplemail.com,Urban Labs,Sales Lead,mql,email_reply,Australia,2025-03-25,2026-03-11
+cli_0011_ct_0051,Arjun Joshi,arjun.joshi50@examplemail.com,Urban Labs,Founder,sql,referral,United Kingdom,2025-04-12,2026-03-09
+cli_0011_ct_0052,Ishaan Reddy,ishaan.reddy51@examplemail.com,Peak LLC,Marketing Manager,lead,email_reply,India,2025-06-24,2026-01-12
+cli_0011_ct_0053,Maya Bhatia,maya.bhatia52@examplemail.com,Urban Labs,Head of Growth,lead,website_form,Canada,2024-12-12,2026-01-02
+cli_0011_ct_0054,Arjun Gupta,arjun.gupta53@examplemail.com,Urban Labs,Founder,churn_risk,website_form,Canada,2025-02-22,2026-04-06
+cli_0011_ct_0055,Leo Khan,leo.khan54@examplemail.com,Zen Group,Marketing Manager,lead,email_reply,UAE,2025-01-25,2026-02-26
+cli_0011_ct_0056,Ava Reddy,ava.reddy55@examplemail.com,Metro LLC,Founder,sql,email_reply,Australia,2025-01-01,2026-02-03
+cli_0011_ct_0057,Ishaan Mehta,ishaan.mehta56@examplemail.com,Peak Inc,RevOps Manager,lead,website_form,UAE,2025-10-06,2026-01-08
+cli_0011_ct_0058,Noah Joshi,noah.joshi57@examplemail.com,Peak LLC,RevOps Manager,mql,email_reply,India,2025-06-26,2026-01-15
+cli_0011_ct_0059,Kabir Reddy,kabir.reddy58@examplemail.com,Urban Labs,Founder,mql,referral,United States,2026-04-05,2026-01-15
+cli_0011_ct_0060,Ava Kapoor,ava.kapoor59@examplemail.com,Metro LLC,Sales Lead,sql,website_form,Canada,2025-12-06,2026-02-28
+cli_0011_ct_0061,Ava Kapoor,ava.kapoor60@examplemail.com,Urban Labs,RevOps Manager,mql,website_form,Australia,2025-05-13,2026-03-15
+cli_0011_ct_0062,Ishaan Patel,ishaan.patel61@examplemail.com,Metro LLC,Marketing Manager,sql,import,UAE,2025-05-24,2026-01-26
+cli_0011_ct_0063,Liam Reddy,liam.reddy62@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,United States,2025-11-09,2026-02-18
+cli_0011_ct_0064,Kabir Reddy,kabir.reddy63@examplemail.com,Acme Inc,Marketing Manager,lead,website_form,Canada,2025-12-18,2026-01-11
+cli_0011_ct_0065,Noah Singh,noah.singh64@examplemail.com,Acme Group,Sales Lead,lead,email_reply,UAE,2024-12-07,2026-03-14
+cli_0011_ct_0066,Maya Nair,maya.nair65@examplemail.com,Zen LLC,RevOps Manager,mql,website_form,Canada,2025-08-01,2026-02-21
+cli_0011_ct_0067,Sara Joshi,sara.joshi66@examplemail.com,Peak Group,Marketing Manager,sql,website_form,Canada,2026-03-21,2026-04-09
+cli_0011_ct_0068,Arjun Singh,arjun.singh67@examplemail.com,Urban Labs,Sales Lead,mql,referral,Australia,2025-02-19,2025-12-25
+cli_0011_ct_0069,Anika Gupta,anika.gupta68@examplemail.com,Acme Ltd,Sales Lead,mql,import,United States,2025-12-01,2026-01-29
+cli_0011_ct_0070,Ishaan Sharma,ishaan.sharma69@examplemail.com,Metro Inc,Founder,lead,email_reply,United States,2025-05-06,2026-01-19
+cli_0011_ct_0071,Ava Khan,ava.khan70@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,Australia,2024-10-31,2026-02-06
+cli_0011_ct_0072,Kabir Mehta,kabir.mehta71@examplemail.com,Urban Labs,Head of Growth,sql,website_form,India,2025-06-22,2026-03-12
+cli_0011_ct_0073,Ishaan Nair,ishaan.nair72@examplemail.com,Urban Labs,Head of Growth,mql,website_form,India,2025-06-23,2026-01-02
+cli_0011_ct_0074,Maya Reddy,maya.reddy73@examplemail.com,Zen Ltd,Head of Growth,lead,website_form,United Kingdom,2026-03-27,2026-03-29
+cli_0011_ct_0075,Noah Verma,noah.verma74@examplemail.com,Zen LLC,Head of Growth,lead,referral,Canada,2024-11-16,2026-01-18
+cli_0011_ct_0076,Ishaan Patel,ishaan.patel75@examplemail.com,Zen Group,Marketing Manager,mql,website_form,India,2025-07-10,2026-03-17
+cli_0011_ct_0077,Noah Mehta,noah.mehta76@examplemail.com,Zen Ltd,Head of Growth,sql,import,United Kingdom,2026-01-12,2026-03-09
+cli_0011_ct_0078,Sara Verma,sara.verma77@examplemail.com,Urban Labs,RevOps Manager,lead,website_form,United States,2025-09-07,2025-12-31
+cli_0011_ct_0079,Zara Khan,zara.khan78@examplemail.com,Urban Labs,RevOps Manager,lead,website_form,United States,2025-09-14,2026-02-14
+cli_0011_ct_0080,Zara Khan,zara.khan79@examplemail.com,Urban Labs,Head of Growth,customer,import,United States,2024-11-19,2026-03-27
+cli_0011_ct_0081,Anika Sharma,anika.sharma80@examplemail.com,Urban Labs,Marketing Manager,sql,website_form,United States,2025-05-01,2026-03-08
+cli_0011_ct_0082,Arjun Nair,arjun.nair81@examplemail.com,Urban Labs,Marketing Manager,churn_risk,import,United Kingdom,2026-01-17,2026-04-16
+cli_0011_ct_0083,Kabir Verma,kabir.verma82@examplemail.com,Metro LLC,Sales Lead,sql,email_reply,United States,2025-01-04,2026-01-08
+cli_0011_ct_0084,Liam Patel,liam.patel83@examplemail.com,Zen Ltd,RevOps Manager,lead,email_reply,Canada,2025-10-21,2026-03-20
+cli_0011_ct_0085,Mia Bhatia,mia.bhatia84@examplemail.com,Orbit LLC,Founder,mql,import,United Kingdom,2024-11-10,2026-02-17
+cli_0011_ct_0086,Ishaan Sharma,ishaan.sharma85@examplemail.com,Metro Ltd,Marketing Manager,sql,event,UAE,2025-04-26,2026-03-15
+cli_0011_ct_0087,Sara Bhatia,sara.bhatia86@examplemail.com,Urban Labs,Marketing Manager,mql,website_form,United States,2026-01-21,2026-02-12
+cli_0011_ct_0088,Zara Singh,zara.singh87@examplemail.com,Acme Inc,Head of Growth,customer,event,Canada,2025-02-28,2026-03-20
+cli_0011_ct_0089,Zara Verma,zara.verma88@examplemail.com,Urban Labs,Founder,sql,import,Canada,2024-11-24,2026-03-25
+cli_0011_ct_0090,Arjun Mehta,arjun.mehta89@examplemail.com,Urban Labs,Sales Lead,sql,referral,Australia,2025-09-21,2025-12-31
+cli_0011_ct_0091,Sara Kapoor,sara.kapoor90@examplemail.com,Metro Inc,Marketing Manager,customer,referral,UAE,2025-12-09,2026-03-10
+cli_0011_ct_0092,Anika Gupta,anika.gupta91@examplemail.com,Urban Labs,Marketing Manager,mql,website_form,United States,2025-02-05,2026-01-03
+cli_0011_ct_0093,Mia Verma,mia.verma92@examplemail.com,Metro Group,Marketing Manager,churn_risk,referral,Australia,2025-11-08,2026-01-26
+cli_0011_ct_0094,Mia Sharma,mia.sharma93@examplemail.com,Urban Labs,Head of Growth,sql,import,UAE,2026-02-13,2026-03-14
+cli_0011_ct_0095,Zara Bhatia,zara.bhatia94@examplemail.com,Peak Ltd,Marketing Manager,mql,import,United Kingdom,2025-05-14,2026-03-09
+cli_0011_ct_0096,Liam Mehta,liam.mehta95@examplemail.com,Peak Group,RevOps Manager,customer,import,United Kingdom,2025-08-26,2026-03-08
+cli_0011_ct_0097,Arjun Khan,arjun.khan96@examplemail.com,Zen Ltd,Founder,sql,email_reply,United Kingdom,2025-09-16,2026-04-17
+cli_0011_ct_0098,Maya Sharma,maya.sharma97@examplemail.com,Peak Group,Founder,customer,website_form,India,2025-11-16,2025-12-29
+cli_0011_ct_0099,Mia Singh,mia.singh98@examplemail.com,Acme Inc,Founder,sql,import,UAE,2025-03-29,2026-01-13
+cli_0011_ct_0100,Noah Verma,noah.verma99@examplemail.com,Urban Labs,Head of Growth,lead,email_reply,Canada,2025-01-07,2026-04-03
+cli_0011_ct_0101,Noah Sharma,noah.sharma100@examplemail.com,Acme Group,Founder,lead,referral,United Kingdom,2025-02-26,2026-02-04
+cli_0011_ct_0102,Liam Gupta,liam.gupta101@examplemail.com,Urban Labs,RevOps Manager,sql,website_form,Australia,2025-10-26,2026-02-02
+cli_0011_ct_0103,Maya Singh,maya.singh102@examplemail.com,Peak Ltd,Sales Lead,sql,event,India,2025-02-17,2026-03-11
+cli_0011_ct_0104,Zara Singh,zara.singh103@examplemail.com,Metro Group,Marketing Manager,customer,email_reply,Australia,2026-04-24,2026-01-04
+cli_0011_ct_0105,Maya Sharma,maya.sharma104@examplemail.com,Urban Labs,RevOps Manager,sql,email_reply,India,2026-02-11,2026-02-04
+cli_0011_ct_0106,Sara Bhatia,sara.bhatia105@examplemail.com,Urban Labs,Marketing Manager,mql,event,India,2026-01-31,2026-02-25
+cli_0011_ct_0107,Anika Sharma,anika.sharma106@examplemail.com,Acme Inc,Marketing Manager,lead,email_reply,United States,2026-01-29,2025-12-29
+cli_0011_ct_0108,Kabir Singh,kabir.singh107@examplemail.com,Urban Labs,RevOps Manager,lead,event,United States,2025-10-20,2026-04-07
+cli_0011_ct_0109,Ishaan Reddy,ishaan.reddy108@examplemail.com,Metro LLC,Marketing Manager,mql,referral,India,2026-03-11,2026-04-16
+cli_0011_ct_0110,Leo Bhatia,leo.bhatia109@examplemail.com,Metro Group,Head of Growth,mql,website_form,India,2025-01-29,2026-04-03
+cli_0011_ct_0111,Mia Reddy,mia.reddy110@examplemail.com,Peak Group,Sales Lead,lead,website_form,India,2025-03-30,2026-04-24
+cli_0011_ct_0112,Ishaan Patel,ishaan.patel111@examplemail.com,Urban Labs,Marketing Manager,mql,referral,United Kingdom,2026-02-04,2026-01-02
+cli_0011_ct_0113,Kabir Patel,kabir.patel112@examplemail.com,Urban Labs,Marketing Manager,mql,email_reply,India,2026-02-02,2026-04-20
+cli_0011_ct_0114,Zara Kapoor,zara.kapoor113@examplemail.com,Orbit LLC,Marketing Manager,lead,website_form,Australia,2025-07-11,2026-03-30
+cli_0011_ct_0115,Kabir Mehta,kabir.mehta114@examplemail.com,Peak Ltd,Sales Lead,mql,email_reply,UAE,2025-04-10,2026-03-19
+cli_0011_ct_0116,Zara Singh,zara.singh115@examplemail.com,Peak Group,Marketing Manager,lead,email_reply,India,2024-11-07,2026-04-21
+cli_0011_ct_0117,Sara Nair,sara.nair116@examplemail.com,Urban Labs,Head of Growth,sql,website_form,UAE,2024-12-31,2026-04-07
+cli_0011_ct_0118,Arjun Nair,arjun.nair117@examplemail.com,Urban Labs,Sales Lead,lead,website_form,United Kingdom,2026-02-14,2026-01-21
+cli_0011_ct_0119,Ishaan Sharma,ishaan.sharma118@examplemail.com,Orbit Group,Founder,mql,website_form,UAE,2025-09-02,2026-03-29
+cli_0011_ct_0120,Ava Mehta,ava.mehta119@examplemail.com,Acme Ltd,Marketing Manager,lead,import,Australia,2024-12-17,2026-01-04
+cli_0011_ct_0121,Ava Verma,ava.verma120@examplemail.com,Urban Labs,Sales Lead,sql,email_reply,UAE,2024-11-24,2026-03-27
+cli_0011_ct_0122,Ava Patel,ava.patel121@examplemail.com,Acme Ltd,RevOps Manager,lead,import,United States,2024-12-27,2026-04-18
+cli_0011_ct_0123,Ava Joshi,ava.joshi122@examplemail.com,Orbit Group,Sales Lead,lead,import,UAE,2025-11-08,2026-02-17
+cli_0011_ct_0124,Anika Sharma,anika.sharma123@examplemail.com,Acme LLC,Founder,lead,import,Canada,2026-01-06,2026-04-10
+cli_0011_ct_0125,Ishaan Reddy,ishaan.reddy124@examplemail.com,Metro LLC,RevOps Manager,lead,email_reply,United States,2025-04-07,2026-03-26
+cli_0011_ct_0126,Arjun Bhatia,arjun.bhatia125@examplemail.com,Zen Group,Head of Growth,sql,email_reply,United Kingdom,2025-09-03,2026-03-02
+cli_0011_ct_0127,Zara Verma,zara.verma126@examplemail.com,Urban Labs,Head of Growth,sql,email_reply,UAE,2024-12-31,2026-02-17
+cli_0011_ct_0128,Zara Gupta,zara.gupta127@examplemail.com,Peak Inc,Marketing Manager,sql,website_form,Canada,2025-02-19,2026-03-02
+cli_0011_ct_0129,Anika Nair,anika.nair128@examplemail.com,Urban Labs,Marketing Manager,churn_risk,website_form,UAE,2025-01-19,2026-04-20
+cli_0011_ct_0130,Ishaan Joshi,ishaan.joshi129@examplemail.com,Urban Labs,Founder,lead,import,United Kingdom,2025-10-26,2026-02-08
+cli_0011_ct_0131,Noah Gupta,noah.gupta130@examplemail.com,Zen Group,Marketing Manager,lead,website_form,India,2026-02-05,2026-04-23
+cli_0011_ct_0132,Zara Kapoor,zara.kapoor131@examplemail.com,Metro Ltd,Head of Growth,churn_risk,website_form,United States,2025-12-25,2026-04-24
+cli_0011_ct_0133,Ava Gupta,ava.gupta132@examplemail.com,Urban Labs,Head of Growth,lead,website_form,India,2025-03-19,2026-03-19
+cli_0011_ct_0134,Noah Gupta,noah.gupta133@examplemail.com,Urban Labs,Founder,lead,website_form,United States,2025-02-18,2026-01-19
+cli_0011_ct_0135,Leo Nair,leo.nair134@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,Canada,2024-12-14,2026-02-20
+cli_0011_ct_0136,Zara Gupta,zara.gupta135@examplemail.com,Urban Labs,Founder,lead,event,Canada,2024-12-01,2026-04-04
+cli_0011_ct_0137,Ava Verma,ava.verma136@examplemail.com,Acme Inc,Sales Lead,lead,email_reply,UAE,2025-06-17,2026-02-12
+cli_0011_ct_0138,Mia Sharma,mia.sharma137@examplemail.com,Urban Labs,Sales Lead,lead,email_reply,Canada,2025-04-28,2026-02-12
+cli_0011_ct_0139,Anika Sharma,anika.sharma138@examplemail.com,Orbit Ltd,Sales Lead,lead,website_form,Australia,2025-03-31,2026-02-13
+cli_0011_ct_0140,Noah Khan,noah.khan139@examplemail.com,Zen Inc,Head of Growth,lead,email_reply,United Kingdom,2025-06-27,2026-01-26
+cli_0011_ct_0141,Mia Singh,mia.singh140@examplemail.com,Urban Labs,Marketing Manager,lead,event,India,2025-04-23,2026-01-17
+cli_0011_ct_0142,Mia Verma,mia.verma141@examplemail.com,Acme Group,Marketing Manager,lead,website_form,India,2025-02-22,2026-01-08
+cli_0011_ct_0143,Sara Gupta,sara.gupta142@examplemail.com,Acme Ltd,Marketing Manager,churn_risk,email_reply,India,2025-11-18,2026-03-29
+cli_0011_ct_0144,Noah Singh,noah.singh143@examplemail.com,Peak Inc,RevOps Manager,lead,website_form,Canada,2026-02-08,2026-02-13
+cli_0011_ct_0145,Noah Nair,noah.nair144@examplemail.com,Zen Inc,Head of Growth,sql,referral,UAE,2025-07-17,2026-04-14
+cli_0011_ct_0146,Maya Mehta,maya.mehta145@examplemail.com,Urban Labs,RevOps Manager,customer,referral,Australia,2025-05-18,2026-04-04
+cli_0011_ct_0147,Ava Patel,ava.patel146@examplemail.com,Urban Labs,RevOps Manager,sql,import,Australia,2025-11-20,2025-12-31
+cli_0011_ct_0148,Kabir Kapoor,kabir.kapoor147@examplemail.com,Acme Ltd,Marketing Manager,sql,event,Australia,2025-11-04,2026-04-04
+cli_0011_ct_0149,Anika Verma,anika.verma148@examplemail.com,Metro Group,Founder,sql,email_reply,Canada,2026-02-12,2026-04-06
+cli_0011_ct_0150,Zara Gupta,zara.gupta149@examplemail.com,Urban Labs,Head of Growth,lead,import,Australia,2025-07-14,2026-02-07
+cli_0011_ct_0151,Liam Mehta,liam.mehta150@examplemail.com,Zen Group,Marketing Manager,lead,import,UAE,2025-08-19,2026-02-06
+cli_0011_ct_0152,Noah Mehta,noah.mehta151@examplemail.com,Urban Labs,Sales Lead,customer,referral,United States,2025-07-22,2026-03-29
+cli_0011_ct_0153,Ishaan Khan,ishaan.khan152@examplemail.com,Orbit Ltd,Head of Growth,lead,referral,Canada,2026-02-07,2026-01-08
+cli_0011_ct_0154,Zara Sharma,zara.sharma153@examplemail.com,Urban Labs,Sales Lead,lead,import,United Kingdom,2026-01-21,2026-01-08
+cli_0011_ct_0155,Anika Joshi,anika.joshi154@examplemail.com,Peak Group,Head of Growth,mql,referral,Canada,2026-01-30,2026-02-13
+cli_0011_ct_0156,Noah Nair,noah.nair155@examplemail.com,Urban Labs,Founder,mql,email_reply,United Kingdom,2026-03-22,2026-01-30
+cli_0011_ct_0157,Ava Bhatia,ava.bhatia156@examplemail.com,Acme Ltd,Marketing Manager,lead,website_form,India,2025-12-19,2026-03-17
+cli_0011_ct_0158,Zara Reddy,zara.reddy157@examplemail.com,Peak Group,Marketing Manager,lead,event,Canada,2024-12-09,2026-03-25
+cli_0011_ct_0159,Sara Bhatia,sara.bhatia158@examplemail.com,Urban Labs,Marketing Manager,mql,import,United States,2025-11-20,2026-01-31
+cli_0011_ct_0160,Leo Singh,leo.singh159@examplemail.com,Acme Ltd,Head of Growth,sql,event,India,2025-11-12,2026-01-17
+cli_0011_ct_0161,Kabir Bhatia,kabir.bhatia160@examplemail.com,Metro Group,Head of Growth,lead,website_form,Canada,2025-10-08,2026-04-17
+cli_0011_ct_0162,Ava Patel,ava.patel161@examplemail.com,Urban Labs,Marketing Manager,lead,website_form,India,2024-11-02,2026-04-01
+cli_0011_ct_0163,Anika Reddy,anika.reddy162@examplemail.com,Urban Labs,Marketing Manager,lead,email_reply,UAE,2025-11-25,2026-01-03
+cli_0011_ct_0164,Zara Sharma,zara.sharma163@examplemail.com,Peak Inc,Sales Lead,customer,website_form,India,2025-12-01,2026-03-30

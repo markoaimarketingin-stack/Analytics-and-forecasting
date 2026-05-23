@@ -1,0 +1,47 @@
+invoice_id,invoice_date,due_date,currency,amount,status,customer_name,line_items
+cli_0017_inv_0001,2026-01-02,2026-05-21,USD,10365.58,paid,Arjun Singh,setup fee; strategy work; support
+cli_0017_inv_0002,2026-03-14,2026-05-07,USD,11490.36,paid,Mia Joshi,strategy work; creative work
+cli_0017_inv_0003,2026-04-07,2026-06-04,USD,11279.81,overdue,Ishaan Sharma,creative work; support; media spend
+cli_0017_inv_0004,2026-01-21,2026-05-06,USD,1636.04,open,Mia Reddy,consulting
+cli_0017_inv_0005,2026-03-14,2026-06-04,USD,5789.87,open,Maya Reddy,support; creative work; setup fee
+cli_0017_inv_0006,2025-12-19,2026-05-22,USD,2247.98,open,Noah Patel,support
+cli_0017_inv_0007,2025-11-09,2026-04-23,USD,1521.04,paid,Mia Khan,creative work; support
+cli_0017_inv_0008,2026-03-08,2026-06-02,USD,3276.78,paid,Ishaan Mehta,setup fee
+cli_0017_inv_0009,2026-04-06,2026-05-16,USD,8969.0,open,Zara Nair,setup fee; media spend; strategy work
+cli_0017_inv_0010,2025-12-18,2026-04-06,USD,5159.64,overdue,Ishaan Nair,support; consulting
+cli_0017_inv_0011,2025-11-29,2026-05-08,USD,3338.92,paid,Anika Patel,setup fee; strategy work; creative work
+cli_0017_inv_0012,2025-11-30,2026-06-01,USD,2921.93,paid,Arjun Patel,creative work; consulting; support
+cli_0017_inv_0013,2026-01-11,2026-06-05,USD,6977.61,paid,Mia Mehta,media spend; support
+cli_0017_inv_0014,2026-01-10,2026-05-20,USD,4574.44,open,Sara Bhatia,creative work
+cli_0017_inv_0015,2025-11-07,2026-05-21,USD,5727.57,paid,Ishaan Mehta,consulting
+cli_0017_inv_0016,2026-01-10,2026-05-18,USD,6994.96,paid,Ava Patel,strategy work; consulting; support
+cli_0017_inv_0017,2025-10-27,2026-04-20,USD,11616.48,open,Sara Patel,consulting; creative work
+cli_0017_inv_0018,2026-04-12,2026-04-29,USD,6991.45,open,Sara Patel,strategy work; creative work
+cli_0017_inv_0019,2026-03-22,2026-04-25,USD,6831.38,open,Ava Gupta,creative work; strategy work; consulting
+cli_0017_inv_0020,2026-03-06,2026-03-25,USD,3339.83,open,Ishaan Gupta,support
+cli_0017_inv_0021,2026-02-05,2026-04-28,USD,7256.76,paid,Mia Kapoor,support
+cli_0017_inv_0022,2026-04-18,2026-04-20,USD,5217.36,overdue,Liam Reddy,strategy work; consulting
+cli_0017_inv_0023,2025-12-28,2026-04-14,USD,9548.02,paid,Anika Mehta,support
+cli_0017_inv_0024,2026-03-26,2026-04-01,USD,6199.38,paid,Ishaan Mehta,support
+cli_0017_inv_0025,2025-11-13,2026-05-22,USD,11191.65,paid,Anika Gupta,support; strategy work
+cli_0017_inv_0026,2026-04-15,2026-04-08,USD,7467.84,paid,Noah Sharma,support; consulting
+cli_0017_inv_0027,2025-12-29,2026-04-15,USD,5519.38,overdue,Ishaan Singh,consulting; strategy work
+cli_0017_inv_0028,2025-11-24,2026-04-23,USD,6913.48,paid,Arjun Verma,creative work
+cli_0017_inv_0029,2025-11-06,2026-06-03,USD,6127.71,open,Maya Kapoor,support; creative work; media spend
+cli_0017_inv_0030,2025-12-23,2026-04-23,USD,9282.73,paid,Kabir Kapoor,consulting
+cli_0017_inv_0031,2026-01-25,2026-05-02,USD,10258.02,paid,Ishaan Nair,media spend; consulting; setup fee
+cli_0017_inv_0032,2026-01-09,2026-05-24,USD,3178.13,paid,Ishaan Kapoor,strategy work
+cli_0017_inv_0033,2026-01-06,2026-05-26,USD,1639.82,paid,Zara Mehta,media spend; strategy work; setup fee
+cli_0017_inv_0034,2026-01-23,2026-05-06,USD,9502.45,paid,Leo Bhatia,strategy work
+cli_0017_inv_0035,2026-04-11,2026-04-22,USD,8141.63,paid,Ava Singh,strategy work
+cli_0017_inv_0036,2026-04-11,2026-06-08,USD,5804.8,paid,Anika Kapoor,support; strategy work; consulting
+cli_0017_inv_0037,2026-03-04,2026-04-02,USD,2380.92,paid,Noah Mehta,setup fee; consulting
+cli_0017_inv_0038,2025-11-08,2026-04-07,USD,355.38,open,Ishaan Gupta,consulting; support
+cli_0017_inv_0039,2026-02-19,2026-03-26,USD,5856.48,open,Sara Bhatia,consulting; creative work
+cli_0017_inv_0040,2026-01-25,2026-04-16,USD,7701.39,paid,Ava Mehta,consulting
+cli_0017_inv_0041,2025-11-18,2026-04-17,USD,4675.73,open,Liam Khan,creative work; consulting
+cli_0017_inv_0042,2025-12-14,2026-03-25,USD,5072.37,paid,Anika Khan,creative work; consulting
+cli_0017_inv_0043,2026-03-24,2026-04-30,USD,10187.55,paid,Mia Gupta,media spend
+cli_0017_inv_0044,2026-01-29,2026-06-04,USD,10054.61,paid,Leo Joshi,consulting
+cli_0017_inv_0045,2025-12-22,2026-06-04,USD,9182.71,overdue,Arjun Verma,creative work
+cli_0017_inv_0046,2026-04-19,2026-05-24,USD,4609.06,paid,Sara Joshi,setup fee; consulting

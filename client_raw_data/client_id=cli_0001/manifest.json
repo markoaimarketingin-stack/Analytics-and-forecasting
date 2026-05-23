@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0001",
+  "company_name": "Vertex Commerce",
+  "industry": "saas",
+  "region": "US",
+  "generated_at": "2026-04-23T20:55:53.189600Z",
+  "counts": {
+    "contacts": 134,
+    "deals": 88,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 6,
+    "marketing_rows": 180,
+    "email_campaigns": 41,
+    "posts": 60,
+    "comments": 120,
+    "tickets": 68,
+    "transcripts": 63,
+    "sessions": 26786,
+    "events": 133663,
+    "orders": 143,
+    "refunds": 8,
+    "invoices": 79,
+    "payments": 54,
+    "feedback": 149,
+    "feature_requests": 70,
+    "meeting_notes": 17,
+    "raw_observations": 46
+  }
+}

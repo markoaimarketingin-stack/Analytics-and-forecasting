@@ -1,0 +1,197 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0012_ct_0001,Kabir Reddy,kabir.reddy0@examplemail.com,Vertex Works,Marketing Manager,lead,website_form,Australia,2026-03-08,2026-02-20
+cli_0012_ct_0002,Ava Reddy,ava.reddy1@examplemail.com,Vertex Works,Head of Growth,lead,website_form,India,2025-08-02,2026-04-01
+cli_0012_ct_0003,Noah Kapoor,noah.kapoor2@examplemail.com,Vertex Works,Founder,lead,website_form,UAE,2026-03-27,2026-03-06
+cli_0012_ct_0004,Sara Kapoor,sara.kapoor3@examplemail.com,Zen LLC,Marketing Manager,customer,website_form,Australia,2025-11-03,2026-03-17
+cli_0012_ct_0005,Maya Khan,maya.khan4@examplemail.com,Metro Ltd,Head of Growth,sql,email_reply,Australia,2025-10-25,2026-02-01
+cli_0012_ct_0006,Sara Verma,sara.verma5@examplemail.com,Orbit Ltd,Sales Lead,mql,website_form,United States,2024-11-08,2026-04-03
+cli_0012_ct_0007,Sara Joshi,sara.joshi6@examplemail.com,Zen Ltd,Founder,sql,website_form,India,2025-09-17,2026-02-22
+cli_0012_ct_0008,Kabir Verma,kabir.verma7@examplemail.com,Metro Group,Marketing Manager,mql,import,UAE,2025-02-22,2026-01-13
+cli_0012_ct_0009,Zara Gupta,zara.gupta8@examplemail.com,Vertex Works,Founder,mql,website_form,India,2025-09-23,2026-03-09
+cli_0012_ct_0010,Zara Verma,zara.verma9@examplemail.com,Vertex Works,Sales Lead,lead,import,United States,2025-11-12,2026-01-07
+cli_0012_ct_0011,Anika Nair,anika.nair10@examplemail.com,Vertex Works,Head of Growth,customer,referral,India,2025-06-14,2026-03-08
+cli_0012_ct_0012,Leo Nair,leo.nair11@examplemail.com,Vertex Works,Sales Lead,mql,referral,Australia,2024-12-29,2025-12-25
+cli_0012_ct_0013,Mia Singh,mia.singh12@examplemail.com,Acme Ltd,Marketing Manager,sql,import,India,2026-01-12,2026-02-21
+cli_0012_ct_0014,Anika Singh,anika.singh13@examplemail.com,Acme Ltd,Sales Lead,lead,referral,UAE,2025-09-23,2026-03-19
+cli_0012_ct_0015,Anika Sharma,anika.sharma14@examplemail.com,Peak Inc,Marketing Manager,lead,website_form,India,2026-02-07,2026-01-02
+cli_0012_ct_0016,Leo Nair,leo.nair15@examplemail.com,Vertex Works,Marketing Manager,lead,referral,Australia,2025-11-21,2025-12-30
+cli_0012_ct_0017,Maya Verma,maya.verma16@examplemail.com,Orbit LLC,Head of Growth,lead,website_form,United Kingdom,2025-07-28,2026-04-09
+cli_0012_ct_0018,Ava Sharma,ava.sharma17@examplemail.com,Vertex Works,Founder,sql,import,Australia,2024-11-10,2026-02-28
+cli_0012_ct_0019,Mia Gupta,mia.gupta18@examplemail.com,Vertex Works,Sales Lead,lead,event,Canada,2025-08-31,2026-01-25
+cli_0012_ct_0020,Kabir Joshi,kabir.joshi19@examplemail.com,Vertex Works,Head of Growth,sql,import,United Kingdom,2026-02-05,2026-02-11
+cli_0012_ct_0021,Kabir Bhatia,kabir.bhatia20@examplemail.com,Orbit LLC,Marketing Manager,lead,import,India,2024-11-18,2026-04-02
+cli_0012_ct_0022,Ishaan Bhatia,ishaan.bhatia21@examplemail.com,Acme Inc,RevOps Manager,churn_risk,import,Australia,2025-12-12,2026-03-09
+cli_0012_ct_0023,Ishaan Verma,ishaan.verma22@examplemail.com,Metro Group,RevOps Manager,sql,email_reply,United Kingdom,2025-11-25,2026-03-26
+cli_0012_ct_0024,Liam Khan,liam.khan23@examplemail.com,Orbit Inc,RevOps Manager,customer,import,UAE,2025-09-04,2026-01-10
+cli_0012_ct_0025,Liam Verma,liam.verma24@examplemail.com,Zen LLC,Sales Lead,lead,import,Canada,2025-09-03,2026-03-12
+cli_0012_ct_0026,Ishaan Khan,ishaan.khan25@examplemail.com,Vertex Works,Head of Growth,lead,website_form,UAE,2025-12-30,2026-04-12
+cli_0012_ct_0027,Kabir Patel,kabir.patel26@examplemail.com,Metro LLC,Head of Growth,churn_risk,import,United Kingdom,2025-04-26,2026-01-28
+cli_0012_ct_0028,Noah Sharma,noah.sharma27@examplemail.com,Peak Inc,Sales Lead,sql,website_form,Australia,2025-04-22,2026-01-13
+cli_0012_ct_0029,Kabir Sharma,kabir.sharma28@examplemail.com,Peak Group,Marketing Manager,lead,website_form,UAE,2025-11-30,2026-03-03
+cli_0012_ct_0030,Arjun Kapoor,arjun.kapoor29@examplemail.com,Metro LLC,Founder,sql,email_reply,Canada,2025-11-02,2026-03-10
+cli_0012_ct_0031,Anika Verma,anika.verma30@examplemail.com,Acme Ltd,Sales Lead,lead,website_form,India,2025-11-21,2026-02-23
+cli_0012_ct_0032,Kabir Sharma,kabir.sharma31@examplemail.com,Vertex Works,Marketing Manager,sql,email_reply,Australia,2025-02-07,2026-01-01
+cli_0012_ct_0033,Anika Patel,anika.patel32@examplemail.com,Vertex Works,Head of Growth,mql,referral,India,2025-07-31,2026-02-22
+cli_0012_ct_0034,Sara Nair,sara.nair33@examplemail.com,Acme Inc,Sales Lead,mql,email_reply,United States,2025-09-18,2026-01-09
+cli_0012_ct_0035,Sara Bhatia,sara.bhatia34@examplemail.com,Zen LLC,Head of Growth,lead,referral,United States,2025-12-04,2026-04-06
+cli_0012_ct_0036,Liam Bhatia,liam.bhatia35@examplemail.com,Vertex Works,Head of Growth,lead,email_reply,UAE,2025-11-18,2026-02-01
+cli_0012_ct_0037,Noah Kapoor,noah.kapoor36@examplemail.com,Vertex Works,Marketing Manager,mql,referral,Australia,2024-12-11,2026-03-15
+cli_0012_ct_0038,Sara Kapoor,sara.kapoor37@examplemail.com,Vertex Works,Sales Lead,lead,email_reply,Canada,2025-06-29,2026-02-06
+cli_0012_ct_0039,Maya Singh,maya.singh38@examplemail.com,Vertex Works,Sales Lead,customer,website_form,Canada,2025-05-20,2026-03-15
+cli_0012_ct_0040,Ishaan Khan,ishaan.khan39@examplemail.com,Orbit Group,RevOps Manager,sql,event,United States,2024-12-09,2026-04-13
+cli_0012_ct_0041,Arjun Bhatia,arjun.bhatia40@examplemail.com,Metro Ltd,Marketing Manager,mql,event,United Kingdom,2025-02-11,2026-03-19
+cli_0012_ct_0042,Leo Khan,leo.khan41@examplemail.com,Orbit Ltd,Sales Lead,mql,website_form,United States,2025-05-16,2026-02-10
+cli_0012_ct_0043,Zara Sharma,zara.sharma42@examplemail.com,Vertex Works,Sales Lead,mql,email_reply,Canada,2025-01-17,2026-01-22
+cli_0012_ct_0044,Noah Kapoor,noah.kapoor43@examplemail.com,Vertex Works,Marketing Manager,mql,import,United States,2025-07-10,2026-01-14
+cli_0012_ct_0045,Maya Sharma,maya.sharma44@examplemail.com,Metro Group,Marketing Manager,lead,referral,United Kingdom,2026-03-13,2026-04-01
+cli_0012_ct_0046,Arjun Joshi,arjun.joshi45@examplemail.com,Acme LLC,RevOps Manager,lead,import,Australia,2025-04-28,2026-03-05
+cli_0012_ct_0047,Leo Kapoor,leo.kapoor46@examplemail.com,Peak Inc,Head of Growth,mql,website_form,Australia,2026-03-21,2026-04-11
+cli_0012_ct_0048,Leo Reddy,leo.reddy47@examplemail.com,Acme Group,Marketing Manager,lead,import,UAE,2025-06-24,2026-04-15
+cli_0012_ct_0049,Sara Verma,sara.verma48@examplemail.com,Vertex Works,Marketing Manager,lead,event,UAE,2026-04-08,2026-03-19
+cli_0012_ct_0050,Ishaan Khan,ishaan.khan49@examplemail.com,Vertex Works,Head of Growth,lead,referral,United Kingdom,2026-03-20,2026-01-27
+cli_0012_ct_0051,Maya Mehta,maya.mehta50@examplemail.com,Vertex Works,Sales Lead,sql,website_form,Canada,2025-05-22,2026-04-22
+cli_0012_ct_0052,Maya Gupta,maya.gupta51@examplemail.com,Peak LLC,Marketing Manager,sql,email_reply,India,2025-12-12,2026-01-04
+cli_0012_ct_0053,Arjun Bhatia,arjun.bhatia52@examplemail.com,Orbit Inc,Sales Lead,sql,event,UAE,2025-02-09,2026-02-14
+cli_0012_ct_0054,Mia Khan,mia.khan53@examplemail.com,Vertex Works,RevOps Manager,sql,referral,United States,2025-12-11,2026-03-07
+cli_0012_ct_0055,Zara Patel,zara.patel54@examplemail.com,Vertex Works,Founder,lead,referral,Canada,2025-01-12,2026-01-25
+cli_0012_ct_0056,Ishaan Bhatia,ishaan.bhatia55@examplemail.com,Vertex Works,Founder,lead,email_reply,United States,2025-01-15,2026-02-25
+cli_0012_ct_0057,Liam Khan,liam.khan56@examplemail.com,Vertex Works,Marketing Manager,mql,website_form,India,2025-07-05,2026-02-17
+cli_0012_ct_0058,Zara Singh,zara.singh57@examplemail.com,Vertex Works,RevOps Manager,sql,email_reply,Canada,2025-10-16,2026-04-17
+cli_0012_ct_0059,Noah Nair,noah.nair58@examplemail.com,Zen Ltd,Sales Lead,mql,website_form,UAE,2025-04-28,2026-01-24
+cli_0012_ct_0060,Sara Khan,sara.khan59@examplemail.com,Peak LLC,Marketing Manager,mql,website_form,Canada,2025-01-29,2026-01-14
+cli_0012_ct_0061,Maya Reddy,maya.reddy60@examplemail.com,Vertex Works,Marketing Manager,lead,import,UAE,2024-11-08,2025-12-29
+cli_0012_ct_0062,Maya Singh,maya.singh61@examplemail.com,Zen Inc,Founder,sql,website_form,United States,2026-02-28,2026-01-12
+cli_0012_ct_0063,Ishaan Sharma,ishaan.sharma62@examplemail.com,Vertex Works,Marketing Manager,sql,website_form,UAE,2025-12-09,2026-02-22
+cli_0012_ct_0064,Ishaan Khan,ishaan.khan63@examplemail.com,Metro Ltd,Sales Lead,lead,website_form,Australia,2024-11-03,2026-02-06
+cli_0012_ct_0065,Maya Verma,maya.verma64@examplemail.com,Peak Ltd,Sales Lead,lead,import,India,2025-09-26,2026-03-27
+cli_0012_ct_0066,Kabir Gupta,kabir.gupta65@examplemail.com,Vertex Works,Sales Lead,lead,referral,UAE,2026-02-21,2026-03-12
+cli_0012_ct_0067,Liam Verma,liam.verma66@examplemail.com,Vertex Works,Marketing Manager,mql,website_form,United Kingdom,2025-11-18,2026-01-13
+cli_0012_ct_0068,Noah Mehta,noah.mehta67@examplemail.com,Vertex Works,Sales Lead,lead,website_form,United States,2025-02-08,2026-02-22
+cli_0012_ct_0069,Noah Bhatia,noah.bhatia68@examplemail.com,Vertex Works,Sales Lead,mql,import,Australia,2025-01-24,2026-04-01
+cli_0012_ct_0070,Noah Reddy,noah.reddy69@examplemail.com,Peak LLC,Sales Lead,lead,event,UAE,2025-05-19,2026-02-02
+cli_0012_ct_0071,Ava Sharma,ava.sharma70@examplemail.com,Orbit Group,RevOps Manager,lead,website_form,Australia,2025-10-14,2026-01-17
+cli_0012_ct_0072,Ava Nair,ava.nair71@examplemail.com,Vertex Works,Head of Growth,customer,event,United States,2024-11-04,2026-03-11
+cli_0012_ct_0073,Ishaan Singh,ishaan.singh72@examplemail.com,Vertex Works,Marketing Manager,lead,event,Australia,2025-05-17,2026-03-24
+cli_0012_ct_0074,Maya Reddy,maya.reddy73@examplemail.com,Zen LLC,Head of Growth,sql,website_form,Canada,2025-03-22,2026-04-02
+cli_0012_ct_0075,Sara Gupta,sara.gupta74@examplemail.com,Vertex Works,RevOps Manager,lead,import,Canada,2026-04-11,2026-02-19
+cli_0012_ct_0076,Mia Gupta,mia.gupta75@examplemail.com,Vertex Works,Head of Growth,sql,import,United Kingdom,2026-02-21,2026-01-01
+cli_0012_ct_0077,Kabir Singh,kabir.singh76@examplemail.com,Zen LLC,Marketing Manager,churn_risk,email_reply,Canada,2026-03-03,2026-02-06
+cli_0012_ct_0078,Maya Singh,maya.singh77@examplemail.com,Zen Group,Sales Lead,lead,import,United States,2025-10-12,2026-01-05
+cli_0012_ct_0079,Leo Mehta,leo.mehta78@examplemail.com,Vertex Works,Head of Growth,lead,website_form,India,2025-04-23,2026-04-01
+cli_0012_ct_0080,Noah Reddy,noah.reddy79@examplemail.com,Vertex Works,Head of Growth,mql,import,Canada,2025-03-09,2026-02-27
+cli_0012_ct_0081,Liam Verma,liam.verma80@examplemail.com,Vertex Works,RevOps Manager,mql,import,Canada,2025-07-03,2026-02-23
+cli_0012_ct_0082,Sara Sharma,sara.sharma81@examplemail.com,Zen Group,Marketing Manager,sql,email_reply,United Kingdom,2026-01-02,2026-01-13
+cli_0012_ct_0083,Sara Sharma,sara.sharma82@examplemail.com,Orbit Ltd,RevOps Manager,lead,website_form,UAE,2025-04-25,2026-02-10
+cli_0012_ct_0084,Anika Reddy,anika.reddy83@examplemail.com,Peak Ltd,RevOps Manager,mql,event,India,2025-07-29,2026-03-22
+cli_0012_ct_0085,Mia Nair,mia.nair84@examplemail.com,Peak Ltd,RevOps Manager,sql,website_form,United Kingdom,2024-11-26,2026-04-24
+cli_0012_ct_0086,Leo Joshi,leo.joshi85@examplemail.com,Zen LLC,RevOps Manager,mql,import,Canada,2025-07-10,2026-04-12
+cli_0012_ct_0087,Noah Patel,noah.patel86@examplemail.com,Acme LLC,Marketing Manager,lead,import,United States,2025-01-30,2026-03-25
+cli_0012_ct_0088,Zara Reddy,zara.reddy87@examplemail.com,Peak Group,Sales Lead,lead,referral,Canada,2026-04-06,2026-02-08
+cli_0012_ct_0089,Leo Reddy,leo.reddy88@examplemail.com,Metro Ltd,Head of Growth,lead,email_reply,Australia,2026-03-14,2026-01-04
+cli_0012_ct_0090,Anika Singh,anika.singh89@examplemail.com,Orbit Group,Marketing Manager,sql,website_form,United Kingdom,2026-04-13,2026-04-08
+cli_0012_ct_0091,Mia Reddy,mia.reddy90@examplemail.com,Orbit Inc,Marketing Manager,mql,website_form,UAE,2025-03-20,2026-01-06
+cli_0012_ct_0092,Kabir Singh,kabir.singh91@examplemail.com,Orbit LLC,Head of Growth,sql,event,India,2026-03-14,2026-03-09
+cli_0012_ct_0093,Arjun Kapoor,arjun.kapoor92@examplemail.com,Vertex Works,Founder,mql,email_reply,United Kingdom,2025-05-04,2026-03-31
+cli_0012_ct_0094,Arjun Verma,arjun.verma93@examplemail.com,Vertex Works,Marketing Manager,lead,email_reply,Canada,2025-05-25,2026-02-08
+cli_0012_ct_0095,Arjun Mehta,arjun.mehta94@examplemail.com,Peak Ltd,Head of Growth,sql,import,United States,2025-11-20,2026-04-01
+cli_0012_ct_0096,Ava Mehta,ava.mehta95@examplemail.com,Vertex Works,Marketing Manager,sql,email_reply,United Kingdom,2025-08-07,2026-02-08
+cli_0012_ct_0097,Anika Joshi,anika.joshi96@examplemail.com,Metro Ltd,Head of Growth,customer,website_form,Canada,2025-01-10,2026-01-19
+cli_0012_ct_0098,Leo Gupta,leo.gupta97@examplemail.com,Orbit Inc,Marketing Manager,sql,website_form,India,2025-07-12,2026-02-01
+cli_0012_ct_0099,Ava Singh,ava.singh98@examplemail.com,Vertex Works,RevOps Manager,mql,event,United Kingdom,2025-06-20,2026-01-14
+cli_0012_ct_0100,Ishaan Gupta,ishaan.gupta99@examplemail.com,Peak LLC,Marketing Manager,lead,website_form,United Kingdom,2026-02-04,2026-02-15
+cli_0012_ct_0101,Zara Sharma,zara.sharma100@examplemail.com,Vertex Works,Head of Growth,churn_risk,event,United States,2025-12-05,2026-02-25
+cli_0012_ct_0102,Liam Singh,liam.singh101@examplemail.com,Acme Inc,Head of Growth,customer,website_form,Canada,2026-01-17,2026-04-03
+cli_0012_ct_0103,Sara Kapoor,sara.kapoor102@examplemail.com,Acme Ltd,Head of Growth,sql,website_form,India,2026-02-13,2026-01-12
+cli_0012_ct_0104,Leo Mehta,leo.mehta103@examplemail.com,Peak Ltd,Head of Growth,mql,website_form,United Kingdom,2025-04-24,2026-01-28
+cli_0012_ct_0105,Kabir Reddy,kabir.reddy104@examplemail.com,Vertex Works,Head of Growth,lead,import,UAE,2025-05-12,2026-01-10
+cli_0012_ct_0106,Noah Gupta,noah.gupta105@examplemail.com,Acme Group,Marketing Manager,mql,import,Canada,2025-08-25,2026-04-03
+cli_0012_ct_0107,Maya Reddy,maya.reddy106@examplemail.com,Acme LLC,Marketing Manager,lead,website_form,United States,2025-12-11,2026-01-17
+cli_0012_ct_0108,Liam Nair,liam.nair107@examplemail.com,Orbit Ltd,RevOps Manager,sql,referral,United Kingdom,2025-11-18,2026-02-01
+cli_0012_ct_0109,Ishaan Patel,ishaan.patel108@examplemail.com,Vertex Works,RevOps Manager,mql,event,United States,2025-11-07,2026-01-28
+cli_0012_ct_0110,Liam Joshi,liam.joshi109@examplemail.com,Vertex Works,RevOps Manager,mql,import,India,2025-12-12,2026-03-02
+cli_0012_ct_0111,Liam Verma,liam.verma110@examplemail.com,Vertex Works,Founder,sql,website_form,UAE,2025-03-30,2026-04-21
+cli_0012_ct_0112,Mia Gupta,mia.gupta111@examplemail.com,Metro Inc,RevOps Manager,lead,website_form,United States,2025-12-11,2026-04-16
+cli_0012_ct_0113,Liam Mehta,liam.mehta112@examplemail.com,Vertex Works,Head of Growth,churn_risk,referral,UAE,2024-12-30,2026-02-27
+cli_0012_ct_0114,Anika Sharma,anika.sharma113@examplemail.com,Vertex Works,Marketing Manager,lead,import,UAE,2026-01-12,2026-03-11
+cli_0012_ct_0115,Liam Singh,liam.singh114@examplemail.com,Zen Group,Head of Growth,sql,website_form,UAE,2025-09-09,2026-01-28
+cli_0012_ct_0116,Arjun Patel,arjun.patel115@examplemail.com,Vertex Works,RevOps Manager,customer,website_form,UAE,2025-10-27,2026-01-16
+cli_0012_ct_0117,Noah Kapoor,noah.kapoor116@examplemail.com,Metro Inc,Founder,mql,referral,Australia,2026-02-26,2026-04-13
+cli_0012_ct_0118,Mia Patel,mia.patel117@examplemail.com,Vertex Works,Marketing Manager,lead,website_form,United States,2025-05-03,2026-03-11
+cli_0012_ct_0119,Sara Patel,sara.patel118@examplemail.com,Acme LLC,Marketing Manager,lead,import,Canada,2025-07-08,2026-02-06
+cli_0012_ct_0120,Maya Joshi,maya.joshi119@examplemail.com,Metro LLC,RevOps Manager,mql,website_form,United Kingdom,2025-03-22,2026-01-14
+cli_0012_ct_0121,Liam Joshi,liam.joshi120@examplemail.com,Vertex Works,RevOps Manager,customer,referral,India,2025-06-26,2026-01-11
+cli_0012_ct_0122,Liam Sharma,liam.sharma121@examplemail.com,Vertex Works,Head of Growth,mql,website_form,United Kingdom,2025-12-25,2026-02-14
+cli_0012_ct_0123,Mia Verma,mia.verma122@examplemail.com,Metro Inc,Head of Growth,mql,email_reply,United States,2025-09-16,2026-04-19
+cli_0012_ct_0124,Mia Nair,mia.nair123@examplemail.com,Peak LLC,Head of Growth,customer,website_form,United States,2026-04-12,2026-03-23
+cli_0012_ct_0125,Mia Verma,mia.verma124@examplemail.com,Acme Inc,Founder,lead,import,India,2025-05-07,2026-02-02
+cli_0012_ct_0126,Liam Nair,liam.nair125@examplemail.com,Zen LLC,Marketing Manager,mql,website_form,UAE,2025-06-08,2026-01-12
+cli_0012_ct_0127,Liam Nair,liam.nair126@examplemail.com,Zen LLC,Marketing Manager,lead,website_form,United Kingdom,2026-02-10,2026-01-02
+cli_0012_ct_0128,Anika Joshi,anika.joshi127@examplemail.com,Vertex Works,Head of Growth,mql,import,UAE,2025-09-20,2026-02-28
+cli_0012_ct_0129,Liam Khan,liam.khan128@examplemail.com,Vertex Works,Marketing Manager,sql,website_form,United Kingdom,2025-07-01,2026-01-26
+cli_0012_ct_0130,Leo Singh,leo.singh129@examplemail.com,Zen Inc,Founder,sql,email_reply,United Kingdom,2025-07-17,2026-04-17
+cli_0012_ct_0131,Noah Bhatia,noah.bhatia130@examplemail.com,Peak Group,Sales Lead,churn_risk,email_reply,United Kingdom,2025-06-30,2026-03-01
+cli_0012_ct_0132,Noah Singh,noah.singh131@examplemail.com,Acme Inc,Founder,lead,import,United States,2026-01-13,2026-01-27
+cli_0012_ct_0133,Zara Bhatia,zara.bhatia132@examplemail.com,Zen Group,Marketing Manager,mql,import,Australia,2025-05-10,2026-01-28
+cli_0012_ct_0134,Ava Bhatia,ava.bhatia133@examplemail.com,Vertex Works,Sales Lead,lead,website_form,United Kingdom,2026-03-06,2026-03-25
+cli_0012_ct_0135,Arjun Khan,arjun.khan134@examplemail.com,Zen Ltd,Head of Growth,mql,import,India,2025-10-08,2026-01-31
+cli_0012_ct_0136,Arjun Khan,arjun.khan135@examplemail.com,Vertex Works,Marketing Manager,mql,website_form,United States,2025-04-18,2025-12-29
+cli_0012_ct_0137,Noah Singh,noah.singh136@examplemail.com,Vertex Works,Marketing Manager,lead,email_reply,Canada,2024-11-20,2026-02-14
+cli_0012_ct_0138,Noah Kapoor,noah.kapoor137@examplemail.com,Orbit Inc,Marketing Manager,sql,event,Canada,2024-12-31,2026-03-18
+cli_0012_ct_0139,Mia Sharma,mia.sharma138@examplemail.com,Vertex Works,Founder,customer,referral,Canada,2026-03-09,2026-02-16
+cli_0012_ct_0140,Anika Kapoor,anika.kapoor139@examplemail.com,Vertex Works,Founder,customer,import,India,2024-11-25,2026-04-17
+cli_0012_ct_0141,Leo Gupta,leo.gupta140@examplemail.com,Vertex Works,Head of Growth,customer,event,UAE,2024-11-14,2026-02-10
+cli_0012_ct_0142,Maya Verma,maya.verma141@examplemail.com,Zen Inc,Sales Lead,lead,event,Canada,2026-03-21,2026-01-05
+cli_0012_ct_0143,Ishaan Khan,ishaan.khan142@examplemail.com,Vertex Works,Sales Lead,sql,event,India,2025-11-14,2026-01-28
+cli_0012_ct_0144,Leo Joshi,leo.joshi143@examplemail.com,Vertex Works,Marketing Manager,lead,website_form,United States,2026-01-27,2026-02-06
+cli_0012_ct_0145,Mia Nair,mia.nair144@examplemail.com,Zen LLC,Head of Growth,lead,website_form,India,2025-12-25,2026-04-05
+cli_0012_ct_0146,Kabir Mehta,kabir.mehta145@examplemail.com,Metro Inc,Head of Growth,mql,import,UAE,2026-02-13,2026-04-01
+cli_0012_ct_0147,Mia Reddy,mia.reddy146@examplemail.com,Vertex Works,Marketing Manager,churn_risk,import,Australia,2025-11-10,2026-02-01
+cli_0012_ct_0148,Liam Patel,liam.patel147@examplemail.com,Peak Ltd,Marketing Manager,mql,website_form,Canada,2025-10-16,2026-02-28
+cli_0012_ct_0149,Mia Mehta,mia.mehta148@examplemail.com,Vertex Works,Sales Lead,mql,email_reply,India,2025-02-14,2026-01-27
+cli_0012_ct_0150,Zara Reddy,zara.reddy149@examplemail.com,Orbit Ltd,Founder,lead,website_form,Canada,2025-09-06,2026-01-25
+cli_0012_ct_0151,Sara Nair,sara.nair150@examplemail.com,Zen Group,Marketing Manager,lead,email_reply,India,2025-07-08,2026-03-28
+cli_0012_ct_0152,Ava Gupta,ava.gupta151@examplemail.com,Vertex Works,Head of Growth,sql,email_reply,India,2026-03-24,2025-12-25
+cli_0012_ct_0153,Anika Khan,anika.khan152@examplemail.com,Vertex Works,Marketing Manager,lead,website_form,Australia,2025-10-19,2026-03-06
+cli_0012_ct_0154,Ishaan Joshi,ishaan.joshi153@examplemail.com,Peak Inc,Head of Growth,mql,import,Canada,2025-09-18,2026-01-21
+cli_0012_ct_0155,Kabir Reddy,kabir.reddy154@examplemail.com,Vertex Works,Founder,mql,website_form,United States,2025-05-30,2026-04-21
+cli_0012_ct_0156,Noah Khan,noah.khan155@examplemail.com,Metro Inc,RevOps Manager,mql,import,United Kingdom,2025-05-07,2026-04-12
+cli_0012_ct_0157,Liam Singh,liam.singh156@examplemail.com,Vertex Works,Marketing Manager,lead,event,India,2026-03-02,2026-03-09
+cli_0012_ct_0158,Anika Patel,anika.patel157@examplemail.com,Zen Group,Marketing Manager,sql,referral,Australia,2025-01-20,2026-02-14
+cli_0012_ct_0159,Noah Reddy,noah.reddy158@examplemail.com,Vertex Works,Sales Lead,sql,website_form,UAE,2025-12-16,2026-04-18
+cli_0012_ct_0160,Anika Nair,anika.nair159@examplemail.com,Peak Group,RevOps Manager,lead,import,UAE,2025-10-23,2026-03-09
+cli_0012_ct_0161,Ava Patel,ava.patel160@examplemail.com,Acme Inc,RevOps Manager,mql,website_form,India,2025-03-04,2026-04-24
+cli_0012_ct_0162,Ishaan Gupta,ishaan.gupta161@examplemail.com,Vertex Works,Marketing Manager,lead,email_reply,Australia,2026-03-15,2026-02-17
+cli_0012_ct_0163,Kabir Patel,kabir.patel162@examplemail.com,Peak Inc,Sales Lead,lead,website_form,UAE,2024-12-04,2026-02-17
+cli_0012_ct_0164,Leo Singh,leo.singh163@examplemail.com,Orbit Ltd,Marketing Manager,mql,import,Canada,2025-11-30,2026-01-09
+cli_0012_ct_0165,Mia Gupta,mia.gupta164@examplemail.com,Vertex Works,Marketing Manager,lead,email_reply,Australia,2025-03-03,2026-03-08
+cli_0012_ct_0166,Noah Gupta,noah.gupta165@examplemail.com,Vertex Works,Head of Growth,lead,import,UAE,2026-01-02,2026-01-25
+cli_0012_ct_0167,Ava Kapoor,ava.kapoor166@examplemail.com,Peak Inc,Founder,lead,website_form,India,2025-02-08,2026-03-10
+cli_0012_ct_0168,Anika Verma,anika.verma167@examplemail.com,Vertex Works,Marketing Manager,customer,referral,UAE,2025-03-23,2026-02-24
+cli_0012_ct_0169,Liam Sharma,liam.sharma168@examplemail.com,Peak Ltd,Marketing Manager,mql,email_reply,India,2025-07-16,2026-03-16
+cli_0012_ct_0170,Noah Patel,noah.patel169@examplemail.com,Vertex Works,Marketing Manager,customer,import,Canada,2026-01-22,2026-02-16
+cli_0012_ct_0171,Kabir Bhatia,kabir.bhatia170@examplemail.com,Vertex Works,Sales Lead,sql,website_form,India,2026-03-30,2026-01-26
+cli_0012_ct_0172,Ishaan Nair,ishaan.nair171@examplemail.com,Peak LLC,Founder,sql,website_form,Canada,2026-02-23,2025-12-26
+cli_0012_ct_0173,Kabir Singh,kabir.singh172@examplemail.com,Vertex Works,Head of Growth,mql,referral,United States,2025-08-24,2026-01-24
+cli_0012_ct_0174,Arjun Kapoor,arjun.kapoor173@examplemail.com,Zen Ltd,Sales Lead,customer,website_form,India,2025-11-01,2025-12-25
+cli_0012_ct_0175,Anika Bhatia,anika.bhatia174@examplemail.com,Vertex Works,Marketing Manager,mql,website_form,UAE,2025-10-21,2026-01-22
+cli_0012_ct_0176,Zara Reddy,zara.reddy175@examplemail.com,Vertex Works,Founder,lead,website_form,United Kingdom,2025-09-24,2026-03-17
+cli_0012_ct_0177,Kabir Nair,kabir.nair176@examplemail.com,Vertex Works,RevOps Manager,lead,website_form,United Kingdom,2025-04-08,2026-02-11
+cli_0012_ct_0178,Mia Joshi,mia.joshi177@examplemail.com,Orbit Ltd,Marketing Manager,sql,website_form,Canada,2025-02-17,2026-04-22
+cli_0012_ct_0179,Zara Patel,zara.patel178@examplemail.com,Metro Group,Sales Lead,mql,website_form,India,2024-11-15,2026-01-03
+cli_0012_ct_0180,Leo Gupta,leo.gupta179@examplemail.com,Vertex Works,Marketing Manager,mql,referral,India,2026-02-15,2026-01-08
+cli_0012_ct_0181,Leo Nair,leo.nair180@examplemail.com,Vertex Works,Marketing Manager,sql,email_reply,United States,2025-06-11,2026-01-12
+cli_0012_ct_0182,Kabir Kapoor,kabir.kapoor181@examplemail.com,Orbit Inc,Head of Growth,mql,email_reply,UAE,2025-09-23,2026-04-11
+cli_0012_ct_0183,Leo Gupta,leo.gupta182@examplemail.com,Vertex Works,Sales Lead,sql,website_form,Australia,2025-05-10,2026-03-18
+cli_0012_ct_0184,Ishaan Mehta,ishaan.mehta183@examplemail.com,Peak Ltd,Head of Growth,sql,email_reply,United States,2025-10-09,2025-12-30
+cli_0012_ct_0185,Kabir Reddy,kabir.reddy184@examplemail.com,Zen LLC,Founder,sql,referral,India,2025-05-25,2026-04-14
+cli_0012_ct_0186,Liam Gupta,liam.gupta185@examplemail.com,Vertex Works,Head of Growth,lead,website_form,India,2026-04-04,2026-02-27
+cli_0012_ct_0187,Maya Sharma,maya.sharma186@examplemail.com,Orbit Ltd,Head of Growth,lead,email_reply,India,2026-02-18,2026-02-23
+cli_0012_ct_0188,Sara Bhatia,sara.bhatia187@examplemail.com,Vertex Works,Sales Lead,sql,email_reply,India,2025-04-08,2026-02-02
+cli_0012_ct_0189,Ishaan Bhatia,ishaan.bhatia188@examplemail.com,Vertex Works,RevOps Manager,mql,import,Australia,2025-06-04,2026-02-27
+cli_0012_ct_0190,Ava Verma,ava.verma189@examplemail.com,Acme LLC,Head of Growth,sql,referral,United States,2026-02-17,2026-01-16
+cli_0012_ct_0191,Ava Patel,ava.patel190@examplemail.com,Vertex Works,Marketing Manager,lead,import,United States,2026-04-24,2026-03-14
+cli_0012_ct_0192,Maya Joshi,maya.joshi191@examplemail.com,Vertex Works,Marketing Manager,lead,event,India,2025-02-11,2026-01-02
+cli_0012_ct_0193,Leo Joshi,leo.joshi192@examplemail.com,Peak LLC,Founder,lead,referral,UAE,2025-07-12,2026-01-05
+cli_0012_ct_0194,Ishaan Kapoor,ishaan.kapoor193@examplemail.com,Orbit Group,Marketing Manager,sql,email_reply,United Kingdom,2025-03-23,2026-01-11
+cli_0012_ct_0195,Mia Patel,mia.patel194@examplemail.com,Vertex Works,Sales Lead,lead,import,United Kingdom,2024-12-07,2026-04-20
+cli_0012_ct_0196,Arjun Nair,arjun.nair195@examplemail.com,Orbit LLC,Head of Growth,lead,import,India,2025-01-27,2026-03-07

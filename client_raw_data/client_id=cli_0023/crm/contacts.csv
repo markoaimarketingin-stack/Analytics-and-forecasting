@@ -1,0 +1,175 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0023_ct_0001,Kabir Gupta,kabir.gupta0@examplemail.com,Nova Labs,Marketing Manager,mql,email_reply,United Kingdom,2024-12-05,2026-01-06
+cli_0023_ct_0002,Noah Khan,noah.khan1@examplemail.com,Orbit LLC,Founder,customer,website_form,Canada,2024-12-01,2026-04-20
+cli_0023_ct_0003,Noah Kapoor,noah.kapoor2@examplemail.com,Acme LLC,Founder,mql,import,Australia,2025-01-19,2026-04-02
+cli_0023_ct_0004,Arjun Khan,arjun.khan3@examplemail.com,Nova Labs,RevOps Manager,mql,website_form,Canada,2025-02-25,2026-04-08
+cli_0023_ct_0005,Liam Sharma,liam.sharma4@examplemail.com,Orbit Group,Head of Growth,lead,website_form,India,2025-04-02,2025-12-30
+cli_0023_ct_0006,Mia Reddy,mia.reddy5@examplemail.com,Nova Labs,RevOps Manager,lead,website_form,UAE,2025-10-31,2026-03-13
+cli_0023_ct_0007,Leo Mehta,leo.mehta6@examplemail.com,Metro Group,Sales Lead,customer,website_form,India,2025-05-20,2026-01-10
+cli_0023_ct_0008,Ava Nair,ava.nair7@examplemail.com,Nova Labs,Founder,lead,website_form,India,2025-05-08,2026-03-05
+cli_0023_ct_0009,Sara Mehta,sara.mehta8@examplemail.com,Nova Labs,Marketing Manager,mql,event,UAE,2024-11-04,2026-01-25
+cli_0023_ct_0010,Zara Singh,zara.singh9@examplemail.com,Nova Labs,Founder,mql,email_reply,India,2025-09-26,2026-01-26
+cli_0023_ct_0011,Zara Nair,zara.nair10@examplemail.com,Zen LLC,RevOps Manager,lead,website_form,Australia,2025-06-13,2026-02-06
+cli_0023_ct_0012,Maya Gupta,maya.gupta11@examplemail.com,Nova Labs,Head of Growth,lead,email_reply,Australia,2025-09-23,2026-01-18
+cli_0023_ct_0013,Zara Kapoor,zara.kapoor12@examplemail.com,Peak Ltd,Sales Lead,lead,website_form,India,2026-02-25,2026-01-27
+cli_0023_ct_0014,Sara Nair,sara.nair13@examplemail.com,Metro Group,Marketing Manager,customer,website_form,India,2025-07-26,2026-04-11
+cli_0023_ct_0015,Liam Bhatia,liam.bhatia14@examplemail.com,Nova Labs,Marketing Manager,lead,import,Canada,2026-03-22,2026-04-10
+cli_0023_ct_0016,Leo Singh,leo.singh15@examplemail.com,Nova Labs,Head of Growth,lead,website_form,United Kingdom,2025-08-28,2026-01-19
+cli_0023_ct_0017,Mia Singh,mia.singh16@examplemail.com,Nova Labs,Marketing Manager,lead,import,United States,2025-07-16,2026-02-06
+cli_0023_ct_0018,Liam Bhatia,liam.bhatia17@examplemail.com,Nova Labs,Head of Growth,sql,import,Australia,2025-04-24,2026-01-14
+cli_0023_ct_0019,Zara Mehta,zara.mehta18@examplemail.com,Peak Group,RevOps Manager,lead,event,Australia,2025-04-17,2026-04-15
+cli_0023_ct_0020,Zara Bhatia,zara.bhatia19@examplemail.com,Nova Labs,Sales Lead,lead,email_reply,United Kingdom,2025-03-29,2026-03-10
+cli_0023_ct_0021,Mia Joshi,mia.joshi20@examplemail.com,Zen Group,Founder,customer,event,UAE,2025-02-20,2026-03-05
+cli_0023_ct_0022,Ava Sharma,ava.sharma21@examplemail.com,Nova Labs,Marketing Manager,customer,import,United Kingdom,2025-05-02,2026-02-04
+cli_0023_ct_0023,Anika Singh,anika.singh22@examplemail.com,Zen Inc,Sales Lead,lead,website_form,Australia,2025-03-16,2026-01-04
+cli_0023_ct_0024,Zara Singh,zara.singh23@examplemail.com,Zen LLC,Head of Growth,customer,website_form,Canada,2025-04-09,2025-12-31
+cli_0023_ct_0025,Leo Kapoor,leo.kapoor24@examplemail.com,Acme Inc,Marketing Manager,lead,referral,United Kingdom,2025-08-27,2026-04-16
+cli_0023_ct_0026,Sara Joshi,sara.joshi25@examplemail.com,Acme Inc,Head of Growth,sql,website_form,UAE,2025-06-21,2026-02-24
+cli_0023_ct_0027,Kabir Mehta,kabir.mehta26@examplemail.com,Nova Labs,Sales Lead,mql,event,India,2026-02-20,2026-03-15
+cli_0023_ct_0028,Kabir Nair,kabir.nair27@examplemail.com,Nova Labs,Marketing Manager,sql,website_form,UAE,2025-08-04,2026-04-02
+cli_0023_ct_0029,Kabir Sharma,kabir.sharma28@examplemail.com,Nova Labs,Head of Growth,mql,referral,Australia,2024-12-27,2026-03-13
+cli_0023_ct_0030,Maya Bhatia,maya.bhatia29@examplemail.com,Peak Ltd,Marketing Manager,customer,email_reply,United States,2025-07-08,2026-03-10
+cli_0023_ct_0031,Noah Sharma,noah.sharma30@examplemail.com,Acme Ltd,Marketing Manager,lead,website_form,UAE,2025-07-04,2026-02-16
+cli_0023_ct_0032,Leo Verma,leo.verma31@examplemail.com,Nova Labs,RevOps Manager,lead,event,UAE,2026-02-02,2026-01-29
+cli_0023_ct_0033,Ishaan Sharma,ishaan.sharma32@examplemail.com,Nova Labs,Marketing Manager,lead,email_reply,Australia,2026-04-09,2026-01-28
+cli_0023_ct_0034,Zara Bhatia,zara.bhatia33@examplemail.com,Nova Labs,Sales Lead,lead,email_reply,United Kingdom,2025-01-16,2026-04-09
+cli_0023_ct_0035,Arjun Khan,arjun.khan34@examplemail.com,Nova Labs,Marketing Manager,customer,import,Australia,2026-04-24,2026-03-13
+cli_0023_ct_0036,Mia Gupta,mia.gupta35@examplemail.com,Metro Group,Head of Growth,sql,referral,Australia,2025-05-10,2026-02-09
+cli_0023_ct_0037,Zara Patel,zara.patel36@examplemail.com,Orbit Ltd,RevOps Manager,sql,website_form,UAE,2025-07-29,2026-02-07
+cli_0023_ct_0038,Zara Verma,zara.verma37@examplemail.com,Nova Labs,Head of Growth,mql,import,UAE,2025-12-03,2026-04-09
+cli_0023_ct_0039,Ava Reddy,ava.reddy38@examplemail.com,Orbit Inc,Marketing Manager,customer,website_form,United States,2025-08-29,2026-01-22
+cli_0023_ct_0040,Maya Sharma,maya.sharma39@examplemail.com,Metro Group,Head of Growth,churn_risk,referral,India,2025-04-04,2026-03-12
+cli_0023_ct_0041,Liam Singh,liam.singh40@examplemail.com,Nova Labs,Sales Lead,sql,referral,Australia,2025-09-08,2026-02-12
+cli_0023_ct_0042,Noah Gupta,noah.gupta41@examplemail.com,Metro Ltd,Sales Lead,mql,website_form,United States,2025-08-30,2026-03-19
+cli_0023_ct_0043,Leo Gupta,leo.gupta42@examplemail.com,Nova Labs,Marketing Manager,lead,import,Canada,2025-02-19,2026-03-30
+cli_0023_ct_0044,Arjun Gupta,arjun.gupta43@examplemail.com,Peak Group,Founder,lead,website_form,India,2025-09-02,2026-04-07
+cli_0023_ct_0045,Liam Singh,liam.singh44@examplemail.com,Nova Labs,RevOps Manager,lead,email_reply,United Kingdom,2025-08-30,2026-01-05
+cli_0023_ct_0046,Ishaan Gupta,ishaan.gupta45@examplemail.com,Nova Labs,Head of Growth,sql,event,United States,2026-03-09,2026-03-11
+cli_0023_ct_0047,Noah Gupta,noah.gupta46@examplemail.com,Nova Labs,Head of Growth,lead,website_form,United Kingdom,2025-12-08,2026-01-04
+cli_0023_ct_0048,Noah Kapoor,noah.kapoor47@examplemail.com,Acme Inc,Marketing Manager,lead,website_form,India,2026-02-10,2026-01-21
+cli_0023_ct_0049,Arjun Kapoor,arjun.kapoor48@examplemail.com,Nova Labs,Head of Growth,mql,website_form,United Kingdom,2025-10-17,2026-01-19
+cli_0023_ct_0050,Ishaan Khan,ishaan.khan49@examplemail.com,Metro Group,Head of Growth,mql,website_form,India,2025-01-13,2026-01-10
+cli_0023_ct_0051,Anika Mehta,anika.mehta50@examplemail.com,Nova Labs,Sales Lead,mql,email_reply,United Kingdom,2025-06-13,2026-01-11
+cli_0023_ct_0052,Kabir Khan,kabir.khan51@examplemail.com,Metro LLC,Marketing Manager,sql,import,Canada,2026-03-06,2026-01-12
+cli_0023_ct_0053,Liam Sharma,liam.sharma52@examplemail.com,Acme Group,Head of Growth,churn_risk,website_form,UAE,2025-03-18,2026-03-18
+cli_0023_ct_0054,Noah Mehta,noah.mehta53@examplemail.com,Peak Ltd,Sales Lead,sql,email_reply,United States,2026-03-15,2026-04-04
+cli_0023_ct_0055,Ishaan Reddy,ishaan.reddy54@examplemail.com,Acme Group,Founder,customer,import,UAE,2025-05-28,2026-01-07
+cli_0023_ct_0056,Ava Bhatia,ava.bhatia55@examplemail.com,Metro Group,Sales Lead,mql,website_form,India,2024-12-20,2026-02-10
+cli_0023_ct_0057,Ava Nair,ava.nair56@examplemail.com,Acme Group,Marketing Manager,mql,import,India,2026-03-10,2026-01-31
+cli_0023_ct_0058,Noah Mehta,noah.mehta57@examplemail.com,Peak LLC,Head of Growth,lead,website_form,India,2024-11-11,2026-03-23
+cli_0023_ct_0059,Kabir Sharma,kabir.sharma58@examplemail.com,Peak LLC,Marketing Manager,mql,email_reply,Australia,2025-09-29,2026-01-18
+cli_0023_ct_0060,Liam Bhatia,liam.bhatia59@examplemail.com,Acme Ltd,Marketing Manager,customer,import,United Kingdom,2026-01-14,2026-02-14
+cli_0023_ct_0061,Zara Nair,zara.nair60@examplemail.com,Acme Group,Marketing Manager,mql,email_reply,Canada,2025-08-07,2026-02-19
+cli_0023_ct_0062,Ava Verma,ava.verma61@examplemail.com,Nova Labs,Sales Lead,lead,email_reply,Australia,2026-01-08,2026-04-21
+cli_0023_ct_0063,Kabir Bhatia,kabir.bhatia62@examplemail.com,Nova Labs,RevOps Manager,lead,import,Canada,2025-10-22,2026-03-06
+cli_0023_ct_0064,Noah Gupta,noah.gupta63@examplemail.com,Nova Labs,Founder,lead,website_form,Australia,2025-08-14,2026-02-21
+cli_0023_ct_0065,Noah Nair,noah.nair64@examplemail.com,Nova Labs,Head of Growth,mql,website_form,UAE,2024-11-17,2026-02-27
+cli_0023_ct_0066,Leo Nair,leo.nair65@examplemail.com,Nova Labs,Head of Growth,mql,website_form,United Kingdom,2025-07-04,2026-01-06
+cli_0023_ct_0067,Maya Patel,maya.patel66@examplemail.com,Metro Ltd,Head of Growth,churn_risk,referral,Canada,2024-12-04,2026-03-12
+cli_0023_ct_0068,Ava Khan,ava.khan67@examplemail.com,Nova Labs,Marketing Manager,customer,website_form,India,2025-06-25,2026-01-06
+cli_0023_ct_0069,Sara Verma,sara.verma68@examplemail.com,Nova Labs,RevOps Manager,lead,email_reply,UAE,2025-10-02,2025-12-25
+cli_0023_ct_0070,Mia Mehta,mia.mehta69@examplemail.com,Acme Inc,Head of Growth,mql,website_form,Canada,2025-01-27,2026-02-01
+cli_0023_ct_0071,Ava Sharma,ava.sharma70@examplemail.com,Orbit Inc,Sales Lead,sql,import,Australia,2025-05-27,2026-04-13
+cli_0023_ct_0072,Sara Verma,sara.verma71@examplemail.com,Nova Labs,Founder,lead,website_form,Canada,2026-03-25,2026-02-11
+cli_0023_ct_0073,Kabir Kapoor,kabir.kapoor72@examplemail.com,Acme LLC,Marketing Manager,lead,import,Canada,2025-05-20,2026-04-17
+cli_0023_ct_0074,Kabir Gupta,kabir.gupta73@examplemail.com,Orbit Ltd,Head of Growth,lead,website_form,India,2026-02-17,2026-04-01
+cli_0023_ct_0075,Ava Khan,ava.khan74@examplemail.com,Nova Labs,Sales Lead,customer,import,United Kingdom,2025-12-16,2026-02-26
+cli_0023_ct_0076,Mia Reddy,mia.reddy75@examplemail.com,Nova Labs,Sales Lead,sql,import,Australia,2025-05-04,2026-04-05
+cli_0023_ct_0077,Mia Patel,mia.patel76@examplemail.com,Nova Labs,Marketing Manager,mql,website_form,Canada,2025-10-08,2026-02-06
+cli_0023_ct_0078,Ava Bhatia,ava.bhatia77@examplemail.com,Nova Labs,Head of Growth,sql,email_reply,Australia,2026-02-28,2026-04-09
+cli_0023_ct_0079,Arjun Bhatia,arjun.bhatia78@examplemail.com,Orbit Inc,Head of Growth,lead,website_form,Australia,2025-06-30,2026-03-26
+cli_0023_ct_0080,Sara Reddy,sara.reddy79@examplemail.com,Nova Labs,RevOps Manager,lead,email_reply,Canada,2025-05-17,2026-03-11
+cli_0023_ct_0081,Mia Bhatia,mia.bhatia80@examplemail.com,Nova Labs,Sales Lead,lead,referral,United States,2025-11-02,2026-01-09
+cli_0023_ct_0082,Sara Singh,sara.singh81@examplemail.com,Nova Labs,Founder,lead,email_reply,India,2025-09-12,2026-03-09
+cli_0023_ct_0083,Ava Reddy,ava.reddy82@examplemail.com,Peak Group,Head of Growth,lead,import,United States,2026-02-01,2026-01-12
+cli_0023_ct_0084,Arjun Khan,arjun.khan83@examplemail.com,Metro Group,Sales Lead,lead,event,United Kingdom,2026-03-28,2026-03-12
+cli_0023_ct_0085,Liam Gupta,liam.gupta84@examplemail.com,Peak Inc,Head of Growth,mql,import,United States,2025-11-26,2026-03-08
+cli_0023_ct_0086,Ava Reddy,ava.reddy85@examplemail.com,Nova Labs,Marketing Manager,customer,email_reply,United Kingdom,2026-02-14,2026-01-24
+cli_0023_ct_0087,Leo Reddy,leo.reddy86@examplemail.com,Nova Labs,Marketing Manager,sql,import,United States,2025-05-25,2026-02-28
+cli_0023_ct_0088,Leo Mehta,leo.mehta87@examplemail.com,Acme LLC,Founder,sql,import,Australia,2025-04-17,2026-04-10
+cli_0023_ct_0089,Arjun Joshi,arjun.joshi88@examplemail.com,Metro Ltd,Head of Growth,lead,website_form,India,2026-04-09,2026-04-15
+cli_0023_ct_0090,Ishaan Kapoor,ishaan.kapoor89@examplemail.com,Nova Labs,RevOps Manager,sql,website_form,Australia,2026-01-24,2026-02-28
+cli_0023_ct_0091,Mia Singh,mia.singh90@examplemail.com,Nova Labs,Founder,mql,website_form,UAE,2025-02-09,2026-04-24
+cli_0023_ct_0092,Noah Kapoor,noah.kapoor91@examplemail.com,Nova Labs,Head of Growth,lead,website_form,United Kingdom,2025-03-06,2026-01-14
+cli_0023_ct_0093,Noah Kapoor,noah.kapoor92@examplemail.com,Nova Labs,Sales Lead,mql,website_form,Canada,2026-01-09,2026-03-26
+cli_0023_ct_0094,Anika Mehta,anika.mehta93@examplemail.com,Nova Labs,Marketing Manager,churn_risk,website_form,United Kingdom,2026-04-21,2026-01-09
+cli_0023_ct_0095,Ishaan Gupta,ishaan.gupta94@examplemail.com,Metro LLC,Marketing Manager,lead,website_form,United States,2025-09-10,2026-04-05
+cli_0023_ct_0096,Ava Verma,ava.verma95@examplemail.com,Peak Group,Sales Lead,sql,import,United Kingdom,2025-03-01,2026-03-15
+cli_0023_ct_0097,Liam Nair,liam.nair96@examplemail.com,Nova Labs,Marketing Manager,sql,import,Canada,2024-11-22,2025-12-28
+cli_0023_ct_0098,Ava Gupta,ava.gupta97@examplemail.com,Nova Labs,Head of Growth,lead,email_reply,Australia,2025-03-20,2026-04-01
+cli_0023_ct_0099,Noah Joshi,noah.joshi98@examplemail.com,Zen Group,Sales Lead,lead,email_reply,Australia,2025-07-08,2026-03-31
+cli_0023_ct_0100,Sara Bhatia,sara.bhatia99@examplemail.com,Nova Labs,Head of Growth,customer,referral,Australia,2025-01-09,2026-02-13
+cli_0023_ct_0101,Zara Nair,zara.nair100@examplemail.com,Nova Labs,Head of Growth,lead,website_form,Australia,2025-07-30,2026-04-03
+cli_0023_ct_0102,Anika Mehta,anika.mehta101@examplemail.com,Metro LLC,Marketing Manager,lead,website_form,United Kingdom,2024-12-30,2026-03-15
+cli_0023_ct_0103,Sara Mehta,sara.mehta102@examplemail.com,Orbit LLC,Head of Growth,sql,website_form,Canada,2026-04-18,2026-01-25
+cli_0023_ct_0104,Arjun Gupta,arjun.gupta103@examplemail.com,Nova Labs,Head of Growth,mql,website_form,United States,2025-08-20,2026-02-06
+cli_0023_ct_0105,Leo Kapoor,leo.kapoor104@examplemail.com,Peak Ltd,Head of Growth,lead,email_reply,United Kingdom,2024-12-11,2026-04-01
+cli_0023_ct_0106,Sara Gupta,sara.gupta105@examplemail.com,Zen Inc,Head of Growth,customer,website_form,United States,2025-12-14,2026-01-21
+cli_0023_ct_0107,Arjun Verma,arjun.verma106@examplemail.com,Peak Group,RevOps Manager,mql,website_form,Canada,2025-10-03,2026-03-03
+cli_0023_ct_0108,Leo Joshi,leo.joshi107@examplemail.com,Nova Labs,RevOps Manager,mql,email_reply,United States,2025-06-25,2026-04-18
+cli_0023_ct_0109,Ava Singh,ava.singh108@examplemail.com,Nova Labs,Marketing Manager,lead,import,United Kingdom,2025-11-02,2026-03-06
+cli_0023_ct_0110,Anika Verma,anika.verma109@examplemail.com,Metro LLC,Marketing Manager,mql,import,Canada,2026-04-07,2026-03-27
+cli_0023_ct_0111,Leo Reddy,leo.reddy110@examplemail.com,Metro Group,Marketing Manager,sql,event,Australia,2024-12-25,2026-03-27
+cli_0023_ct_0112,Noah Mehta,noah.mehta111@examplemail.com,Nova Labs,Founder,customer,website_form,United Kingdom,2024-11-06,2026-03-09
+cli_0023_ct_0113,Kabir Verma,kabir.verma112@examplemail.com,Acme LLC,RevOps Manager,customer,website_form,United States,2025-07-12,2026-01-06
+cli_0023_ct_0114,Kabir Patel,kabir.patel113@examplemail.com,Nova Labs,Head of Growth,sql,referral,Canada,2025-05-20,2026-02-21
+cli_0023_ct_0115,Noah Reddy,noah.reddy114@examplemail.com,Nova Labs,Marketing Manager,lead,website_form,Canada,2025-10-03,2025-12-25
+cli_0023_ct_0116,Mia Joshi,mia.joshi115@examplemail.com,Nova Labs,RevOps Manager,mql,import,UAE,2025-10-30,2026-03-12
+cli_0023_ct_0117,Ava Reddy,ava.reddy116@examplemail.com,Nova Labs,RevOps Manager,sql,referral,India,2026-03-21,2026-02-06
+cli_0023_ct_0118,Ava Mehta,ava.mehta117@examplemail.com,Nova Labs,Head of Growth,lead,website_form,United States,2025-10-26,2025-12-30
+cli_0023_ct_0119,Maya Gupta,maya.gupta118@examplemail.com,Nova Labs,Marketing Manager,customer,website_form,India,2025-02-25,2026-03-03
+cli_0023_ct_0120,Ava Reddy,ava.reddy119@examplemail.com,Nova Labs,Marketing Manager,sql,email_reply,Canada,2025-06-05,2026-04-07
+cli_0023_ct_0121,Anika Nair,anika.nair120@examplemail.com,Metro Ltd,RevOps Manager,customer,email_reply,United States,2025-07-28,2026-01-04
+cli_0023_ct_0122,Zara Khan,zara.khan121@examplemail.com,Peak LLC,Sales Lead,mql,website_form,Australia,2025-04-18,2026-03-15
+cli_0023_ct_0123,Liam Nair,liam.nair122@examplemail.com,Metro Ltd,Sales Lead,lead,import,UAE,2025-04-01,2026-03-29
+cli_0023_ct_0124,Zara Joshi,zara.joshi123@examplemail.com,Zen Ltd,Founder,customer,event,UAE,2025-10-04,2026-02-01
+cli_0023_ct_0125,Leo Singh,leo.singh124@examplemail.com,Nova Labs,Marketing Manager,lead,website_form,United Kingdom,2025-09-16,2026-04-01
+cli_0023_ct_0126,Sara Bhatia,sara.bhatia125@examplemail.com,Orbit Inc,Head of Growth,customer,website_form,Australia,2025-03-12,2026-01-06
+cli_0023_ct_0127,Maya Bhatia,maya.bhatia126@examplemail.com,Nova Labs,RevOps Manager,customer,referral,United Kingdom,2025-11-26,2026-02-10
+cli_0023_ct_0128,Noah Kapoor,noah.kapoor127@examplemail.com,Nova Labs,Head of Growth,lead,website_form,UAE,2025-02-25,2026-03-10
+cli_0023_ct_0129,Ava Sharma,ava.sharma128@examplemail.com,Peak LLC,Marketing Manager,lead,website_form,United States,2024-12-23,2026-04-12
+cli_0023_ct_0130,Kabir Sharma,kabir.sharma129@examplemail.com,Nova Labs,Sales Lead,sql,website_form,UAE,2024-11-13,2026-02-28
+cli_0023_ct_0131,Zara Patel,zara.patel130@examplemail.com,Nova Labs,Sales Lead,lead,event,United States,2025-02-15,2026-02-06
+cli_0023_ct_0132,Kabir Joshi,kabir.joshi131@examplemail.com,Nova Labs,RevOps Manager,lead,website_form,UAE,2025-02-10,2025-12-29
+cli_0023_ct_0133,Ishaan Reddy,ishaan.reddy132@examplemail.com,Acme Inc,Head of Growth,mql,website_form,India,2025-06-17,2026-01-10
+cli_0023_ct_0134,Noah Gupta,noah.gupta133@examplemail.com,Nova Labs,Marketing Manager,sql,email_reply,UAE,2025-05-12,2026-02-12
+cli_0023_ct_0135,Arjun Singh,arjun.singh134@examplemail.com,Zen Group,Sales Lead,lead,website_form,United Kingdom,2025-04-19,2026-04-22
+cli_0023_ct_0136,Arjun Mehta,arjun.mehta135@examplemail.com,Zen Group,Founder,mql,import,United Kingdom,2026-02-20,2026-02-04
+cli_0023_ct_0137,Ava Patel,ava.patel136@examplemail.com,Acme Ltd,Marketing Manager,sql,referral,United States,2025-09-21,2026-04-08
+cli_0023_ct_0138,Arjun Reddy,arjun.reddy137@examplemail.com,Peak LLC,Head of Growth,churn_risk,import,Canada,2025-03-11,2026-04-03
+cli_0023_ct_0139,Arjun Kapoor,arjun.kapoor138@examplemail.com,Nova Labs,Head of Growth,mql,email_reply,United Kingdom,2026-01-07,2026-02-26
+cli_0023_ct_0140,Zara Sharma,zara.sharma139@examplemail.com,Orbit Inc,Founder,customer,website_form,India,2025-02-16,2026-04-21
+cli_0023_ct_0141,Ishaan Bhatia,ishaan.bhatia140@examplemail.com,Nova Labs,Marketing Manager,sql,import,United Kingdom,2025-12-28,2026-01-27
+cli_0023_ct_0142,Arjun Nair,arjun.nair141@examplemail.com,Zen Ltd,Head of Growth,mql,website_form,United Kingdom,2025-07-03,2026-03-05
+cli_0023_ct_0143,Kabir Singh,kabir.singh142@examplemail.com,Acme Group,Head of Growth,churn_risk,website_form,India,2025-04-04,2026-02-17
+cli_0023_ct_0144,Liam Singh,liam.singh143@examplemail.com,Metro Inc,RevOps Manager,sql,import,UAE,2025-07-30,2026-03-13
+cli_0023_ct_0145,Ava Bhatia,ava.bhatia144@examplemail.com,Acme Inc,Marketing Manager,sql,import,India,2025-12-03,2026-01-20
+cli_0023_ct_0146,Liam Bhatia,liam.bhatia145@examplemail.com,Peak LLC,Head of Growth,mql,email_reply,India,2025-09-21,2026-01-16
+cli_0023_ct_0147,Maya Nair,maya.nair146@examplemail.com,Peak Ltd,Marketing Manager,lead,email_reply,India,2024-12-12,2026-03-11
+cli_0023_ct_0148,Mia Nair,mia.nair147@examplemail.com,Nova Labs,Head of Growth,lead,email_reply,Australia,2026-03-18,2026-03-04
+cli_0023_ct_0149,Ava Reddy,ava.reddy148@examplemail.com,Nova Labs,Head of Growth,lead,referral,UAE,2025-08-04,2025-12-25
+cli_0023_ct_0150,Arjun Verma,arjun.verma149@examplemail.com,Metro LLC,Head of Growth,sql,website_form,Australia,2025-03-30,2026-02-06
+cli_0023_ct_0151,Noah Singh,noah.singh150@examplemail.com,Orbit Inc,Sales Lead,lead,import,UAE,2026-03-09,2026-01-08
+cli_0023_ct_0152,Ishaan Khan,ishaan.khan151@examplemail.com,Peak Group,Marketing Manager,churn_risk,email_reply,India,2024-11-18,2025-12-27
+cli_0023_ct_0153,Zara Verma,zara.verma152@examplemail.com,Peak Group,Sales Lead,sql,import,UAE,2025-06-29,2026-03-18
+cli_0023_ct_0154,Liam Patel,liam.patel153@examplemail.com,Nova Labs,Sales Lead,customer,event,Canada,2025-09-03,2026-03-02
+cli_0023_ct_0155,Mia Joshi,mia.joshi154@examplemail.com,Acme Inc,Marketing Manager,customer,website_form,United Kingdom,2025-04-14,2026-04-12
+cli_0023_ct_0156,Noah Singh,noah.singh155@examplemail.com,Zen Ltd,Marketing Manager,mql,email_reply,Canada,2025-01-18,2026-01-22
+cli_0023_ct_0157,Anika Khan,anika.khan156@examplemail.com,Orbit Group,RevOps Manager,customer,website_form,Canada,2025-11-20,2026-01-22
+cli_0023_ct_0158,Arjun Patel,arjun.patel157@examplemail.com,Nova Labs,Marketing Manager,customer,import,Australia,2025-09-12,2025-12-28
+cli_0023_ct_0159,Ava Verma,ava.verma158@examplemail.com,Nova Labs,Head of Growth,sql,website_form,India,2025-11-24,2026-01-09
+cli_0023_ct_0160,Ishaan Kapoor,ishaan.kapoor159@examplemail.com,Nova Labs,Marketing Manager,mql,website_form,Canada,2025-02-14,2026-02-18
+cli_0023_ct_0161,Liam Nair,liam.nair160@examplemail.com,Nova Labs,RevOps Manager,lead,website_form,Australia,2025-04-19,2025-12-28
+cli_0023_ct_0162,Maya Reddy,maya.reddy161@examplemail.com,Nova Labs,Head of Growth,sql,referral,United Kingdom,2026-01-08,2026-01-16
+cli_0023_ct_0163,Sara Reddy,sara.reddy162@examplemail.com,Nova Labs,Marketing Manager,lead,website_form,Canada,2025-12-16,2026-04-13
+cli_0023_ct_0164,Kabir Joshi,kabir.joshi163@examplemail.com,Metro Ltd,Marketing Manager,lead,event,United States,2025-02-03,2026-02-21
+cli_0023_ct_0165,Liam Bhatia,liam.bhatia164@examplemail.com,Zen Group,Sales Lead,mql,website_form,Australia,2026-02-19,2025-12-28
+cli_0023_ct_0166,Sara Kapoor,sara.kapoor165@examplemail.com,Metro Group,Head of Growth,customer,email_reply,Canada,2025-01-31,2026-01-03
+cli_0023_ct_0167,Zara Gupta,zara.gupta166@examplemail.com,Peak Ltd,Founder,lead,website_form,Canada,2026-02-24,2026-02-04
+cli_0023_ct_0168,Ava Gupta,ava.gupta167@examplemail.com,Nova Labs,Sales Lead,sql,import,Australia,2025-12-28,2026-03-01
+cli_0023_ct_0169,Leo Gupta,leo.gupta168@examplemail.com,Nova Labs,RevOps Manager,mql,website_form,India,2025-09-27,2026-04-16
+cli_0023_ct_0170,Anika Mehta,anika.mehta169@examplemail.com,Nova Labs,Head of Growth,lead,import,UAE,2026-02-27,2026-01-10
+cli_0023_ct_0171,Sara Sharma,sara.sharma170@examplemail.com,Nova Labs,Marketing Manager,customer,import,India,2025-02-17,2026-03-06
+cli_0023_ct_0172,Sara Nair,sara.nair171@examplemail.com,Acme Ltd,Head of Growth,customer,event,UAE,2025-07-19,2026-01-11
+cli_0023_ct_0173,Anika Joshi,anika.joshi172@examplemail.com,Metro Group,Founder,lead,event,India,2026-01-16,2026-04-21
+cli_0023_ct_0174,Maya Patel,maya.patel173@examplemail.com,Nova Labs,Sales Lead,sql,website_form,United Kingdom,2026-02-13,2026-01-01

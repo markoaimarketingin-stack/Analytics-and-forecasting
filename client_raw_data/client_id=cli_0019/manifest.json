@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0019",
+  "company_name": "Bright Labs",
+  "industry": "local_services",
+  "region": "AU",
+  "generated_at": "2026-04-23T20:56:23.131293Z",
+  "counts": {
+    "contacts": 119,
+    "deals": 109,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 15,
+    "marketing_rows": 300,
+    "email_campaigns": 45,
+    "posts": 62,
+    "comments": 124,
+    "tickets": 115,
+    "transcripts": 73,
+    "sessions": 25271,
+    "events": 126147,
+    "orders": 85,
+    "refunds": 2,
+    "invoices": 73,
+    "payments": 52,
+    "feedback": 67,
+    "feature_requests": 67,
+    "meeting_notes": 19,
+    "raw_observations": 44
+  }
+}

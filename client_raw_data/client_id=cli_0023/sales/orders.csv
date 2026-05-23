@@ -1,0 +1,230 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0023_ord_00001,2026-02-19,69dc9d72450d,starter plan,USD,2011.58,25,meta_ads,paid,paypal
+cli_0023_ord_00002,2026-03-28,114ba8ed26e0,starter plan,USD,795.1,20,google_ads,paid,bank_transfer
+cli_0023_ord_00003,2026-02-01,7bee5757537a,membership,USD,1174.77,25,referral,paid,bank_transfer
+cli_0023_ord_00004,2025-12-31,090cd1d3fa85,membership,USD,2302.56,0,email,pending,bank_transfer
+cli_0023_ord_00005,2026-01-23,47bbd41cde02,audit package,USD,1652.61,15,referral,paid,paypal
+cli_0023_ord_00006,2025-12-06,6f96a0ef88e2,annual subscription,USD,2114.8,20,email,paid,paypal
+cli_0023_ord_00007,2025-12-09,c45382507852,premium bundle,USD,999.76,15,google_ads,paid,paypal
+cli_0023_ord_00008,2026-02-25,6f351e4ef832,service retainer,USD,1217.83,15,google_ads,paid,paypal
+cli_0023_ord_00009,2025-12-11,e528c0977539,starter plan,USD,2289.95,10,referral,paid,card
+cli_0023_ord_00010,2026-01-29,96f635adde64,pro plan,USD,138.98,15,meta_ads,paid,card
+cli_0023_ord_00011,2025-11-27,4be04a33f707,audit package,USD,1673.25,20,meta_ads,refunded,card
+cli_0023_ord_00012,2026-01-19,ba35ea3587bb,audit package,USD,1800.33,20,meta_ads,paid,card
+cli_0023_ord_00013,2025-11-22,dc89b674e2c2,membership,USD,544.32,0,google_ads,paid,upi
+cli_0023_ord_00014,2025-12-14,75f42e170fb2,pro plan,USD,262.27,25,meta_ads,paid,bank_transfer
+cli_0023_ord_00015,2025-11-11,0e192b559e2f,premium bundle,USD,406.49,10,meta_ads,paid,bank_transfer
+cli_0023_ord_00016,2026-02-20,1b087e14f798,membership,USD,1832.37,15,tiktok_ads,paid,paypal
+cli_0023_ord_00017,2026-01-27,f0f82624518f,premium bundle,USD,2328.93,15,meta_ads,paid,paypal
+cli_0023_ord_00018,2026-03-13,3737c902f6be,pro plan,USD,917.21,10,meta_ads,paid,wallet
+cli_0023_ord_00019,2026-01-06,098e67c57114,pro plan,USD,1033.93,5,google_ads,paid,card
+cli_0023_ord_00020,2025-11-23,6aabca997e69,audit package,USD,250.82,10,referral,paid,paypal
+cli_0023_ord_00021,2026-01-26,21e3384f7769,service retainer,USD,114.46,25,google_ads,paid,paypal
+cli_0023_ord_00022,2025-12-19,45541b79213e,premium bundle,USD,1926.03,15,email,paid,upi
+cli_0023_ord_00023,2026-02-17,778f8f23c292,service retainer,USD,2054.37,5,referral,paid,upi
+cli_0023_ord_00024,2025-12-15,8876f33787ef,annual subscription,USD,1686.45,5,email,paid,upi
+cli_0023_ord_00025,2025-11-02,480e4e4abda8,starter plan,USD,1360.83,25,tiktok_ads,paid,paypal
+cli_0023_ord_00026,2026-03-02,d09345d4e549,annual subscription,USD,553.78,20,google_ads,paid,bank_transfer
+cli_0023_ord_00027,2026-01-06,a517655af402,service retainer,USD,629.8,10,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00028,2025-10-31,6a99dcfe9571,starter plan,USD,464.3,15,meta_ads,paid,paypal
+cli_0023_ord_00029,2026-04-01,4b4a7f28fe7d,pro plan,USD,1377.8,0,referral,paid,wallet
+cli_0023_ord_00030,2026-04-13,348aefe5ca85,audit package,USD,1656.72,5,tiktok_ads,paid,card
+cli_0023_ord_00031,2026-04-05,c31f56b36b9a,annual subscription,USD,1800.31,25,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00032,2025-11-11,6670918e9dcc,starter plan,USD,1356.14,0,email,paid,card
+cli_0023_ord_00033,2025-12-14,8460b2992f93,starter plan,USD,797.54,20,email,paid,paypal
+cli_0023_ord_00034,2025-11-18,f032cd19103e,pro plan,USD,1951.18,5,google_ads,paid,card
+cli_0023_ord_00035,2026-02-08,ec967650efbb,starter plan,USD,236.17,20,meta_ads,paid,upi
+cli_0023_ord_00036,2025-12-12,747c87e23388,membership,USD,1342.33,0,email,paid,upi
+cli_0023_ord_00037,2026-01-08,7a573282339f,annual subscription,USD,900.42,0,meta_ads,paid,paypal
+cli_0023_ord_00038,2025-12-24,3791d0565893,annual subscription,USD,1728.57,25,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00039,2026-04-05,dedc7bf3e691,audit package,USD,2218.17,10,tiktok_ads,paid,paypal
+cli_0023_ord_00040,2026-03-20,6f75f51a63cb,premium bundle,USD,974.11,25,email,paid,paypal
+cli_0023_ord_00041,2025-11-23,44c1203348ed,starter plan,USD,1592.39,15,meta_ads,paid,wallet
+cli_0023_ord_00042,2026-02-21,ede5672edf3c,membership,USD,2093.38,10,meta_ads,paid,upi
+cli_0023_ord_00043,2025-11-22,750ccc36bf0a,membership,USD,1769.46,5,email,paid,paypal
+cli_0023_ord_00044,2026-03-29,ee3c01f2112d,pro plan,USD,1287.4,0,email,paid,paypal
+cli_0023_ord_00045,2025-11-14,ef0be4585e45,annual subscription,USD,103.76,0,email,paid,upi
+cli_0023_ord_00046,2026-04-24,10422dd635c5,audit package,USD,2465.72,25,referral,paid,wallet
+cli_0023_ord_00047,2026-03-11,094bcf785d33,audit package,USD,1913.71,25,referral,paid,card
+cli_0023_ord_00048,2025-11-06,afa24b50b807,membership,USD,115.62,25,google_ads,paid,card
+cli_0023_ord_00049,2025-12-20,ece7edcba205,service retainer,USD,859.58,15,email,refunded,card
+cli_0023_ord_00050,2025-12-15,6b216c8c9222,membership,USD,1911.49,15,tiktok_ads,paid,wallet
+cli_0023_ord_00051,2026-03-24,25f6b5001959,premium bundle,USD,1474.05,5,tiktok_ads,paid,card
+cli_0023_ord_00052,2025-12-19,6d10ab60bb16,membership,USD,1284.44,0,google_ads,pending,upi
+cli_0023_ord_00053,2026-02-09,3edada9e45b2,annual subscription,USD,2080.08,20,google_ads,paid,upi
+cli_0023_ord_00054,2026-02-01,98f53183e7c3,pro plan,USD,1560.1,10,referral,paid,card
+cli_0023_ord_00055,2026-04-21,d8806848d992,audit package,USD,1174.54,0,meta_ads,paid,paypal
+cli_0023_ord_00056,2026-01-28,8731620d32ba,service retainer,USD,1475.64,20,tiktok_ads,paid,wallet
+cli_0023_ord_00057,2025-12-22,0bd491523f24,service retainer,USD,2008.38,10,tiktok_ads,pending,paypal
+cli_0023_ord_00058,2025-11-02,7e44914a6426,membership,USD,1693.61,15,tiktok_ads,paid,upi
+cli_0023_ord_00059,2025-11-22,f714d567f316,service retainer,USD,213.06,10,referral,refunded,bank_transfer
+cli_0023_ord_00060,2025-10-31,abf4d341dbd0,service retainer,USD,1021.26,20,email,paid,upi
+cli_0023_ord_00061,2025-11-03,3c8d177e93cb,annual subscription,USD,1314.37,15,email,paid,paypal
+cli_0023_ord_00062,2026-03-10,1b72b7b7dc1c,service retainer,USD,2465.02,0,referral,paid,upi
+cli_0023_ord_00063,2026-02-19,aace109ea911,membership,USD,1478.04,15,google_ads,paid,paypal
+cli_0023_ord_00064,2026-03-11,72b876c2a7a5,pro plan,USD,2243.84,20,google_ads,paid,card
+cli_0023_ord_00065,2026-04-17,1e9c3ee9dfb3,premium bundle,USD,802.28,0,referral,paid,card
+cli_0023_ord_00066,2026-03-04,f5b5b27ad47a,membership,USD,2188.14,0,tiktok_ads,paid,card
+cli_0023_ord_00067,2026-03-26,13440f977587,premium bundle,USD,2307.74,5,referral,paid,card
+cli_0023_ord_00068,2025-11-27,832b77a4e14c,pro plan,USD,321.38,15,meta_ads,paid,upi
+cli_0023_ord_00069,2026-04-02,88e6f350f05f,audit package,USD,661.71,10,referral,paid,card
+cli_0023_ord_00070,2026-01-28,b3428e16d2cb,premium bundle,USD,267.22,25,meta_ads,refunded,card
+cli_0023_ord_00071,2025-11-05,a80555a48376,audit package,USD,929.12,0,referral,paid,card
+cli_0023_ord_00072,2026-03-04,e317e7e816b3,starter plan,USD,754.64,25,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00073,2025-12-13,dbc08e380451,audit package,USD,74.12,10,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00074,2026-02-26,b9d84cf31b2a,audit package,USD,1802.72,15,tiktok_ads,refunded,wallet
+cli_0023_ord_00075,2026-02-03,641fc9921d0f,service retainer,USD,1637.59,20,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00076,2026-03-03,2ad780dbc641,starter plan,USD,1617.6,15,tiktok_ads,paid,paypal
+cli_0023_ord_00077,2026-03-11,1289e5aa0592,annual subscription,USD,2073.37,5,meta_ads,paid,paypal
+cli_0023_ord_00078,2026-02-05,df6ef3c66f3c,pro plan,USD,1493.64,15,tiktok_ads,pending,wallet
+cli_0023_ord_00079,2025-11-16,d6676d98e83c,starter plan,USD,492.74,15,meta_ads,paid,upi
+cli_0023_ord_00080,2026-02-21,5a0f6c3618d6,service retainer,USD,762.4,0,email,paid,bank_transfer
+cli_0023_ord_00081,2026-02-09,bdbf0c1a992b,premium bundle,USD,476.59,5,meta_ads,paid,paypal
+cli_0023_ord_00082,2025-12-14,ac2f676ec12c,annual subscription,USD,2068.3,0,email,paid,upi
+cli_0023_ord_00083,2026-01-22,ab77ab3a567c,annual subscription,USD,2092.76,10,referral,paid,card
+cli_0023_ord_00084,2025-12-06,92e8c8d867e5,annual subscription,USD,1655.71,0,referral,pending,paypal
+cli_0023_ord_00085,2026-01-29,6919ca2070cd,starter plan,USD,2261.9,15,email,paid,wallet
+cli_0023_ord_00086,2025-12-29,32d695bb7171,premium bundle,USD,1293.03,20,tiktok_ads,paid,wallet
+cli_0023_ord_00087,2026-01-14,6d1ab958d3ed,audit package,USD,163.24,20,referral,paid,paypal
+cli_0023_ord_00088,2026-01-27,7695c34d0084,annual subscription,USD,1348.84,0,referral,paid,paypal
+cli_0023_ord_00089,2025-12-03,770a4f04471e,audit package,USD,2034.49,20,meta_ads,refunded,wallet
+cli_0023_ord_00090,2026-01-22,f11fcbc17abe,membership,USD,2325.51,5,email,paid,paypal
+cli_0023_ord_00091,2026-02-21,8e645d4b46f7,annual subscription,USD,841.85,10,meta_ads,paid,bank_transfer
+cli_0023_ord_00092,2025-12-03,379406573601,service retainer,USD,431.99,10,google_ads,paid,upi
+cli_0023_ord_00093,2026-02-28,78488d4e34a4,starter plan,USD,2311.18,20,email,refunded,wallet
+cli_0023_ord_00094,2025-12-23,817e947ef5f2,audit package,USD,2090.05,20,tiktok_ads,refunded,card
+cli_0023_ord_00095,2026-03-25,929f9cacab6a,service retainer,USD,1537.36,20,tiktok_ads,paid,paypal
+cli_0023_ord_00096,2025-11-14,bcee8a1c4b59,membership,USD,1165.98,5,meta_ads,paid,upi
+cli_0023_ord_00097,2026-01-17,ca0aaed89f56,starter plan,USD,1010.01,10,tiktok_ads,paid,card
+cli_0023_ord_00098,2026-02-05,8279cfc82145,pro plan,USD,936.37,20,google_ads,refunded,card
+cli_0023_ord_00099,2026-01-01,0f20041bc02a,annual subscription,USD,655.69,5,google_ads,pending,paypal
+cli_0023_ord_00100,2026-01-01,9722a6b077cf,annual subscription,USD,2182.7,25,email,paid,upi
+cli_0023_ord_00101,2026-03-10,5ac2e069ef10,annual subscription,USD,835.24,0,referral,paid,card
+cli_0023_ord_00102,2026-01-08,87c42861b328,starter plan,USD,2430.43,25,referral,paid,card
+cli_0023_ord_00103,2026-03-31,6150d7ac9c71,membership,USD,440.4,10,email,paid,upi
+cli_0023_ord_00104,2025-12-16,b98254f07875,starter plan,USD,1328.76,25,meta_ads,paid,paypal
+cli_0023_ord_00105,2026-01-29,65c26fc99085,audit package,USD,147.04,15,referral,pending,bank_transfer
+cli_0023_ord_00106,2026-01-12,b684f3932193,audit package,USD,2171.23,20,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00107,2026-02-18,63114c1b721c,premium bundle,USD,1352.36,10,email,paid,upi
+cli_0023_ord_00108,2026-03-24,46ff22e2e875,annual subscription,USD,923.04,10,meta_ads,paid,wallet
+cli_0023_ord_00109,2025-12-22,13b324417a09,premium bundle,USD,2084.75,10,google_ads,paid,bank_transfer
+cli_0023_ord_00110,2026-02-23,5a0c24134773,annual subscription,USD,633.54,0,google_ads,paid,upi
+cli_0023_ord_00111,2025-12-25,7b926eafb956,service retainer,USD,57.78,0,meta_ads,paid,card
+cli_0023_ord_00112,2026-04-23,92062a3b640a,audit package,USD,848.72,25,referral,paid,upi
+cli_0023_ord_00113,2026-04-05,8b8887817d34,pro plan,USD,1493.32,15,tiktok_ads,paid,card
+cli_0023_ord_00114,2025-12-31,a7c266b1423b,premium bundle,USD,1853.44,25,email,paid,paypal
+cli_0023_ord_00115,2026-03-19,1af8a04e74a2,annual subscription,USD,1294.45,25,referral,paid,wallet
+cli_0023_ord_00116,2026-03-16,02312a96c3fd,membership,USD,205.16,20,referral,paid,card
+cli_0023_ord_00117,2025-11-03,594d5ed596e4,annual subscription,USD,120.17,10,google_ads,paid,wallet
+cli_0023_ord_00118,2025-12-11,04e7b3143403,annual subscription,USD,2427.48,0,referral,paid,wallet
+cli_0023_ord_00119,2025-12-24,dda65e68929e,audit package,USD,1781.47,0,email,paid,wallet
+cli_0023_ord_00120,2026-02-10,fc2cd5eadf75,premium bundle,USD,1949.62,15,google_ads,paid,wallet
+cli_0023_ord_00121,2026-01-06,47dd68e9255b,starter plan,USD,595.66,25,email,refunded,card
+cli_0023_ord_00122,2025-11-03,14e5b4e54e63,annual subscription,USD,1799.18,10,google_ads,pending,bank_transfer
+cli_0023_ord_00123,2025-12-04,bf95276021d3,pro plan,USD,2011.86,15,tiktok_ads,paid,paypal
+cli_0023_ord_00124,2026-02-25,442651ceb2c4,starter plan,USD,1748.5,5,referral,paid,paypal
+cli_0023_ord_00125,2026-02-08,4c4105fb3b09,annual subscription,USD,1964.88,0,tiktok_ads,paid,wallet
+cli_0023_ord_00126,2026-02-04,75a1fae749fc,premium bundle,USD,1906.61,25,google_ads,pending,bank_transfer
+cli_0023_ord_00127,2025-12-05,7642d98dfa81,service retainer,USD,2267.92,25,referral,paid,paypal
+cli_0023_ord_00128,2025-11-18,5b63f80c79e0,service retainer,USD,2371.51,5,google_ads,paid,card
+cli_0023_ord_00129,2025-11-13,33f89550891b,starter plan,USD,495.21,0,google_ads,paid,card
+cli_0023_ord_00130,2026-02-19,da2323cd9590,premium bundle,USD,367.34,5,referral,paid,bank_transfer
+cli_0023_ord_00131,2025-11-01,51c7be0e0133,starter plan,USD,351.23,25,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00132,2026-03-15,d40aacc0e06d,premium bundle,USD,1893.37,10,referral,paid,bank_transfer
+cli_0023_ord_00133,2026-01-26,62f41b141859,audit package,USD,1018.82,0,tiktok_ads,paid,paypal
+cli_0023_ord_00134,2026-02-08,bbae23721d7c,starter plan,USD,1239.58,15,email,paid,upi
+cli_0023_ord_00135,2025-10-26,bf830348a6ed,audit package,USD,661.49,15,email,paid,card
+cli_0023_ord_00136,2026-01-22,b364b57418f5,service retainer,USD,613.15,10,tiktok_ads,paid,wallet
+cli_0023_ord_00137,2025-11-22,405426f6f320,annual subscription,USD,1175.48,5,email,paid,upi
+cli_0023_ord_00138,2026-01-30,a220a5b4d9a0,premium bundle,USD,2180.12,25,meta_ads,paid,bank_transfer
+cli_0023_ord_00139,2026-01-09,8697a11605e7,premium bundle,USD,224.73,25,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00140,2025-11-05,6da7e58c527d,audit package,USD,1414.97,5,google_ads,paid,card
+cli_0023_ord_00141,2026-01-30,4aa0a8ff0a47,premium bundle,USD,1009.17,15,email,paid,wallet
+cli_0023_ord_00142,2026-02-18,bd61b29bea6c,pro plan,USD,1390.91,15,google_ads,paid,card
+cli_0023_ord_00143,2026-03-11,7ea712e0d9ac,service retainer,USD,482.21,25,google_ads,paid,bank_transfer
+cli_0023_ord_00144,2026-04-17,578092dd1ce9,starter plan,USD,1106.85,25,referral,paid,card
+cli_0023_ord_00145,2026-04-12,693a0b6229e7,audit package,USD,1367.07,15,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00146,2026-04-14,f5e4de839ea6,starter plan,USD,1932.12,0,meta_ads,paid,upi
+cli_0023_ord_00147,2025-12-13,aad8f16ce940,annual subscription,USD,348.68,20,meta_ads,refunded,paypal
+cli_0023_ord_00148,2026-03-06,b6e83f51a9c5,annual subscription,USD,2475.06,25,referral,paid,bank_transfer
+cli_0023_ord_00149,2026-04-08,d3857d77b217,premium bundle,USD,1905.92,0,email,paid,wallet
+cli_0023_ord_00150,2026-01-01,4c2ed3f0c553,audit package,USD,2050.16,25,tiktok_ads,paid,card
+cli_0023_ord_00151,2026-02-27,06c4d35445b4,membership,USD,695.27,0,meta_ads,paid,upi
+cli_0023_ord_00152,2025-12-15,f08e8a1c9a22,membership,USD,81.95,25,google_ads,paid,upi
+cli_0023_ord_00153,2025-12-21,1c63ba4b5a55,annual subscription,USD,1568.01,15,tiktok_ads,paid,card
+cli_0023_ord_00154,2026-01-15,2fdbdfcd34a2,premium bundle,USD,1077.29,20,tiktok_ads,refunded,bank_transfer
+cli_0023_ord_00155,2026-01-12,b8d4296e8cda,annual subscription,USD,475.55,0,referral,paid,paypal
+cli_0023_ord_00156,2025-12-28,4efea2a7c1ea,service retainer,USD,759.17,20,tiktok_ads,pending,bank_transfer
+cli_0023_ord_00157,2026-02-24,6cf133e82889,premium bundle,USD,1868.37,0,meta_ads,paid,upi
+cli_0023_ord_00158,2026-01-01,44f914be6674,premium bundle,USD,362.93,5,referral,paid,wallet
+cli_0023_ord_00159,2025-11-19,466f7fd6047b,membership,USD,612.06,5,email,paid,card
+cli_0023_ord_00160,2026-02-11,1bd091387736,premium bundle,USD,2186.62,10,referral,paid,wallet
+cli_0023_ord_00161,2026-02-13,f7101336113d,audit package,USD,1636.33,5,meta_ads,pending,upi
+cli_0023_ord_00162,2025-12-17,3cf069718bd2,pro plan,USD,204.81,0,referral,paid,paypal
+cli_0023_ord_00163,2025-11-24,b15a324bf5af,premium bundle,USD,173.63,25,google_ads,paid,wallet
+cli_0023_ord_00164,2026-02-25,2637d5bab59b,premium bundle,USD,1759.65,0,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00165,2026-01-06,31e5a2c36f77,audit package,USD,1139.35,5,tiktok_ads,paid,paypal
+cli_0023_ord_00166,2025-11-18,e780913f5cd7,service retainer,USD,384.37,10,tiktok_ads,paid,wallet
+cli_0023_ord_00167,2026-04-23,bb7184c9a43a,audit package,USD,1122.24,25,google_ads,paid,bank_transfer
+cli_0023_ord_00168,2026-02-10,0cbd3ac26c93,annual subscription,USD,2462.0,10,email,paid,paypal
+cli_0023_ord_00169,2026-03-25,47db54086b02,pro plan,USD,2021.98,20,tiktok_ads,paid,paypal
+cli_0023_ord_00170,2025-12-29,e967a75667e6,membership,USD,509.25,25,tiktok_ads,paid,upi
+cli_0023_ord_00171,2025-12-15,615ba56dbb07,pro plan,USD,828.0,15,referral,paid,bank_transfer
+cli_0023_ord_00172,2026-03-19,dbfdfeae56e0,audit package,USD,1764.02,10,meta_ads,paid,paypal
+cli_0023_ord_00173,2026-02-28,8b24391953d6,starter plan,USD,207.91,25,email,paid,wallet
+cli_0023_ord_00174,2026-02-28,8ff701af0654,premium bundle,USD,343.41,10,referral,paid,paypal
+cli_0023_ord_00175,2025-12-26,c157ec6bd2b0,premium bundle,USD,249.0,0,tiktok_ads,paid,paypal
+cli_0023_ord_00176,2026-02-04,55e95e663bb9,starter plan,USD,1847.94,0,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00177,2026-03-09,552e404e8b49,service retainer,USD,2134.07,0,google_ads,paid,wallet
+cli_0023_ord_00178,2025-12-28,3e6b8495da2c,membership,USD,2378.42,10,tiktok_ads,paid,bank_transfer
+cli_0023_ord_00179,2026-03-03,a4f8efb1ef39,membership,USD,2194.22,20,referral,paid,card
+cli_0023_ord_00180,2026-04-03,a79896254527,service retainer,USD,1987.08,25,google_ads,refunded,bank_transfer
+cli_0023_ord_00181,2025-12-12,3869772662a1,membership,USD,1316.95,25,email,paid,paypal
+cli_0023_ord_00182,2026-01-24,d818ab9921d8,pro plan,USD,1895.84,20,email,paid,card
+cli_0023_ord_00183,2026-02-12,c811a6c3ec71,service retainer,USD,278.7,5,meta_ads,paid,card
+cli_0023_ord_00184,2026-01-28,63764eafb6aa,service retainer,USD,749.01,25,referral,paid,wallet
+cli_0023_ord_00185,2026-01-10,0ac4c2e27aca,membership,USD,2402.6,10,google_ads,pending,wallet
+cli_0023_ord_00186,2026-03-16,2c7e0013c875,audit package,USD,1444.8,25,email,paid,paypal
+cli_0023_ord_00187,2026-02-18,e9163cebd055,membership,USD,1002.59,5,referral,paid,paypal
+cli_0023_ord_00188,2026-04-14,0bc18bcc10c7,annual subscription,USD,498.95,0,google_ads,pending,paypal
+cli_0023_ord_00189,2025-10-31,53e422ae99d8,membership,USD,259.14,25,referral,paid,bank_transfer
+cli_0023_ord_00190,2026-03-05,d32918f3c5c9,premium bundle,USD,125.9,15,referral,paid,bank_transfer
+cli_0023_ord_00191,2025-12-01,a18f0ca66959,service retainer,USD,1518.39,5,tiktok_ads,paid,wallet
+cli_0023_ord_00192,2026-01-13,77c5da83c774,audit package,USD,900.26,10,email,pending,wallet
+cli_0023_ord_00193,2026-02-04,75ffc7742833,service retainer,USD,1213.12,25,tiktok_ads,paid,card
+cli_0023_ord_00194,2025-11-01,9730de4400f0,audit package,USD,2289.83,10,meta_ads,pending,paypal
+cli_0023_ord_00195,2026-04-13,0760bbdc0d4f,audit package,USD,281.9,20,google_ads,paid,wallet
+cli_0023_ord_00196,2025-11-20,cc6c68b7b639,premium bundle,USD,1918.63,20,email,paid,card
+cli_0023_ord_00197,2025-12-07,0d4476ecf605,membership,USD,630.71,5,google_ads,paid,card
+cli_0023_ord_00198,2025-11-12,5156086a3c0d,audit package,USD,718.7,25,google_ads,paid,paypal
+cli_0023_ord_00199,2025-11-30,edc8fef0d9f1,starter plan,USD,1229.68,20,google_ads,paid,wallet
+cli_0023_ord_00200,2026-03-05,a9393d7bdc84,pro plan,USD,201.58,20,google_ads,paid,paypal
+cli_0023_ord_00201,2025-12-30,6c715dfb41a7,audit package,USD,1447.16,25,referral,paid,wallet
+cli_0023_ord_00202,2026-03-25,92b9951538fb,audit package,USD,80.75,25,referral,paid,card
+cli_0023_ord_00203,2025-12-03,0c242667a4ee,membership,USD,167.3,20,tiktok_ads,paid,card
+cli_0023_ord_00204,2026-03-18,8a7968d87361,premium bundle,USD,2349.68,25,meta_ads,paid,card
+cli_0023_ord_00205,2026-03-06,2c8fd9fb27ed,starter plan,USD,1253.09,20,google_ads,paid,wallet
+cli_0023_ord_00206,2026-02-17,48b3818642ef,premium bundle,USD,1433.29,25,email,paid,bank_transfer
+cli_0023_ord_00207,2026-01-07,05972fb9b3ef,annual subscription,USD,674.47,10,email,paid,wallet
+cli_0023_ord_00208,2026-02-15,ce17fe580415,audit package,USD,221.95,10,tiktok_ads,paid,card
+cli_0023_ord_00209,2026-04-05,04b813b93fb5,pro plan,USD,1202.39,10,referral,paid,paypal
+cli_0023_ord_00210,2025-12-06,cc6da99b5fb0,service retainer,USD,111.41,10,tiktok_ads,paid,wallet
+cli_0023_ord_00211,2026-01-02,4c6fd5a5ad3a,membership,USD,1091.23,15,referral,pending,upi
+cli_0023_ord_00212,2025-12-09,a207ca67a88f,annual subscription,USD,1248.81,0,email,refunded,upi
+cli_0023_ord_00213,2026-02-01,814b91cd50ad,audit package,USD,594.37,0,email,paid,bank_transfer
+cli_0023_ord_00214,2026-01-24,8a03486275dc,premium bundle,USD,830.89,20,referral,paid,paypal
+cli_0023_ord_00215,2025-12-04,1b23b55af869,membership,USD,736.16,5,meta_ads,paid,upi
+cli_0023_ord_00216,2026-03-29,7fa020bfe5f0,annual subscription,USD,1247.26,20,google_ads,paid,paypal
+cli_0023_ord_00217,2026-02-03,360048a4b76d,service retainer,USD,1727.67,15,tiktok_ads,paid,paypal
+cli_0023_ord_00218,2026-01-29,100b4975a7c0,audit package,USD,325.08,25,email,paid,wallet
+cli_0023_ord_00219,2025-12-31,c5ae0f5f825b,pro plan,USD,1204.54,25,meta_ads,paid,upi
+cli_0023_ord_00220,2026-03-16,49b5cd5bab7c,starter plan,USD,1851.0,0,referral,paid,card
+cli_0023_ord_00221,2026-01-22,da042254ab6d,premium bundle,USD,1164.26,10,google_ads,paid,upi
+cli_0023_ord_00222,2026-01-16,91a48559c313,premium bundle,USD,67.53,25,email,pending,paypal
+cli_0023_ord_00223,2026-04-23,a8e9d350383b,starter plan,USD,1192.81,25,tiktok_ads,paid,card
+cli_0023_ord_00224,2025-12-31,9c967cdebab9,audit package,USD,978.98,15,referral,paid,paypal
+cli_0023_ord_00225,2025-11-21,6bb78db46fb3,membership,USD,2297.3,25,email,paid,wallet
+cli_0023_ord_00226,2025-11-23,1a1accd099b9,service retainer,USD,253.51,15,referral,paid,upi
+cli_0023_ord_00227,2026-02-09,4df982794ca8,premium bundle,USD,2088.45,25,email,paid,wallet
+cli_0023_ord_00228,2025-12-22,7a97080a15f7,annual subscription,USD,1190.37,20,google_ads,refunded,card
+cli_0023_ord_00229,2026-04-18,11fe714bb31e,membership,USD,2480.68,10,email,paid,upi

@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0005",
+  "company_name": "North Commerce",
+  "industry": "education",
+  "region": "UK",
+  "generated_at": "2026-04-23T20:55:59.456489Z",
+  "counts": {
+    "contacts": 158,
+    "deals": 106,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 7,
+    "uploads": 8,
+    "marketing_rows": 180,
+    "email_campaigns": 43,
+    "posts": 55,
+    "comments": 110,
+    "tickets": 103,
+    "transcripts": 49,
+    "sessions": 26505,
+    "events": 132814,
+    "orders": 235,
+    "refunds": 21,
+    "invoices": 69,
+    "payments": 46,
+    "feedback": 119,
+    "feature_requests": 55,
+    "meeting_notes": 14,
+    "raw_observations": 47
+  }
+}

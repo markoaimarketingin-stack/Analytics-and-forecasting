@@ -1,0 +1,119 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0008_dl_0001,cli_0008_ct_0076,Blue Commerce - annual subscription,won,11762.24,AED,62,website_form,Arjun Singh,2025-12-16,2025-12-29
+cli_0008_dl_0002,cli_0008_ct_0146,Blue Commerce - service retainer,proposal,5593.47,AED,91,import,Noah Joshi,2026-02-11,2026-03-07
+cli_0008_dl_0003,cli_0008_ct_0059,Blue Commerce - premium bundle,proposal,12364.7,AED,24,import,Leo Joshi,2025-11-27,2026-01-20
+cli_0008_dl_0004,cli_0008_ct_0156,Blue Commerce - pro plan,won,16301.06,AED,74,website_form,Zara Kapoor,2026-02-02,2026-02-28
+cli_0008_dl_0005,cli_0008_ct_0103,Blue Commerce - audit package,won,14796.45,AED,72,referral,Noah Nair,2025-11-16,2026-01-10
+cli_0008_dl_0006,cli_0008_ct_0110,Blue Commerce - audit package,qualified,4630.07,AED,89,event,Noah Verma,2025-12-05,2026-01-23
+cli_0008_dl_0007,cli_0008_ct_0159,Blue Commerce - membership,lost,15640.39,AED,74,import,Mia Nair,2025-12-18,2026-01-05
+cli_0008_dl_0008,cli_0008_ct_0081,Blue Commerce - annual subscription,won,12153.16,AED,70,import,Leo Verma,2025-11-25,2026-01-09
+cli_0008_dl_0009,cli_0008_ct_0112,Blue Commerce - pro plan,qualified,21938.64,AED,13,email_reply,Arjun Singh,2025-09-22,2025-11-07
+cli_0008_dl_0010,cli_0008_ct_0074,Blue Commerce - membership,new,14314.39,AED,67,website_form,Zara Nair,2025-10-30,2025-12-06
+cli_0008_dl_0011,cli_0008_ct_0043,Blue Commerce - service retainer,qualified,3899.53,AED,55,import,Noah Kapoor,2026-02-07,2026-03-25
+cli_0008_dl_0012,cli_0008_ct_0148,Blue Commerce - premium bundle,qualified,5130.28,AED,94,website_form,Sara Joshi,2025-12-11,2026-01-26
+cli_0008_dl_0013,cli_0008_ct_0139,Blue Commerce - service retainer,negotiation,15089.1,AED,6,import,Anika Gupta,2026-01-19,2026-02-25
+cli_0008_dl_0014,cli_0008_ct_0148,Blue Commerce - pro plan,won,8710.0,AED,25,website_form,Arjun Singh,2026-02-24,2026-03-23
+cli_0008_dl_0015,cli_0008_ct_0137,Blue Commerce - premium bundle,negotiation,14703.09,AED,85,import,Kabir Sharma,2025-10-27,2025-11-13
+cli_0008_dl_0016,cli_0008_ct_0106,Blue Commerce - annual subscription,proposal,23504.28,AED,11,website_form,Liam Nair,2025-12-26,2026-02-16
+cli_0008_dl_0017,cli_0008_ct_0022,Blue Commerce - service retainer,won,8112.76,AED,21,event,Mia Patel,2026-01-12,2026-01-28
+cli_0008_dl_0018,cli_0008_ct_0127,Blue Commerce - annual subscription,qualified,11943.99,AED,76,referral,Leo Bhatia,2026-02-21,2026-02-26
+cli_0008_dl_0019,cli_0008_ct_0019,Blue Commerce - premium bundle,new,22846.47,AED,28,referral,Noah Joshi,2025-11-19,2025-12-18
+cli_0008_dl_0020,cli_0008_ct_0001,Blue Commerce - annual subscription,qualified,4190.5,AED,25,email_reply,Anika Patel,2026-03-05,2026-03-22
+cli_0008_dl_0021,cli_0008_ct_0100,Blue Commerce - membership,negotiation,21607.52,AED,62,email_reply,Sara Gupta,2026-01-02,2026-01-06
+cli_0008_dl_0022,cli_0008_ct_0126,Blue Commerce - pro plan,qualified,17280.83,AED,63,import,Mia Nair,2025-12-22,2026-01-09
+cli_0008_dl_0023,cli_0008_ct_0067,Blue Commerce - audit package,qualified,4052.51,AED,18,website_form,Leo Singh,2025-09-24,2025-11-07
+cli_0008_dl_0024,cli_0008_ct_0121,Blue Commerce - annual subscription,won,2694.04,AED,7,email_reply,Sara Nair,2026-02-26,2026-03-18
+cli_0008_dl_0025,cli_0008_ct_0036,Blue Commerce - pro plan,proposal,4159.69,AED,43,event,Zara Verma,2025-11-19,2025-12-01
+cli_0008_dl_0026,cli_0008_ct_0067,Blue Commerce - membership,won,2259.25,AED,57,website_form,Zara Verma,2025-11-14,2025-11-20
+cli_0008_dl_0027,cli_0008_ct_0127,Blue Commerce - annual subscription,qualified,7303.71,AED,43,referral,Leo Verma,2025-12-31,2026-02-13
+cli_0008_dl_0028,cli_0008_ct_0154,Blue Commerce - service retainer,proposal,568.67,AED,76,event,Sara Bhatia,2025-10-23,2025-10-27
+cli_0008_dl_0029,cli_0008_ct_0085,Blue Commerce - audit package,proposal,23451.04,AED,64,website_form,Maya Reddy,2025-11-21,2026-01-09
+cli_0008_dl_0030,cli_0008_ct_0095,Blue Commerce - pro plan,qualified,1110.66,AED,9,website_form,Noah Nair,2026-02-03,2026-02-22
+cli_0008_dl_0031,cli_0008_ct_0165,Blue Commerce - pro plan,negotiation,1954.71,AED,72,email_reply,Mia Khan,2025-11-17,2025-12-16
+cli_0008_dl_0032,cli_0008_ct_0137,Blue Commerce - starter plan,lost,24834.71,AED,59,import,Ishaan Reddy,2025-11-28,2026-01-06
+cli_0008_dl_0033,cli_0008_ct_0074,Blue Commerce - starter plan,new,24305.57,AED,95,website_form,Anika Bhatia,2025-09-28,2025-11-02
+cli_0008_dl_0034,cli_0008_ct_0040,Blue Commerce - audit package,qualified,1824.47,AED,32,import,Kabir Sharma,2025-11-04,2025-11-20
+cli_0008_dl_0035,cli_0008_ct_0121,Blue Commerce - starter plan,won,9790.83,AED,42,email_reply,Leo Reddy,2026-02-11,2026-02-20
+cli_0008_dl_0036,cli_0008_ct_0126,Blue Commerce - starter plan,negotiation,5012.0,AED,27,import,Ava Nair,2026-02-15,2026-04-07
+cli_0008_dl_0037,cli_0008_ct_0049,Blue Commerce - annual subscription,proposal,6577.95,AED,95,event,Kabir Joshi,2025-10-19,2025-10-28
+cli_0008_dl_0038,cli_0008_ct_0101,Blue Commerce - audit package,proposal,5201.53,AED,17,website_form,Kabir Bhatia,2025-12-24,2026-02-14
+cli_0008_dl_0039,cli_0008_ct_0052,Blue Commerce - pro plan,qualified,18922.11,AED,71,referral,Sara Joshi,2025-11-17,2025-12-17
+cli_0008_dl_0040,cli_0008_ct_0037,Blue Commerce - audit package,new,23702.36,AED,39,website_form,Sara Nair,2025-12-18,2025-12-21
+cli_0008_dl_0041,cli_0008_ct_0071,Blue Commerce - annual subscription,qualified,13224.99,AED,27,import,Anika Reddy,2025-12-14,2026-02-07
+cli_0008_dl_0042,cli_0008_ct_0165,Blue Commerce - audit package,proposal,12373.2,AED,65,email_reply,Mia Khan,2026-01-21,2026-03-15
+cli_0008_dl_0043,cli_0008_ct_0117,Blue Commerce - service retainer,lost,24221.29,AED,35,import,Zara Patel,2026-01-17,2026-03-14
+cli_0008_dl_0044,cli_0008_ct_0077,Blue Commerce - membership,proposal,1243.23,AED,70,referral,Sara Verma,2026-01-02,2026-01-06
+cli_0008_dl_0045,cli_0008_ct_0095,Blue Commerce - audit package,proposal,20249.21,AED,60,website_form,Anika Gupta,2025-10-18,2025-12-16
+cli_0008_dl_0046,cli_0008_ct_0133,Blue Commerce - pro plan,new,5153.22,AED,77,import,Kabir Gupta,2025-11-13,2025-12-16
+cli_0008_dl_0047,cli_0008_ct_0095,Blue Commerce - pro plan,new,15796.92,AED,81,website_form,Arjun Kapoor,2025-11-23,2026-01-12
+cli_0008_dl_0048,cli_0008_ct_0012,Blue Commerce - service retainer,won,16621.24,AED,88,import,Ishaan Kapoor,2025-10-31,2025-11-13
+cli_0008_dl_0049,cli_0008_ct_0018,Blue Commerce - audit package,won,16807.7,AED,34,website_form,Ava Singh,2025-10-07,2025-11-14
+cli_0008_dl_0050,cli_0008_ct_0120,Blue Commerce - premium bundle,lost,8833.04,AED,17,import,Maya Singh,2026-03-14,2026-04-17
+cli_0008_dl_0051,cli_0008_ct_0146,Blue Commerce - annual subscription,new,19282.23,AED,24,import,Ava Gupta,2026-03-28,2026-04-09
+cli_0008_dl_0052,cli_0008_ct_0158,Blue Commerce - premium bundle,new,10258.02,AED,73,event,Sara Singh,2026-01-03,2026-03-03
+cli_0008_dl_0053,cli_0008_ct_0023,Blue Commerce - service retainer,proposal,5625.09,AED,87,import,Anika Patel,2026-01-10,2026-01-30
+cli_0008_dl_0054,cli_0008_ct_0025,Blue Commerce - service retainer,proposal,20972.38,AED,66,website_form,Maya Verma,2025-10-31,2025-11-28
+cli_0008_dl_0055,cli_0008_ct_0091,Blue Commerce - starter plan,proposal,24942.7,AED,67,website_form,Maya Patel,2026-01-30,2026-03-24
+cli_0008_dl_0056,cli_0008_ct_0118,Blue Commerce - premium bundle,lost,1344.87,AED,63,website_form,Zara Verma,2026-01-12,2026-01-25
+cli_0008_dl_0057,cli_0008_ct_0085,Blue Commerce - premium bundle,qualified,22321.39,AED,32,website_form,Ishaan Patel,2026-01-29,2026-03-14
+cli_0008_dl_0058,cli_0008_ct_0100,Blue Commerce - pro plan,negotiation,23951.15,AED,33,email_reply,Kabir Reddy,2025-10-22,2025-12-16
+cli_0008_dl_0059,cli_0008_ct_0154,Blue Commerce - audit package,qualified,17655.64,AED,41,event,Kabir Bhatia,2026-02-20,2026-04-17
+cli_0008_dl_0060,cli_0008_ct_0096,Blue Commerce - membership,new,23067.34,AED,45,email_reply,Zara Reddy,2026-01-06,2026-01-14
+cli_0008_dl_0061,cli_0008_ct_0129,Blue Commerce - audit package,qualified,413.27,AED,45,website_form,Noah Singh,2025-11-30,2026-01-25
+cli_0008_dl_0062,cli_0008_ct_0158,Blue Commerce - audit package,lost,15903.46,AED,91,event,Anika Patel,2026-03-15,2026-04-10
+cli_0008_dl_0063,cli_0008_ct_0028,Blue Commerce - annual subscription,won,16370.27,AED,10,website_form,Ishaan Joshi,2026-03-14,2026-04-08
+cli_0008_dl_0064,cli_0008_ct_0079,Blue Commerce - annual subscription,lost,12351.57,AED,5,import,Anika Mehta,2025-10-31,2025-11-16
+cli_0008_dl_0065,cli_0008_ct_0117,Blue Commerce - annual subscription,negotiation,14548.73,AED,74,import,Ava Sharma,2026-02-04,2026-02-16
+cli_0008_dl_0066,cli_0008_ct_0133,Blue Commerce - pro plan,negotiation,23189.65,AED,14,import,Maya Gupta,2025-12-17,2026-01-06
+cli_0008_dl_0067,cli_0008_ct_0083,Blue Commerce - premium bundle,qualified,10976.55,AED,88,email_reply,Ava Kapoor,2026-01-30,2026-03-01
+cli_0008_dl_0068,cli_0008_ct_0151,Blue Commerce - service retainer,qualified,18100.43,AED,25,email_reply,Noah Kapoor,2026-02-20,2026-04-08
+cli_0008_dl_0069,cli_0008_ct_0132,Blue Commerce - starter plan,qualified,6498.63,AED,47,email_reply,Anika Kapoor,2025-10-17,2025-12-05
+cli_0008_dl_0070,cli_0008_ct_0116,Blue Commerce - service retainer,qualified,11797.28,AED,83,website_form,Mia Verma,2025-09-25,2025-11-17
+cli_0008_dl_0071,cli_0008_ct_0137,Blue Commerce - service retainer,negotiation,18056.15,AED,26,import,Ava Khan,2025-11-03,2025-11-07
+cli_0008_dl_0072,cli_0008_ct_0079,Blue Commerce - annual subscription,negotiation,21362.03,AED,43,import,Ishaan Gupta,2025-10-26,2025-12-06
+cli_0008_dl_0073,cli_0008_ct_0155,Blue Commerce - audit package,won,16073.78,AED,62,referral,Ava Gupta,2026-02-13,2026-02-16
+cli_0008_dl_0074,cli_0008_ct_0033,Blue Commerce - pro plan,proposal,23386.88,AED,32,website_form,Anika Verma,2026-01-25,2026-03-21
+cli_0008_dl_0075,cli_0008_ct_0062,Blue Commerce - annual subscription,won,21750.43,AED,42,import,Ishaan Reddy,2026-02-07,2026-02-28
+cli_0008_dl_0076,cli_0008_ct_0041,Blue Commerce - annual subscription,new,6350.55,AED,86,website_form,Sara Gupta,2025-10-06,2025-11-06
+cli_0008_dl_0077,cli_0008_ct_0114,Blue Commerce - service retainer,proposal,1577.9,AED,73,email_reply,Ava Singh,2025-11-30,2025-12-05
+cli_0008_dl_0078,cli_0008_ct_0083,Blue Commerce - annual subscription,won,22474.45,AED,77,email_reply,Kabir Patel,2026-01-01,2026-02-28
+cli_0008_dl_0079,cli_0008_ct_0030,Blue Commerce - pro plan,proposal,15576.06,AED,11,event,Mia Joshi,2025-09-28,2025-10-30
+cli_0008_dl_0080,cli_0008_ct_0148,Blue Commerce - membership,lost,11370.77,AED,86,website_form,Ishaan Kapoor,2025-09-15,2025-11-10
+cli_0008_dl_0081,cli_0008_ct_0101,Blue Commerce - premium bundle,qualified,4537.96,AED,59,website_form,Noah Patel,2026-02-18,2026-03-31
+cli_0008_dl_0082,cli_0008_ct_0092,Blue Commerce - service retainer,lost,17978.82,AED,26,import,Ishaan Verma,2026-02-19,2026-03-19
+cli_0008_dl_0083,cli_0008_ct_0154,Blue Commerce - service retainer,qualified,13349.6,AED,88,event,Ishaan Verma,2026-01-30,2026-03-14
+cli_0008_dl_0084,cli_0008_ct_0110,Blue Commerce - membership,qualified,21602.63,AED,53,event,Mia Sharma,2025-10-22,2025-12-20
+cli_0008_dl_0085,cli_0008_ct_0121,Blue Commerce - audit package,proposal,21257.1,AED,54,email_reply,Liam Bhatia,2025-10-07,2025-11-30
+cli_0008_dl_0086,cli_0008_ct_0146,Blue Commerce - membership,qualified,16070.97,AED,74,import,Ava Khan,2025-11-11,2025-12-17
+cli_0008_dl_0087,cli_0008_ct_0122,Blue Commerce - pro plan,lost,12155.44,AED,36,import,Zara Patel,2026-03-02,2026-03-23
+cli_0008_dl_0088,cli_0008_ct_0075,Blue Commerce - annual subscription,qualified,4310.05,AED,95,event,Mia Nair,2026-02-21,2026-04-06
+cli_0008_dl_0089,cli_0008_ct_0114,Blue Commerce - membership,proposal,19537.54,AED,62,email_reply,Zara Khan,2026-04-14,2026-04-19
+cli_0008_dl_0090,cli_0008_ct_0149,Blue Commerce - pro plan,lost,4431.25,AED,69,referral,Ishaan Reddy,2026-01-27,2026-03-16
+cli_0008_dl_0091,cli_0008_ct_0027,Blue Commerce - membership,qualified,21514.05,AED,25,import,Arjun Sharma,2025-11-13,2025-12-03
+cli_0008_dl_0092,cli_0008_ct_0103,Blue Commerce - service retainer,qualified,13241.12,AED,12,referral,Noah Bhatia,2026-01-18,2026-02-01
+cli_0008_dl_0093,cli_0008_ct_0034,Blue Commerce - starter plan,negotiation,6356.33,AED,36,referral,Mia Sharma,2025-09-28,2025-11-14
+cli_0008_dl_0094,cli_0008_ct_0103,Blue Commerce - premium bundle,won,5201.29,AED,50,referral,Arjun Mehta,2025-12-30,2026-02-28
+cli_0008_dl_0095,cli_0008_ct_0061,Blue Commerce - service retainer,qualified,20837.58,AED,78,event,Ishaan Kapoor,2025-11-05,2025-11-16
+cli_0008_dl_0096,cli_0008_ct_0053,Blue Commerce - membership,qualified,9774.47,AED,12,import,Kabir Kapoor,2025-11-25,2026-01-07
+cli_0008_dl_0097,cli_0008_ct_0001,Blue Commerce - audit package,proposal,6972.54,AED,14,email_reply,Mia Patel,2025-12-03,2026-01-13
+cli_0008_dl_0098,cli_0008_ct_0162,Blue Commerce - premium bundle,qualified,2580.01,AED,12,website_form,Maya Singh,2026-02-16,2026-03-12
+cli_0008_dl_0099,cli_0008_ct_0153,Blue Commerce - premium bundle,negotiation,8152.89,AED,59,referral,Arjun Nair,2026-01-08,2026-02-11
+cli_0008_dl_0100,cli_0008_ct_0065,Blue Commerce - pro plan,negotiation,16415.91,AED,80,email_reply,Leo Patel,2025-10-26,2025-11-01
+cli_0008_dl_0101,cli_0008_ct_0004,Blue Commerce - starter plan,qualified,2110.37,AED,95,email_reply,Sara Joshi,2026-02-26,2026-03-16
+cli_0008_dl_0102,cli_0008_ct_0162,Blue Commerce - annual subscription,qualified,11632.06,AED,70,website_form,Zara Verma,2026-02-25,2026-03-27
+cli_0008_dl_0103,cli_0008_ct_0057,Blue Commerce - annual subscription,negotiation,13574.02,AED,26,website_form,Kabir Reddy,2025-10-17,2025-10-30
+cli_0008_dl_0104,cli_0008_ct_0009,Blue Commerce - audit package,proposal,16415.1,AED,21,import,Ava Sharma,2025-11-19,2026-01-15
+cli_0008_dl_0105,cli_0008_ct_0043,Blue Commerce - premium bundle,qualified,4544.99,AED,21,import,Anika Mehta,2025-11-01,2025-12-23
+cli_0008_dl_0106,cli_0008_ct_0100,Blue Commerce - pro plan,won,14638.72,AED,73,email_reply,Kabir Sharma,2026-01-14,2026-01-29
+cli_0008_dl_0107,cli_0008_ct_0058,Blue Commerce - annual subscription,won,1021.11,AED,27,website_form,Liam Reddy,2025-11-04,2025-12-15
+cli_0008_dl_0108,cli_0008_ct_0052,Blue Commerce - pro plan,qualified,4736.7,AED,52,referral,Maya Singh,2025-12-07,2026-02-02
+cli_0008_dl_0109,cli_0008_ct_0035,Blue Commerce - membership,qualified,14679.86,AED,11,website_form,Liam Kapoor,2026-01-28,2026-02-03
+cli_0008_dl_0110,cli_0008_ct_0036,Blue Commerce - membership,won,11385.63,AED,31,event,Ava Sharma,2026-01-17,2026-02-07
+cli_0008_dl_0111,cli_0008_ct_0065,Blue Commerce - service retainer,negotiation,17821.52,AED,21,email_reply,Kabir Khan,2026-03-18,2026-04-15
+cli_0008_dl_0112,cli_0008_ct_0033,Blue Commerce - audit package,qualified,5521.07,AED,67,website_form,Ishaan Singh,2025-12-11,2026-01-25
+cli_0008_dl_0113,cli_0008_ct_0010,Blue Commerce - pro plan,lost,4932.18,AED,54,event,Ava Singh,2025-09-26,2025-11-23
+cli_0008_dl_0114,cli_0008_ct_0112,Blue Commerce - pro plan,negotiation,21464.34,AED,55,email_reply,Anika Sharma,2025-11-19,2025-12-09
+cli_0008_dl_0115,cli_0008_ct_0052,Blue Commerce - annual subscription,qualified,3526.12,AED,26,referral,Kabir Kapoor,2025-11-24,2026-01-18
+cli_0008_dl_0116,cli_0008_ct_0066,Blue Commerce - premium bundle,negotiation,8078.31,AED,57,event,Leo Patel,2025-11-15,2026-01-08
+cli_0008_dl_0117,cli_0008_ct_0111,Blue Commerce - service retainer,qualified,13242.4,AED,14,website_form,Anika Gupta,2025-09-30,2025-11-24
+cli_0008_dl_0118,cli_0008_ct_0139,Blue Commerce - annual subscription,qualified,5195.69,AED,73,import,Anika Bhatia,2026-03-10,2026-04-21

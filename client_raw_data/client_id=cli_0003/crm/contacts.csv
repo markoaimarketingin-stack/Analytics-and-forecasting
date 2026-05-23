@@ -1,0 +1,186 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0003_ct_0001,Sara Khan,sara.khan0@examplemail.com,Nova Finance,Sales Lead,sql,event,UAE,2024-11-18,2026-03-03
+cli_0003_ct_0002,Ava Singh,ava.singh1@examplemail.com,Nova Finance,RevOps Manager,lead,website_form,Australia,2026-01-12,2026-03-09
+cli_0003_ct_0003,Noah Bhatia,noah.bhatia2@examplemail.com,Nova Finance,RevOps Manager,sql,website_form,Canada,2025-03-23,2026-01-19
+cli_0003_ct_0004,Kabir Mehta,kabir.mehta3@examplemail.com,Peak Inc,Marketing Manager,sql,website_form,United States,2025-07-20,2026-02-16
+cli_0003_ct_0005,Zara Patel,zara.patel4@examplemail.com,Nova Finance,Head of Growth,customer,import,United States,2025-05-23,2026-01-03
+cli_0003_ct_0006,Anika Verma,anika.verma5@examplemail.com,Nova Finance,Marketing Manager,customer,import,United States,2025-06-26,2026-03-31
+cli_0003_ct_0007,Noah Khan,noah.khan6@examplemail.com,Peak LLC,Sales Lead,mql,referral,United Kingdom,2024-11-16,2026-01-21
+cli_0003_ct_0008,Arjun Kapoor,arjun.kapoor7@examplemail.com,Metro Ltd,RevOps Manager,mql,referral,India,2025-05-13,2026-03-30
+cli_0003_ct_0009,Ishaan Patel,ishaan.patel8@examplemail.com,Acme Ltd,Marketing Manager,customer,import,United Kingdom,2025-09-19,2026-01-30
+cli_0003_ct_0010,Liam Bhatia,liam.bhatia9@examplemail.com,Metro LLC,Head of Growth,sql,import,Canada,2025-11-06,2026-02-28
+cli_0003_ct_0011,Noah Kapoor,noah.kapoor10@examplemail.com,Nova Finance,Head of Growth,lead,import,United States,2026-02-03,2026-02-20
+cli_0003_ct_0012,Maya Kapoor,maya.kapoor11@examplemail.com,Nova Finance,Founder,mql,website_form,India,2025-03-01,2026-03-17
+cli_0003_ct_0013,Anika Joshi,anika.joshi12@examplemail.com,Nova Finance,Founder,sql,import,United States,2025-06-30,2026-03-22
+cli_0003_ct_0014,Liam Sharma,liam.sharma13@examplemail.com,Acme LLC,Founder,customer,import,United States,2025-11-14,2025-12-27
+cli_0003_ct_0015,Leo Nair,leo.nair14@examplemail.com,Acme LLC,Head of Growth,mql,email_reply,Australia,2024-12-02,2026-01-25
+cli_0003_ct_0016,Maya Gupta,maya.gupta15@examplemail.com,Nova Finance,Marketing Manager,customer,website_form,United States,2025-01-23,2026-01-24
+cli_0003_ct_0017,Zara Sharma,zara.sharma16@examplemail.com,Zen LLC,RevOps Manager,mql,import,India,2025-05-13,2025-12-26
+cli_0003_ct_0018,Ishaan Joshi,ishaan.joshi17@examplemail.com,Nova Finance,RevOps Manager,mql,import,Australia,2024-11-25,2026-01-25
+cli_0003_ct_0019,Mia Gupta,mia.gupta18@examplemail.com,Peak Inc,RevOps Manager,sql,website_form,Canada,2025-07-14,2026-02-10
+cli_0003_ct_0020,Noah Nair,noah.nair19@examplemail.com,Nova Finance,Marketing Manager,lead,email_reply,Australia,2025-11-25,2026-03-31
+cli_0003_ct_0021,Noah Bhatia,noah.bhatia20@examplemail.com,Nova Finance,Marketing Manager,customer,website_form,Canada,2026-03-17,2026-03-10
+cli_0003_ct_0022,Ishaan Khan,ishaan.khan21@examplemail.com,Peak Group,Founder,lead,import,UAE,2024-11-23,2026-04-07
+cli_0003_ct_0023,Ishaan Reddy,ishaan.reddy22@examplemail.com,Nova Finance,RevOps Manager,mql,referral,India,2025-01-24,2026-01-06
+cli_0003_ct_0024,Sara Nair,sara.nair23@examplemail.com,Acme Group,Marketing Manager,customer,email_reply,United Kingdom,2025-02-24,2026-03-26
+cli_0003_ct_0025,Kabir Singh,kabir.singh24@examplemail.com,Nova Finance,Marketing Manager,lead,website_form,UAE,2025-07-07,2026-04-02
+cli_0003_ct_0026,Ishaan Reddy,ishaan.reddy25@examplemail.com,Nova Finance,Marketing Manager,mql,event,Canada,2025-06-23,2026-04-04
+cli_0003_ct_0027,Noah Reddy,noah.reddy26@examplemail.com,Zen Ltd,Marketing Manager,mql,import,United Kingdom,2024-11-15,2025-12-29
+cli_0003_ct_0028,Mia Joshi,mia.joshi27@examplemail.com,Nova Finance,Marketing Manager,mql,import,Canada,2025-09-30,2026-04-13
+cli_0003_ct_0029,Kabir Bhatia,kabir.bhatia28@examplemail.com,Nova Finance,Marketing Manager,lead,website_form,UAE,2025-06-28,2026-02-02
+cli_0003_ct_0030,Kabir Mehta,kabir.mehta29@examplemail.com,Nova Finance,Marketing Manager,mql,website_form,United Kingdom,2026-02-19,2026-03-11
+cli_0003_ct_0031,Kabir Gupta,kabir.gupta30@examplemail.com,Nova Finance,Founder,lead,import,Canada,2025-10-29,2026-03-13
+cli_0003_ct_0032,Arjun Joshi,arjun.joshi31@examplemail.com,Zen Inc,Sales Lead,lead,email_reply,UAE,2025-09-30,2026-01-29
+cli_0003_ct_0033,Kabir Khan,kabir.khan32@examplemail.com,Nova Finance,Head of Growth,sql,import,India,2025-08-13,2026-04-14
+cli_0003_ct_0034,Mia Gupta,mia.gupta33@examplemail.com,Peak Inc,Sales Lead,mql,import,India,2025-08-31,2026-03-19
+cli_0003_ct_0035,Ishaan Khan,ishaan.khan34@examplemail.com,Nova Finance,RevOps Manager,lead,email_reply,United Kingdom,2025-11-21,2026-03-09
+cli_0003_ct_0036,Ishaan Verma,ishaan.verma35@examplemail.com,Nova Finance,Sales Lead,churn_risk,email_reply,India,2025-08-07,2026-01-06
+cli_0003_ct_0037,Kabir Bhatia,kabir.bhatia36@examplemail.com,Zen Ltd,Sales Lead,lead,import,India,2025-07-09,2026-03-18
+cli_0003_ct_0038,Sara Reddy,sara.reddy37@examplemail.com,Zen Inc,Marketing Manager,sql,email_reply,United States,2025-07-30,2026-03-03
+cli_0003_ct_0039,Noah Sharma,noah.sharma38@examplemail.com,Nova Finance,Head of Growth,mql,website_form,United Kingdom,2026-03-26,2026-04-17
+cli_0003_ct_0040,Maya Joshi,maya.joshi39@examplemail.com,Nova Finance,Marketing Manager,lead,event,India,2025-11-28,2026-03-14
+cli_0003_ct_0041,Leo Singh,leo.singh40@examplemail.com,Zen Group,Marketing Manager,lead,import,Canada,2025-05-08,2026-01-19
+cli_0003_ct_0042,Zara Reddy,zara.reddy41@examplemail.com,Peak Group,Marketing Manager,lead,website_form,Australia,2025-11-22,2026-03-19
+cli_0003_ct_0043,Ishaan Reddy,ishaan.reddy42@examplemail.com,Peak Ltd,Marketing Manager,sql,website_form,United Kingdom,2026-01-24,2026-04-24
+cli_0003_ct_0044,Anika Patel,anika.patel43@examplemail.com,Nova Finance,Founder,mql,referral,India,2025-06-19,2026-03-25
+cli_0003_ct_0045,Zara Kapoor,zara.kapoor44@examplemail.com,Metro Ltd,Marketing Manager,sql,email_reply,United States,2025-06-18,2026-04-07
+cli_0003_ct_0046,Noah Reddy,noah.reddy45@examplemail.com,Acme Inc,Founder,sql,event,United States,2025-05-10,2026-04-05
+cli_0003_ct_0047,Noah Kapoor,noah.kapoor46@examplemail.com,Metro Group,Sales Lead,churn_risk,event,India,2024-11-18,2026-02-12
+cli_0003_ct_0048,Sara Mehta,sara.mehta47@examplemail.com,Nova Finance,Marketing Manager,mql,website_form,United States,2025-08-19,2026-04-19
+cli_0003_ct_0049,Maya Verma,maya.verma48@examplemail.com,Metro Ltd,Marketing Manager,sql,website_form,United Kingdom,2025-08-01,2026-01-17
+cli_0003_ct_0050,Zara Patel,zara.patel49@examplemail.com,Nova Finance,Founder,churn_risk,import,Canada,2025-01-27,2026-01-11
+cli_0003_ct_0051,Maya Patel,maya.patel50@examplemail.com,Nova Finance,Founder,sql,website_form,United Kingdom,2025-07-12,2026-01-26
+cli_0003_ct_0052,Ava Joshi,ava.joshi51@examplemail.com,Nova Finance,RevOps Manager,lead,import,Australia,2025-03-10,2026-03-30
+cli_0003_ct_0053,Liam Kapoor,liam.kapoor52@examplemail.com,Zen Group,Sales Lead,lead,import,Canada,2025-08-10,2026-04-22
+cli_0003_ct_0054,Kabir Nair,kabir.nair53@examplemail.com,Nova Finance,Head of Growth,lead,referral,Australia,2025-07-19,2026-04-02
+cli_0003_ct_0055,Leo Mehta,leo.mehta54@examplemail.com,Acme Inc,Head of Growth,lead,event,India,2025-03-07,2025-12-27
+cli_0003_ct_0056,Sara Joshi,sara.joshi55@examplemail.com,Nova Finance,Marketing Manager,churn_risk,referral,India,2025-02-20,2026-01-12
+cli_0003_ct_0057,Maya Singh,maya.singh56@examplemail.com,Metro Group,Sales Lead,lead,import,United Kingdom,2025-04-06,2026-03-22
+cli_0003_ct_0058,Leo Singh,leo.singh57@examplemail.com,Metro Ltd,Founder,customer,website_form,UAE,2026-03-27,2026-03-24
+cli_0003_ct_0059,Maya Patel,maya.patel58@examplemail.com,Orbit Ltd,Head of Growth,lead,email_reply,Canada,2025-11-29,2026-04-16
+cli_0003_ct_0060,Sara Khan,sara.khan59@examplemail.com,Zen LLC,Head of Growth,lead,website_form,United States,2025-10-07,2026-01-02
+cli_0003_ct_0061,Arjun Khan,arjun.khan60@examplemail.com,Nova Finance,Sales Lead,churn_risk,website_form,UAE,2025-05-27,2026-03-14
+cli_0003_ct_0062,Ishaan Khan,ishaan.khan61@examplemail.com,Nova Finance,Head of Growth,lead,website_form,India,2025-12-21,2026-03-01
+cli_0003_ct_0063,Sara Gupta,sara.gupta62@examplemail.com,Nova Finance,RevOps Manager,churn_risk,import,Australia,2025-04-16,2026-02-07
+cli_0003_ct_0064,Maya Singh,maya.singh63@examplemail.com,Nova Finance,Sales Lead,mql,website_form,India,2026-01-22,2026-02-25
+cli_0003_ct_0065,Anika Verma,anika.verma64@examplemail.com,Nova Finance,Marketing Manager,lead,event,United Kingdom,2025-04-30,2026-03-28
+cli_0003_ct_0066,Kabir Joshi,kabir.joshi65@examplemail.com,Nova Finance,Marketing Manager,customer,import,United Kingdom,2025-09-06,2026-01-24
+cli_0003_ct_0067,Leo Sharma,leo.sharma66@examplemail.com,Peak Inc,Sales Lead,lead,import,India,2025-11-17,2026-02-05
+cli_0003_ct_0068,Zara Gupta,zara.gupta67@examplemail.com,Nova Finance,Marketing Manager,mql,email_reply,Australia,2024-12-02,2026-01-28
+cli_0003_ct_0069,Noah Nair,noah.nair68@examplemail.com,Orbit Inc,RevOps Manager,lead,import,United Kingdom,2026-01-16,2026-02-11
+cli_0003_ct_0070,Liam Singh,liam.singh69@examplemail.com,Orbit Group,Sales Lead,mql,website_form,UAE,2025-03-06,2026-03-10
+cli_0003_ct_0071,Noah Verma,noah.verma70@examplemail.com,Nova Finance,Marketing Manager,mql,event,Canada,2024-12-03,2026-04-23
+cli_0003_ct_0072,Mia Bhatia,mia.bhatia71@examplemail.com,Nova Finance,Founder,lead,website_form,Canada,2026-03-20,2026-03-23
+cli_0003_ct_0073,Ishaan Mehta,ishaan.mehta72@examplemail.com,Peak Inc,Marketing Manager,mql,website_form,United States,2025-04-08,2026-03-12
+cli_0003_ct_0074,Noah Nair,noah.nair73@examplemail.com,Nova Finance,Head of Growth,mql,email_reply,United States,2025-12-03,2026-03-23
+cli_0003_ct_0075,Mia Singh,mia.singh74@examplemail.com,Orbit Ltd,RevOps Manager,lead,website_form,Australia,2025-03-22,2026-03-08
+cli_0003_ct_0076,Kabir Nair,kabir.nair75@examplemail.com,Nova Finance,Founder,lead,website_form,Australia,2026-02-25,2026-02-07
+cli_0003_ct_0077,Ava Nair,ava.nair76@examplemail.com,Zen Ltd,RevOps Manager,churn_risk,event,Canada,2026-03-29,2026-01-13
+cli_0003_ct_0078,Anika Verma,anika.verma77@examplemail.com,Nova Finance,RevOps Manager,sql,referral,India,2025-10-15,2026-01-07
+cli_0003_ct_0079,Noah Patel,noah.patel78@examplemail.com,Metro Ltd,Head of Growth,customer,email_reply,Australia,2026-02-19,2026-01-19
+cli_0003_ct_0080,Arjun Nair,arjun.nair79@examplemail.com,Nova Finance,Head of Growth,customer,email_reply,United Kingdom,2025-09-09,2026-02-12
+cli_0003_ct_0081,Noah Sharma,noah.sharma80@examplemail.com,Nova Finance,Founder,lead,website_form,United Kingdom,2025-12-31,2025-12-26
+cli_0003_ct_0082,Leo Joshi,leo.joshi81@examplemail.com,Nova Finance,Marketing Manager,mql,website_form,Australia,2024-11-23,2026-01-17
+cli_0003_ct_0083,Zara Nair,zara.nair82@examplemail.com,Orbit Inc,RevOps Manager,churn_risk,import,UAE,2025-04-09,2025-12-29
+cli_0003_ct_0084,Maya Kapoor,maya.kapoor83@examplemail.com,Nova Finance,Marketing Manager,lead,website_form,India,2025-06-10,2026-02-04
+cli_0003_ct_0085,Anika Nair,anika.nair84@examplemail.com,Metro Ltd,Founder,lead,event,Canada,2025-02-06,2026-04-15
+cli_0003_ct_0086,Kabir Khan,kabir.khan85@examplemail.com,Acme Ltd,Sales Lead,customer,event,United Kingdom,2025-10-30,2026-04-17
+cli_0003_ct_0087,Maya Joshi,maya.joshi86@examplemail.com,Nova Finance,Marketing Manager,mql,import,UAE,2024-12-13,2026-01-28
+cli_0003_ct_0088,Leo Patel,leo.patel87@examplemail.com,Orbit LLC,Head of Growth,lead,event,UAE,2024-11-27,2025-12-25
+cli_0003_ct_0089,Ishaan Patel,ishaan.patel88@examplemail.com,Nova Finance,Head of Growth,mql,referral,Australia,2024-11-27,2026-02-19
+cli_0003_ct_0090,Ishaan Reddy,ishaan.reddy89@examplemail.com,Nova Finance,Marketing Manager,sql,email_reply,India,2026-02-23,2026-02-03
+cli_0003_ct_0091,Anika Nair,anika.nair90@examplemail.com,Nova Finance,Founder,lead,referral,India,2025-02-14,2026-04-12
+cli_0003_ct_0092,Zara Reddy,zara.reddy91@examplemail.com,Orbit Ltd,Sales Lead,lead,website_form,Australia,2025-05-01,2026-04-16
+cli_0003_ct_0093,Arjun Bhatia,arjun.bhatia92@examplemail.com,Nova Finance,Marketing Manager,churn_risk,website_form,United Kingdom,2025-02-12,2026-03-04
+cli_0003_ct_0094,Ishaan Khan,ishaan.khan93@examplemail.com,Acme Group,Head of Growth,sql,website_form,United Kingdom,2025-07-25,2026-04-15
+cli_0003_ct_0095,Liam Nair,liam.nair94@examplemail.com,Zen LLC,Marketing Manager,lead,event,Canada,2026-04-13,2026-01-22
+cli_0003_ct_0096,Ishaan Gupta,ishaan.gupta95@examplemail.com,Zen Group,Marketing Manager,customer,event,Canada,2025-12-24,2026-02-18
+cli_0003_ct_0097,Ishaan Sharma,ishaan.sharma96@examplemail.com,Nova Finance,Sales Lead,sql,website_form,Australia,2025-01-20,2026-03-19
+cli_0003_ct_0098,Anika Bhatia,anika.bhatia97@examplemail.com,Acme Ltd,Head of Growth,mql,import,Canada,2025-08-19,2026-02-04
+cli_0003_ct_0099,Liam Patel,liam.patel98@examplemail.com,Peak LLC,Founder,lead,import,India,2025-10-14,2026-04-03
+cli_0003_ct_0100,Noah Sharma,noah.sharma99@examplemail.com,Nova Finance,Founder,sql,import,Canada,2025-10-27,2026-02-28
+cli_0003_ct_0101,Zara Mehta,zara.mehta100@examplemail.com,Nova Finance,Marketing Manager,sql,import,Canada,2025-10-30,2026-02-03
+cli_0003_ct_0102,Liam Khan,liam.khan101@examplemail.com,Acme LLC,Sales Lead,lead,event,United Kingdom,2025-02-03,2026-02-02
+cli_0003_ct_0103,Kabir Verma,kabir.verma102@examplemail.com,Peak Group,Sales Lead,lead,website_form,India,2025-05-13,2026-01-12
+cli_0003_ct_0104,Ishaan Verma,ishaan.verma103@examplemail.com,Nova Finance,Marketing Manager,mql,import,Australia,2024-12-10,2026-02-02
+cli_0003_ct_0105,Ava Patel,ava.patel104@examplemail.com,Peak LLC,Sales Lead,mql,website_form,United States,2025-10-04,2026-04-20
+cli_0003_ct_0106,Kabir Reddy,kabir.reddy105@examplemail.com,Nova Finance,Head of Growth,customer,website_form,United States,2025-09-08,2026-03-15
+cli_0003_ct_0107,Arjun Sharma,arjun.sharma106@examplemail.com,Orbit Group,Founder,customer,website_form,India,2025-11-10,2026-03-22
+cli_0003_ct_0108,Sara Mehta,sara.mehta107@examplemail.com,Nova Finance,RevOps Manager,sql,referral,Australia,2025-02-02,2026-01-20
+cli_0003_ct_0109,Liam Patel,liam.patel108@examplemail.com,Orbit LLC,Sales Lead,sql,import,United States,2025-01-17,2026-04-22
+cli_0003_ct_0110,Liam Mehta,liam.mehta109@examplemail.com,Nova Finance,Head of Growth,sql,referral,UAE,2025-12-24,2026-03-04
+cli_0003_ct_0111,Leo Reddy,leo.reddy110@examplemail.com,Metro LLC,Marketing Manager,churn_risk,website_form,UAE,2024-11-21,2026-01-17
+cli_0003_ct_0112,Arjun Mehta,arjun.mehta111@examplemail.com,Zen Ltd,Sales Lead,customer,email_reply,United Kingdom,2025-12-22,2026-03-10
+cli_0003_ct_0113,Ishaan Singh,ishaan.singh112@examplemail.com,Nova Finance,Marketing Manager,sql,email_reply,Canada,2025-05-31,2026-02-03
+cli_0003_ct_0114,Mia Sharma,mia.sharma113@examplemail.com,Nova Finance,Marketing Manager,lead,event,United Kingdom,2026-01-17,2026-02-24
+cli_0003_ct_0115,Ava Nair,ava.nair114@examplemail.com,Nova Finance,Head of Growth,lead,website_form,India,2024-11-26,2026-04-07
+cli_0003_ct_0116,Sara Joshi,sara.joshi115@examplemail.com,Orbit LLC,Head of Growth,lead,website_form,India,2025-01-05,2026-04-08
+cli_0003_ct_0117,Zara Singh,zara.singh116@examplemail.com,Orbit Group,Marketing Manager,mql,event,United Kingdom,2025-06-01,2026-02-19
+cli_0003_ct_0118,Zara Sharma,zara.sharma117@examplemail.com,Nova Finance,RevOps Manager,customer,referral,UAE,2025-11-07,2026-04-15
+cli_0003_ct_0119,Arjun Mehta,arjun.mehta118@examplemail.com,Nova Finance,Marketing Manager,mql,import,UAE,2026-02-26,2026-04-09
+cli_0003_ct_0120,Anika Mehta,anika.mehta119@examplemail.com,Orbit Group,Marketing Manager,sql,website_form,United Kingdom,2025-03-20,2026-03-14
+cli_0003_ct_0121,Kabir Sharma,kabir.sharma120@examplemail.com,Nova Finance,Founder,lead,email_reply,United Kingdom,2026-01-31,2026-03-31
+cli_0003_ct_0122,Mia Mehta,mia.mehta121@examplemail.com,Nova Finance,Head of Growth,customer,website_form,United States,2024-12-04,2026-01-30
+cli_0003_ct_0123,Maya Singh,maya.singh122@examplemail.com,Acme Inc,RevOps Manager,customer,website_form,Australia,2025-11-01,2026-03-09
+cli_0003_ct_0124,Ishaan Singh,ishaan.singh123@examplemail.com,Nova Finance,Head of Growth,sql,import,India,2025-03-21,2026-01-18
+cli_0003_ct_0125,Zara Nair,zara.nair124@examplemail.com,Nova Finance,Sales Lead,mql,referral,United Kingdom,2025-05-09,2026-01-17
+cli_0003_ct_0126,Leo Khan,leo.khan125@examplemail.com,Orbit Ltd,Sales Lead,churn_risk,event,Australia,2025-12-19,2026-02-11
+cli_0003_ct_0127,Maya Bhatia,maya.bhatia126@examplemail.com,Nova Finance,Head of Growth,mql,website_form,United Kingdom,2025-05-20,2026-03-16
+cli_0003_ct_0128,Ishaan Reddy,ishaan.reddy127@examplemail.com,Nova Finance,Marketing Manager,churn_risk,import,United States,2025-07-25,2026-02-06
+cli_0003_ct_0129,Mia Joshi,mia.joshi128@examplemail.com,Nova Finance,Sales Lead,mql,import,India,2025-09-28,2026-03-25
+cli_0003_ct_0130,Arjun Patel,arjun.patel129@examplemail.com,Peak LLC,Sales Lead,lead,website_form,Australia,2025-09-23,2026-01-30
+cli_0003_ct_0131,Ishaan Kapoor,ishaan.kapoor130@examplemail.com,Nova Finance,Marketing Manager,sql,import,UAE,2024-11-14,2026-02-26
+cli_0003_ct_0132,Liam Singh,liam.singh131@examplemail.com,Orbit Ltd,Marketing Manager,customer,event,Canada,2025-08-25,2026-04-17
+cli_0003_ct_0133,Anika Nair,anika.nair132@examplemail.com,Peak Group,Head of Growth,mql,import,Australia,2026-02-22,2026-01-06
+cli_0003_ct_0134,Ishaan Gupta,ishaan.gupta133@examplemail.com,Zen Ltd,Founder,lead,website_form,United States,2025-05-19,2026-04-02
+cli_0003_ct_0135,Anika Joshi,anika.joshi134@examplemail.com,Peak Inc,Marketing Manager,sql,referral,India,2026-04-20,2026-04-13
+cli_0003_ct_0136,Mia Reddy,mia.reddy135@examplemail.com,Nova Finance,RevOps Manager,customer,referral,Canada,2025-01-31,2025-12-31
+cli_0003_ct_0137,Leo Khan,leo.khan136@examplemail.com,Nova Finance,RevOps Manager,sql,email_reply,UAE,2025-01-12,2026-03-23
+cli_0003_ct_0138,Arjun Mehta,arjun.mehta137@examplemail.com,Orbit Inc,RevOps Manager,lead,email_reply,Australia,2026-04-20,2025-12-25
+cli_0003_ct_0139,Liam Joshi,liam.joshi138@examplemail.com,Nova Finance,Marketing Manager,mql,website_form,Australia,2025-03-08,2026-01-03
+cli_0003_ct_0140,Noah Joshi,noah.joshi139@examplemail.com,Nova Finance,Sales Lead,churn_risk,event,United Kingdom,2024-11-20,2026-02-05
+cli_0003_ct_0141,Anika Bhatia,anika.bhatia140@examplemail.com,Peak Ltd,Sales Lead,mql,import,India,2026-04-05,2026-02-20
+cli_0003_ct_0142,Anika Patel,anika.patel141@examplemail.com,Acme LLC,Head of Growth,customer,event,United States,2024-11-24,2026-04-19
+cli_0003_ct_0143,Arjun Gupta,arjun.gupta142@examplemail.com,Nova Finance,Marketing Manager,churn_risk,email_reply,India,2024-11-01,2026-02-22
+cli_0003_ct_0144,Arjun Reddy,arjun.reddy143@examplemail.com,Zen Group,Marketing Manager,lead,import,Australia,2026-01-11,2026-03-06
+cli_0003_ct_0145,Noah Joshi,noah.joshi144@examplemail.com,Peak LLC,RevOps Manager,lead,website_form,United Kingdom,2025-08-20,2026-04-08
+cli_0003_ct_0146,Mia Kapoor,mia.kapoor145@examplemail.com,Nova Finance,Marketing Manager,mql,event,Australia,2025-08-29,2026-03-16
+cli_0003_ct_0147,Maya Kapoor,maya.kapoor146@examplemail.com,Zen LLC,Marketing Manager,churn_risk,website_form,Canada,2024-12-03,2026-04-06
+cli_0003_ct_0148,Ava Nair,ava.nair147@examplemail.com,Nova Finance,Marketing Manager,mql,import,UAE,2024-12-12,2026-01-15
+cli_0003_ct_0149,Zara Reddy,zara.reddy148@examplemail.com,Peak Ltd,Sales Lead,mql,event,Canada,2025-01-08,2026-04-20
+cli_0003_ct_0150,Ishaan Joshi,ishaan.joshi149@examplemail.com,Nova Finance,RevOps Manager,lead,website_form,Canada,2025-04-16,2026-03-09
+cli_0003_ct_0151,Anika Sharma,anika.sharma150@examplemail.com,Peak LLC,Marketing Manager,sql,import,United Kingdom,2025-12-25,2026-01-26
+cli_0003_ct_0152,Ishaan Nair,ishaan.nair151@examplemail.com,Orbit Group,Marketing Manager,lead,email_reply,United States,2025-04-23,2026-04-10
+cli_0003_ct_0153,Sara Kapoor,sara.kapoor152@examplemail.com,Nova Finance,Marketing Manager,lead,email_reply,United States,2024-11-20,2026-03-08
+cli_0003_ct_0154,Maya Nair,maya.nair153@examplemail.com,Nova Finance,Marketing Manager,mql,import,India,2026-01-20,2026-04-07
+cli_0003_ct_0155,Ishaan Kapoor,ishaan.kapoor154@examplemail.com,Nova Finance,Head of Growth,mql,email_reply,Canada,2025-01-24,2026-03-08
+cli_0003_ct_0156,Maya Kapoor,maya.kapoor155@examplemail.com,Metro Group,Marketing Manager,lead,referral,Canada,2025-10-13,2025-12-26
+cli_0003_ct_0157,Kabir Patel,kabir.patel156@examplemail.com,Nova Finance,Sales Lead,customer,email_reply,India,2025-12-28,2026-02-17
+cli_0003_ct_0158,Kabir Reddy,kabir.reddy157@examplemail.com,Peak Ltd,Sales Lead,lead,import,Canada,2026-02-26,2026-01-12
+cli_0003_ct_0159,Ishaan Mehta,ishaan.mehta158@examplemail.com,Peak LLC,Sales Lead,mql,website_form,Canada,2025-03-03,2026-02-24
+cli_0003_ct_0160,Arjun Bhatia,arjun.bhatia159@examplemail.com,Orbit Ltd,Head of Growth,lead,website_form,Canada,2026-04-12,2026-04-16
+cli_0003_ct_0161,Liam Kapoor,liam.kapoor160@examplemail.com,Orbit Inc,Head of Growth,customer,website_form,UAE,2025-12-04,2026-04-06
+cli_0003_ct_0162,Noah Singh,noah.singh161@examplemail.com,Nova Finance,Founder,mql,referral,Australia,2025-07-12,2026-04-02
+cli_0003_ct_0163,Ishaan Mehta,ishaan.mehta162@examplemail.com,Orbit Group,Founder,lead,email_reply,Australia,2025-08-03,2026-01-17
+cli_0003_ct_0164,Arjun Joshi,arjun.joshi163@examplemail.com,Metro LLC,RevOps Manager,lead,email_reply,United Kingdom,2025-08-22,2026-01-28
+cli_0003_ct_0165,Noah Reddy,noah.reddy164@examplemail.com,Nova Finance,Marketing Manager,lead,website_form,United Kingdom,2025-07-25,2025-12-27
+cli_0003_ct_0166,Anika Reddy,anika.reddy165@examplemail.com,Nova Finance,Head of Growth,lead,event,Australia,2026-02-20,2026-02-22
+cli_0003_ct_0167,Mia Gupta,mia.gupta166@examplemail.com,Nova Finance,Head of Growth,lead,website_form,United States,2025-09-16,2026-04-12
+cli_0003_ct_0168,Anika Khan,anika.khan167@examplemail.com,Nova Finance,Head of Growth,churn_risk,import,United States,2025-04-19,2026-03-30
+cli_0003_ct_0169,Ishaan Kapoor,ishaan.kapoor168@examplemail.com,Nova Finance,Sales Lead,lead,import,Australia,2025-09-05,2026-03-28
+cli_0003_ct_0170,Zara Bhatia,zara.bhatia169@examplemail.com,Orbit Ltd,Sales Lead,mql,import,United States,2025-11-04,2026-02-10
+cli_0003_ct_0171,Noah Gupta,noah.gupta170@examplemail.com,Nova Finance,Marketing Manager,mql,referral,United States,2025-12-12,2026-04-08
+cli_0003_ct_0172,Sara Mehta,sara.mehta171@examplemail.com,Acme Ltd,Marketing Manager,lead,import,Australia,2025-05-21,2026-03-01
+cli_0003_ct_0173,Zara Kapoor,zara.kapoor172@examplemail.com,Metro Inc,Sales Lead,mql,referral,Canada,2026-01-22,2026-04-03
+cli_0003_ct_0174,Kabir Sharma,kabir.sharma173@examplemail.com,Orbit LLC,Sales Lead,sql,website_form,UAE,2024-12-14,2026-02-15
+cli_0003_ct_0175,Liam Verma,liam.verma174@examplemail.com,Nova Finance,Founder,sql,event,Australia,2025-03-26,2026-03-27
+cli_0003_ct_0176,Liam Singh,liam.singh175@examplemail.com,Orbit Inc,Founder,lead,website_form,United Kingdom,2025-07-02,2026-01-26
+cli_0003_ct_0177,Ava Patel,ava.patel176@examplemail.com,Nova Finance,Head of Growth,lead,website_form,India,2025-09-28,2026-03-14
+cli_0003_ct_0178,Anika Nair,anika.nair177@examplemail.com,Nova Finance,RevOps Manager,mql,referral,United Kingdom,2026-02-09,2026-01-07
+cli_0003_ct_0179,Liam Verma,liam.verma178@examplemail.com,Orbit Group,Sales Lead,sql,email_reply,United Kingdom,2025-07-29,2026-04-22
+cli_0003_ct_0180,Sara Mehta,sara.mehta179@examplemail.com,Metro Inc,Sales Lead,lead,website_form,Australia,2026-04-10,2026-02-14
+cli_0003_ct_0181,Arjun Khan,arjun.khan180@examplemail.com,Nova Finance,Founder,sql,website_form,United Kingdom,2025-11-02,2026-04-11
+cli_0003_ct_0182,Anika Bhatia,anika.bhatia181@examplemail.com,Acme Inc,Head of Growth,lead,event,India,2024-11-09,2026-04-09
+cli_0003_ct_0183,Liam Bhatia,liam.bhatia182@examplemail.com,Orbit Inc,Founder,mql,website_form,United States,2026-01-09,2025-12-27
+cli_0003_ct_0184,Leo Reddy,leo.reddy183@examplemail.com,Peak Group,Marketing Manager,mql,website_form,United States,2025-11-23,2026-02-01
+cli_0003_ct_0185,Leo Khan,leo.khan184@examplemail.com,Nova Finance,Marketing Manager,lead,email_reply,United States,2025-04-17,2026-01-28

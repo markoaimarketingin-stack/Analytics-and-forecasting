@@ -1,0 +1,40 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0002_em_0001,Offer,A quick update on Pulse Commerce,20086,19610,6268,877,107,3,2026-03-29
+cli_0002_em_0002,Re-engagement,Last chance for Pulse Commerce,22670,22230,12160,2555,68,4,2026-04-05
+cli_0002_em_0003,Launch,Last chance for Pulse Commerce,21264,20833,5312,520,93,2,2026-01-04
+cli_0002_em_0004,Education,New Pulse Commerce,37835,37073,6932,1202,156,0,2026-03-30
+cli_0002_em_0005,Education,How to improve Pulse Commerce,32251,30819,11805,2102,167,1,2026-02-19
+cli_0002_em_0006,Launch,Last chance for Pulse Commerce,22187,21798,2809,306,212,2,2025-11-06
+cli_0002_em_0007,Winback,Last chance for Pulse Commerce,47158,45847,8867,1069,102,2,2025-12-11
+cli_0002_em_0008,Newsletter,New Pulse Commerce,36830,36639,17837,818,188,2,2026-02-02
+cli_0002_em_0009,Launch,A quick update on Pulse Commerce,47816,46812,24527,3384,54,5,2025-12-14
+cli_0002_em_0010,Education,How to improve Pulse Commerce,37123,35627,12126,2306,191,2,2026-03-30
+cli_0002_em_0011,Launch,A quick update on Pulse Commerce,25576,24936,8876,1776,114,0,2025-11-14
+cli_0002_em_0012,Winback,A quick update on Pulse Commerce,6126,6024,2465,492,24,1,2026-04-22
+cli_0002_em_0013,Newsletter,New Pulse Commerce,38775,38486,8676,1295,54,1,2026-04-02
+cli_0002_em_0014,Re-engagement,Last chance for Pulse Commerce,13950,13715,5486,846,49,3,2026-01-29
+cli_0002_em_0015,Winback,New Pulse Commerce,16597,16318,8288,1218,138,3,2026-01-12
+cli_0002_em_0016,Re-engagement,New Pulse Commerce,17147,16787,4095,284,167,0,2026-02-06
+cli_0002_em_0017,Offer,A quick update on Pulse Commerce,47218,45277,20627,3638,166,3,2026-03-07
+cli_0002_em_0018,Re-engagement,New Pulse Commerce,42350,40643,18982,3844,380,0,2026-02-04
+cli_0002_em_0019,Newsletter,How to improve Pulse Commerce,19899,19646,7623,1126,41,3,2025-12-23
+cli_0002_em_0020,Education,New Pulse Commerce,48555,46396,24374,2489,276,1,2026-03-24
+cli_0002_em_0021,Launch,Last chance for Pulse Commerce,14544,14210,4592,976,135,1,2026-01-10
+cli_0002_em_0022,Launch,New Pulse Commerce,17714,17025,6711,1384,17,5,2026-04-20
+cli_0002_em_0023,Launch,New Pulse Commerce,39954,38119,12821,2157,179,4,2025-11-05
+cli_0002_em_0024,Education,How to improve Pulse Commerce,9963,9720,2753,375,67,4,2026-02-23
+cli_0002_em_0025,Education,Last chance for Pulse Commerce,23279,23013,10701,1770,52,2,2026-04-06
+cli_0002_em_0026,Re-engagement,New Pulse Commerce,19914,19694,5643,655,2,2,2025-12-27
+cli_0002_em_0027,Launch,New Pulse Commerce,26508,26262,6266,424,264,0,2026-01-02
+cli_0002_em_0028,Re-engagement,A quick update on Pulse Commerce,4924,4905,2006,433,33,5,2026-03-04
+cli_0002_em_0029,Offer,Last chance for Pulse Commerce,33449,31866,10759,646,132,5,2026-04-10
+cli_0002_em_0030,Winback,How to improve Pulse Commerce,33449,32410,16283,1460,284,0,2025-12-12
+cli_0002_em_0031,Launch,New Pulse Commerce,44234,42507,16505,3167,314,1,2025-11-03
+cli_0002_em_0032,Education,New Pulse Commerce,26809,25726,12845,1368,213,5,2026-01-03
+cli_0002_em_0033,Offer,New Pulse Commerce,2549,2455,823,47,20,1,2025-12-04
+cli_0002_em_0034,Offer,A quick update on Pulse Commerce,38982,38753,20213,3412,306,0,2026-03-13
+cli_0002_em_0035,Newsletter,How to improve Pulse Commerce,9876,9420,2594,129,97,1,2026-03-20
+cli_0002_em_0036,Education,A quick update on Pulse Commerce,36895,36148,7016,1450,28,2,2025-12-04
+cli_0002_em_0037,Re-engagement,A quick update on Pulse Commerce,48846,48354,13850,1399,78,3,2025-12-10
+cli_0002_em_0038,Winback,New Pulse Commerce,12356,11739,3926,219,25,4,2025-12-07
+cli_0002_em_0039,Education,New Pulse Commerce,45744,43474,19064,2691,28,0,2025-11-26

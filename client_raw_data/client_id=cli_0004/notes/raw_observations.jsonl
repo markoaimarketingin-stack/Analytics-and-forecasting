@@ -1,0 +1,49 @@
+{"observation_id": "cli_0004_obs_001", "source": "call", "created_at": "2025-12-03T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.94}
+{"observation_id": "cli_0004_obs_002", "source": "doc", "created_at": "2025-11-28T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.85}
+{"observation_id": "cli_0004_obs_003", "source": "doc", "created_at": "2026-02-09T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.48}
+{"observation_id": "cli_0004_obs_004", "source": "call", "created_at": "2026-04-14T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.94}
+{"observation_id": "cli_0004_obs_005", "source": "call", "created_at": "2026-03-06T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.79}
+{"observation_id": "cli_0004_obs_006", "source": "email", "created_at": "2026-02-25T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.68}
+{"observation_id": "cli_0004_obs_007", "source": "call", "created_at": "2025-12-18T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.92}
+{"observation_id": "cli_0004_obs_008", "source": "whatsapp", "created_at": "2026-04-21T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.85}
+{"observation_id": "cli_0004_obs_009", "source": "slack", "created_at": "2025-12-25T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.97}
+{"observation_id": "cli_0004_obs_010", "source": "email", "created_at": "2026-01-08T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.79}
+{"observation_id": "cli_0004_obs_011", "source": "slack", "created_at": "2026-03-26T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.72}
+{"observation_id": "cli_0004_obs_012", "source": "whatsapp", "created_at": "2025-12-09T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.91}
+{"observation_id": "cli_0004_obs_013", "source": "doc", "created_at": "2026-01-18T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.66}
+{"observation_id": "cli_0004_obs_014", "source": "whatsapp", "created_at": "2026-01-18T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.65}
+{"observation_id": "cli_0004_obs_015", "source": "slack", "created_at": "2025-11-20T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.91}
+{"observation_id": "cli_0004_obs_016", "source": "call", "created_at": "2025-12-03T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.55}
+{"observation_id": "cli_0004_obs_017", "source": "whatsapp", "created_at": "2026-04-21T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.84}
+{"observation_id": "cli_0004_obs_018", "source": "email", "created_at": "2025-11-26T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.87}
+{"observation_id": "cli_0004_obs_019", "source": "call", "created_at": "2026-03-06T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.62}
+{"observation_id": "cli_0004_obs_020", "source": "whatsapp", "created_at": "2025-12-22T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.75}
+{"observation_id": "cli_0004_obs_021", "source": "email", "created_at": "2025-10-26T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.86}
+{"observation_id": "cli_0004_obs_022", "source": "doc", "created_at": "2025-12-03T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.48}
+{"observation_id": "cli_0004_obs_023", "source": "doc", "created_at": "2026-01-15T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.91}
+{"observation_id": "cli_0004_obs_024", "source": "email", "created_at": "2026-02-04T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.9}
+{"observation_id": "cli_0004_obs_025", "source": "email", "created_at": "2025-12-14T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.94}
+{"observation_id": "cli_0004_obs_026", "source": "slack", "created_at": "2025-12-04T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.86}
+{"observation_id": "cli_0004_obs_027", "source": "call", "created_at": "2026-01-16T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.9}
+{"observation_id": "cli_0004_obs_028", "source": "slack", "created_at": "2025-11-25T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.56}
+{"observation_id": "cli_0004_obs_029", "source": "slack", "created_at": "2026-02-17T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.47}
+{"observation_id": "cli_0004_obs_030", "source": "call", "created_at": "2026-01-19T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.81}
+{"observation_id": "cli_0004_obs_031", "source": "doc", "created_at": "2025-11-07T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.66}
+{"observation_id": "cli_0004_obs_032", "source": "whatsapp", "created_at": "2026-04-15T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.6}
+{"observation_id": "cli_0004_obs_033", "source": "slack", "created_at": "2026-03-20T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.59}
+{"observation_id": "cli_0004_obs_034", "source": "whatsapp", "created_at": "2025-11-24T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.75}
+{"observation_id": "cli_0004_obs_035", "source": "call", "created_at": "2026-04-21T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.9}
+{"observation_id": "cli_0004_obs_036", "source": "email", "created_at": "2025-12-24T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.69}
+{"observation_id": "cli_0004_obs_037", "source": "whatsapp", "created_at": "2025-11-22T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.45}
+{"observation_id": "cli_0004_obs_038", "source": "slack", "created_at": "2026-04-22T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.73}
+{"observation_id": "cli_0004_obs_039", "source": "email", "created_at": "2026-03-27T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.81}
+{"observation_id": "cli_0004_obs_040", "source": "email", "created_at": "2025-12-14T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.49}
+{"observation_id": "cli_0004_obs_041", "source": "email", "created_at": "2025-12-10T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.66}
+{"observation_id": "cli_0004_obs_042", "source": "whatsapp", "created_at": "2025-12-04T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.68}
+{"observation_id": "cli_0004_obs_043", "source": "slack", "created_at": "2026-04-09T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.68}
+{"observation_id": "cli_0004_obs_044", "source": "email", "created_at": "2026-02-06T20:55:57.154443Z", "text": "Geo performance differs a lot.", "confidence": 0.71}
+{"observation_id": "cli_0004_obs_045", "source": "email", "created_at": "2026-04-21T20:55:57.154443Z", "text": "Audience overlaps are likely causing waste.", "confidence": 0.9}
+{"observation_id": "cli_0004_obs_046", "source": "call", "created_at": "2026-03-01T20:55:57.154443Z", "text": "Copy is too aggressive for policy.", "confidence": 0.72}
+{"observation_id": "cli_0004_obs_047", "source": "slack", "created_at": "2026-04-16T20:55:57.154443Z", "text": "Budget may need to shift next month.", "confidence": 0.59}
+{"observation_id": "cli_0004_obs_048", "source": "doc", "created_at": "2026-02-23T20:55:57.154443Z", "text": "Reporting is delayed.", "confidence": 0.78}
+{"observation_id": "cli_0004_obs_049", "source": "doc", "created_at": "2025-12-30T20:55:57.154443Z", "text": "Attribution seems noisy.", "confidence": 0.55}

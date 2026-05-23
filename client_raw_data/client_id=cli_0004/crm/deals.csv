@@ -1,0 +1,48 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0004_dl_0001,cli_0004_ct_0043,North Growth - service retainer,new,11707.33,AED,39,email_reply,Maya Bhatia,2025-11-22,2025-12-12
+cli_0004_dl_0002,cli_0004_ct_0005,North Growth - premium bundle,lost,2990.29,AED,52,import,Leo Mehta,2025-12-14,2026-01-08
+cli_0004_dl_0003,cli_0004_ct_0018,North Growth - starter plan,proposal,18435.54,AED,87,email_reply,Zara Joshi,2025-12-07,2026-01-28
+cli_0004_dl_0004,cli_0004_ct_0027,North Growth - pro plan,proposal,1284.29,AED,12,import,Arjun Mehta,2025-09-23,2025-11-04
+cli_0004_dl_0005,cli_0004_ct_0078,North Growth - starter plan,qualified,21467.09,AED,70,email_reply,Ava Reddy,2025-09-27,2025-11-05
+cli_0004_dl_0006,cli_0004_ct_0087,North Growth - service retainer,qualified,6867.7,AED,18,import,Zara Nair,2026-02-15,2026-03-20
+cli_0004_dl_0007,cli_0004_ct_0041,North Growth - service retainer,won,10127.47,AED,85,event,Sara Mehta,2025-12-31,2026-01-07
+cli_0004_dl_0008,cli_0004_ct_0022,North Growth - audit package,new,20914.64,AED,53,email_reply,Ishaan Sharma,2026-03-10,2026-03-24
+cli_0004_dl_0009,cli_0004_ct_0046,North Growth - membership,lost,24792.67,AED,94,referral,Leo Singh,2026-01-01,2026-02-22
+cli_0004_dl_0010,cli_0004_ct_0064,North Growth - pro plan,proposal,3234.89,AED,62,email_reply,Ishaan Bhatia,2026-04-07,2026-04-21
+cli_0004_dl_0011,cli_0004_ct_0053,North Growth - audit package,won,3844.39,AED,64,referral,Anika Reddy,2025-09-25,2025-11-21
+cli_0004_dl_0012,cli_0004_ct_0018,North Growth - premium bundle,negotiation,17539.59,AED,28,email_reply,Ishaan Khan,2025-12-29,2026-02-16
+cli_0004_dl_0013,cli_0004_ct_0059,North Growth - starter plan,won,6874.77,AED,7,website_form,Arjun Patel,2025-11-27,2025-12-18
+cli_0004_dl_0014,cli_0004_ct_0036,North Growth - service retainer,lost,6597.42,AED,66,event,Anika Reddy,2026-04-06,2026-04-24
+cli_0004_dl_0015,cli_0004_ct_0051,North Growth - pro plan,won,7915.61,AED,49,email_reply,Ishaan Nair,2026-01-07,2026-01-10
+cli_0004_dl_0016,cli_0004_ct_0037,North Growth - membership,won,9377.68,AED,82,website_form,Maya Nair,2025-11-16,2025-12-15
+cli_0004_dl_0017,cli_0004_ct_0034,North Growth - pro plan,proposal,17192.92,AED,83,website_form,Ishaan Mehta,2026-03-20,2026-04-09
+cli_0004_dl_0018,cli_0004_ct_0069,North Growth - premium bundle,proposal,12294.04,AED,22,website_form,Ava Patel,2026-02-25,2026-03-23
+cli_0004_dl_0019,cli_0004_ct_0058,North Growth - premium bundle,qualified,16450.4,AED,29,event,Mia Verma,2026-01-05,2026-01-28
+cli_0004_dl_0020,cli_0004_ct_0010,North Growth - audit package,qualified,22369.1,AED,58,import,Arjun Singh,2025-10-24,2025-11-22
+cli_0004_dl_0021,cli_0004_ct_0042,North Growth - audit package,proposal,22936.25,AED,23,import,Liam Khan,2025-11-11,2025-12-27
+cli_0004_dl_0022,cli_0004_ct_0041,North Growth - service retainer,new,13895.22,AED,38,event,Liam Mehta,2026-03-09,2026-03-29
+cli_0004_dl_0023,cli_0004_ct_0071,North Growth - audit package,new,9941.82,AED,42,import,Ava Reddy,2025-10-01,2025-11-05
+cli_0004_dl_0024,cli_0004_ct_0002,North Growth - audit package,proposal,18656.3,AED,14,email_reply,Liam Gupta,2025-11-21,2026-01-19
+cli_0004_dl_0025,cli_0004_ct_0059,North Growth - annual subscription,qualified,5224.47,AED,75,website_form,Zara Singh,2025-10-27,2025-12-16
+cli_0004_dl_0026,cli_0004_ct_0022,North Growth - membership,new,7775.49,AED,70,email_reply,Sara Nair,2026-03-07,2026-04-19
+cli_0004_dl_0027,cli_0004_ct_0034,North Growth - pro plan,negotiation,6490.28,AED,18,website_form,Zara Nair,2026-02-25,2026-04-11
+cli_0004_dl_0028,cli_0004_ct_0067,North Growth - service retainer,lost,21342.15,AED,41,event,Maya Nair,2026-03-25,2026-03-29
+cli_0004_dl_0029,cli_0004_ct_0018,North Growth - service retainer,won,2526.55,AED,17,email_reply,Leo Reddy,2026-02-28,2026-03-06
+cli_0004_dl_0030,cli_0004_ct_0012,North Growth - pro plan,qualified,8408.65,AED,27,import,Liam Reddy,2025-12-26,2026-02-13
+cli_0004_dl_0031,cli_0004_ct_0039,North Growth - service retainer,negotiation,22894.83,AED,20,import,Ava Bhatia,2026-01-12,2026-03-10
+cli_0004_dl_0032,cli_0004_ct_0041,North Growth - audit package,new,12743.31,AED,31,event,Leo Sharma,2025-09-17,2025-10-27
+cli_0004_dl_0033,cli_0004_ct_0024,North Growth - starter plan,proposal,7829.55,AED,6,website_form,Ishaan Reddy,2026-04-03,2026-04-24
+cli_0004_dl_0034,cli_0004_ct_0017,North Growth - membership,qualified,11439.64,AED,13,event,Anika Singh,2025-12-10,2026-02-05
+cli_0004_dl_0035,cli_0004_ct_0037,North Growth - premium bundle,proposal,13040.33,AED,71,website_form,Arjun Singh,2026-01-08,2026-01-22
+cli_0004_dl_0036,cli_0004_ct_0056,North Growth - pro plan,qualified,12298.71,AED,10,website_form,Anika Mehta,2026-02-13,2026-03-13
+cli_0004_dl_0037,cli_0004_ct_0033,North Growth - audit package,proposal,5861.56,AED,44,email_reply,Maya Bhatia,2025-11-08,2025-11-21
+cli_0004_dl_0038,cli_0004_ct_0023,North Growth - service retainer,new,10593.25,AED,73,event,Maya Kapoor,2025-10-11,2025-11-20
+cli_0004_dl_0039,cli_0004_ct_0020,North Growth - annual subscription,qualified,10135.89,AED,49,website_form,Ishaan Bhatia,2025-10-28,2025-11-05
+cli_0004_dl_0040,cli_0004_ct_0074,North Growth - audit package,negotiation,689.53,AED,51,referral,Noah Gupta,2026-01-26,2026-02-18
+cli_0004_dl_0041,cli_0004_ct_0001,North Growth - annual subscription,lost,22693.68,AED,17,import,Mia Sharma,2025-11-25,2026-01-17
+cli_0004_dl_0042,cli_0004_ct_0053,North Growth - annual subscription,won,8913.65,AED,43,referral,Zara Gupta,2025-12-13,2026-01-04
+cli_0004_dl_0043,cli_0004_ct_0062,North Growth - service retainer,new,17526.54,AED,21,referral,Sara Verma,2026-01-09,2026-02-13
+cli_0004_dl_0044,cli_0004_ct_0069,North Growth - service retainer,new,21962.19,AED,65,website_form,Ishaan Khan,2026-01-21,2026-02-17
+cli_0004_dl_0045,cli_0004_ct_0001,North Growth - annual subscription,proposal,274.96,AED,9,import,Sara Nair,2025-12-22,2026-01-13
+cli_0004_dl_0046,cli_0004_ct_0034,North Growth - annual subscription,qualified,22295.76,AED,52,website_form,Zara Bhatia,2026-02-01,2026-02-23
+cli_0004_dl_0047,cli_0004_ct_0035,North Growth - membership,qualified,3113.51,AED,87,import,Ishaan Mehta,2025-10-14,2025-10-31

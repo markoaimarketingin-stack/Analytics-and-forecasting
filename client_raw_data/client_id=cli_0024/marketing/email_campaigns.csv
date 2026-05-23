@@ -1,0 +1,32 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0024_em_0001,Education,New Pulse Market,2880,2819,762,36,10,1,2026-03-14
+cli_0024_em_0002,Winback,New Pulse Market,16346,16161,7468,1231,66,5,2026-02-03
+cli_0024_em_0003,Newsletter,Last chance for Pulse Market,7638,7421,3803,459,21,3,2026-01-11
+cli_0024_em_0004,Newsletter,New Pulse Market,20019,19189,8972,1138,74,0,2025-11-11
+cli_0024_em_0005,Education,A quick update on Pulse Market,14996,14555,6215,670,121,5,2026-02-01
+cli_0024_em_0006,Winback,A quick update on Pulse Market,46124,45567,15482,1848,39,3,2025-11-14
+cli_0024_em_0007,Re-engagement,A quick update on Pulse Market,11272,10890,3085,439,98,3,2026-02-16
+cli_0024_em_0008,Winback,A quick update on Pulse Market,35767,34542,19310,3648,207,5,2025-11-17
+cli_0024_em_0009,Offer,A quick update on Pulse Market,39986,39520,8095,1166,188,5,2026-02-09
+cli_0024_em_0010,Offer,A quick update on Pulse Market,48555,47816,19870,2046,10,2,2026-02-26
+cli_0024_em_0011,Launch,How to improve Pulse Market,12930,12655,4681,720,98,2,2025-10-28
+cli_0024_em_0012,Newsletter,How to improve Pulse Market,27302,27036,6118,659,271,2,2025-12-05
+cli_0024_em_0013,Newsletter,A quick update on Pulse Market,32316,31053,11324,865,152,2,2026-02-13
+cli_0024_em_0014,Education,New Pulse Market,17153,16847,8633,1155,150,4,2025-12-08
+cli_0024_em_0015,Winback,Last chance for Pulse Market,31810,31367,14888,2025,281,0,2026-01-17
+cli_0024_em_0016,Offer,A quick update on Pulse Market,14981,14722,2735,127,112,3,2026-04-07
+cli_0024_em_0017,Launch,How to improve Pulse Market,1359,1333,334,15,9,2,2025-11-02
+cli_0024_em_0018,Re-engagement,A quick update on Pulse Market,13255,12984,4331,833,104,3,2025-11-08
+cli_0024_em_0019,Offer,New Pulse Market,31255,29705,4945,1039,0,0,2025-11-13
+cli_0024_em_0020,Education,New Pulse Market,36107,35300,8183,1640,281,3,2025-12-29
+cli_0024_em_0021,Re-engagement,How to improve Pulse Market,48099,46742,8580,1124,226,5,2026-02-07
+cli_0024_em_0022,Re-engagement,New Pulse Market,6761,6498,986,104,59,3,2026-01-10
+cli_0024_em_0023,Offer,Last chance for Pulse Market,12860,12329,6957,722,72,5,2025-11-24
+cli_0024_em_0024,Offer,Last chance for Pulse Market,30294,29424,13759,2128,89,1,2026-01-31
+cli_0024_em_0025,Newsletter,How to improve Pulse Market,20302,19786,3675,746,10,2,2025-11-16
+cli_0024_em_0026,Newsletter,A quick update on Pulse Market,38071,36894,20188,1441,204,1,2026-02-01
+cli_0024_em_0027,Launch,Last chance for Pulse Market,43110,41269,8506,1686,423,0,2025-11-09
+cli_0024_em_0028,Newsletter,Last chance for Pulse Market,17087,16854,2149,249,155,3,2025-11-16
+cli_0024_em_0029,Re-engagement,A quick update on Pulse Market,37745,36530,19455,2331,284,4,2025-11-01
+cli_0024_em_0030,Education,A quick update on Pulse Market,898,876,317,39,4,0,2026-03-05
+cli_0024_em_0031,Launch,A quick update on Pulse Market,14414,13961,4013,349,58,4,2025-11-21

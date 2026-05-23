@@ -1,0 +1,41 @@
+query,page,clicks,impressions,ctr,avg_position,country
+compare local_services solution,/product,413,40172,0.0171,35.1,IN
+buy local_services services,/product,282,27176,0.0574,32.9,US
+best local_services tools,/pricing,92,12319,0.0176,24.0,UK
+best local_services services,/pricing,131,40705,0.0656,4.5,US
+top local_services tools,/case-studies,212,39235,0.0696,26.8,IN
+best local_services solution,/,933,44304,0.1157,1.3,IN
+top local_services services,/case-studies,204,11829,0.0628,42.7,US
+top local_services software,/case-studies,1065,49373,0.05,35.8,IN
+top local_services solution,/,524,40422,0.0619,14.9,US
+compare local_services services,/product,593,41472,0.0816,16.5,UK
+top local_services tools,/pricing,815,22238,0.0855,20.1,IN
+top local_services services,/blog/guide,289,6877,0.0161,20.7,AU
+compare local_services software,/pricing,1183,42748,0.0788,34.8,IN
+buy local_services tools,/,850,35339,0.0763,33.2,IN
+buy local_services solution,/blog/guide,632,23426,0.004,18.2,US
+top local_services software,/case-studies,607,5022,0.0422,25.2,US
+best local_services tools,/pricing,897,30133,0.1139,18.4,AU
+buy local_services services,/,884,33821,0.0444,9.5,AU
+how to local_services software,/product,420,5144,0.0855,38.4,UK
+how to local_services tools,/blog/guide,783,41818,0.0865,12.2,AU
+top local_services solution,/blog/guide,395,48684,0.0435,16.2,US
+best local_services services,/blog/guide,1038,9321,0.0648,14.5,AU
+top local_services services,/case-studies,172,32795,0.0069,32.5,AU
+buy local_services software,/,356,4610,0.1011,22.1,IN
+how to local_services services,/,1188,41510,0.1196,4.6,IN
+top local_services services,/product,278,41811,0.011,4.3,IN
+compare local_services services,/product,1002,29296,0.104,38.1,UK
+how to local_services tools,/product,964,42164,0.0446,23.9,US
+best local_services software,/case-studies,562,26430,0.0864,10.6,AU
+compare local_services tools,/case-studies,707,17063,0.036,26.9,US
+how to local_services solution,/,836,7761,0.0529,18.5,US
+buy local_services tools,/case-studies,1019,43882,0.0381,3.8,UK
+how to local_services solution,/case-studies,853,39228,0.1071,3.7,AU
+compare local_services solution,/product,769,7343,0.0586,7.3,AU
+top local_services solution,/case-studies,282,17862,0.0998,35.2,US
+compare local_services solution,/,649,46880,0.0184,12.2,IN
+how to local_services solution,/blog/guide,1069,7753,0.0472,44.6,UK
+top local_services services,/case-studies,233,38324,0.0299,22.5,AU
+compare local_services software,/blog/guide,410,13736,0.0443,12.8,US
+compare local_services software,/case-studies,648,2850,0.1159,4.6,US

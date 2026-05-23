@@ -1,0 +1,21 @@
+{
+  "client_id": "cli_0025",
+  "company_name": "Pulse Finance",
+  "industry": "education",
+  "region": "CA",
+  "currency": "CAD",
+  "website": "https://pulse-finance.example.com",
+  "business_model": "b2c",
+  "employee_band": "201-500",
+  "objective": "purchase",
+  "budget_monthly": 60000,
+  "voice": "playful",
+  "channels": [
+    "email",
+    "linkedin_ads",
+    "tiktok_ads",
+    "google_ads",
+    "direct"
+  ],
+  "created_at": "2026-04-23T20:56:32.000018Z"
+}

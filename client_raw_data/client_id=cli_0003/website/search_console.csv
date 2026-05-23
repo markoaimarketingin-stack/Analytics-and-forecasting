@@ -1,0 +1,41 @@
+query,page,clicks,impressions,ctr,avg_position,country
+compare d2c tools,/case-studies,332,45875,0.0859,29.2,UK
+best d2c tools,/,597,39914,0.0083,21.4,IN
+buy d2c tools,/,723,5182,0.0449,2.1,US
+compare d2c solution,/product,603,42532,0.1111,22.5,AU
+top d2c software,/case-studies,1032,39632,0.0463,33.9,US
+buy d2c software,/case-studies,806,40603,0.1054,9.7,US
+how to d2c services,/blog/guide,359,12780,0.0119,25.8,UK
+compare d2c services,/,489,5134,0.0215,42.1,AU
+how to d2c services,/blog/guide,123,5102,0.0624,12.1,US
+top d2c solution,/case-studies,856,14087,0.0891,30.5,UK
+top d2c services,/blog/guide,810,49397,0.0364,41.2,US
+top d2c software,/product,1077,31393,0.0793,1.8,AU
+compare d2c services,/,195,6091,0.0969,42.8,IN
+buy d2c tools,/,18,40120,0.0089,25.9,UK
+top d2c tools,/blog/guide,520,413,0.1026,43.5,AU
+buy d2c services,/pricing,213,30153,0.1107,39.3,IN
+how to d2c services,/case-studies,1063,4167,0.1195,37.9,AU
+top d2c solution,/,601,12178,0.0503,37.8,US
+compare d2c tools,/pricing,1044,19337,0.0457,15.1,US
+compare d2c software,/case-studies,597,1464,0.1054,23.4,US
+top d2c tools,/pricing,448,25114,0.0448,8.1,UK
+top d2c solution,/product,334,491,0.0649,1.0,IN
+best d2c tools,/product,221,32640,0.0733,44.9,US
+compare d2c software,/,1132,39768,0.1037,6.3,IN
+how to d2c solution,/case-studies,1106,13827,0.0729,3.3,US
+top d2c tools,/,989,37066,0.0491,31.4,US
+top d2c tools,/case-studies,542,19262,0.0436,41.3,IN
+buy d2c software,/pricing,270,21165,0.1163,35.7,AU
+how to d2c services,/,613,14440,0.0428,39.3,UK
+how to d2c tools,/pricing,262,35009,0.0699,28.0,AU
+top d2c services,/pricing,382,17498,0.0022,8.0,UK
+how to d2c software,/,1,23688,0.0949,15.5,IN
+top d2c tools,/pricing,713,33685,0.0776,16.3,IN
+how to d2c solution,/case-studies,320,19531,0.0937,39.4,AU
+how to d2c solution,/blog/guide,933,24261,0.0236,1.1,US
+compare d2c software,/pricing,639,13046,0.0782,2.4,UK
+how to d2c services,/blog/guide,262,4264,0.1129,37.6,AU
+best d2c services,/product,953,37636,0.1104,1.9,IN
+best d2c solution,/product,1189,38165,0.0862,34.9,AU
+compare d2c solution,/blog/guide,935,28059,0.0715,13.2,IN

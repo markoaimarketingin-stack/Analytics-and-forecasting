@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0012",
+  "company_name": "Vertex Works",
+  "industry": "marketplace",
+  "region": "US",
+  "generated_at": "2026-04-23T20:56:11.198682Z",
+  "counts": {
+    "contacts": 196,
+    "deals": 79,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 10,
+    "marketing_rows": 300,
+    "email_campaigns": 47,
+    "posts": 60,
+    "comments": 120,
+    "tickets": 83,
+    "transcripts": 39,
+    "sessions": 26618,
+    "events": 132961,
+    "orders": 123,
+    "refunds": 7,
+    "invoices": 41,
+    "payments": 28,
+    "feedback": 56,
+    "feature_requests": 66,
+    "meeting_notes": 22,
+    "raw_observations": 35
+  }
+}

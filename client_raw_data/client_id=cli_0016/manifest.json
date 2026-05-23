@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0016",
+  "company_name": "Blue Commerce",
+  "industry": "hospitality",
+  "region": "SG",
+  "generated_at": "2026-04-23T20:56:17.845340Z",
+  "counts": {
+    "contacts": 103,
+    "deals": 58,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 6,
+    "uploads": 14,
+    "marketing_rows": 180,
+    "email_campaigns": 43,
+    "posts": 54,
+    "comments": 108,
+    "tickets": 73,
+    "transcripts": 42,
+    "sessions": 24339,
+    "events": 121730,
+    "orders": 61,
+    "refunds": 6,
+    "invoices": 36,
+    "payments": 28,
+    "feedback": 72,
+    "feature_requests": 54,
+    "meeting_notes": 19,
+    "raw_observations": 23
+  }
+}

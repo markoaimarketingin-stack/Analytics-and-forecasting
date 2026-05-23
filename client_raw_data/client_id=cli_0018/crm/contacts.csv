@@ -1,0 +1,149 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0018_ct_0001,Anika Verma,anika.verma0@examplemail.com,Metro Ltd,Marketing Manager,lead,referral,UAE,2026-03-26,2026-03-15
+cli_0018_ct_0002,Ishaan Patel,ishaan.patel1@examplemail.com,Orbit Ltd,Head of Growth,lead,import,UAE,2025-06-05,2026-01-14
+cli_0018_ct_0003,Noah Sharma,noah.sharma2@examplemail.com,Signal Collective,Head of Growth,sql,event,Australia,2025-11-14,2026-01-11
+cli_0018_ct_0004,Noah Mehta,noah.mehta3@examplemail.com,Signal Collective,Founder,lead,import,Canada,2025-12-08,2026-01-13
+cli_0018_ct_0005,Noah Verma,noah.verma4@examplemail.com,Signal Collective,Marketing Manager,lead,event,UAE,2025-11-07,2026-01-26
+cli_0018_ct_0006,Ishaan Sharma,ishaan.sharma5@examplemail.com,Acme Group,Sales Lead,sql,event,UAE,2025-03-11,2025-12-27
+cli_0018_ct_0007,Leo Gupta,leo.gupta6@examplemail.com,Zen Group,RevOps Manager,customer,import,United Kingdom,2024-11-22,2026-02-20
+cli_0018_ct_0008,Zara Nair,zara.nair7@examplemail.com,Signal Collective,Sales Lead,lead,event,United Kingdom,2025-05-04,2026-02-05
+cli_0018_ct_0009,Noah Kapoor,noah.kapoor8@examplemail.com,Peak Group,Head of Growth,lead,referral,United Kingdom,2026-03-14,2026-04-01
+cli_0018_ct_0010,Liam Joshi,liam.joshi9@examplemail.com,Orbit Ltd,Head of Growth,sql,import,Australia,2025-08-09,2026-02-07
+cli_0018_ct_0011,Maya Singh,maya.singh10@examplemail.com,Signal Collective,Sales Lead,lead,referral,UAE,2025-04-30,2025-12-28
+cli_0018_ct_0012,Ava Nair,ava.nair11@examplemail.com,Acme Inc,Head of Growth,mql,referral,Canada,2025-12-17,2026-01-23
+cli_0018_ct_0013,Ava Nair,ava.nair12@examplemail.com,Signal Collective,Marketing Manager,lead,import,United States,2026-01-22,2026-03-23
+cli_0018_ct_0014,Zara Khan,zara.khan13@examplemail.com,Signal Collective,Marketing Manager,lead,import,UAE,2025-02-17,2026-04-22
+cli_0018_ct_0015,Mia Sharma,mia.sharma14@examplemail.com,Signal Collective,Sales Lead,sql,import,Canada,2024-11-28,2026-02-02
+cli_0018_ct_0016,Maya Verma,maya.verma15@examplemail.com,Signal Collective,RevOps Manager,customer,referral,UAE,2025-11-14,2026-02-06
+cli_0018_ct_0017,Maya Bhatia,maya.bhatia16@examplemail.com,Acme Ltd,Marketing Manager,lead,website_form,UAE,2025-06-18,2026-03-02
+cli_0018_ct_0018,Sara Sharma,sara.sharma17@examplemail.com,Signal Collective,Sales Lead,mql,referral,UAE,2025-08-19,2026-03-05
+cli_0018_ct_0019,Ava Patel,ava.patel18@examplemail.com,Signal Collective,Sales Lead,mql,website_form,Canada,2025-05-28,2026-02-25
+cli_0018_ct_0020,Ava Mehta,ava.mehta19@examplemail.com,Orbit Ltd,Head of Growth,sql,website_form,United States,2026-02-26,2026-03-23
+cli_0018_ct_0021,Arjun Nair,arjun.nair20@examplemail.com,Metro Inc,Sales Lead,sql,website_form,Australia,2025-02-03,2026-01-14
+cli_0018_ct_0022,Ishaan Nair,ishaan.nair21@examplemail.com,Signal Collective,RevOps Manager,churn_risk,email_reply,Canada,2026-03-05,2026-03-02
+cli_0018_ct_0023,Anika Mehta,anika.mehta22@examplemail.com,Acme Group,Founder,sql,website_form,UAE,2025-04-27,2026-01-04
+cli_0018_ct_0024,Maya Verma,maya.verma23@examplemail.com,Zen Ltd,Sales Lead,lead,email_reply,UAE,2024-11-17,2026-03-02
+cli_0018_ct_0025,Liam Verma,liam.verma24@examplemail.com,Metro Group,RevOps Manager,sql,referral,Canada,2025-06-10,2026-04-02
+cli_0018_ct_0026,Kabir Khan,kabir.khan25@examplemail.com,Zen Inc,Marketing Manager,mql,email_reply,India,2025-01-13,2026-01-26
+cli_0018_ct_0027,Ishaan Mehta,ishaan.mehta26@examplemail.com,Signal Collective,Head of Growth,lead,email_reply,Canada,2025-08-01,2026-01-11
+cli_0018_ct_0028,Leo Reddy,leo.reddy27@examplemail.com,Zen Ltd,RevOps Manager,sql,import,Canada,2025-02-04,2026-04-16
+cli_0018_ct_0029,Liam Kapoor,liam.kapoor28@examplemail.com,Signal Collective,Sales Lead,mql,event,India,2025-05-19,2026-01-19
+cli_0018_ct_0030,Leo Reddy,leo.reddy29@examplemail.com,Zen Group,Head of Growth,mql,event,UAE,2025-04-26,2026-02-10
+cli_0018_ct_0031,Noah Kapoor,noah.kapoor30@examplemail.com,Peak Ltd,Sales Lead,lead,import,India,2025-06-13,2026-04-12
+cli_0018_ct_0032,Mia Reddy,mia.reddy31@examplemail.com,Metro LLC,Marketing Manager,mql,website_form,India,2026-01-22,2026-03-20
+cli_0018_ct_0033,Noah Sharma,noah.sharma32@examplemail.com,Orbit Ltd,Founder,customer,website_form,United Kingdom,2025-12-22,2026-03-29
+cli_0018_ct_0034,Arjun Reddy,arjun.reddy33@examplemail.com,Signal Collective,Sales Lead,sql,website_form,Australia,2025-05-27,2026-04-12
+cli_0018_ct_0035,Kabir Patel,kabir.patel34@examplemail.com,Acme Inc,Head of Growth,lead,website_form,United States,2025-12-10,2026-01-08
+cli_0018_ct_0036,Anika Khan,anika.khan35@examplemail.com,Signal Collective,Marketing Manager,mql,import,United States,2025-07-27,2026-04-07
+cli_0018_ct_0037,Kabir Khan,kabir.khan36@examplemail.com,Metro LLC,Founder,churn_risk,import,United Kingdom,2025-09-03,2026-01-03
+cli_0018_ct_0038,Kabir Kapoor,kabir.kapoor37@examplemail.com,Peak Ltd,RevOps Manager,sql,referral,India,2025-11-16,2026-04-06
+cli_0018_ct_0039,Arjun Reddy,arjun.reddy38@examplemail.com,Signal Collective,Sales Lead,sql,import,India,2024-12-30,2026-02-18
+cli_0018_ct_0040,Leo Nair,leo.nair39@examplemail.com,Acme Ltd,Founder,mql,website_form,Canada,2025-05-20,2026-03-07
+cli_0018_ct_0041,Arjun Mehta,arjun.mehta40@examplemail.com,Orbit Inc,Sales Lead,sql,referral,Australia,2025-01-27,2026-04-14
+cli_0018_ct_0042,Noah Sharma,noah.sharma41@examplemail.com,Signal Collective,Founder,sql,import,UAE,2025-02-10,2025-12-29
+cli_0018_ct_0043,Ishaan Patel,ishaan.patel42@examplemail.com,Signal Collective,Sales Lead,mql,website_form,UAE,2025-12-16,2026-03-15
+cli_0018_ct_0044,Ava Kapoor,ava.kapoor43@examplemail.com,Acme Ltd,Marketing Manager,lead,email_reply,United States,2025-05-03,2026-03-28
+cli_0018_ct_0045,Mia Nair,mia.nair44@examplemail.com,Signal Collective,Marketing Manager,customer,website_form,Australia,2026-04-23,2026-01-23
+cli_0018_ct_0046,Ishaan Joshi,ishaan.joshi45@examplemail.com,Signal Collective,Head of Growth,lead,import,Australia,2025-07-25,2026-02-05
+cli_0018_ct_0047,Ava Bhatia,ava.bhatia46@examplemail.com,Metro Group,Founder,customer,website_form,India,2025-03-28,2026-02-20
+cli_0018_ct_0048,Liam Verma,liam.verma47@examplemail.com,Signal Collective,RevOps Manager,lead,email_reply,Australia,2024-12-20,2026-02-25
+cli_0018_ct_0049,Maya Patel,maya.patel48@examplemail.com,Signal Collective,Founder,lead,import,UAE,2025-04-01,2026-02-11
+cli_0018_ct_0050,Mia Verma,mia.verma49@examplemail.com,Signal Collective,Sales Lead,churn_risk,email_reply,India,2024-11-18,2026-04-05
+cli_0018_ct_0051,Maya Verma,maya.verma50@examplemail.com,Signal Collective,Head of Growth,lead,event,India,2025-07-07,2026-01-10
+cli_0018_ct_0052,Noah Mehta,noah.mehta51@examplemail.com,Signal Collective,Head of Growth,churn_risk,email_reply,UAE,2026-01-23,2026-04-24
+cli_0018_ct_0053,Liam Singh,liam.singh52@examplemail.com,Metro Group,Marketing Manager,lead,website_form,India,2026-02-09,2026-04-11
+cli_0018_ct_0054,Sara Verma,sara.verma53@examplemail.com,Orbit Ltd,Founder,customer,website_form,Canada,2025-07-08,2026-02-01
+cli_0018_ct_0055,Noah Reddy,noah.reddy54@examplemail.com,Signal Collective,RevOps Manager,lead,referral,Australia,2025-06-04,2026-03-14
+cli_0018_ct_0056,Ava Khan,ava.khan55@examplemail.com,Signal Collective,Marketing Manager,mql,import,United States,2025-03-02,2026-03-17
+cli_0018_ct_0057,Noah Joshi,noah.joshi56@examplemail.com,Peak LLC,Marketing Manager,sql,email_reply,Australia,2025-06-11,2026-01-31
+cli_0018_ct_0058,Mia Bhatia,mia.bhatia57@examplemail.com,Signal Collective,Founder,lead,event,United States,2025-05-31,2026-03-31
+cli_0018_ct_0059,Anika Verma,anika.verma58@examplemail.com,Signal Collective,Marketing Manager,mql,import,Australia,2025-12-18,2026-03-12
+cli_0018_ct_0060,Noah Patel,noah.patel59@examplemail.com,Peak LLC,Head of Growth,lead,website_form,India,2025-03-18,2026-04-12
+cli_0018_ct_0061,Kabir Mehta,kabir.mehta60@examplemail.com,Signal Collective,Sales Lead,lead,website_form,Australia,2026-04-20,2026-01-29
+cli_0018_ct_0062,Sara Patel,sara.patel61@examplemail.com,Acme LLC,Marketing Manager,sql,referral,Canada,2025-04-06,2026-03-27
+cli_0018_ct_0063,Noah Singh,noah.singh62@examplemail.com,Signal Collective,RevOps Manager,lead,email_reply,United States,2025-10-06,2026-02-25
+cli_0018_ct_0064,Sara Khan,sara.khan63@examplemail.com,Metro Inc,Marketing Manager,sql,website_form,Australia,2026-01-18,2026-02-19
+cli_0018_ct_0065,Mia Reddy,mia.reddy64@examplemail.com,Signal Collective,Sales Lead,mql,website_form,UAE,2025-04-08,2026-03-26
+cli_0018_ct_0066,Liam Bhatia,liam.bhatia65@examplemail.com,Metro Ltd,Founder,churn_risk,referral,United States,2025-10-03,2026-04-23
+cli_0018_ct_0067,Arjun Kapoor,arjun.kapoor66@examplemail.com,Signal Collective,Marketing Manager,sql,email_reply,Australia,2026-03-29,2026-02-06
+cli_0018_ct_0068,Arjun Singh,arjun.singh67@examplemail.com,Signal Collective,Marketing Manager,sql,event,Australia,2026-01-20,2026-03-03
+cli_0018_ct_0069,Kabir Patel,kabir.patel68@examplemail.com,Signal Collective,Head of Growth,lead,website_form,United Kingdom,2025-12-06,2026-04-22
+cli_0018_ct_0070,Ava Singh,ava.singh69@examplemail.com,Peak Group,Head of Growth,mql,website_form,Canada,2026-04-04,2026-01-11
+cli_0018_ct_0071,Anika Nair,anika.nair70@examplemail.com,Signal Collective,Head of Growth,sql,website_form,United States,2025-12-27,2026-02-09
+cli_0018_ct_0072,Noah Reddy,noah.reddy71@examplemail.com,Orbit Group,Head of Growth,mql,event,UAE,2025-12-26,2026-02-05
+cli_0018_ct_0073,Sara Joshi,sara.joshi72@examplemail.com,Signal Collective,Marketing Manager,sql,website_form,Australia,2025-06-10,2026-01-05
+cli_0018_ct_0074,Ava Reddy,ava.reddy73@examplemail.com,Signal Collective,Head of Growth,mql,event,UAE,2024-12-17,2026-01-03
+cli_0018_ct_0075,Zara Singh,zara.singh74@examplemail.com,Zen Ltd,Founder,lead,referral,United Kingdom,2025-11-18,2026-03-06
+cli_0018_ct_0076,Ishaan Bhatia,ishaan.bhatia75@examplemail.com,Signal Collective,Founder,lead,event,United Kingdom,2026-01-09,2026-03-19
+cli_0018_ct_0077,Ava Verma,ava.verma76@examplemail.com,Signal Collective,Marketing Manager,lead,website_form,UAE,2025-06-12,2026-02-28
+cli_0018_ct_0078,Liam Joshi,liam.joshi77@examplemail.com,Signal Collective,Marketing Manager,sql,import,UAE,2025-07-02,2026-03-29
+cli_0018_ct_0079,Zara Joshi,zara.joshi78@examplemail.com,Signal Collective,Founder,lead,import,India,2025-08-12,2026-02-14
+cli_0018_ct_0080,Mia Gupta,mia.gupta79@examplemail.com,Orbit Inc,RevOps Manager,churn_risk,import,United States,2026-01-10,2026-04-13
+cli_0018_ct_0081,Leo Reddy,leo.reddy80@examplemail.com,Orbit Group,Sales Lead,sql,email_reply,UAE,2026-03-09,2026-02-08
+cli_0018_ct_0082,Mia Mehta,mia.mehta81@examplemail.com,Signal Collective,Head of Growth,mql,import,Australia,2025-03-06,2026-04-17
+cli_0018_ct_0083,Sara Joshi,sara.joshi82@examplemail.com,Zen Ltd,Founder,lead,import,UAE,2025-10-03,2026-03-10
+cli_0018_ct_0084,Zara Bhatia,zara.bhatia83@examplemail.com,Signal Collective,Sales Lead,mql,website_form,India,2026-04-06,2026-02-13
+cli_0018_ct_0085,Noah Patel,noah.patel84@examplemail.com,Signal Collective,Marketing Manager,lead,import,India,2025-10-28,2026-01-05
+cli_0018_ct_0086,Anika Reddy,anika.reddy85@examplemail.com,Acme Ltd,Head of Growth,mql,website_form,UAE,2025-05-17,2026-03-02
+cli_0018_ct_0087,Liam Kapoor,liam.kapoor86@examplemail.com,Signal Collective,Sales Lead,sql,import,United Kingdom,2025-05-23,2026-02-17
+cli_0018_ct_0088,Leo Gupta,leo.gupta87@examplemail.com,Signal Collective,RevOps Manager,sql,website_form,Canada,2025-10-11,2026-02-20
+cli_0018_ct_0089,Ishaan Nair,ishaan.nair88@examplemail.com,Zen Ltd,Sales Lead,sql,import,Canada,2024-12-06,2026-03-05
+cli_0018_ct_0090,Liam Sharma,liam.sharma89@examplemail.com,Signal Collective,Head of Growth,lead,website_form,United States,2025-01-06,2026-01-04
+cli_0018_ct_0091,Liam Singh,liam.singh90@examplemail.com,Signal Collective,Founder,churn_risk,email_reply,UAE,2024-12-17,2026-03-30
+cli_0018_ct_0092,Ava Bhatia,ava.bhatia91@examplemail.com,Peak LLC,Marketing Manager,sql,website_form,Canada,2025-11-17,2026-02-22
+cli_0018_ct_0093,Ishaan Mehta,ishaan.mehta92@examplemail.com,Signal Collective,Marketing Manager,lead,email_reply,India,2024-11-03,2026-01-25
+cli_0018_ct_0094,Arjun Mehta,arjun.mehta93@examplemail.com,Signal Collective,Head of Growth,sql,referral,United Kingdom,2025-09-03,2026-03-08
+cli_0018_ct_0095,Leo Singh,leo.singh94@examplemail.com,Acme Group,Head of Growth,lead,event,United States,2025-04-08,2026-03-17
+cli_0018_ct_0096,Kabir Verma,kabir.verma95@examplemail.com,Peak Group,Head of Growth,lead,website_form,United Kingdom,2025-08-08,2026-02-23
+cli_0018_ct_0097,Mia Kapoor,mia.kapoor96@examplemail.com,Signal Collective,Head of Growth,mql,event,Australia,2025-02-13,2026-02-25
+cli_0018_ct_0098,Noah Gupta,noah.gupta97@examplemail.com,Zen Ltd,Head of Growth,sql,website_form,India,2026-02-08,2026-03-08
+cli_0018_ct_0099,Liam Khan,liam.khan98@examplemail.com,Orbit Ltd,Head of Growth,mql,import,United Kingdom,2026-01-18,2026-02-28
+cli_0018_ct_0100,Liam Kapoor,liam.kapoor99@examplemail.com,Signal Collective,RevOps Manager,sql,referral,United States,2025-02-25,2026-02-23
+cli_0018_ct_0101,Kabir Patel,kabir.patel100@examplemail.com,Orbit Group,Marketing Manager,sql,import,United States,2026-04-22,2026-04-13
+cli_0018_ct_0102,Sara Verma,sara.verma101@examplemail.com,Metro Ltd,Marketing Manager,lead,website_form,United Kingdom,2025-04-23,2026-01-18
+cli_0018_ct_0103,Zara Singh,zara.singh102@examplemail.com,Signal Collective,Founder,lead,website_form,UAE,2025-11-15,2026-03-02
+cli_0018_ct_0104,Maya Gupta,maya.gupta103@examplemail.com,Signal Collective,Marketing Manager,customer,email_reply,Australia,2025-02-24,2026-02-01
+cli_0018_ct_0105,Sara Kapoor,sara.kapoor104@examplemail.com,Zen Inc,Sales Lead,lead,referral,Australia,2025-01-19,2026-03-11
+cli_0018_ct_0106,Leo Joshi,leo.joshi105@examplemail.com,Peak LLC,RevOps Manager,mql,website_form,UAE,2024-12-17,2026-01-25
+cli_0018_ct_0107,Sara Gupta,sara.gupta106@examplemail.com,Metro Group,Sales Lead,mql,email_reply,Canada,2025-08-06,2026-01-14
+cli_0018_ct_0108,Noah Gupta,noah.gupta107@examplemail.com,Acme LLC,Marketing Manager,mql,import,UAE,2025-03-10,2026-04-23
+cli_0018_ct_0109,Maya Patel,maya.patel108@examplemail.com,Metro Group,Head of Growth,sql,import,UAE,2025-06-23,2026-01-08
+cli_0018_ct_0110,Leo Sharma,leo.sharma109@examplemail.com,Peak Inc,RevOps Manager,lead,website_form,United Kingdom,2025-10-06,2026-01-17
+cli_0018_ct_0111,Zara Sharma,zara.sharma110@examplemail.com,Metro Inc,Marketing Manager,lead,email_reply,Canada,2025-12-21,2026-03-22
+cli_0018_ct_0112,Kabir Nair,kabir.nair111@examplemail.com,Metro Ltd,Marketing Manager,mql,website_form,United States,2025-04-10,2026-02-03
+cli_0018_ct_0113,Noah Sharma,noah.sharma112@examplemail.com,Zen Inc,Marketing Manager,mql,website_form,UAE,2025-12-22,2026-02-23
+cli_0018_ct_0114,Kabir Sharma,kabir.sharma113@examplemail.com,Orbit Ltd,Head of Growth,lead,website_form,United States,2025-10-02,2026-02-08
+cli_0018_ct_0115,Noah Khan,noah.khan114@examplemail.com,Acme Group,Head of Growth,sql,website_form,United Kingdom,2025-09-04,2025-12-26
+cli_0018_ct_0116,Leo Reddy,leo.reddy115@examplemail.com,Signal Collective,Sales Lead,lead,email_reply,UAE,2025-10-12,2025-12-27
+cli_0018_ct_0117,Mia Mehta,mia.mehta116@examplemail.com,Peak Inc,Head of Growth,lead,import,UAE,2025-12-01,2026-02-25
+cli_0018_ct_0118,Ishaan Verma,ishaan.verma117@examplemail.com,Signal Collective,Head of Growth,lead,email_reply,United States,2026-03-27,2026-02-01
+cli_0018_ct_0119,Arjun Verma,arjun.verma118@examplemail.com,Signal Collective,Founder,lead,website_form,Canada,2025-02-22,2026-03-01
+cli_0018_ct_0120,Sara Gupta,sara.gupta119@examplemail.com,Signal Collective,Marketing Manager,sql,import,United Kingdom,2026-01-05,2026-01-21
+cli_0018_ct_0121,Ishaan Khan,ishaan.khan120@examplemail.com,Signal Collective,Head of Growth,mql,import,Canada,2025-07-16,2026-03-07
+cli_0018_ct_0122,Zara Kapoor,zara.kapoor121@examplemail.com,Signal Collective,Head of Growth,lead,website_form,United States,2025-05-24,2026-04-19
+cli_0018_ct_0123,Sara Reddy,sara.reddy122@examplemail.com,Signal Collective,Head of Growth,lead,import,United Kingdom,2024-11-27,2026-01-12
+cli_0018_ct_0124,Liam Patel,liam.patel123@examplemail.com,Signal Collective,Sales Lead,mql,referral,Australia,2025-12-29,2026-04-05
+cli_0018_ct_0125,Mia Singh,mia.singh124@examplemail.com,Zen Group,Marketing Manager,sql,website_form,Canada,2025-06-08,2026-01-17
+cli_0018_ct_0126,Arjun Khan,arjun.khan125@examplemail.com,Acme Ltd,Marketing Manager,mql,website_form,India,2025-09-27,2026-03-05
+cli_0018_ct_0127,Mia Khan,mia.khan126@examplemail.com,Signal Collective,Marketing Manager,lead,email_reply,Canada,2025-08-30,2026-04-04
+cli_0018_ct_0128,Liam Gupta,liam.gupta127@examplemail.com,Signal Collective,Marketing Manager,churn_risk,website_form,UAE,2025-10-14,2026-03-28
+cli_0018_ct_0129,Ava Joshi,ava.joshi128@examplemail.com,Peak Ltd,Sales Lead,mql,import,Canada,2025-05-19,2026-02-28
+cli_0018_ct_0130,Noah Bhatia,noah.bhatia129@examplemail.com,Signal Collective,RevOps Manager,customer,referral,India,2026-04-24,2026-04-21
+cli_0018_ct_0131,Zara Verma,zara.verma130@examplemail.com,Metro LLC,Founder,sql,event,India,2025-03-09,2025-12-29
+cli_0018_ct_0132,Leo Singh,leo.singh131@examplemail.com,Orbit Ltd,Marketing Manager,mql,import,UAE,2025-01-31,2026-04-10
+cli_0018_ct_0133,Arjun Verma,arjun.verma132@examplemail.com,Orbit Inc,Head of Growth,sql,website_form,United Kingdom,2026-01-22,2026-04-07
+cli_0018_ct_0134,Zara Joshi,zara.joshi133@examplemail.com,Peak Ltd,Marketing Manager,customer,referral,United States,2026-04-10,2026-02-13
+cli_0018_ct_0135,Liam Sharma,liam.sharma134@examplemail.com,Acme Group,Founder,lead,import,Canada,2025-07-15,2026-01-30
+cli_0018_ct_0136,Maya Nair,maya.nair135@examplemail.com,Signal Collective,Head of Growth,sql,email_reply,United States,2025-12-31,2026-02-12
+cli_0018_ct_0137,Noah Kapoor,noah.kapoor136@examplemail.com,Signal Collective,Founder,lead,import,Australia,2025-02-11,2026-03-30
+cli_0018_ct_0138,Anika Reddy,anika.reddy137@examplemail.com,Zen Inc,Marketing Manager,lead,import,United Kingdom,2026-04-03,2026-02-20
+cli_0018_ct_0139,Noah Mehta,noah.mehta138@examplemail.com,Signal Collective,Founder,sql,import,Australia,2025-03-20,2026-02-19
+cli_0018_ct_0140,Mia Singh,mia.singh139@examplemail.com,Signal Collective,Founder,mql,email_reply,India,2025-09-27,2026-01-06
+cli_0018_ct_0141,Mia Sharma,mia.sharma140@examplemail.com,Zen Group,Sales Lead,mql,referral,India,2025-11-12,2026-04-10
+cli_0018_ct_0142,Sara Nair,sara.nair141@examplemail.com,Metro Group,Head of Growth,lead,email_reply,India,2026-04-03,2026-04-06
+cli_0018_ct_0143,Anika Nair,anika.nair142@examplemail.com,Metro Group,Head of Growth,customer,referral,UAE,2025-03-31,2026-01-12
+cli_0018_ct_0144,Mia Verma,mia.verma143@examplemail.com,Signal Collective,Head of Growth,mql,email_reply,Australia,2025-05-28,2026-02-07
+cli_0018_ct_0145,Ishaan Gupta,ishaan.gupta144@examplemail.com,Peak Ltd,Head of Growth,lead,event,UAE,2025-10-10,2026-04-10
+cli_0018_ct_0146,Leo Gupta,leo.gupta145@examplemail.com,Metro Ltd,Marketing Manager,mql,website_form,Australia,2025-10-30,2026-04-22
+cli_0018_ct_0147,Anika Mehta,anika.mehta146@examplemail.com,Signal Collective,Marketing Manager,customer,email_reply,United States,2025-12-24,2026-03-16
+cli_0018_ct_0148,Ava Sharma,ava.sharma147@examplemail.com,Peak Group,Sales Lead,mql,website_form,United Kingdom,2025-02-08,2026-03-07

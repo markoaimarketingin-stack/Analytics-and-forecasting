@@ -1,0 +1,107 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0005_dl_0001,cli_0005_ct_0152,North Commerce - service retainer,qualified,23066.1,GBP,26,event,Kabir Patel,2025-12-15,2025-12-22
+cli_0005_dl_0002,cli_0005_ct_0110,North Commerce - starter plan,negotiation,22851.53,GBP,70,website_form,Ava Patel,2025-09-02,2025-10-28
+cli_0005_dl_0003,cli_0005_ct_0029,North Commerce - annual subscription,new,13909.09,GBP,63,email_reply,Anika Khan,2025-12-24,2025-12-29
+cli_0005_dl_0004,cli_0005_ct_0098,North Commerce - starter plan,qualified,23105.85,GBP,25,referral,Liam Singh,2025-12-10,2026-01-27
+cli_0005_dl_0005,cli_0005_ct_0043,North Commerce - pro plan,qualified,9851.86,GBP,72,email_reply,Maya Joshi,2025-11-01,2025-12-12
+cli_0005_dl_0006,cli_0005_ct_0064,North Commerce - service retainer,new,17556.9,GBP,49,website_form,Maya Gupta,2025-11-29,2026-01-09
+cli_0005_dl_0007,cli_0005_ct_0101,North Commerce - audit package,qualified,20844.34,GBP,33,email_reply,Kabir Verma,2025-09-15,2025-10-29
+cli_0005_dl_0008,cli_0005_ct_0044,North Commerce - annual subscription,proposal,24793.3,GBP,16,website_form,Noah Kapoor,2025-11-29,2025-12-26
+cli_0005_dl_0009,cli_0005_ct_0115,North Commerce - starter plan,qualified,24171.42,GBP,72,email_reply,Noah Gupta,2025-10-20,2025-10-26
+cli_0005_dl_0010,cli_0005_ct_0052,North Commerce - premium bundle,won,7214.75,GBP,63,event,Ava Patel,2025-10-31,2025-12-12
+cli_0005_dl_0011,cli_0005_ct_0100,North Commerce - starter plan,won,23768.03,GBP,45,event,Leo Mehta,2026-01-20,2026-01-31
+cli_0005_dl_0012,cli_0005_ct_0150,North Commerce - audit package,proposal,9707.56,GBP,72,event,Arjun Singh,2026-01-10,2026-02-04
+cli_0005_dl_0013,cli_0005_ct_0036,North Commerce - audit package,new,4070.18,GBP,32,import,Noah Sharma,2026-02-04,2026-02-28
+cli_0005_dl_0014,cli_0005_ct_0141,North Commerce - starter plan,qualified,19067.37,GBP,66,event,Noah Mehta,2025-09-22,2025-10-29
+cli_0005_dl_0015,cli_0005_ct_0027,North Commerce - membership,won,10919.85,GBP,42,website_form,Kabir Joshi,2025-10-11,2025-11-08
+cli_0005_dl_0016,cli_0005_ct_0019,North Commerce - starter plan,qualified,17474.26,GBP,93,import,Noah Patel,2026-01-24,2026-02-18
+cli_0005_dl_0017,cli_0005_ct_0125,North Commerce - starter plan,negotiation,1953.05,GBP,66,import,Leo Gupta,2025-10-26,2025-11-19
+cli_0005_dl_0018,cli_0005_ct_0008,North Commerce - audit package,proposal,19636.61,GBP,43,import,Sara Kapoor,2026-02-10,2026-03-15
+cli_0005_dl_0019,cli_0005_ct_0098,North Commerce - annual subscription,qualified,13110.49,GBP,60,referral,Maya Verma,2025-10-16,2025-11-17
+cli_0005_dl_0020,cli_0005_ct_0065,North Commerce - premium bundle,proposal,21467.04,GBP,66,website_form,Noah Mehta,2025-11-18,2025-11-27
+cli_0005_dl_0021,cli_0005_ct_0057,North Commerce - service retainer,lost,21359.25,GBP,7,website_form,Sara Sharma,2025-09-19,2025-11-09
+cli_0005_dl_0022,cli_0005_ct_0042,North Commerce - membership,qualified,11795.26,GBP,15,website_form,Ishaan Kapoor,2025-11-09,2026-01-05
+cli_0005_dl_0023,cli_0005_ct_0021,North Commerce - pro plan,new,11465.75,GBP,77,email_reply,Mia Mehta,2026-02-18,2026-03-30
+cli_0005_dl_0024,cli_0005_ct_0096,North Commerce - membership,won,9138.11,GBP,62,email_reply,Noah Reddy,2025-12-21,2026-01-21
+cli_0005_dl_0025,cli_0005_ct_0003,North Commerce - pro plan,proposal,9931.08,GBP,31,website_form,Zara Verma,2026-04-06,2026-04-15
+cli_0005_dl_0026,cli_0005_ct_0077,North Commerce - pro plan,proposal,23412.62,GBP,89,referral,Sara Reddy,2026-04-03,2026-04-18
+cli_0005_dl_0027,cli_0005_ct_0067,North Commerce - premium bundle,qualified,3450.71,GBP,26,email_reply,Liam Nair,2026-02-06,2026-04-03
+cli_0005_dl_0028,cli_0005_ct_0116,North Commerce - premium bundle,won,12206.53,GBP,6,website_form,Kabir Verma,2025-11-22,2025-12-24
+cli_0005_dl_0029,cli_0005_ct_0130,North Commerce - starter plan,proposal,16364.34,GBP,82,referral,Mia Gupta,2025-09-19,2025-11-12
+cli_0005_dl_0030,cli_0005_ct_0100,North Commerce - audit package,proposal,24582.18,GBP,65,event,Arjun Gupta,2026-04-09,2026-04-20
+cli_0005_dl_0031,cli_0005_ct_0041,North Commerce - annual subscription,negotiation,22935.42,GBP,70,referral,Leo Kapoor,2026-03-07,2026-03-28
+cli_0005_dl_0032,cli_0005_ct_0155,North Commerce - starter plan,won,14987.77,GBP,30,import,Ishaan Mehta,2026-01-14,2026-03-01
+cli_0005_dl_0033,cli_0005_ct_0138,North Commerce - starter plan,negotiation,10373.42,GBP,52,website_form,Kabir Verma,2025-10-26,2025-11-12
+cli_0005_dl_0034,cli_0005_ct_0090,North Commerce - starter plan,qualified,12459.09,GBP,28,website_form,Leo Bhatia,2026-02-11,2026-03-25
+cli_0005_dl_0035,cli_0005_ct_0071,North Commerce - service retainer,negotiation,21550.28,GBP,50,website_form,Kabir Joshi,2025-10-25,2025-10-28
+cli_0005_dl_0036,cli_0005_ct_0098,North Commerce - pro plan,lost,23344.66,GBP,54,referral,Ava Khan,2026-01-08,2026-01-28
+cli_0005_dl_0037,cli_0005_ct_0042,North Commerce - membership,new,8695.35,GBP,49,website_form,Kabir Khan,2025-10-01,2025-10-30
+cli_0005_dl_0038,cli_0005_ct_0069,North Commerce - premium bundle,negotiation,12683.54,GBP,14,email_reply,Zara Kapoor,2025-12-29,2026-01-07
+cli_0005_dl_0039,cli_0005_ct_0030,North Commerce - service retainer,proposal,22289.61,GBP,89,website_form,Noah Reddy,2026-02-12,2026-03-14
+cli_0005_dl_0040,cli_0005_ct_0157,North Commerce - audit package,won,18608.66,GBP,7,website_form,Kabir Singh,2026-01-08,2026-02-05
+cli_0005_dl_0041,cli_0005_ct_0089,North Commerce - starter plan,qualified,8694.7,GBP,58,email_reply,Liam Patel,2025-12-07,2026-01-06
+cli_0005_dl_0042,cli_0005_ct_0027,North Commerce - service retainer,qualified,10602.02,GBP,58,website_form,Ava Reddy,2026-04-02,2026-04-17
+cli_0005_dl_0043,cli_0005_ct_0063,North Commerce - pro plan,qualified,10921.57,GBP,90,import,Mia Singh,2025-11-01,2025-11-14
+cli_0005_dl_0044,cli_0005_ct_0087,North Commerce - annual subscription,won,16999.6,GBP,90,referral,Sara Bhatia,2026-03-01,2026-04-17
+cli_0005_dl_0045,cli_0005_ct_0145,North Commerce - pro plan,won,19891.25,GBP,93,referral,Mia Joshi,2026-02-25,2026-04-16
+cli_0005_dl_0046,cli_0005_ct_0018,North Commerce - premium bundle,proposal,1218.61,GBP,33,import,Noah Kapoor,2026-01-05,2026-01-18
+cli_0005_dl_0047,cli_0005_ct_0079,North Commerce - pro plan,proposal,4291.71,GBP,7,referral,Zara Verma,2026-04-15,2026-04-20
+cli_0005_dl_0048,cli_0005_ct_0076,North Commerce - starter plan,qualified,21901.4,GBP,57,website_form,Mia Verma,2025-10-22,2025-12-18
+cli_0005_dl_0049,cli_0005_ct_0045,North Commerce - audit package,won,12813.79,GBP,95,import,Noah Bhatia,2026-02-06,2026-04-01
+cli_0005_dl_0050,cli_0005_ct_0143,North Commerce - pro plan,won,19231.14,GBP,41,import,Noah Sharma,2026-04-04,2026-04-10
+cli_0005_dl_0051,cli_0005_ct_0028,North Commerce - starter plan,proposal,5999.67,GBP,56,website_form,Kabir Nair,2026-03-08,2026-03-22
+cli_0005_dl_0052,cli_0005_ct_0122,North Commerce - annual subscription,won,15065.98,GBP,57,import,Zara Patel,2025-10-27,2025-11-09
+cli_0005_dl_0053,cli_0005_ct_0094,North Commerce - membership,qualified,21122.73,GBP,48,event,Mia Nair,2026-01-13,2026-01-24
+cli_0005_dl_0054,cli_0005_ct_0144,North Commerce - annual subscription,qualified,6214.64,GBP,71,website_form,Leo Reddy,2025-12-19,2026-01-06
+cli_0005_dl_0055,cli_0005_ct_0103,North Commerce - annual subscription,negotiation,21307.73,GBP,23,import,Anika Kapoor,2026-01-10,2026-01-27
+cli_0005_dl_0056,cli_0005_ct_0039,North Commerce - audit package,qualified,847.45,GBP,90,website_form,Mia Patel,2026-04-14,2026-04-24
+cli_0005_dl_0057,cli_0005_ct_0116,North Commerce - starter plan,won,23711.79,GBP,67,website_form,Ishaan Joshi,2025-12-04,2026-01-01
+cli_0005_dl_0058,cli_0005_ct_0053,North Commerce - starter plan,qualified,16950.46,GBP,94,referral,Liam Verma,2026-03-06,2026-04-04
+cli_0005_dl_0059,cli_0005_ct_0142,North Commerce - starter plan,proposal,5661.69,GBP,15,referral,Ishaan Mehta,2026-01-21,2026-02-27
+cli_0005_dl_0060,cli_0005_ct_0088,North Commerce - membership,lost,16682.18,GBP,61,website_form,Sara Sharma,2025-12-14,2026-01-11
+cli_0005_dl_0061,cli_0005_ct_0010,North Commerce - membership,new,14265.33,GBP,77,website_form,Ishaan Patel,2026-01-25,2026-02-06
+cli_0005_dl_0062,cli_0005_ct_0098,North Commerce - starter plan,proposal,9064.21,GBP,76,referral,Arjun Kapoor,2025-10-12,2025-12-10
+cli_0005_dl_0063,cli_0005_ct_0094,North Commerce - starter plan,qualified,5126.23,GBP,24,event,Ishaan Singh,2025-11-30,2026-01-03
+cli_0005_dl_0064,cli_0005_ct_0153,North Commerce - audit package,new,11223.1,GBP,6,website_form,Maya Verma,2026-01-26,2026-03-02
+cli_0005_dl_0065,cli_0005_ct_0097,North Commerce - audit package,lost,18844.16,GBP,13,email_reply,Mia Mehta,2025-10-25,2025-12-12
+cli_0005_dl_0066,cli_0005_ct_0093,North Commerce - annual subscription,new,17687.71,GBP,47,import,Leo Reddy,2026-01-07,2026-02-24
+cli_0005_dl_0067,cli_0005_ct_0069,North Commerce - audit package,proposal,11169.03,GBP,37,email_reply,Mia Sharma,2026-02-23,2026-03-20
+cli_0005_dl_0068,cli_0005_ct_0148,North Commerce - premium bundle,proposal,24526.81,GBP,22,website_form,Leo Patel,2026-03-22,2026-04-22
+cli_0005_dl_0069,cli_0005_ct_0045,North Commerce - service retainer,negotiation,4678.3,GBP,92,import,Kabir Bhatia,2026-02-28,2026-03-26
+cli_0005_dl_0070,cli_0005_ct_0135,North Commerce - membership,proposal,22056.63,GBP,62,email_reply,Maya Mehta,2026-03-04,2026-03-13
+cli_0005_dl_0071,cli_0005_ct_0026,North Commerce - premium bundle,new,7149.3,GBP,80,import,Kabir Gupta,2025-10-13,2025-12-11
+cli_0005_dl_0072,cli_0005_ct_0041,North Commerce - membership,qualified,7502.32,GBP,92,referral,Zara Singh,2025-12-04,2025-12-20
+cli_0005_dl_0073,cli_0005_ct_0136,North Commerce - premium bundle,qualified,14118.41,GBP,66,website_form,Sara Sharma,2025-11-18,2025-12-24
+cli_0005_dl_0074,cli_0005_ct_0152,North Commerce - pro plan,qualified,5010.11,GBP,14,event,Ava Reddy,2025-10-08,2025-11-05
+cli_0005_dl_0075,cli_0005_ct_0090,North Commerce - starter plan,negotiation,10077.2,GBP,64,website_form,Ishaan Mehta,2025-12-22,2026-02-03
+cli_0005_dl_0076,cli_0005_ct_0001,North Commerce - pro plan,proposal,15362.57,GBP,95,website_form,Leo Mehta,2026-02-08,2026-03-08
+cli_0005_dl_0077,cli_0005_ct_0046,North Commerce - service retainer,negotiation,9584.43,GBP,24,import,Kabir Kapoor,2025-12-12,2026-02-09
+cli_0005_dl_0078,cli_0005_ct_0041,North Commerce - membership,proposal,21054.32,GBP,76,referral,Arjun Bhatia,2026-03-04,2026-04-11
+cli_0005_dl_0079,cli_0005_ct_0143,North Commerce - service retainer,proposal,14396.94,GBP,62,import,Kabir Mehta,2026-03-13,2026-04-03
+cli_0005_dl_0080,cli_0005_ct_0037,North Commerce - membership,proposal,1545.33,GBP,15,website_form,Liam Patel,2025-11-26,2025-12-02
+cli_0005_dl_0081,cli_0005_ct_0011,North Commerce - audit package,lost,20004.37,GBP,60,email_reply,Noah Mehta,2025-10-28,2025-12-25
+cli_0005_dl_0082,cli_0005_ct_0009,North Commerce - annual subscription,lost,360.9,GBP,46,referral,Anika Mehta,2026-01-27,2026-02-17
+cli_0005_dl_0083,cli_0005_ct_0051,North Commerce - starter plan,new,23906.57,GBP,42,email_reply,Liam Kapoor,2026-03-29,2026-04-09
+cli_0005_dl_0084,cli_0005_ct_0026,North Commerce - premium bundle,negotiation,6072.98,GBP,45,import,Maya Khan,2026-02-25,2026-03-08
+cli_0005_dl_0085,cli_0005_ct_0025,North Commerce - premium bundle,negotiation,18328.27,GBP,80,website_form,Sara Reddy,2026-03-03,2026-03-09
+cli_0005_dl_0086,cli_0005_ct_0146,North Commerce - starter plan,qualified,6170.08,GBP,50,website_form,Noah Patel,2025-12-11,2026-01-30
+cli_0005_dl_0087,cli_0005_ct_0124,North Commerce - starter plan,lost,12099.73,GBP,8,import,Maya Patel,2026-01-27,2026-01-31
+cli_0005_dl_0088,cli_0005_ct_0116,North Commerce - membership,won,16874.01,GBP,20,website_form,Kabir Mehta,2025-10-22,2025-11-03
+cli_0005_dl_0089,cli_0005_ct_0064,North Commerce - membership,negotiation,12703.27,GBP,41,website_form,Maya Joshi,2025-12-19,2025-12-25
+cli_0005_dl_0090,cli_0005_ct_0119,North Commerce - starter plan,qualified,10055.67,GBP,18,event,Noah Patel,2026-02-21,2026-03-07
+cli_0005_dl_0091,cli_0005_ct_0145,North Commerce - service retainer,negotiation,997.88,GBP,21,referral,Ishaan Bhatia,2025-12-21,2026-01-29
+cli_0005_dl_0092,cli_0005_ct_0084,North Commerce - audit package,negotiation,14901.12,GBP,29,import,Ava Gupta,2025-12-02,2026-01-31
+cli_0005_dl_0093,cli_0005_ct_0124,North Commerce - annual subscription,lost,15004.56,GBP,86,import,Zara Patel,2025-12-11,2026-01-26
+cli_0005_dl_0094,cli_0005_ct_0100,North Commerce - membership,negotiation,15231.5,GBP,16,event,Anika Nair,2026-02-17,2026-03-26
+cli_0005_dl_0095,cli_0005_ct_0045,North Commerce - starter plan,qualified,4172.64,GBP,51,import,Ava Reddy,2026-02-12,2026-03-11
+cli_0005_dl_0096,cli_0005_ct_0086,North Commerce - service retainer,won,4194.89,GBP,46,email_reply,Kabir Singh,2025-10-09,2025-12-06
+cli_0005_dl_0097,cli_0005_ct_0048,North Commerce - service retainer,lost,6378.74,GBP,29,import,Kabir Joshi,2026-01-07,2026-02-13
+cli_0005_dl_0098,cli_0005_ct_0097,North Commerce - membership,qualified,16279.08,GBP,65,email_reply,Ava Joshi,2025-12-05,2025-12-09
+cli_0005_dl_0099,cli_0005_ct_0082,North Commerce - annual subscription,qualified,2654.66,GBP,62,import,Maya Nair,2025-12-01,2026-01-02
+cli_0005_dl_0100,cli_0005_ct_0146,North Commerce - premium bundle,won,8688.61,GBP,80,website_form,Maya Khan,2026-02-09,2026-03-28
+cli_0005_dl_0101,cli_0005_ct_0068,North Commerce - service retainer,negotiation,3127.65,GBP,47,event,Noah Patel,2025-12-09,2025-12-14
+cli_0005_dl_0102,cli_0005_ct_0145,North Commerce - annual subscription,qualified,5543.95,GBP,38,referral,Arjun Gupta,2025-10-15,2025-12-11
+cli_0005_dl_0103,cli_0005_ct_0122,North Commerce - annual subscription,qualified,13780.66,GBP,16,import,Kabir Patel,2026-02-28,2026-04-01
+cli_0005_dl_0104,cli_0005_ct_0046,North Commerce - pro plan,negotiation,13987.25,GBP,10,import,Mia Reddy,2025-12-16,2026-01-31
+cli_0005_dl_0105,cli_0005_ct_0142,North Commerce - pro plan,qualified,17763.49,GBP,52,referral,Maya Gupta,2025-10-12,2025-11-14
+cli_0005_dl_0106,cli_0005_ct_0032,North Commerce - annual subscription,won,3336.65,GBP,87,import,Sara Patel,2026-01-26,2026-03-13

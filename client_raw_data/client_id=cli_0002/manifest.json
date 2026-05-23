@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0002",
+  "company_name": "Pulse Commerce",
+  "industry": "ecommerce",
+  "region": "UK",
+  "generated_at": "2026-04-23T20:55:54.366327Z",
+  "counts": {
+    "contacts": 92,
+    "deals": 119,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 6,
+    "uploads": 5,
+    "marketing_rows": 300,
+    "email_campaigns": 39,
+    "posts": 73,
+    "comments": 146,
+    "tickets": 84,
+    "transcripts": 45,
+    "sessions": 23201,
+    "events": 115982,
+    "orders": 105,
+    "refunds": 11,
+    "invoices": 76,
+    "payments": 48,
+    "feedback": 64,
+    "feature_requests": 80,
+    "meeting_notes": 21,
+    "raw_observations": 43
+  }
+}

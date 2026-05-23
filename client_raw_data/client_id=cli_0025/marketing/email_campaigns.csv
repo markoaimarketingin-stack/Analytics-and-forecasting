@@ -1,0 +1,21 @@
+campaign_id,campaign_name,subject_line,sent,delivered,opens,clicks,unsubscribes,spam_complaints,send_date
+cli_0025_em_0001,Newsletter,A quick update on Pulse Finance,28989,27614,10166,988,30,3,2026-02-13
+cli_0025_em_0002,Education,How to improve Pulse Finance,24669,24639,10717,674,138,4,2026-02-14
+cli_0025_em_0003,Launch,How to improve Pulse Finance,37812,37278,15538,888,315,0,2026-01-16
+cli_0025_em_0004,Launch,A quick update on Pulse Finance,35941,34157,17632,3372,34,4,2026-04-14
+cli_0025_em_0005,Education,Last chance for Pulse Finance,25917,24969,5379,999,186,2,2025-12-29
+cli_0025_em_0006,Re-engagement,How to improve Pulse Finance,25480,24863,4755,396,191,1,2026-02-27
+cli_0025_em_0007,Re-engagement,Last chance for Pulse Finance,44919,44859,21994,4589,360,3,2026-03-19
+cli_0025_em_0008,Newsletter,How to improve Pulse Finance,40463,39954,9672,1353,17,0,2026-01-27
+cli_0025_em_0009,Offer,New Pulse Finance,11849,11762,4087,499,70,3,2026-02-01
+cli_0025_em_0010,Education,How to improve Pulse Finance,9594,9181,2831,227,93,2,2025-12-31
+cli_0025_em_0011,Offer,A quick update on Pulse Finance,20872,20169,2645,407,132,4,2026-04-19
+cli_0025_em_0012,Re-engagement,New Pulse Finance,49208,49097,7440,578,204,1,2025-12-25
+cli_0025_em_0013,Offer,A quick update on Pulse Finance,42330,42142,22065,3036,105,5,2026-03-04
+cli_0025_em_0014,Re-engagement,New Pulse Finance,45581,44462,9603,884,389,3,2026-03-25
+cli_0025_em_0015,Offer,How to improve Pulse Finance,40040,39797,9383,518,112,3,2026-01-19
+cli_0025_em_0016,Winback,A quick update on Pulse Finance,47690,46293,24635,3623,396,1,2025-10-26
+cli_0025_em_0017,Education,A quick update on Pulse Finance,23543,22688,11956,1540,29,2,2026-02-12
+cli_0025_em_0018,Re-engagement,How to improve Pulse Finance,30470,29187,16735,3023,96,4,2025-11-20
+cli_0025_em_0019,Education,How to improve Pulse Finance,48601,48306,8283,785,46,1,2025-12-02
+cli_0025_em_0020,Newsletter,New Pulse Finance,1382,1316,357,70,7,0,2025-12-28

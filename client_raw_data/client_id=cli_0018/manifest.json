@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0018",
+  "company_name": "Signal Collective",
+  "industry": "education",
+  "region": "EU",
+  "generated_at": "2026-04-23T20:56:21.454465Z",
+  "counts": {
+    "contacts": 148,
+    "deals": 81,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 5,
+    "uploads": 8,
+    "marketing_rows": 240,
+    "email_campaigns": 29,
+    "posts": 61,
+    "comments": 122,
+    "tickets": 116,
+    "transcripts": 63,
+    "sessions": 28021,
+    "events": 140116,
+    "orders": 142,
+    "refunds": 16,
+    "invoices": 63,
+    "payments": 43,
+    "feedback": 51,
+    "feature_requests": 64,
+    "meeting_notes": 19,
+    "raw_observations": 40
+  }
+}

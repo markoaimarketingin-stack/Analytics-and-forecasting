@@ -1,0 +1,86 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0003_dl_0001,cli_0003_ct_0067,Nova Finance - audit package,won,9752.51,AUD,12,import,Sara Joshi,2026-02-13,2026-04-03
+cli_0003_dl_0002,cli_0003_ct_0031,Nova Finance - premium bundle,qualified,8899.6,AUD,5,import,Zara Singh,2025-10-14,2025-11-24
+cli_0003_dl_0003,cli_0003_ct_0142,Nova Finance - audit package,negotiation,4168.06,AUD,26,event,Sara Nair,2025-12-07,2025-12-25
+cli_0003_dl_0004,cli_0003_ct_0097,Nova Finance - membership,qualified,15758.56,AUD,18,website_form,Zara Kapoor,2025-12-08,2026-01-30
+cli_0003_dl_0005,cli_0003_ct_0045,Nova Finance - pro plan,qualified,7780.88,AUD,90,email_reply,Noah Sharma,2026-03-25,2026-04-07
+cli_0003_dl_0006,cli_0003_ct_0009,Nova Finance - starter plan,new,13118.99,AUD,23,import,Anika Kapoor,2026-02-27,2026-03-27
+cli_0003_dl_0007,cli_0003_ct_0027,Nova Finance - annual subscription,won,21054.67,AUD,92,import,Ava Sharma,2025-10-19,2025-12-18
+cli_0003_dl_0008,cli_0003_ct_0008,Nova Finance - audit package,qualified,3635.91,AUD,64,referral,Mia Singh,2025-11-19,2025-12-13
+cli_0003_dl_0009,cli_0003_ct_0060,Nova Finance - membership,proposal,19294.03,AUD,42,website_form,Sara Joshi,2025-11-13,2025-12-23
+cli_0003_dl_0010,cli_0003_ct_0171,Nova Finance - service retainer,new,13003.84,AUD,48,referral,Anika Singh,2026-02-16,2026-03-26
+cli_0003_dl_0011,cli_0003_ct_0028,Nova Finance - service retainer,qualified,18860.47,AUD,28,import,Ishaan Reddy,2026-03-28,2026-04-17
+cli_0003_dl_0012,cli_0003_ct_0077,Nova Finance - membership,qualified,3942.83,AUD,9,event,Sara Gupta,2025-09-30,2025-11-11
+cli_0003_dl_0013,cli_0003_ct_0049,Nova Finance - premium bundle,lost,564.06,AUD,41,website_form,Arjun Singh,2025-09-21,2025-11-06
+cli_0003_dl_0014,cli_0003_ct_0026,Nova Finance - service retainer,qualified,8197.27,AUD,50,event,Noah Gupta,2025-12-18,2026-01-08
+cli_0003_dl_0015,cli_0003_ct_0172,Nova Finance - premium bundle,won,8914.2,AUD,93,import,Arjun Khan,2025-12-26,2026-02-15
+cli_0003_dl_0016,cli_0003_ct_0118,Nova Finance - service retainer,negotiation,21830.76,AUD,49,referral,Zara Kapoor,2026-04-03,2026-04-06
+cli_0003_dl_0017,cli_0003_ct_0146,Nova Finance - pro plan,proposal,4893.01,AUD,6,event,Sara Nair,2025-11-01,2025-12-10
+cli_0003_dl_0018,cli_0003_ct_0136,Nova Finance - service retainer,won,19360.93,AUD,33,referral,Leo Sharma,2025-12-04,2026-01-10
+cli_0003_dl_0019,cli_0003_ct_0132,Nova Finance - pro plan,proposal,22014.98,AUD,36,event,Sara Singh,2026-02-02,2026-02-25
+cli_0003_dl_0020,cli_0003_ct_0135,Nova Finance - annual subscription,lost,8707.62,AUD,61,referral,Liam Mehta,2026-01-23,2026-01-26
+cli_0003_dl_0021,cli_0003_ct_0073,Nova Finance - service retainer,proposal,4054.55,AUD,17,website_form,Anika Sharma,2026-02-15,2026-03-08
+cli_0003_dl_0022,cli_0003_ct_0098,Nova Finance - starter plan,proposal,9557.23,AUD,85,import,Mia Bhatia,2026-01-03,2026-02-20
+cli_0003_dl_0023,cli_0003_ct_0059,Nova Finance - service retainer,qualified,4898.83,AUD,87,email_reply,Anika Kapoor,2026-01-11,2026-01-21
+cli_0003_dl_0024,cli_0003_ct_0054,Nova Finance - membership,proposal,11158.55,AUD,31,referral,Leo Patel,2026-04-13,2026-04-18
+cli_0003_dl_0025,cli_0003_ct_0038,Nova Finance - annual subscription,qualified,8625.06,AUD,21,email_reply,Liam Bhatia,2025-10-26,2025-12-08
+cli_0003_dl_0026,cli_0003_ct_0015,Nova Finance - premium bundle,lost,6163.76,AUD,54,email_reply,Maya Verma,2025-11-04,2025-11-11
+cli_0003_dl_0027,cli_0003_ct_0144,Nova Finance - service retainer,proposal,1992.0,AUD,12,import,Zara Nair,2026-03-27,2026-04-14
+cli_0003_dl_0028,cli_0003_ct_0121,Nova Finance - premium bundle,proposal,13054.69,AUD,15,email_reply,Liam Reddy,2025-10-30,2025-12-19
+cli_0003_dl_0029,cli_0003_ct_0016,Nova Finance - premium bundle,proposal,14577.03,AUD,5,website_form,Sara Mehta,2025-12-31,2026-01-06
+cli_0003_dl_0030,cli_0003_ct_0030,Nova Finance - membership,qualified,8380.44,AUD,50,website_form,Liam Bhatia,2025-12-08,2025-12-12
+cli_0003_dl_0031,cli_0003_ct_0169,Nova Finance - premium bundle,negotiation,21807.37,AUD,48,import,Noah Verma,2025-10-15,2025-11-12
+cli_0003_dl_0032,cli_0003_ct_0146,Nova Finance - annual subscription,negotiation,24679.37,AUD,86,event,Kabir Bhatia,2026-01-19,2026-01-24
+cli_0003_dl_0033,cli_0003_ct_0099,Nova Finance - pro plan,proposal,9425.73,AUD,20,import,Ava Patel,2025-11-20,2025-12-28
+cli_0003_dl_0034,cli_0003_ct_0013,Nova Finance - membership,won,16595.19,AUD,73,import,Zara Mehta,2026-02-26,2026-03-28
+cli_0003_dl_0035,cli_0003_ct_0101,Nova Finance - premium bundle,won,2243.55,AUD,40,import,Noah Kapoor,2026-03-18,2026-04-01
+cli_0003_dl_0036,cli_0003_ct_0142,Nova Finance - membership,lost,5507.47,AUD,77,event,Leo Reddy,2026-03-24,2026-03-29
+cli_0003_dl_0037,cli_0003_ct_0032,Nova Finance - starter plan,negotiation,24222.2,AUD,22,email_reply,Ava Verma,2025-10-30,2025-12-28
+cli_0003_dl_0038,cli_0003_ct_0020,Nova Finance - pro plan,qualified,16102.47,AUD,82,email_reply,Anika Khan,2025-11-02,2025-11-25
+cli_0003_dl_0039,cli_0003_ct_0128,Nova Finance - pro plan,new,9182.47,AUD,32,import,Noah Reddy,2026-03-02,2026-03-26
+cli_0003_dl_0040,cli_0003_ct_0010,Nova Finance - premium bundle,proposal,22540.22,AUD,27,import,Mia Khan,2025-10-17,2025-12-14
+cli_0003_dl_0041,cli_0003_ct_0056,Nova Finance - service retainer,proposal,13871.7,AUD,26,referral,Sara Reddy,2026-02-17,2026-03-11
+cli_0003_dl_0042,cli_0003_ct_0093,Nova Finance - membership,won,15553.02,AUD,53,website_form,Arjun Nair,2025-11-26,2026-01-16
+cli_0003_dl_0043,cli_0003_ct_0161,Nova Finance - membership,won,19276.07,AUD,23,website_form,Mia Gupta,2025-10-12,2025-11-26
+cli_0003_dl_0044,cli_0003_ct_0176,Nova Finance - audit package,qualified,22279.35,AUD,76,website_form,Liam Mehta,2025-11-11,2025-12-04
+cli_0003_dl_0045,cli_0003_ct_0143,Nova Finance - pro plan,proposal,13530.32,AUD,84,email_reply,Noah Patel,2026-01-23,2026-02-13
+cli_0003_dl_0046,cli_0003_ct_0104,Nova Finance - starter plan,lost,4529.09,AUD,39,import,Ava Gupta,2026-01-31,2026-02-26
+cli_0003_dl_0047,cli_0003_ct_0033,Nova Finance - annual subscription,qualified,22202.89,AUD,50,import,Liam Sharma,2025-10-01,2025-11-07
+cli_0003_dl_0048,cli_0003_ct_0163,Nova Finance - pro plan,qualified,4340.58,AUD,40,email_reply,Kabir Patel,2026-02-20,2026-02-28
+cli_0003_dl_0049,cli_0003_ct_0022,Nova Finance - premium bundle,qualified,1307.33,AUD,79,import,Ishaan Kapoor,2025-10-28,2025-11-10
+cli_0003_dl_0050,cli_0003_ct_0182,Nova Finance - pro plan,proposal,15511.45,AUD,69,event,Arjun Mehta,2025-11-24,2025-12-26
+cli_0003_dl_0051,cli_0003_ct_0142,Nova Finance - premium bundle,won,6463.62,AUD,73,event,Noah Verma,2026-02-01,2026-03-01
+cli_0003_dl_0052,cli_0003_ct_0036,Nova Finance - audit package,won,14173.13,AUD,19,email_reply,Ishaan Sharma,2026-03-22,2026-03-26
+cli_0003_dl_0053,cli_0003_ct_0163,Nova Finance - premium bundle,negotiation,844.26,AUD,58,email_reply,Anika Nair,2025-12-20,2026-02-01
+cli_0003_dl_0054,cli_0003_ct_0112,Nova Finance - pro plan,proposal,16685.35,AUD,20,email_reply,Anika Khan,2026-02-24,2026-03-09
+cli_0003_dl_0055,cli_0003_ct_0087,Nova Finance - starter plan,proposal,18441.6,AUD,63,import,Arjun Verma,2025-10-11,2025-11-12
+cli_0003_dl_0056,cli_0003_ct_0052,Nova Finance - audit package,won,19605.67,AUD,29,import,Maya Joshi,2026-01-16,2026-01-29
+cli_0003_dl_0057,cli_0003_ct_0182,Nova Finance - pro plan,lost,24237.33,AUD,16,event,Anika Singh,2026-03-11,2026-04-13
+cli_0003_dl_0058,cli_0003_ct_0022,Nova Finance - premium bundle,qualified,13112.63,AUD,9,import,Leo Patel,2025-10-08,2025-11-10
+cli_0003_dl_0059,cli_0003_ct_0119,Nova Finance - premium bundle,won,19110.63,AUD,44,import,Maya Singh,2025-11-05,2025-12-15
+cli_0003_dl_0060,cli_0003_ct_0157,Nova Finance - premium bundle,lost,5007.81,AUD,21,email_reply,Mia Joshi,2025-11-29,2025-12-14
+cli_0003_dl_0061,cli_0003_ct_0085,Nova Finance - audit package,lost,16813.12,AUD,65,event,Liam Khan,2025-11-08,2026-01-07
+cli_0003_dl_0062,cli_0003_ct_0129,Nova Finance - membership,negotiation,24205.93,AUD,64,import,Sara Gupta,2025-09-22,2025-11-21
+cli_0003_dl_0063,cli_0003_ct_0133,Nova Finance - premium bundle,proposal,17518.84,AUD,57,import,Kabir Khan,2025-11-22,2026-01-18
+cli_0003_dl_0064,cli_0003_ct_0058,Nova Finance - premium bundle,won,16846.71,AUD,27,website_form,Noah Nair,2026-01-23,2026-01-30
+cli_0003_dl_0065,cli_0003_ct_0174,Nova Finance - pro plan,qualified,2220.68,AUD,31,website_form,Anika Patel,2025-11-21,2025-12-28
+cli_0003_dl_0066,cli_0003_ct_0147,Nova Finance - audit package,lost,14586.75,AUD,43,website_form,Liam Sharma,2025-12-08,2025-12-12
+cli_0003_dl_0067,cli_0003_ct_0047,Nova Finance - annual subscription,qualified,3360.57,AUD,74,event,Kabir Reddy,2026-01-14,2026-02-28
+cli_0003_dl_0068,cli_0003_ct_0022,Nova Finance - starter plan,proposal,17879.52,AUD,6,import,Zara Kapoor,2026-02-11,2026-04-11
+cli_0003_dl_0069,cli_0003_ct_0020,Nova Finance - pro plan,lost,6456.4,AUD,46,email_reply,Mia Khan,2026-01-18,2026-02-09
+cli_0003_dl_0070,cli_0003_ct_0074,Nova Finance - starter plan,proposal,18547.79,AUD,58,email_reply,Mia Khan,2026-02-11,2026-03-29
+cli_0003_dl_0071,cli_0003_ct_0004,Nova Finance - membership,qualified,14593.88,AUD,16,website_form,Anika Gupta,2026-03-19,2026-04-17
+cli_0003_dl_0072,cli_0003_ct_0019,Nova Finance - premium bundle,negotiation,5428.26,AUD,26,website_form,Zara Sharma,2025-12-27,2026-01-13
+cli_0003_dl_0073,cli_0003_ct_0018,Nova Finance - starter plan,proposal,10214.05,AUD,23,import,Ishaan Sharma,2025-12-17,2026-01-06
+cli_0003_dl_0074,cli_0003_ct_0163,Nova Finance - annual subscription,qualified,21575.54,AUD,90,email_reply,Liam Sharma,2026-03-18,2026-04-16
+cli_0003_dl_0075,cli_0003_ct_0121,Nova Finance - audit package,proposal,2143.78,AUD,28,email_reply,Zara Sharma,2025-12-10,2026-02-04
+cli_0003_dl_0076,cli_0003_ct_0051,Nova Finance - premium bundle,proposal,16682.0,AUD,55,website_form,Ava Mehta,2025-09-29,2025-11-18
+cli_0003_dl_0077,cli_0003_ct_0075,Nova Finance - premium bundle,won,11183.94,AUD,52,website_form,Leo Kapoor,2025-12-25,2026-01-07
+cli_0003_dl_0078,cli_0003_ct_0171,Nova Finance - service retainer,qualified,6343.85,AUD,32,referral,Zara Sharma,2025-12-31,2026-02-26
+cli_0003_dl_0079,cli_0003_ct_0073,Nova Finance - service retainer,new,3673.58,AUD,89,website_form,Noah Sharma,2026-01-16,2026-02-22
+cli_0003_dl_0080,cli_0003_ct_0001,Nova Finance - premium bundle,negotiation,23311.45,AUD,57,event,Kabir Bhatia,2025-10-13,2025-12-10
+cli_0003_dl_0081,cli_0003_ct_0001,Nova Finance - premium bundle,lost,21165.43,AUD,85,event,Kabir Bhatia,2025-10-25,2025-12-22
+cli_0003_dl_0082,cli_0003_ct_0024,Nova Finance - membership,won,20171.88,AUD,74,email_reply,Zara Patel,2025-09-12,2025-10-28
+cli_0003_dl_0083,cli_0003_ct_0131,Nova Finance - premium bundle,new,17244.2,AUD,77,import,Ava Gupta,2025-10-22,2025-11-19
+cli_0003_dl_0084,cli_0003_ct_0152,Nova Finance - annual subscription,qualified,23774.67,AUD,90,email_reply,Zara Mehta,2025-10-27,2025-12-09
+cli_0003_dl_0085,cli_0003_ct_0140,Nova Finance - pro plan,won,11983.43,AUD,87,event,Maya Sharma,2025-12-04,2025-12-21

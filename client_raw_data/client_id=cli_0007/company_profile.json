@@ -1,0 +1,19 @@
+{
+  "client_id": "cli_0007",
+  "company_name": "Vertex Works",
+  "industry": "marketplace",
+  "region": "AU",
+  "currency": "AUD",
+  "website": "https://vertex-works.example.com",
+  "business_model": "b2b",
+  "employee_band": "1-10",
+  "objective": "retention",
+  "budget_monthly": 15000,
+  "voice": "premium",
+  "channels": [
+    "linkedin_ads",
+    "referral",
+    "google_ads"
+  ],
+  "created_at": "2026-04-23T20:56:01.106142Z"
+}

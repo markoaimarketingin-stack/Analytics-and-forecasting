@@ -1,0 +1,52 @@
+deal_id,contact_id,deal_name,stage,amount,currency,probability,source,owner,created_at,close_date
+cli_0014_dl_0001,cli_0014_ct_0035,Signal Studio - pro plan,proposal,15848.27,INR,92,referral,Ishaan Reddy,2025-09-01,2025-10-30
+cli_0014_dl_0002,cli_0014_ct_0035,Signal Studio - starter plan,qualified,1721.44,INR,72,referral,Ava Mehta,2026-02-08,2026-03-24
+cli_0014_dl_0003,cli_0014_ct_0059,Signal Studio - membership,won,20679.04,INR,80,import,Kabir Bhatia,2025-11-02,2026-01-01
+cli_0014_dl_0004,cli_0014_ct_0033,Signal Studio - pro plan,negotiation,11075.8,INR,7,event,Zara Mehta,2026-02-18,2026-03-19
+cli_0014_dl_0005,cli_0014_ct_0002,Signal Studio - annual subscription,negotiation,16307.75,INR,85,event,Sara Patel,2025-12-22,2026-01-10
+cli_0014_dl_0006,cli_0014_ct_0056,Signal Studio - annual subscription,won,5679.34,INR,84,email_reply,Zara Reddy,2026-01-26,2026-02-24
+cli_0014_dl_0007,cli_0014_ct_0013,Signal Studio - annual subscription,qualified,15553.81,INR,95,website_form,Mia Sharma,2025-12-04,2026-01-13
+cli_0014_dl_0008,cli_0014_ct_0007,Signal Studio - starter plan,new,12008.55,INR,63,import,Ava Verma,2026-02-28,2026-03-08
+cli_0014_dl_0009,cli_0014_ct_0071,Signal Studio - audit package,negotiation,7501.97,INR,17,referral,Noah Sharma,2025-12-31,2026-02-12
+cli_0014_dl_0010,cli_0014_ct_0050,Signal Studio - starter plan,qualified,21956.05,INR,5,website_form,Sara Joshi,2026-01-21,2026-03-01
+cli_0014_dl_0011,cli_0014_ct_0046,Signal Studio - membership,qualified,20532.09,INR,64,referral,Mia Khan,2026-01-25,2026-03-25
+cli_0014_dl_0012,cli_0014_ct_0056,Signal Studio - annual subscription,negotiation,12318.23,INR,56,email_reply,Sara Sharma,2026-01-20,2026-01-28
+cli_0014_dl_0013,cli_0014_ct_0039,Signal Studio - pro plan,qualified,5484.7,INR,86,event,Leo Mehta,2025-12-22,2026-01-13
+cli_0014_dl_0014,cli_0014_ct_0014,Signal Studio - membership,qualified,14101.91,INR,64,email_reply,Anika Reddy,2025-11-19,2025-12-11
+cli_0014_dl_0015,cli_0014_ct_0081,Signal Studio - starter plan,proposal,10711.91,INR,48,website_form,Sara Sharma,2026-01-13,2026-03-03
+cli_0014_dl_0016,cli_0014_ct_0003,Signal Studio - starter plan,qualified,19209.0,INR,58,website_form,Leo Sharma,2025-12-13,2026-01-28
+cli_0014_dl_0017,cli_0014_ct_0021,Signal Studio - premium bundle,proposal,6748.47,INR,33,import,Mia Joshi,2025-12-02,2026-01-24
+cli_0014_dl_0018,cli_0014_ct_0056,Signal Studio - service retainer,qualified,11696.03,INR,57,email_reply,Kabir Patel,2025-12-03,2026-01-29
+cli_0014_dl_0019,cli_0014_ct_0036,Signal Studio - membership,won,5562.62,INR,82,import,Maya Gupta,2026-01-01,2026-02-12
+cli_0014_dl_0020,cli_0014_ct_0025,Signal Studio - pro plan,negotiation,18948.89,INR,29,event,Ava Bhatia,2025-09-26,2025-11-04
+cli_0014_dl_0021,cli_0014_ct_0038,Signal Studio - starter plan,proposal,17599.66,INR,47,website_form,Kabir Joshi,2026-02-26,2026-03-08
+cli_0014_dl_0022,cli_0014_ct_0018,Signal Studio - starter plan,proposal,21007.1,INR,58,event,Liam Sharma,2025-12-15,2026-01-17
+cli_0014_dl_0023,cli_0014_ct_0003,Signal Studio - membership,new,10211.13,INR,92,website_form,Maya Gupta,2026-03-09,2026-04-07
+cli_0014_dl_0024,cli_0014_ct_0066,Signal Studio - membership,negotiation,4232.54,INR,6,website_form,Maya Singh,2025-12-28,2026-01-05
+cli_0014_dl_0025,cli_0014_ct_0036,Signal Studio - service retainer,negotiation,10550.29,INR,91,import,Mia Gupta,2025-09-24,2025-11-15
+cli_0014_dl_0026,cli_0014_ct_0070,Signal Studio - membership,qualified,24807.99,INR,8,email_reply,Noah Gupta,2026-02-18,2026-03-16
+cli_0014_dl_0027,cli_0014_ct_0030,Signal Studio - membership,won,11704.28,INR,92,email_reply,Ishaan Mehta,2025-10-26,2025-12-18
+cli_0014_dl_0028,cli_0014_ct_0068,Signal Studio - starter plan,proposal,12030.1,INR,57,import,Anika Mehta,2025-11-09,2025-12-05
+cli_0014_dl_0029,cli_0014_ct_0044,Signal Studio - service retainer,won,5755.64,INR,87,event,Zara Nair,2025-10-13,2025-11-13
+cli_0014_dl_0030,cli_0014_ct_0032,Signal Studio - audit package,new,19544.66,INR,49,email_reply,Maya Kapoor,2025-11-09,2025-11-27
+cli_0014_dl_0031,cli_0014_ct_0064,Signal Studio - pro plan,negotiation,22609.96,INR,72,email_reply,Ava Mehta,2026-02-11,2026-02-20
+cli_0014_dl_0032,cli_0014_ct_0079,Signal Studio - premium bundle,qualified,15086.99,INR,61,referral,Arjun Verma,2026-01-20,2026-03-01
+cli_0014_dl_0033,cli_0014_ct_0021,Signal Studio - service retainer,negotiation,20463.26,INR,31,import,Mia Joshi,2025-10-28,2025-12-18
+cli_0014_dl_0034,cli_0014_ct_0003,Signal Studio - service retainer,qualified,21386.74,INR,34,website_form,Kabir Bhatia,2026-03-28,2026-04-24
+cli_0014_dl_0035,cli_0014_ct_0054,Signal Studio - premium bundle,lost,15291.57,INR,25,referral,Kabir Reddy,2025-12-09,2026-01-16
+cli_0014_dl_0036,cli_0014_ct_0065,Signal Studio - membership,proposal,15377.64,INR,11,email_reply,Arjun Joshi,2026-04-05,2026-04-09
+cli_0014_dl_0037,cli_0014_ct_0065,Signal Studio - premium bundle,qualified,1260.32,INR,9,email_reply,Arjun Bhatia,2025-10-05,2025-11-04
+cli_0014_dl_0038,cli_0014_ct_0061,Signal Studio - pro plan,negotiation,6618.38,INR,52,website_form,Ishaan Kapoor,2025-09-24,2025-11-13
+cli_0014_dl_0039,cli_0014_ct_0003,Signal Studio - membership,qualified,20525.94,INR,93,website_form,Anika Reddy,2026-04-07,2026-04-21
+cli_0014_dl_0040,cli_0014_ct_0028,Signal Studio - membership,won,19747.48,INR,68,referral,Anika Sharma,2025-10-30,2025-11-26
+cli_0014_dl_0041,cli_0014_ct_0064,Signal Studio - starter plan,won,3233.05,INR,86,email_reply,Anika Patel,2025-11-01,2025-11-07
+cli_0014_dl_0042,cli_0014_ct_0003,Signal Studio - service retainer,new,17138.35,INR,57,website_form,Kabir Nair,2026-02-09,2026-04-06
+cli_0014_dl_0043,cli_0014_ct_0077,Signal Studio - premium bundle,proposal,14826.04,INR,8,website_form,Noah Sharma,2026-03-22,2026-04-21
+cli_0014_dl_0044,cli_0014_ct_0080,Signal Studio - premium bundle,proposal,23947.8,INR,66,website_form,Ava Bhatia,2025-12-23,2026-01-30
+cli_0014_dl_0045,cli_0014_ct_0031,Signal Studio - audit package,qualified,16562.09,INR,18,referral,Anika Singh,2025-09-18,2025-10-28
+cli_0014_dl_0046,cli_0014_ct_0026,Signal Studio - audit package,lost,9504.58,INR,84,event,Sara Verma,2025-12-23,2026-02-10
+cli_0014_dl_0047,cli_0014_ct_0023,Signal Studio - service retainer,negotiation,5488.12,INR,41,import,Zara Khan,2026-01-27,2026-03-18
+cli_0014_dl_0048,cli_0014_ct_0027,Signal Studio - pro plan,qualified,1406.9,INR,5,import,Leo Gupta,2026-03-23,2026-04-24
+cli_0014_dl_0049,cli_0014_ct_0002,Signal Studio - pro plan,proposal,21986.66,INR,65,event,Maya Patel,2026-01-09,2026-01-12
+cli_0014_dl_0050,cli_0014_ct_0043,Signal Studio - starter plan,negotiation,10388.94,INR,32,event,Ava Gupta,2026-02-16,2026-03-14
+cli_0014_dl_0051,cli_0014_ct_0051,Signal Studio - pro plan,qualified,15788.35,INR,10,email_reply,Maya Kapoor,2025-11-09,2025-12-20

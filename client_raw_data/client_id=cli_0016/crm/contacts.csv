@@ -1,0 +1,104 @@
+contact_id,full_name,email,company,title,lifecycle_stage,source,country,created_at,last_activity_at
+cli_0016_ct_0001,Ava Joshi,ava.joshi0@examplemail.com,Metro Ltd,Sales Lead,mql,website_form,UAE,2026-01-30,2026-01-01
+cli_0016_ct_0002,Kabir Nair,kabir.nair1@examplemail.com,Peak Group,Founder,customer,website_form,United States,2025-05-20,2026-01-17
+cli_0016_ct_0003,Anika Nair,anika.nair2@examplemail.com,Blue Commerce,RevOps Manager,lead,referral,United Kingdom,2025-04-19,2025-12-26
+cli_0016_ct_0004,Anika Sharma,anika.sharma3@examplemail.com,Peak LLC,Sales Lead,sql,event,UAE,2025-04-08,2026-04-10
+cli_0016_ct_0005,Mia Bhatia,mia.bhatia4@examplemail.com,Blue Commerce,Marketing Manager,lead,event,United Kingdom,2025-02-23,2026-02-12
+cli_0016_ct_0006,Leo Bhatia,leo.bhatia5@examplemail.com,Acme LLC,RevOps Manager,mql,import,India,2025-09-21,2026-01-15
+cli_0016_ct_0007,Zara Mehta,zara.mehta6@examplemail.com,Zen Inc,Marketing Manager,sql,email_reply,UAE,2024-12-15,2026-01-12
+cli_0016_ct_0008,Ava Mehta,ava.mehta7@examplemail.com,Blue Commerce,Marketing Manager,customer,website_form,Australia,2026-02-09,2026-02-20
+cli_0016_ct_0009,Mia Mehta,mia.mehta8@examplemail.com,Metro Ltd,Founder,lead,email_reply,UAE,2026-03-25,2026-03-11
+cli_0016_ct_0010,Ishaan Mehta,ishaan.mehta9@examplemail.com,Acme Ltd,Head of Growth,churn_risk,email_reply,Canada,2025-02-05,2026-03-18
+cli_0016_ct_0011,Mia Patel,mia.patel10@examplemail.com,Peak Inc,Founder,lead,email_reply,Australia,2026-02-22,2026-01-26
+cli_0016_ct_0012,Ava Khan,ava.khan11@examplemail.com,Blue Commerce,Marketing Manager,sql,event,India,2025-08-04,2026-02-03
+cli_0016_ct_0013,Ava Patel,ava.patel12@examplemail.com,Zen LLC,Sales Lead,mql,email_reply,UAE,2026-02-16,2026-04-05
+cli_0016_ct_0014,Liam Gupta,liam.gupta13@examplemail.com,Blue Commerce,Marketing Manager,customer,website_form,India,2025-05-29,2026-03-21
+cli_0016_ct_0015,Mia Singh,mia.singh14@examplemail.com,Orbit Group,Head of Growth,lead,event,United States,2025-12-13,2026-01-10
+cli_0016_ct_0016,Ava Verma,ava.verma15@examplemail.com,Zen LLC,Head of Growth,sql,import,Australia,2025-09-05,2026-04-10
+cli_0016_ct_0017,Mia Bhatia,mia.bhatia16@examplemail.com,Blue Commerce,Sales Lead,customer,import,UAE,2026-01-16,2025-12-26
+cli_0016_ct_0018,Ava Reddy,ava.reddy17@examplemail.com,Blue Commerce,Marketing Manager,sql,import,United States,2026-03-14,2026-01-10
+cli_0016_ct_0019,Zara Patel,zara.patel18@examplemail.com,Blue Commerce,RevOps Manager,lead,referral,Australia,2025-12-16,2026-01-27
+cli_0016_ct_0020,Noah Verma,noah.verma19@examplemail.com,Blue Commerce,Marketing Manager,customer,website_form,UAE,2025-08-27,2025-12-30
+cli_0016_ct_0021,Arjun Mehta,arjun.mehta20@examplemail.com,Blue Commerce,Head of Growth,sql,email_reply,UAE,2025-12-22,2026-02-22
+cli_0016_ct_0022,Anika Gupta,anika.gupta21@examplemail.com,Orbit LLC,Sales Lead,lead,referral,United Kingdom,2025-08-01,2026-04-10
+cli_0016_ct_0023,Noah Joshi,noah.joshi22@examplemail.com,Metro LLC,Marketing Manager,lead,import,India,2026-03-12,2026-04-24
+cli_0016_ct_0024,Ishaan Verma,ishaan.verma23@examplemail.com,Acme LLC,Head of Growth,lead,email_reply,UAE,2025-03-07,2026-02-03
+cli_0016_ct_0025,Ishaan Mehta,ishaan.mehta24@examplemail.com,Blue Commerce,Founder,lead,import,India,2025-03-16,2026-03-25
+cli_0016_ct_0026,Anika Reddy,anika.reddy25@examplemail.com,Orbit LLC,Sales Lead,mql,referral,UAE,2025-11-28,2026-04-14
+cli_0016_ct_0027,Arjun Nair,arjun.nair26@examplemail.com,Blue Commerce,Marketing Manager,sql,import,India,2026-03-31,2026-02-28
+cli_0016_ct_0028,Zara Khan,zara.khan27@examplemail.com,Blue Commerce,Head of Growth,lead,import,United States,2025-07-25,2026-03-07
+cli_0016_ct_0029,Mia Gupta,mia.gupta28@examplemail.com,Metro Ltd,Sales Lead,customer,import,Canada,2025-01-22,2026-02-15
+cli_0016_ct_0030,Mia Verma,mia.verma29@examplemail.com,Blue Commerce,RevOps Manager,mql,import,Australia,2026-01-17,2026-03-12
+cli_0016_ct_0031,Arjun Mehta,arjun.mehta30@examplemail.com,Peak Ltd,Head of Growth,sql,email_reply,Canada,2025-06-20,2026-04-05
+cli_0016_ct_0032,Zara Joshi,zara.joshi31@examplemail.com,Peak Ltd,Marketing Manager,sql,referral,United Kingdom,2025-11-18,2026-01-26
+cli_0016_ct_0033,Arjun Singh,arjun.singh32@examplemail.com,Blue Commerce,Founder,mql,import,United Kingdom,2025-05-29,2026-01-16
+cli_0016_ct_0034,Sara Gupta,sara.gupta33@examplemail.com,Acme Group,Sales Lead,sql,website_form,UAE,2025-04-03,2026-03-26
+cli_0016_ct_0035,Anika Patel,anika.patel34@examplemail.com,Peak LLC,Sales Lead,customer,website_form,India,2026-02-16,2026-03-17
+cli_0016_ct_0036,Arjun Kapoor,arjun.kapoor35@examplemail.com,Acme Ltd,Head of Growth,lead,event,United States,2025-03-25,2026-01-04
+cli_0016_ct_0037,Leo Gupta,leo.gupta36@examplemail.com,Zen Inc,RevOps Manager,lead,import,Australia,2025-09-07,2026-02-02
+cli_0016_ct_0038,Ishaan Singh,ishaan.singh37@examplemail.com,Acme Ltd,Founder,churn_risk,import,UAE,2025-10-28,2026-01-15
+cli_0016_ct_0039,Kabir Kapoor,kabir.kapoor38@examplemail.com,Peak Inc,Marketing Manager,lead,import,Australia,2025-01-24,2025-12-29
+cli_0016_ct_0040,Maya Mehta,maya.mehta39@examplemail.com,Metro Inc,Founder,lead,website_form,India,2025-08-08,2026-01-29
+cli_0016_ct_0041,Liam Patel,liam.patel40@examplemail.com,Peak Inc,Head of Growth,mql,import,UAE,2025-08-19,2026-02-14
+cli_0016_ct_0042,Ava Bhatia,ava.bhatia41@examplemail.com,Metro Ltd,Head of Growth,customer,import,UAE,2025-07-19,2026-03-29
+cli_0016_ct_0043,Liam Bhatia,liam.bhatia42@examplemail.com,Blue Commerce,Sales Lead,mql,website_form,India,2025-11-05,2026-02-08
+cli_0016_ct_0044,Sara Joshi,sara.joshi43@examplemail.com,Orbit Inc,Head of Growth,lead,email_reply,United Kingdom,2025-12-12,2026-04-22
+cli_0016_ct_0045,Kabir Sharma,kabir.sharma44@examplemail.com,Blue Commerce,Founder,lead,website_form,United States,2025-03-14,2026-03-20
+cli_0016_ct_0046,Zara Khan,zara.khan45@examplemail.com,Blue Commerce,Sales Lead,customer,referral,United States,2025-02-17,2026-03-10
+cli_0016_ct_0047,Zara Gupta,zara.gupta46@examplemail.com,Metro LLC,Head of Growth,lead,website_form,United Kingdom,2025-04-06,2026-01-16
+cli_0016_ct_0048,Ishaan Khan,ishaan.khan47@examplemail.com,Metro LLC,Sales Lead,sql,website_form,United Kingdom,2025-05-29,2026-01-10
+cli_0016_ct_0049,Leo Sharma,leo.sharma48@examplemail.com,Acme Ltd,RevOps Manager,lead,referral,India,2025-03-11,2026-03-06
+cli_0016_ct_0050,Maya Joshi,maya.joshi49@examplemail.com,Blue Commerce,Sales Lead,mql,email_reply,India,2025-08-09,2026-03-04
+cli_0016_ct_0051,Anika Mehta,anika.mehta50@examplemail.com,Blue Commerce,Marketing Manager,customer,referral,India,2025-01-13,2026-02-17
+cli_0016_ct_0052,Ava Reddy,ava.reddy51@examplemail.com,Blue Commerce,Marketing Manager,customer,website_form,United States,2025-11-08,2026-01-08
+cli_0016_ct_0053,Noah Reddy,noah.reddy52@examplemail.com,Acme LLC,RevOps Manager,sql,website_form,United Kingdom,2025-11-14,2026-04-19
+cli_0016_ct_0054,Liam Bhatia,liam.bhatia53@examplemail.com,Acme Inc,RevOps Manager,mql,import,Australia,2025-08-01,2026-02-14
+cli_0016_ct_0055,Zara Khan,zara.khan54@examplemail.com,Blue Commerce,Head of Growth,customer,email_reply,India,2025-07-04,2026-03-10
+cli_0016_ct_0056,Leo Sharma,leo.sharma55@examplemail.com,Blue Commerce,Sales Lead,lead,import,UAE,2025-01-24,2026-03-21
+cli_0016_ct_0057,Zara Gupta,zara.gupta56@examplemail.com,Blue Commerce,Marketing Manager,mql,website_form,United States,2026-02-20,2026-02-22
+cli_0016_ct_0058,Ishaan Khan,ishaan.khan57@examplemail.com,Peak Inc,Sales Lead,customer,import,Canada,2025-06-21,2026-03-23
+cli_0016_ct_0059,Arjun Bhatia,arjun.bhatia58@examplemail.com,Blue Commerce,Marketing Manager,customer,import,India,2025-12-12,2025-12-29
+cli_0016_ct_0060,Mia Verma,mia.verma59@examplemail.com,Blue Commerce,Marketing Manager,customer,website_form,United States,2025-05-30,2026-02-06
+cli_0016_ct_0061,Ishaan Verma,ishaan.verma60@examplemail.com,Blue Commerce,Founder,mql,website_form,United States,2025-12-17,2026-03-10
+cli_0016_ct_0062,Ishaan Patel,ishaan.patel61@examplemail.com,Blue Commerce,Founder,mql,event,Australia,2025-12-29,2026-03-18
+cli_0016_ct_0063,Ishaan Patel,ishaan.patel62@examplemail.com,Blue Commerce,Founder,lead,import,India,2025-04-19,2026-01-13
+cli_0016_ct_0064,Liam Verma,liam.verma63@examplemail.com,Blue Commerce,Head of Growth,customer,website_form,United Kingdom,2025-10-15,2026-03-30
+cli_0016_ct_0065,Maya Reddy,maya.reddy64@examplemail.com,Blue Commerce,Sales Lead,mql,referral,Australia,2026-01-30,2026-03-04
+cli_0016_ct_0066,Noah Sharma,noah.sharma65@examplemail.com,Blue Commerce,RevOps Manager,mql,website_form,Canada,2026-02-17,2026-02-06
+cli_0016_ct_0067,Anika Nair,anika.nair66@examplemail.com,Blue Commerce,RevOps Manager,mql,website_form,Canada,2025-09-06,2026-02-17
+cli_0016_ct_0068,Zara Verma,zara.verma67@examplemail.com,Blue Commerce,Founder,sql,event,United States,2026-03-09,2026-04-19
+cli_0016_ct_0069,Anika Singh,anika.singh68@examplemail.com,Blue Commerce,Head of Growth,mql,website_form,United Kingdom,2026-02-11,2026-01-15
+cli_0016_ct_0070,Leo Joshi,leo.joshi69@examplemail.com,Blue Commerce,RevOps Manager,lead,website_form,UAE,2025-11-20,2026-01-29
+cli_0016_ct_0071,Liam Reddy,liam.reddy70@examplemail.com,Peak Ltd,Sales Lead,customer,website_form,Australia,2025-12-09,2026-02-15
+cli_0016_ct_0072,Ishaan Mehta,ishaan.mehta71@examplemail.com,Blue Commerce,Founder,lead,import,United Kingdom,2025-03-09,2026-02-06
+cli_0016_ct_0073,Anika Kapoor,anika.kapoor72@examplemail.com,Blue Commerce,Founder,lead,website_form,United States,2024-11-06,2026-01-18
+cli_0016_ct_0074,Liam Singh,liam.singh73@examplemail.com,Zen LLC,Head of Growth,mql,import,Australia,2026-03-02,2026-03-13
+cli_0016_ct_0075,Sara Nair,sara.nair74@examplemail.com,Blue Commerce,Sales Lead,mql,email_reply,UAE,2025-04-11,2026-03-19
+cli_0016_ct_0076,Ava Patel,ava.patel75@examplemail.com,Blue Commerce,Head of Growth,churn_risk,website_form,UAE,2025-06-26,2026-02-12
+cli_0016_ct_0077,Ava Sharma,ava.sharma76@examplemail.com,Zen Ltd,RevOps Manager,mql,import,UAE,2025-02-09,2026-02-06
+cli_0016_ct_0078,Liam Patel,liam.patel77@examplemail.com,Peak Inc,Head of Growth,lead,email_reply,United States,2025-03-28,2026-04-10
+cli_0016_ct_0079,Leo Reddy,leo.reddy78@examplemail.com,Zen LLC,Founder,lead,import,Canada,2025-07-24,2026-04-01
+cli_0016_ct_0080,Kabir Nair,kabir.nair79@examplemail.com,Orbit Group,RevOps Manager,lead,import,Australia,2024-12-02,2026-03-27
+cli_0016_ct_0081,Arjun Reddy,arjun.reddy80@examplemail.com,Blue Commerce,Sales Lead,lead,import,UAE,2025-08-13,2026-04-13
+cli_0016_ct_0082,Arjun Singh,arjun.singh81@examplemail.com,Metro Group,Sales Lead,mql,email_reply,Canada,2025-08-03,2026-02-09
+cli_0016_ct_0083,Arjun Sharma,arjun.sharma82@examplemail.com,Blue Commerce,Sales Lead,lead,email_reply,United Kingdom,2025-10-19,2026-03-04
+cli_0016_ct_0084,Ishaan Joshi,ishaan.joshi83@examplemail.com,Orbit Ltd,Founder,sql,email_reply,United Kingdom,2025-12-09,2026-03-26
+cli_0016_ct_0085,Mia Verma,mia.verma84@examplemail.com,Blue Commerce,Sales Lead,lead,referral,Canada,2025-07-16,2026-01-16
+cli_0016_ct_0086,Maya Gupta,maya.gupta85@examplemail.com,Zen Ltd,Head of Growth,lead,import,Canada,2025-12-16,2026-04-06
+cli_0016_ct_0087,Mia Verma,mia.verma86@examplemail.com,Blue Commerce,Founder,mql,email_reply,UAE,2026-03-22,2026-02-27
+cli_0016_ct_0088,Mia Sharma,mia.sharma87@examplemail.com,Blue Commerce,Sales Lead,lead,referral,UAE,2026-03-10,2026-03-27
+cli_0016_ct_0089,Zara Patel,zara.patel88@examplemail.com,Blue Commerce,Head of Growth,lead,website_form,India,2025-10-20,2026-04-19
+cli_0016_ct_0090,Maya Sharma,maya.sharma89@examplemail.com,Blue Commerce,Founder,lead,email_reply,India,2025-07-02,2026-04-12
+cli_0016_ct_0091,Liam Patel,liam.patel90@examplemail.com,Metro Inc,Marketing Manager,customer,referral,India,2025-07-12,2026-01-25
+cli_0016_ct_0092,Leo Reddy,leo.reddy91@examplemail.com,Metro Ltd,RevOps Manager,customer,import,United Kingdom,2026-02-27,2026-04-24
+cli_0016_ct_0093,Arjun Mehta,arjun.mehta92@examplemail.com,Blue Commerce,Sales Lead,customer,email_reply,Canada,2025-05-16,2026-02-21
+cli_0016_ct_0094,Liam Gupta,liam.gupta93@examplemail.com,Blue Commerce,RevOps Manager,sql,email_reply,Australia,2024-11-29,2026-04-01
+cli_0016_ct_0095,Noah Mehta,noah.mehta94@examplemail.com,Metro Group,Founder,customer,import,United Kingdom,2025-02-25,2026-03-22
+cli_0016_ct_0096,Noah Joshi,noah.joshi95@examplemail.com,Blue Commerce,Head of Growth,mql,email_reply,Australia,2025-06-15,2026-04-08
+cli_0016_ct_0097,Noah Mehta,noah.mehta96@examplemail.com,Acme Ltd,Head of Growth,lead,event,India,2025-01-04,2026-03-30
+cli_0016_ct_0098,Sara Singh,sara.singh97@examplemail.com,Metro Ltd,Head of Growth,sql,event,UAE,2025-11-23,2026-03-04
+cli_0016_ct_0099,Anika Reddy,anika.reddy98@examplemail.com,Blue Commerce,Founder,mql,website_form,United Kingdom,2025-06-01,2026-02-28
+cli_0016_ct_0100,Noah Sharma,noah.sharma99@examplemail.com,Blue Commerce,Marketing Manager,lead,referral,United Kingdom,2025-06-02,2026-02-22
+cli_0016_ct_0101,Ava Patel,ava.patel100@examplemail.com,Acme Group,Founder,mql,referral,India,2025-01-29,2026-01-27
+cli_0016_ct_0102,Mia Nair,mia.nair101@examplemail.com,Metro Group,Marketing Manager,mql,import,Australia,2025-01-17,2026-04-11
+cli_0016_ct_0103,Sara Singh,sara.singh102@examplemail.com,Blue Commerce,Founder,sql,import,Australia,2026-04-17,2025-12-29

@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0008",
+  "company_name": "Blue Commerce",
+  "industry": "local_services",
+  "region": "UAE",
+  "generated_at": "2026-04-23T20:56:04.492107Z",
+  "counts": {
+    "contacts": 166,
+    "deals": 118,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 13,
+    "marketing_rows": 240,
+    "email_campaigns": 55,
+    "posts": 60,
+    "comments": 120,
+    "tickets": 114,
+    "transcripts": 71,
+    "sessions": 27126,
+    "events": 135748,
+    "orders": 167,
+    "refunds": 16,
+    "invoices": 62,
+    "payments": 41,
+    "feedback": 107,
+    "feature_requests": 37,
+    "meeting_notes": 20,
+    "raw_observations": 31
+  }
+}

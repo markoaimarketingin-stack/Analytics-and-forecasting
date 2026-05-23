@@ -1,0 +1,20 @@
+{
+  "client_id": "cli_0008",
+  "company_name": "Blue Commerce",
+  "industry": "local_services",
+  "region": "UAE",
+  "currency": "AED",
+  "website": "https://blue-commerce.example.com",
+  "business_model": "b2c",
+  "employee_band": "51-200",
+  "objective": "purchase",
+  "budget_monthly": 40000,
+  "voice": "playful",
+  "channels": [
+    "referral",
+    "organic",
+    "linkedin_ads",
+    "meta_ads"
+  ],
+  "created_at": "2026-04-23T20:56:02.855557Z"
+}

@@ -1,0 +1,93 @@
+order_id,created_at,customer_id,product,currency,amount,discount_pct,channel,status,payment_method
+cli_0014_ord_00001,2026-02-28,a6ec1aad470c,annual subscription,INR,336.35,5,organic,paid,upi
+cli_0014_ord_00002,2025-12-27,66ae54cdc689,audit package,INR,2369.19,5,meta_ads,paid,wallet
+cli_0014_ord_00003,2026-01-29,7dd18fb78eb0,service retainer,INR,174.95,10,organic,paid,card
+cli_0014_ord_00004,2026-02-17,540d8c1c5a8f,pro plan,INR,1666.88,20,organic,paid,paypal
+cli_0014_ord_00005,2025-11-16,377e0fc8f820,audit package,INR,761.87,10,tiktok_ads,paid,paypal
+cli_0014_ord_00006,2025-12-16,d3e300f53f0a,audit package,INR,2090.47,0,meta_ads,paid,wallet
+cli_0014_ord_00007,2025-11-24,1e6106629673,membership,INR,2440.32,10,organic,refunded,bank_transfer
+cli_0014_ord_00008,2025-11-19,7cdd0f689906,audit package,INR,1444.27,10,meta_ads,paid,bank_transfer
+cli_0014_ord_00009,2026-04-03,4750cead9f9e,premium bundle,INR,662.51,0,meta_ads,paid,paypal
+cli_0014_ord_00010,2026-04-07,3783e2a37ceb,starter plan,INR,319.98,10,organic,paid,card
+cli_0014_ord_00011,2026-04-20,ae5a83bb89ec,service retainer,INR,2474.86,20,tiktok_ads,paid,wallet
+cli_0014_ord_00012,2026-04-04,39dd347bce85,starter plan,INR,169.98,25,tiktok_ads,paid,wallet
+cli_0014_ord_00013,2025-10-30,03f737342363,starter plan,INR,804.2,25,tiktok_ads,paid,paypal
+cli_0014_ord_00014,2026-01-11,3a0755a1bbca,pro plan,INR,1960.0,20,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00015,2025-11-22,28d4d4ea7195,starter plan,INR,1269.11,15,tiktok_ads,refunded,upi
+cli_0014_ord_00016,2025-12-13,767069e8e365,pro plan,INR,1859.76,5,tiktok_ads,paid,card
+cli_0014_ord_00017,2025-11-02,0531e7f0bb87,annual subscription,INR,2120.83,5,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00018,2026-01-05,28049226225f,premium bundle,INR,1835.54,10,meta_ads,paid,card
+cli_0014_ord_00019,2025-12-20,289cce242d8c,premium bundle,INR,1758.33,5,tiktok_ads,paid,paypal
+cli_0014_ord_00020,2026-03-20,902e0a337244,pro plan,INR,1558.54,0,tiktok_ads,refunded,card
+cli_0014_ord_00021,2026-04-11,ad842f7c0fb8,service retainer,INR,96.36,20,organic,paid,paypal
+cli_0014_ord_00022,2025-12-15,6f2d9f42c45f,membership,INR,49.38,0,organic,paid,paypal
+cli_0014_ord_00023,2026-04-23,e72f39dbff97,membership,INR,1622.72,15,meta_ads,paid,paypal
+cli_0014_ord_00024,2026-01-22,ce6fab9a082a,membership,INR,1421.7,0,tiktok_ads,paid,paypal
+cli_0014_ord_00025,2025-11-03,f679433eb17a,audit package,INR,1799.84,10,organic,paid,bank_transfer
+cli_0014_ord_00026,2026-02-07,aa803a367122,pro plan,INR,2022.87,20,meta_ads,paid,card
+cli_0014_ord_00027,2026-04-18,c47b72911b06,annual subscription,INR,1616.72,15,tiktok_ads,paid,wallet
+cli_0014_ord_00028,2026-03-03,1072d118a967,premium bundle,INR,1380.52,10,tiktok_ads,paid,paypal
+cli_0014_ord_00029,2026-04-23,bbfece236554,starter plan,INR,1987.46,0,organic,refunded,paypal
+cli_0014_ord_00030,2025-11-29,18bacb7f7d91,membership,INR,885.85,25,meta_ads,paid,wallet
+cli_0014_ord_00031,2026-01-27,22b0ef771c26,audit package,INR,2296.28,5,organic,paid,bank_transfer
+cli_0014_ord_00032,2026-01-22,96f6afb0b309,audit package,INR,1883.3,15,meta_ads,paid,card
+cli_0014_ord_00033,2026-03-04,bff42f12dfb9,pro plan,INR,2281.47,15,meta_ads,paid,bank_transfer
+cli_0014_ord_00034,2026-04-21,f065f3d1023e,pro plan,INR,1776.04,15,organic,paid,upi
+cli_0014_ord_00035,2025-10-31,067141d47023,audit package,INR,1844.06,10,organic,paid,upi
+cli_0014_ord_00036,2026-03-17,cd6de9614a4b,membership,INR,1189.3,0,tiktok_ads,paid,wallet
+cli_0014_ord_00037,2025-10-31,f2eac73e6f36,service retainer,INR,238.48,10,organic,pending,wallet
+cli_0014_ord_00038,2026-03-05,ebd01de1cbea,audit package,INR,1891.18,0,tiktok_ads,paid,wallet
+cli_0014_ord_00039,2026-03-16,ae83b6eeec69,starter plan,INR,1482.73,5,organic,paid,bank_transfer
+cli_0014_ord_00040,2025-10-29,95e569c40201,pro plan,INR,2414.14,20,organic,paid,wallet
+cli_0014_ord_00041,2026-02-06,45f4c6db37d7,annual subscription,INR,954.15,10,meta_ads,pending,bank_transfer
+cli_0014_ord_00042,2026-02-01,16bbfd70a98e,audit package,INR,949.56,20,tiktok_ads,paid,wallet
+cli_0014_ord_00043,2026-02-16,651313053645,service retainer,INR,1292.88,10,meta_ads,paid,card
+cli_0014_ord_00044,2026-02-25,e19660405f27,service retainer,INR,1604.52,5,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00045,2026-03-23,75fd618e555b,pro plan,INR,632.85,0,tiktok_ads,pending,wallet
+cli_0014_ord_00046,2026-01-28,6e224a2c2573,audit package,INR,982.61,5,organic,refunded,wallet
+cli_0014_ord_00047,2026-04-01,be0de01c54d4,premium bundle,INR,1664.91,5,organic,paid,card
+cli_0014_ord_00048,2026-02-13,e83320c3a927,premium bundle,INR,1254.53,0,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00049,2025-12-17,eb5ebb6fb274,annual subscription,INR,1323.63,5,tiktok_ads,paid,upi
+cli_0014_ord_00050,2025-11-24,7351fbca102f,premium bundle,INR,1219.69,20,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00051,2025-12-18,6d02fec4bba5,starter plan,INR,1589.0,5,organic,paid,card
+cli_0014_ord_00052,2025-12-04,d1d35673985e,premium bundle,INR,205.51,25,tiktok_ads,paid,wallet
+cli_0014_ord_00053,2026-01-28,e4cb91c0b54f,starter plan,INR,841.25,0,organic,refunded,wallet
+cli_0014_ord_00054,2025-12-30,bab0fe668183,annual subscription,INR,1986.1,20,organic,paid,card
+cli_0014_ord_00055,2025-11-02,fd3305938678,membership,INR,142.61,10,organic,paid,upi
+cli_0014_ord_00056,2025-11-15,e4421b54c020,annual subscription,INR,2117.93,15,organic,pending,upi
+cli_0014_ord_00057,2026-01-09,06a48e89657b,premium bundle,INR,1383.72,5,organic,paid,card
+cli_0014_ord_00058,2025-12-25,0711540de625,membership,INR,2007.88,20,organic,pending,upi
+cli_0014_ord_00059,2025-12-22,9fad1b8cfe3c,service retainer,INR,1212.53,5,meta_ads,paid,upi
+cli_0014_ord_00060,2026-02-17,1578f9906be7,premium bundle,INR,116.99,20,meta_ads,paid,wallet
+cli_0014_ord_00061,2025-11-20,5dfc807c8115,audit package,INR,897.07,10,meta_ads,paid,card
+cli_0014_ord_00062,2025-11-25,303f0888ab99,membership,INR,1821.34,15,meta_ads,paid,wallet
+cli_0014_ord_00063,2025-12-28,160d9bcb75f8,premium bundle,INR,1599.89,20,organic,paid,bank_transfer
+cli_0014_ord_00064,2025-11-04,fb14a380de8d,audit package,INR,1655.98,0,meta_ads,paid,upi
+cli_0014_ord_00065,2025-12-02,b023839ce60b,pro plan,INR,372.39,25,organic,paid,bank_transfer
+cli_0014_ord_00066,2026-01-11,de98f384dda6,pro plan,INR,688.7,25,tiktok_ads,paid,upi
+cli_0014_ord_00067,2025-11-10,afdf7cabd1b5,service retainer,INR,587.17,0,meta_ads,paid,paypal
+cli_0014_ord_00068,2025-12-24,7d76e99eba08,pro plan,INR,853.52,5,meta_ads,paid,wallet
+cli_0014_ord_00069,2025-10-27,5b0190ad0fef,starter plan,INR,2083.32,25,meta_ads,pending,paypal
+cli_0014_ord_00070,2026-04-09,ed898f8aa83d,premium bundle,INR,99.47,15,organic,paid,card
+cli_0014_ord_00071,2026-02-10,ed67afc583a6,pro plan,INR,2289.27,15,tiktok_ads,pending,paypal
+cli_0014_ord_00072,2026-01-29,2444e0e3147a,premium bundle,INR,148.14,0,organic,paid,card
+cli_0014_ord_00073,2026-01-25,eee18195b6f7,pro plan,INR,1385.47,0,organic,paid,card
+cli_0014_ord_00074,2026-04-16,4feb4521c216,membership,INR,2407.7,25,tiktok_ads,paid,paypal
+cli_0014_ord_00075,2026-02-03,9c983d9f31f0,pro plan,INR,134.21,25,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00076,2026-03-05,330298c1bd4d,annual subscription,INR,1914.82,5,tiktok_ads,paid,bank_transfer
+cli_0014_ord_00077,2025-12-19,cca36f98d51a,pro plan,INR,1479.56,15,tiktok_ads,paid,upi
+cli_0014_ord_00078,2026-01-27,4194cea11e35,audit package,INR,2206.02,0,tiktok_ads,paid,wallet
+cli_0014_ord_00079,2026-04-15,b054b82cd25a,audit package,INR,75.17,0,meta_ads,paid,bank_transfer
+cli_0014_ord_00080,2026-02-01,fb883ed42040,annual subscription,INR,1324.76,0,meta_ads,paid,card
+cli_0014_ord_00081,2025-11-08,7f2a38be48fc,pro plan,INR,2032.7,20,meta_ads,paid,bank_transfer
+cli_0014_ord_00082,2026-01-16,16d4ffab8122,pro plan,INR,1486.35,15,meta_ads,paid,upi
+cli_0014_ord_00083,2026-02-25,c330e54f2c37,service retainer,INR,967.73,10,organic,paid,wallet
+cli_0014_ord_00084,2025-11-14,a31862f18302,pro plan,INR,2123.34,10,tiktok_ads,paid,upi
+cli_0014_ord_00085,2026-02-03,f9f92882d7e7,audit package,INR,2392.54,10,organic,paid,card
+cli_0014_ord_00086,2026-04-16,dfad7c0c8d2e,starter plan,INR,2105.14,15,tiktok_ads,pending,wallet
+cli_0014_ord_00087,2026-02-22,1609c341b8f3,pro plan,INR,806.33,20,meta_ads,pending,paypal
+cli_0014_ord_00088,2025-11-21,af6ef410aca4,pro plan,INR,2292.84,10,meta_ads,paid,wallet
+cli_0014_ord_00089,2025-12-17,3155e2f27b58,pro plan,INR,697.56,0,organic,paid,upi
+cli_0014_ord_00090,2026-01-16,8a07486e2599,starter plan,INR,2489.12,10,meta_ads,paid,bank_transfer
+cli_0014_ord_00091,2026-04-17,e4278e0174e2,membership,INR,90.99,20,organic,paid,wallet
+cli_0014_ord_00092,2026-04-17,a37cda2e2458,premium bundle,INR,2157.99,10,meta_ads,refunded,wallet

@@ -1,0 +1,31 @@
+{
+  "client_id": "cli_0022",
+  "company_name": "Summit Finance",
+  "industry": "local_services",
+  "region": "US",
+  "generated_at": "2026-04-23T20:56:28.293400Z",
+  "counts": {
+    "contacts": 80,
+    "deals": 76,
+    "website_pages": 7,
+    "search_console_rows": 40,
+    "briefs": 3,
+    "uploads": 7,
+    "marketing_rows": 300,
+    "email_campaigns": 53,
+    "posts": 56,
+    "comments": 112,
+    "tickets": 85,
+    "transcripts": 38,
+    "sessions": 24392,
+    "events": 122053,
+    "orders": 152,
+    "refunds": 15,
+    "invoices": 60,
+    "payments": 37,
+    "feedback": 137,
+    "feature_requests": 74,
+    "meeting_notes": 13,
+    "raw_observations": 35
+  }
+}
