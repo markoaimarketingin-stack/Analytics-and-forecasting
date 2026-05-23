@@ -463,11 +463,20 @@ async def lifespan(app: FastAPI):
         # Ensure local metadata tables (agents/files/etc.) exist before serving requests.
         init_db()
 
-        # Seed default users if missing
+        # Seed default users if missing or invalid
         import secrets
         db_session = get_session()
         try:
             demo_user = db_session.query(User).filter(User.email == "demo@gmail.com").first()
+            
+            def _is_password_valid(password_plain: str, password_hashed: str) -> bool:
+                try:
+                    salt_part, hash_part = password_hashed.split(":")
+                    test_hash = hashlib.sha256((password_plain + salt_part).encode('utf-8')).hexdigest()
+                    return hmac.compare_digest(test_hash, hash_part)
+                except Exception:
+                    return False
+                    
             if not demo_user:
                 salt = secrets.token_hex(16)
                 demo_hash = f"{salt}:" + hashlib.sha256(("password123" + salt).encode('utf-8')).hexdigest()
@@ -479,6 +488,13 @@ async def lifespan(app: FastAPI):
                 db_session.add(demo_user)
                 db_session.commit()
                 logger.info("Default user seeded: demo@gmail.com / password123")
+            elif not _is_password_valid("password123", demo_user.password_hash):
+                salt = secrets.token_hex(16)
+                demo_hash = f"{salt}:" + hashlib.sha256(("password123" + salt).encode('utf-8')).hexdigest()
+                demo_user.password_hash = demo_hash
+                demo_user.client_id = "local-client"
+                db_session.commit()
+                logger.info("Default user password updated/reset to password123")
         except Exception as seed_err:
             logger.error(f"Failed to seed default users: {seed_err}")
             db_session.rollback()
@@ -962,6 +978,7 @@ async def authenticate_credentials(payload: LoginRequest):
         db_session.close()
 
     if not user:
+        logger.warning(f"Login failed: User {email} not found in database.")
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     def _verify_password(password_plain: str, password_hashed: str) -> bool:
@@ -973,6 +990,7 @@ async def authenticate_credentials(payload: LoginRequest):
             return False
 
     if not _verify_password(password, user.password_hash):
+        logger.warning(f"Login failed: Password verification failed for user {email}.")
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     google_sub = f"credentials-{email}"
