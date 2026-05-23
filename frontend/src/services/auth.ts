@@ -42,6 +42,28 @@ export const authenticateWithGoogle = async (
   return (await response.json()) as GoogleAuthResponse;
 };
 
+export const authenticateWithCredentials = async (
+  email: string,
+  password: string,
+): Promise<GoogleAuthResponse> => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const detail = body?.detail || 'Authentication failed';
+    throw new Error(detail);
+  }
+
+  return (await response.json()) as GoogleAuthResponse;
+};
+
 export const getAuthenticatedSession = async (): Promise<GoogleAuthResponse> => {
   const response = await fetch(`${API_BASE_URL}/auth/session`, {
     method: 'GET',

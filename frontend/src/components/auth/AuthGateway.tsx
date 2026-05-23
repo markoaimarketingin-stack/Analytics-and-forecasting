@@ -4,6 +4,7 @@ import { Bot } from 'lucide-react';
 import App from '../../App';
 import {
   authenticateWithGoogle,
+  authenticateWithCredentials,
   getAuthenticatedSession,
   logoutSession,
   type GoogleAuthResponse,
@@ -23,7 +24,7 @@ const HAS_EXPLICIT_FIXED_SESSION =
   );
 
 const AUTH_BYPASS_ENABLED =
-  isTruthy(import.meta.env.VITE_AUTH_BYPASS_ENABLED) || HAS_EXPLICIT_FIXED_SESSION;
+  isTruthy(import.meta.env.VITE_AUTH_BYPASS_ENABLED);
 
 const FIXED_CLIENT_ID = String(RAW_FIXED_CLIENT_ID || 'local-client').trim() || 'local-client';
 const FIXED_CLIENT_NAME = String(RAW_FIXED_CLIENT_NAME || 'Local Client').trim() || 'Local Client';
@@ -104,84 +105,29 @@ const parseJwt = (token: string) => {
 function MarkoAuthPage({
   error,
   isSigningIn,
-  onGoogleCredential,
+  onSubmit,
+  onMockLogin,
 }: {
   error: string | null;
   isSigningIn: boolean;
-  onGoogleCredential: (credential: string) => Promise<void>;
+  onSubmit: (email: string, password: string) => Promise<void>;
+  onMockLogin: () => void;
 }) {
-  const googleButtonContainerRef = useRef<HTMLDivElement | null>(null);
-  const callbackRef = useRef(onGoogleCredential);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    callbackRef.current = onGoogleCredential;
-  }, [onGoogleCredential]);
-
-  const [loadError, setLoadError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!GOOGLE_CLIENT_ID) {
-      setLoadError('Google Sign-In is not configured yet. Add VITE_GOOGLE_CLIENT_ID to the root .env file.');
-      return;
-    }
-
-    const renderGoogleButton = () => {
-      if (!window.google?.accounts?.id || !googleButtonContainerRef.current) {
-        return;
-      }
-
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: async (response) => {
-          const credential = (response?.credential || '').trim();
-          if (!credential) {
-            setLoadError('Google login returned an empty credential. Please try again.');
-            return;
-          }
-          setLoadError(null);
-          await callbackRef.current(credential);
-        },
-      });
-
-      googleButtonContainerRef.current.innerHTML = '';
-      window.google.accounts.id.renderButton(googleButtonContainerRef.current, {
-        type: 'standard',
-        theme: 'outline',
-        size: 'large',
-        text: 'continue_with',
-        shape: 'pill',
-        logo_alignment: 'left',
-        width: 340,
-      });
-    };
-
-    if (window.google?.accounts?.id) {
-      renderGoogleButton();
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      renderGoogleButton();
-    };
-    script.onerror = () => {
-      setLoadError('Unable to load Google Sign-In script. Check network access and try again.');
-    };
-
-    document.head.appendChild(script);
-  }, []);
-
-  const combinedError = error || loadError;
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) return;
+    void onSubmit(email, password);
+  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#050607] px-4 py-10 text-slate-100">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.2),transparent_38%),radial-gradient(circle_at_80%_75%,rgba(168,85,247,0.2),transparent_34%),linear-gradient(180deg,#030304_0%,#07090f_100%)]" />
       <div className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-500/15 blur-3xl" />
 
-      <div className="relative z-10 w-full max-w-lg rounded-[30px] border border-white/10 bg-black/55 p-8 shadow-[0_22px_60px_rgba(0,0,0,0.58)] backdrop-blur-xl md:p-10">
+      <div className="relative z-10 w-full max-w-md rounded-[30px] border border-white/10 bg-black/55 p-8 shadow-[0_22px_60px_rgba(0,0,0,0.58)] backdrop-blur-xl md:p-10">
         <div className="mb-8 flex flex-col items-center text-center">
           <div className="relative mb-4 flex h-20 w-20 items-center justify-center rounded-3xl border border-white/15 bg-gradient-to-br from-[#0b1320] via-[#101725] to-[#1b1330] text-white shadow-[0_14px_32px_rgba(37,99,235,0.28)]">
             <Bot className="h-10 w-10" strokeWidth={1.8} />
@@ -189,23 +135,61 @@ function MarkoAuthPage({
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.36em] text-slate-400">Intelligent Analytics Workspace</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-tight text-white md:text-[42px]">MarkoAI</h1>
-
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0a0c11]/85 p-5">
-          <div className="mb-2 text-center text-xs font-medium uppercase tracking-[0.2em] text-slate-400">Continue with Google</div>
-          <div ref={googleButtonContainerRef} className="flex min-h-[48px] items-center justify-center" />
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Email Address</label>
+            <input
+              type="email"
+              required
+              placeholder="name@company.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
 
-          {isSigningIn ? (
-            <p className="mt-3 text-center text-sm text-blue-200">Completing secure sign-in...</p>
-          ) : null}
+          <div className="space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Password</label>
+            <input
+              type="password"
+              required
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
 
-          {combinedError ? (
-            <p className="mt-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
-              {combinedError}
+          <button
+            type="submit"
+            disabled={isSigningIn}
+            className="w-full rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-50"
+          >
+            {isSigningIn ? 'Logging in...' : 'Log In'}
+          </button>
+
+          <div className="relative flex py-2 items-center">
+            <div className="flex-grow border-t border-white/10"></div>
+            <span className="flex-shrink mx-4 text-xs text-slate-500 uppercase tracking-widest font-semibold">or</span>
+            <div className="flex-grow border-t border-white/10"></div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onMockLogin}
+            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-semibold text-slate-300 shadow-sm transition hover:bg-white/10 focus:outline-none"
+          >
+            Mock Mode Login
+          </button>
+
+          {error ? (
+            <p className="mt-3 rounded-xl border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-sm text-rose-200 text-center">
+              {error}
             </p>
           ) : null}
-        </div>
+        </form>
       </div>
     </div>
   );
@@ -270,12 +254,12 @@ export default function AuthGateway() {
     };
   }, []);
 
-  const handleGoogleCredential = useCallback(async (credential: string) => {
+  const handleCredentialsSubmit = useCallback(async (email: string, password: string) => {
     setError(null);
     setIsSigningIn(true);
 
     try {
-      const response = await authenticateWithGoogle(credential);
+      const response = await authenticateWithCredentials(email, password);
       const nextSession = toSession(response);
       setSession(nextSession);
     } catch (authError) {
@@ -285,16 +269,23 @@ export default function AuthGateway() {
     }
   }, []);
 
+  const handleMockLogin = useCallback(async () => {
+    setError(null);
+    setIsSigningIn(true);
+    try {
+      const response = await authenticateWithCredentials('demo@gmail.com', 'password123');
+      setSession(toSession(response));
+    } catch (authError) {
+      setError(authError instanceof Error ? authError.message : 'Mock Mode Login failed.');
+    } finally {
+      setIsSigningIn(false);
+    }
+  }, []);
+
   const handleLogout = useCallback(() => {
     if (AUTH_BYPASS_ENABLED) {
       setSession(buildBypassSession());
       return;
-    }
-
-    try {
-      window.google?.accounts?.id?.disableAutoSelect?.();
-    } catch {
-      // Non-blocking: logout should still continue if GIS API is unavailable.
     }
 
     void logoutSession();
@@ -321,7 +312,8 @@ export default function AuthGateway() {
       <MarkoAuthPage
         error={error}
         isSigningIn={isSigningIn}
-        onGoogleCredential={handleGoogleCredential}
+        onSubmit={handleCredentialsSubmit}
+        onMockLogin={handleMockLogin}
       />
     );
   }

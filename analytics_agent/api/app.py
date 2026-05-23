@@ -30,7 +30,7 @@ from analytics_agent.logging_config import get_logger
 from analytics_agent.api.orchestrator import AnalyticsSupervisor
 from analytics_agent.api.strategic_summary import build_strategic_summary_payload
 from analytics_agent.db.repo import get_session, init_db
-from analytics_agent.db.models import File, Agent
+from analytics_agent.db.models import File, Agent, User
 from analytics_agent.db.chat_history_repo import (
     append_chat_message,
     ensure_chat_thread,
@@ -125,6 +125,11 @@ class ChatResponse(BaseModel):
 
 class GoogleAuthRequest(BaseModel):
     credential: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
 
 class AuthenticatedUser(BaseModel):
@@ -457,6 +462,28 @@ async def lifespan(app: FastAPI):
 
         # Ensure local metadata tables (agents/files/etc.) exist before serving requests.
         init_db()
+
+        # Seed default users if missing
+        import secrets
+        db_session = get_session()
+        try:
+            demo_user = db_session.query(User).filter(User.email == "demo@gmail.com").first()
+            if not demo_user:
+                salt = secrets.token_hex(16)
+                demo_hash = f"{salt}:" + hashlib.sha256(("password123" + salt).encode('utf-8')).hexdigest()
+                demo_user = User(
+                    email="demo@gmail.com",
+                    password_hash=demo_hash,
+                    client_id="local-client"
+                )
+                db_session.add(demo_user)
+                db_session.commit()
+                logger.info("Default user seeded: demo@gmail.com / password123")
+        except Exception as seed_err:
+            logger.error(f"Failed to seed default users: {seed_err}")
+            db_session.rollback()
+        finally:
+            db_session.close()
 
         analytics_runner = AnalyticsRunner()
 
@@ -831,6 +858,7 @@ async def _auth_middleware(request: Request, call_next):
     public_paths = {
         "/api/health",
         "/api/auth/google",
+        "/api/auth/login",
         "/api/auth/session",
         "/api/auth/logout",
         "/api",
@@ -915,6 +943,78 @@ async def health_check_head():
 # -----------------------------------------------------------------------------
 # Authentication
 # -----------------------------------------------------------------------------
+@app.post("/api/auth/login", response_model=GoogleAuthResponse)
+async def authenticate_credentials(payload: LoginRequest):
+    email = (payload.email or "").strip().lower()
+    password = payload.password
+
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password are required")
+
+    db_session = get_session()
+    user = None
+    try:
+        user = db_session.query(User).filter(User.email == email).first()
+    except Exception as db_err:
+        logger.error(f"Failed to query user: {db_err}")
+        raise HTTPException(status_code=500, detail="Database query failed")
+    finally:
+        db_session.close()
+
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    def _verify_password(password_plain: str, password_hashed: str) -> bool:
+        try:
+            salt_part, hash_part = password_hashed.split(":")
+            test_hash = hashlib.sha256((password_plain + salt_part).encode('utf-8')).hexdigest()
+            return hmac.compare_digest(test_hash, hash_part)
+        except Exception:
+            return False
+
+    if not _verify_password(password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    google_sub = f"credentials-{email}"
+    name = email.split('@')[0].capitalize()
+
+    access_token, expires_in = _create_access_token(
+        google_sub=google_sub,
+        email=email,
+        client_id=user.client_id,
+        name=name,
+    )
+
+    response_payload = {
+        "success": True,
+        "client_id": user.client_id,
+        "user": {
+            "google_sub": google_sub,
+            "email": email,
+            "name": name,
+            "picture": None,
+            "email_verified": True,
+        },
+        "access_token": access_token,
+        "token_type": "Bearer",
+        "expires_in": expires_in,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+
+    response = JSONResponse(content=response_payload)
+    secure_cookie = (settings.APP_ENV or "").strip().lower() in {"production", "prod", "staging"}
+    same_site = "none" if secure_cookie else "lax"
+    response.set_cookie(
+        key=ACCESS_TOKEN_COOKIE_NAME,
+        value=access_token,
+        httponly=True,
+        secure=secure_cookie,
+        samesite=same_site,
+        max_age=expires_in,
+    )
+    return response
+
+
 @app.post("/api/auth/google", response_model=GoogleAuthResponse)
 async def authenticate_google(payload: GoogleAuthRequest):
     if _is_auth_bypass_enabled():
