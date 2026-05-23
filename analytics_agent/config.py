@@ -41,6 +41,7 @@ class Config:
     CORS_ALLOWED_ORIGINS: str = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5173')
     CORS_ALLOW_CREDENTIALS: bool = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
     ACCESS_TOKEN_TTL_SECONDS: int = config('ACCESS_TOKEN_TTL_SECONDS', default=900, cast=int)
+    SUPERVISOR_TOKEN: str = config('SUPERVISOR_TOKEN', default='shared_supervisor_api_key')
 
     # Performance Configuration
     MAX_WORKERS: int = config('MAX_WORKERS', default=4, cast=int)

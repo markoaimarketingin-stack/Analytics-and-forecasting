@@ -84,6 +84,23 @@ const buildBypassSession = (): AuthSession => ({
   picture: null,
 });
 
+const parseJwt = (token: string) => {
+  try {
+    const base64Url = token.split('.')[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      window.atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
+};
+
 function MarkoAuthPage({
   error,
   isSigningIn,
@@ -204,6 +221,25 @@ export default function AuthGateway() {
     let active = true;
 
     const restore = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get('token');
+      const urlOrgId = params.get('org_id');
+
+      if (urlToken && urlOrgId) {
+        if (active) {
+          document.cookie = `marko_access_token=${urlToken}; path=/; max-age=86400; SameSite=Lax`;
+          const parsed = parseJwt(urlToken);
+          setSession({
+            clientId: urlOrgId,
+            name: parsed?.name || parsed?.email || 'Supervisor User',
+            email: parsed?.email || 'supervisor@user.com',
+            picture: parsed?.picture || null,
+          });
+          setIsRestoringSession(false);
+        }
+        return;
+      }
+
       if (AUTH_BYPASS_ENABLED) {
         if (active) {
           setSession(buildBypassSession());

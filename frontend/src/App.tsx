@@ -159,6 +159,25 @@ const fromLifecycleRecord = (record: RecommendationLifecycleRecord): UISuggestio
   threadId: record.thread_id,
 });
 
+const mapTabToSection = (tab: string): string => {
+  const t = (tab || '').toLowerCase().trim();
+  if (t === 'overview' || t === 'dashboard') return 'dashboard';
+  if (t === 'campaigns' || t === 'forecast') return 'forecast';
+  if (t === 'reports' || t === 'report') return 'report';
+  if (t === 'budget') return 'budget';
+  if (t === 'attribution') return 'attribution';
+  if (t === 'funnel') return 'funnel';
+  if (t === 'cohort') return 'cohort';
+  return t;
+};
+
+const mapSectionToTab = (section: string): string => {
+  if (section === 'dashboard') return 'overview';
+  if (section === 'forecast') return 'campaigns';
+  if (section === 'report') return 'reports';
+  return section;
+};
+
 const DEFAULT_SECTION = 'supervisor';
 
 interface AppProps {
@@ -200,6 +219,69 @@ export default function App({
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isChatPanelCollapsed, setIsChatPanelCollapsed] = useState(false);
   const [supervisorResetToken, setSupervisorResetToken] = useState(0);
+
+  const [isEmbedded] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    const params = new URLSearchParams(window.location.search);
+    return window.location.pathname.includes('/embed') || params.has('token') || params.has('org_id');
+  });
+
+  const [activePlatform, setActivePlatform] = useState<string>(() => {
+    if (typeof window === 'undefined') return 'meta';
+    const params = new URLSearchParams(window.location.search);
+    return params.get('platform') || 'meta';
+  });
+
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string>('all');
+
+  // Handle URL tab initialization
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get('tab');
+    if (tabParam) {
+      setActiveSection(mapTabToSection(tabParam));
+    }
+  }, []);
+
+  // Inbound postMessage event listener
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleMessage = (event: MessageEvent) => {
+      const { type, payload } = event.data || {};
+      if (!type) return;
+
+      if (type === 'SELECT_TAB' && payload?.tab) {
+        setActiveSection(mapTabToSection(payload.tab));
+      } else if (type === 'SELECT_PLATFORM' && payload?.platform) {
+        setActivePlatform(payload.platform);
+      } else if (type === 'SELECT_CAMPAIGN' && payload?.campaignId) {
+        setSelectedCampaignId(payload.campaignId);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  // Outbound postMessage sync broadcaster
+  useEffect(() => {
+    if (typeof window === 'undefined' || !isEmbedded) return;
+
+    window.parent.postMessage(
+      {
+        type: 'UI_SYNC',
+        payload: {
+          tab: mapSectionToTab(activeSection),
+          platform: activePlatform,
+          campaignId: selectedCampaignId,
+          orgId: clientId,
+        },
+      },
+      '*'
+    );
+  }, [activeSection, activePlatform, selectedCampaignId, clientId, isEmbedded]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -827,23 +909,25 @@ export default function App({
 
   return (
     <div className="app-shell app-theme-root flex h-screen w-screen overflow-hidden bg-[#f4f5f7] text-gray-900">
-      <Sidebar
-        activeSection={activeSection}
-        onSectionChange={setActiveSection}
-        isMobileOpen={isSidebarOpen}
-        onMobileClose={() => setIsSidebarOpen(false)}
-        accountName={accountName}
-        accountEmail={accountEmail}
-      />
-
-      <div className="ml-0 flex min-w-0 flex-1 overflow-hidden lg:ml-64">
+      {!isEmbedded && (
+        <Sidebar
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+          isMobileOpen={isSidebarOpen}
+          onMobileClose={() => setIsSidebarOpen(false)}
+          accountName={accountName}
+          accountEmail={accountEmail}
+        />
+      )}
+ 
+      <div className={`ml-0 flex min-w-0 flex-1 overflow-hidden ${isEmbedded ? '' : 'lg:ml-64'}`}>
         <div className="min-w-0 flex-1 overflow-hidden">
           <div key={activeSection} className="h-full page-enter">
             {renderWorkspace()}
           </div>
         </div>
-
-        {!isChatPanelCollapsed ? (
+ 
+        {!isEmbedded && !isChatPanelCollapsed ? (
           <ChatPanel
             messages={messages}
             isLoading={isLoading}
@@ -861,8 +945,8 @@ export default function App({
           />
         ) : null}
       </div>
-
-      {isChatPanelCollapsed ? (
+ 
+      {!isEmbedded && isChatPanelCollapsed ? (
         <button
           type="button"
           onClick={() => setIsChatPanelCollapsed(false)}

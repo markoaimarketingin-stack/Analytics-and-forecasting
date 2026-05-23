@@ -303,6 +303,57 @@ class RecommendationLifecycleUpsertResponse(BaseModel):
     timestamp: str
 
 
+class BusinessProfile(BaseModel):
+    industry: Optional[str] = None
+    goal: Optional[str] = None
+    kpis: Optional[list[str]] = None
+
+
+class ContextModel(BaseModel):
+    business_profile: Optional[BusinessProfile] = None
+    current_strategy: Optional[Any] = None
+    previous_agent_outputs: Optional[list[Any]] = None
+
+
+class TaskModel(BaseModel):
+    type: str
+    instruction: str
+
+
+class ExecuteRequest(BaseModel):
+    trace_id: str
+    run_id: str
+    session_id: str
+    agent_name: str
+    user_input: str
+    client_id: str
+    context: Optional[ContextModel] = None
+    task: TaskModel
+    platform: Optional[str] = "all"
+    campaign_id: Optional[str] = "all"
+
+
+class InsightItem(BaseModel):
+    title: str
+    summary: str
+
+
+class OpportunityItem(BaseModel):
+    title: str
+    impact: float
+    confidence: float
+    priority: str
+
+
+class ExecuteResponse(BaseModel):
+    agent_name: str
+    status: str
+    insights: list[InsightItem] = []
+    opportunities: list[OpportunityItem] = []
+    sources: list[str] = []
+    error: Optional[str] = None
+
+
 # -----------------------------------------------------------------------------
 # Global services
 # -----------------------------------------------------------------------------
@@ -786,6 +837,8 @@ async def _auth_middleware(request: Request, call_next):
         "/docs",
         "/openapi.json",
         "/redoc",
+        "/execute",
+        "/api/execute",
     }
 
     requires_auth = (
@@ -1052,6 +1105,212 @@ async def chat_with_marko_brain(payload: ChatRequest, request: Request):
         raise HTTPException(
             status_code=500,
             detail=f"Failed to generate response: {str(e)}",
+        )
+
+
+# -----------------------------------------------------------------------------
+# Supervisor Integration Execute Route
+# -----------------------------------------------------------------------------
+def _format_execute_results_with_llm(
+    agent_name: str,
+    user_input: str,
+    task_instruction: str,
+    platform: str,
+    executive_summary: str,
+    recommendations: list[str],
+) -> dict:
+    if not marko_brain or not marko_brain.gemini_client:
+        return {
+            "insights": [
+                {"title": "Orchestration Summary", "summary": executive_summary}
+            ],
+            "opportunities": [
+                {
+                    "title": rec,
+                    "impact": 75.0,
+                    "confidence": 80.0,
+                    "priority": "medium"
+                }
+                for rec in recommendations
+            ],
+            "sources": [platform, "database"]
+        }
+
+    prompt = f"""
+You are the MarkoAI Integration Schema Formatter.
+An analytics orchestration run has finished. Format the results into the integration specification response schema.
+
+Input User Request: {user_input}
+Task Instruction: {task_instruction}
+Platform: {platform}
+
+Orchestration Executive Summary:
+{executive_summary}
+
+Orchestration Recommendations:
+{recommendations}
+
+Return ONLY a valid JSON object matching the following structure:
+{{
+  "insights": [
+    {{
+      "title": "Short title describing the metric or behavior trend",
+      "summary": "Detailed summary of the insight based on the executive summary and recommendations."
+    }}
+  ],
+  "opportunities": [
+    {{
+      "title": "Short action-oriented title",
+      "impact": 0.0 to 100.0 float representing financial or business impact,
+      "confidence": 0.0 to 100.0 float representing our confidence in this result,
+      "priority": "low" or "medium" or "high"
+    }}
+  ],
+  "sources": ["list", "of", "sources", "used"]
+}}
+
+DO NOT return any markdown blocks or conversational text. Return ONLY the JSON object.
+"""
+    try:
+        raw = marko_brain.gemini_client.generate(prompt)
+        cleaned = raw.strip().replace("```json", "").replace("```", "").strip()
+        parsed = json.loads(cleaned)
+        if "insights" in parsed and "opportunities" in parsed:
+            return parsed
+    except Exception as e:
+        logger.warning(f"Failed to generate structured execute response with LLM: {e}")
+
+    return {
+        "insights": [
+            {"title": "Orchestration Summary", "summary": executive_summary}
+        ],
+        "opportunities": [
+            {
+                "title": rec,
+                "impact": 75.0,
+                "confidence": 80.0,
+                "priority": "medium"
+            }
+            for rec in recommendations
+        ],
+        "sources": [platform, "database"]
+    }
+
+
+@app.post("/execute")
+@app.post("/api/execute")
+async def execute_task(payload: ExecuteRequest, request: Request):
+    if not marko_brain:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "agent_name": payload.agent_name,
+                "status": "error",
+                "insights": [],
+                "opportunities": [],
+                "sources": [],
+                "error": "Analytics Agent not ready"
+            }
+        )
+
+    # Validate Shared Secret
+    x_supervisor_token = request.headers.get("X-Supervisor-Token")
+    expected_token = getattr(settings, "SUPERVISOR_TOKEN", "shared_supervisor_api_key")
+    if not x_supervisor_token or x_supervisor_token != expected_token:
+        return JSONResponse(
+            status_code=401,
+            content={
+                "agent_name": payload.agent_name,
+                "status": "error",
+                "insights": [],
+                "opportunities": [],
+                "sources": [],
+                "error": "Unauthorized: Invalid X-Supervisor-Token."
+            }
+        )
+
+    try:
+        client_id = payload.client_id.strip()
+        platform = (payload.platform or "meta").strip().lower()
+        campaign_id = (payload.campaign_id or "all").strip().lower()
+        task_type = (payload.task.type or "optimize").strip().lower()
+
+        # Map agent requested or platform to suitable specialized execution agents
+        # Default marketing agent: performance-marketer optimize
+        if payload.agent_name == "performance-marketer" or platform in {"meta", "google"}:
+            agents_to_run = ["attribution", "funnel", "budget_allocator"]
+        elif payload.agent_name == "forecast":
+            agents_to_run = ["forecast", "scenario"]
+        else:
+            agents_to_run = ["attribution", "funnel", "cohort", "forecast", "scenario", "budget_allocator"]
+
+        # Build payload
+        base_payload = marko_brain._build_base_payload()
+        base_payload["client_id"] = client_id
+        base_payload["platform"] = platform
+        base_payload["campaign_id"] = campaign_id
+        if platform == "meta":
+            base_payload["channel"] = "Facebook"
+        elif platform == "google":
+            base_payload["channel"] = "Google Ads"
+
+        # Execute orchestration
+        results = marko_brain.agent_manager.orchestrate(
+            intent="budget_optimization" if task_type == "optimize" else "dashboard",
+            agents_to_run=agents_to_run,
+            payload=base_payload
+        )
+        
+        # If client-specific execution fails (e.g. due to missing client datasets), retry on global dataset context
+        if not results.get("success", False):
+            logger.warning(
+                f"Client execution failed/incomplete for {client_id}. Retrying on global dataset context."
+            )
+            base_payload["client_id"] = None
+            results = marko_brain.agent_manager.orchestrate(
+                intent="budget_optimization" if task_type == "optimize" else "dashboard",
+                agents_to_run=agents_to_run,
+                payload=base_payload
+            )
+
+        if not results.get("success", False):
+            error_msg = results.get("errors", {}).get("system", "Orchestration failed.")
+            raise ValueError(error_msg)
+
+        executive_summary = results.get("executive_summary", "No summary generated.")
+        recommendations = results.get("recommendations", [])
+
+        # Structure using LLM formatter
+        structured_output = _format_execute_results_with_llm(
+            agent_name=payload.agent_name,
+            user_input=payload.user_input,
+            task_instruction=payload.task.instruction,
+            platform=platform,
+            executive_summary=executive_summary,
+            recommendations=recommendations
+        )
+
+        return {
+            "agent_name": payload.agent_name,
+            "status": "ok",
+            "insights": structured_output.get("insights", []),
+            "opportunities": structured_output.get("opportunities", []),
+            "sources": structured_output.get("sources", [platform, "database"]),
+            "error": None
+        }
+
+    except Exception as e:
+        logger.error(f"POST /execute failed: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={
+                "agent_name": payload.agent_name,
+                "status": "error",
+                "insights": [],
+                "opportunities": [],
+                "sources": [],
+                "error": str(e)
+            }
         )
 
 
