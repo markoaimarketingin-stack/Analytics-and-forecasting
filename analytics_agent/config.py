@@ -18,7 +18,11 @@ class Config:
 
     # AI Service Configuration
     GEMINI_API_KEY: Optional[str] = config('GEMINI_API_KEY', default=None)
-    GEMINI_MODEL: str = config('GEMINI_MODEL', default='gemini-2.5-pro')
+    GEMINI_MODEL: str = config('GEMINI_MODEL', default='gemini-2.5-flash-preview-05-20')
+
+    # OpenRouter fallback configuration
+    OPENROUTER_API_KEY: Optional[str] = config('OPENROUTER_API_KEY', default=None)
+    OPENROUTER_BASE_URL: str = config('OPENROUTER_BASE_URL', default='https://openrouter.ai/api/v1')
 
     # Logging Configuration
     LOG_LEVEL: str = config('LOG_LEVEL', default='INFO')

@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
-import { Paperclip, ArrowRight, Loader } from 'lucide-react';
+import { Paperclip, ArrowRight, Square } from 'lucide-react';
 
 interface ChatInputProps {
-  onSend: (message: string) => void;
+  onSend: (message: string, mode: 'ask' | 'agent') => void;
+  onCancel: () => void;
   isLoading: boolean;
+  mode: 'ask' | 'agent';
+  onModeChange: (mode: 'ask' | 'agent') => void;
   onManageModels?: () => void;
 }
 
-export default function ChatInput({ onSend, isLoading, onManageModels }: ChatInputProps) {
+export default function ChatInput({
+  onSend,
+  onCancel,
+  isLoading,
+  mode,
+  onModeChange,
+  onManageModels,
+}: ChatInputProps) {
   const [input, setInput] = useState('');
-  const [mode, setMode] = useState<'ask' | 'agent'>('ask');
   const [model, setModel] = useState<string>('marko-2.0-mini');
 
   const handleSend = () => {
     if (input.trim()) {
-      onSend(input);
+      onSend(input, mode);
       setInput('');
     }
   };
@@ -22,8 +31,19 @@ export default function ChatInput({ onSend, isLoading, onManageModels }: ChatInp
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      if (isLoading) {
+        onCancel();
+      } else {
+        handleSend();
+      }
     }
+    if (e.key === 'Escape' && isLoading) {
+      onCancel();
+    }
+  };
+
+  const handleModeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onModeChange(e.target.value as 'ask' | 'agent');
   };
 
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,7 +52,6 @@ export default function ChatInput({ onSend, isLoading, onManageModels }: ChatInp
       if (onManageModels) {
         onManageModels();
       }
-      // Reset select back to marko-2.0-mini so it doesn't stay selected
       setModel('marko-2.0-mini');
     } else {
       setModel(val);
@@ -56,19 +75,25 @@ export default function ChatInput({ onSend, isLoading, onManageModels }: ChatInp
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Ask or instruct the assistant..."
+        placeholder={
+          mode === 'ask'
+            ? 'Ask anything about your data...'
+            : 'Instruct agents to run analysis or optimizations...'
+        }
         className="chat-textarea-dark"
-        disabled={isLoading}
       />
 
       {/* Bottom controls row */}
       <div className="chat-input-bottom-row flex items-center gap-2 w-full">
-        {/* Mode Selector */}
+
+        {/* Mode Selector — same style as model selector */}
         <select
+          id="chat-mode-select"
           value={mode}
-          onChange={(e) => setMode(e.target.value as 'ask' | 'agent')}
+          onChange={handleModeChange}
           className="chat-dropdown-rect text-xs font-semibold"
           disabled={isLoading}
+          title="Switch between Ask (Q&A) and Agent (orchestration) mode"
         >
           <option value="ask">Ask</option>
           <option value="agent">Agent</option>
@@ -85,19 +110,29 @@ export default function ChatInput({ onSend, isLoading, onManageModels }: ChatInp
           <option value="manage">Manage models</option>
         </select>
 
-        {/* Circular Send Button */}
-        <button
-          onClick={handleSend}
-          disabled={isLoading || !input.trim()}
-          className="chat-send-btn-circle flex-shrink-0"
-          title="Send message"
-        >
-          {isLoading ? (
-            <Loader size={14} className="animate-spin" />
-          ) : (
+        {/* Send / Cancel button */}
+        {isLoading ? (
+          <button
+            id="chat-cancel-btn"
+            onClick={onCancel}
+            className="chat-send-btn-circle chat-cancel-btn flex-shrink-0"
+            title="Cancel generation (Esc)"
+            aria-label="Stop generating"
+          >
+            <Square size={12} fill="currentColor" />
+          </button>
+        ) : (
+          <button
+            id="chat-send-btn"
+            onClick={handleSend}
+            disabled={!input.trim()}
+            className="chat-send-btn-circle flex-shrink-0"
+            title="Send message (Enter)"
+            aria-label="Send message"
+          >
             <ArrowRight size={14} />
-          )}
-        </button>
+          </button>
+        )}
       </div>
     </div>
   );

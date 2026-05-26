@@ -104,3 +104,29 @@ def list_recommendation_outcomes(client_id: str | None = None, thread_id: str | 
     return items[:200]
 
 
+def clear_recommendation_outcomes(client_id: str, thread_id: str | None = None) -> None:
+    normalized_client = (client_id or "").strip() or "anonymous-client"
+    normalized_thread = (thread_id or "").strip() or "global"
+
+    # Clear from in-memory fallback
+    keys_to_delete = []
+    for key, row in list(_FALLBACK_STORE.items()):
+        if row.get("client_id") == normalized_client and row.get("thread_id") == normalized_thread:
+            keys_to_delete.append(key)
+    for key in keys_to_delete:
+        _FALLBACK_STORE.pop(key, None)
+
+    try:
+        supabase = get_supabase_client()
+        (
+            supabase.table("recommendation_outcomes")
+            .delete()
+            .eq("client_id", normalized_client)
+            .eq("thread_id", normalized_thread)
+            .execute()
+        )
+    except Exception as exc:
+        logger.warning("Recommendation outcomes clear fallback", error=str(exc))
+
+
+

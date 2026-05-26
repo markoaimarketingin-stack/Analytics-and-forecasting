@@ -47,6 +47,7 @@ Rules:
 5. Allowed aggregation functions: sum, avg, count, min, max.
 6. Limit must be an integer from 1 to 200.
 7. If data seems insufficient, still return best-effort spec with empty arrays where needed.
+8. CRITICAL: When selecting multiple datasets, or if any field (like 'revenue', 'spend', or 'customer_id') is present in more than one of the selected datasets, you MUST qualify it using the 'dataset.column' format (e.g. 'campaigns.revenue' instead of 'revenue') in ALL fields under select, filters, group_by, aggregations, and order_by.
 
 Output JSON shape:
 {{

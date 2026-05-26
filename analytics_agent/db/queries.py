@@ -247,7 +247,7 @@ def _looks_like_datetime(series: pd.Series, sample_size: int = 100) -> bool:
     sample = series.dropna().astype(str).head(sample_size)
     if sample.empty:
         return False
-    parsed = pd.to_datetime(sample, errors="coerce")
+    parsed = pd.to_datetime(sample, errors="coerce", format="mixed")
     return float(parsed.notna().mean()) >= 0.7
 
 
@@ -445,7 +445,7 @@ def _normalize_datetime(df: pd.DataFrame, columns: Iterable[str]) -> pd.DataFram
     out = df.copy()
     for column in columns:
         if column in out.columns:
-            out[column] = pd.to_datetime(out[column], errors="coerce")
+            out[column] = pd.to_datetime(out[column], errors="coerce", format="mixed")
     return out
 
 
@@ -510,11 +510,11 @@ def get_attribution_filter_options(client_id: str | None = None) -> dict[str, An
     max_date = ""
     date_series: list[pd.Series] = []
     if "date" in campaigns_df.columns:
-        date_series.append(pd.to_datetime(campaigns_df["date"], errors="coerce"))
+        date_series.append(pd.to_datetime(campaigns_df["date"], errors="coerce", format="mixed"))
     if "timestamp" in events_df.columns:
-        date_series.append(pd.to_datetime(events_df["timestamp"], errors="coerce"))
+        date_series.append(pd.to_datetime(events_df["timestamp"], errors="coerce", format="mixed"))
     if "purchase_date" in transactions_df.columns:
-        date_series.append(pd.to_datetime(transactions_df["purchase_date"], errors="coerce"))
+        date_series.append(pd.to_datetime(transactions_df["purchase_date"], errors="coerce", format="mixed"))
 
     if date_series:
         merged = pd.concat(date_series, ignore_index=True).dropna()
@@ -593,7 +593,7 @@ def get_forecast_filter_options(client_id: str | None = None) -> dict[str, Any]:
     min_date = ""
     max_date = ""
     if "date" in campaigns_df.columns:
-        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce").dropna()
+        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce", format="mixed").dropna()
         if not parsed_dates.empty:
             min_date = parsed_dates.min().date().isoformat()
             max_date = parsed_dates.max().date().isoformat()
@@ -654,7 +654,7 @@ def get_scenario_filter_options(client_id: str | None = None) -> dict[str, Any]:
     min_date = ""
     max_date = ""
     if "date" in campaigns_df.columns:
-        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce").dropna()
+        parsed_dates = pd.to_datetime(campaigns_df["date"], errors="coerce", format="mixed").dropna()
         if not parsed_dates.empty:
             min_date = parsed_dates.min().date().isoformat()
             max_date = parsed_dates.max().date().isoformat()
@@ -783,7 +783,7 @@ def get_cohort_filter_options(client_id: str | None = None) -> dict[str, Any]:
         raise ValueError("No customers data found in Supabase for cohort options")
 
     if "signup_date" in customers_df.columns:
-        signup_dates = pd.to_datetime(customers_df["signup_date"], errors="coerce").dropna()
+        signup_dates = pd.to_datetime(customers_df["signup_date"], errors="coerce", format="mixed").dropna()
         min_signup_date = signup_dates.min().date().isoformat() if not signup_dates.empty else ""
         max_signup_date = signup_dates.max().date().isoformat() if not signup_dates.empty else ""
     else:

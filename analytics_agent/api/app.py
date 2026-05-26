@@ -29,6 +29,8 @@ from analytics_agent.config import settings
 from analytics_agent.logging_config import get_logger
 from analytics_agent.api.orchestrator import AnalyticsSupervisor
 from analytics_agent.api.strategic_summary import build_strategic_summary_payload
+from analytics_agent.clients.llm_client import LLMClient
+from analytics_agent.clients.openrouter_client import OpenRouterClient
 from analytics_agent.db.repo import get_session, init_db
 from analytics_agent.db.models import File, Agent, User
 from analytics_agent.db.chat_history_repo import (
@@ -46,6 +48,7 @@ from analytics_agent.db.agent_results_repo import (
     upsert_client_latest_snapshot,
 )
 from analytics_agent.db.recommendation_outcomes_repo import (
+    clear_recommendation_outcomes,
     list_recommendation_outcomes,
     upsert_recommendation_outcome,
 )
@@ -114,6 +117,16 @@ class ChatRequest(BaseModel):
     selected_datasets: list[str] = Field(default_factory=list)
     thread_id: Optional[str] = None
     client_id: Optional[str] = None
+    mode: str = "ask"  # "ask" = Q&A only, "agent" = full orchestration
+
+
+class UserModelConfigRequest(BaseModel):
+    """User-supplied custom model configuration from the Manage Models modal."""
+    provider: str = "openai"          # openai / gemini / anthropic / openrouter
+    model_name: str = ""              # e.g. gpt-4.1-mini or gemini-2.5-flash
+    base_url: Optional[str] = None    # Optional custom base URL
+    api_key: str = ""                 # The user's own API key
+    enabled: bool = True
 
 
 class ChatResponse(BaseModel):
@@ -365,6 +378,7 @@ class ExecuteResponse(BaseModel):
 analytics_runner: Optional[AnalyticsRunner] = None
 marko_brain: Optional[AnalyticsSupervisor] = None
 data_query_agent: Optional[DataQueryAgent] = None
+llm_client: Optional[LLMClient] = None
 
 
 def _is_self_ping_enabled() -> bool:
@@ -451,7 +465,7 @@ async def _self_ping_loop(stop_event: asyncio.Event) -> None:
 # -----------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global analytics_runner, marko_brain, data_query_agent
+    global analytics_runner, marko_brain, data_query_agent, llm_client
     self_ping_task: Optional[asyncio.Task] = None
     self_ping_stop_event: Optional[asyncio.Event] = None
 
@@ -509,9 +523,20 @@ async def lifespan(app: FastAPI):
         )
         data_query_agent = DataQueryAgent(gemini_client=analytics_runner.gemini)
 
+        # Build unified LLM client: Gemini primary -> OpenRouter fallback
+        openrouter = OpenRouterClient(
+            api_key=getattr(settings, 'OPENROUTER_API_KEY', None) or "",
+            base_url=getattr(settings, 'OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1'),
+        )
+        llm_client = LLMClient(
+            gemini_client=analytics_runner.gemini,
+            openrouter_client=openrouter,
+        )
+
         logger.info(
             "Analytics services initialized successfully",
             gemini_enabled=getattr(analytics_runner.gemini, "enabled", False),
+            openrouter_enabled=openrouter.enabled,
         )
 
         if _is_self_ping_enabled():
@@ -825,7 +850,7 @@ def _build_chat_prompt(message: str, history: list[dict]) -> str:
     conversation_context = "\n".join(context_lines) if context_lines else "No previous conversation context."
 
     return f"""
-You are Analytics Supervisor, the intelligent supervisor of a growth analytics platform.
+You are Analytics Supervisor, the intelligent supervisor of a forecasting and analytics platform.
 
 You can help with:
 - Revenue forecasting
@@ -847,6 +872,45 @@ Conversation so far:
 {conversation_context}
 
 Latest user message:
+{message}
+"""
+
+
+def _build_ask_prompt(message: str, history: list[dict]) -> str:
+    """System prompt for Ask (Q&A) mode — read-only analyst, no action/agent activation."""
+    context_lines: list[str] = []
+    for item in history[-8:]:
+        role = (item.get("role") or "user").strip().lower()
+        content = (item.get("content") or "").strip()
+        if not content:
+            continue
+        speaker = "User" if role == "user" else "Assistant"
+        context_lines.append(f"{speaker}: {content}")
+
+    conversation_context = "\n".join(context_lines) if context_lines else "No previous conversation context."
+
+    return f"""You are Marko, an expert growth analytics assistant in read-only Q&A mode.
+
+Your role is strictly to ANSWER questions, EXPLAIN data, and FETCH context from what you know.
+You do NOT execute agents, make changes, or trigger workflows — that is handled by Agent mode.
+
+You have broad knowledge of:
+- Marketing analytics: ROAS, CAC, LTV, attribution models, funnel metrics
+- Business forecasting and scenario planning
+- Cohort analysis and retention
+- Budget optimization strategies
+- Data interpretation and storytelling
+
+Guidelines:
+- Answer in a clear, concise, expert tone
+- Reference specific metrics when relevant
+- Do NOT offer to run agents or trigger analysis — only explain and answer
+- Keep responses focused and actionable
+
+Conversation so far:
+{conversation_context}
+
+User question:
 {message}
 """
 
@@ -1175,11 +1239,71 @@ async def auth_logout():
 
 
 # -----------------------------------------------------------------------------
-# Simple Gemini Chat
+# Simple Chat (Ask mode = Q&A, Agent mode routes to orchestrator in App.tsx)
 # -----------------------------------------------------------------------------
+
+# In-memory store for custom model configs per client session.
+# Format: {client_id: {provider, model_name, base_url, api_key, enabled}}
+_user_model_configs: dict[str, dict] = {}
+
+
+@app.post("/api/user-model-config")
+async def save_user_model_config(payload: UserModelConfigRequest, request: Request):
+    """Save the user's custom LLM provider config from the Manage Models modal."""
+    try:
+        client_id = _resolve_authenticated_client_id(request)
+        _user_model_configs[client_id] = {
+            "provider": payload.provider,
+            "model_name": payload.model_name,
+            "base_url": payload.base_url,
+            "api_key": payload.api_key,
+            "enabled": payload.enabled,
+        }
+        logger.info("User model config saved", client_id=client_id, provider=payload.provider, model=payload.model_name)
+        return {"success": True, "message": "Model configuration saved.", "timestamp": datetime.utcnow().isoformat()}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error("Failed to save user model config", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/user-model-config")
+async def get_user_model_config(request: Request):
+    """Return whether the user has a saved model config."""
+    try:
+        client_id = _resolve_authenticated_client_id(request)
+        config = _user_model_configs.get(client_id, {})
+        safe = {
+            "provider": config.get("provider", "openai"),
+            "model_name": config.get("model_name", ""),
+            "base_url": config.get("base_url") or "",
+            "has_key": bool(config.get("api_key")),
+            "enabled": config.get("enabled", False),
+        }
+        return {"success": True, "data": safe, "timestamp": datetime.utcnow().isoformat()}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+def _resolve_user_llm_overrides(client_id: str) -> dict:
+    """Return custom key/model/provider for a client if they have one enabled."""
+    cfg = _user_model_configs.get(client_id, {})
+    if not cfg.get("enabled") or not cfg.get("api_key") or not cfg.get("model_name"):
+        return {}
+    return {
+        "custom_key": cfg["api_key"],
+        "custom_model": cfg["model_name"],
+        "custom_base_url": cfg.get("base_url") or None,
+        "custom_provider": cfg.get("provider") or "openai",
+    }
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_with_marko_brain(payload: ChatRequest, request: Request):
-    if not analytics_runner:
+    if not analytics_runner or not llm_client:
         raise HTTPException(status_code=503, detail="Analytics service not ready")
 
     try:
@@ -1188,7 +1312,13 @@ async def chat_with_marko_brain(payload: ChatRequest, request: Request):
         thread_id = str(thread["id"])
 
         history = list_recent_messages(client_id, thread_id, limit=8)
-        prompt = _build_chat_prompt(payload.message, history)
+
+        # Build prompt based on mode
+        mode = (payload.mode or "ask").strip().lower()
+        if mode == "ask":
+            prompt = _build_ask_prompt(payload.message, history)
+        else:
+            prompt = _build_chat_prompt(payload.message, history)
 
         append_chat_message(
             client_id=client_id,
@@ -1197,7 +1327,10 @@ async def chat_with_marko_brain(payload: ChatRequest, request: Request):
             content=payload.message,
         )
 
-        response = analytics_runner.gemini.generate(prompt)
+        # Resolve user custom model overrides
+        overrides = _resolve_user_llm_overrides(client_id)
+
+        response = llm_client.generate(prompt, **overrides)
         if not response or not response.strip():
             response = (
                 "I am online and ready. I can help with forecasting, scenario planning, "
@@ -1647,6 +1780,40 @@ async def save_recommendation_outcome(payload: RecommendationLifecycleRecord, re
     except Exception as e:
         logger.error("Recommendation outcome upsert failed", error=str(e))
         raise HTTPException(status_code=500, detail=f"Failed to save recommendation outcome: {str(e)}")
+
+
+@app.delete(
+    "/api/recommendations/outcomes",
+    response_model=dict,
+)
+@app.delete(
+    "/agents/recommendations/outcomes",
+    response_model=dict,
+)
+async def delete_recommendation_outcomes(
+        request: Request,
+        thread_id: Optional[str] = Query(None, description="Chat thread identifier"),
+):
+    resolved_client_id = "unknown"
+    try:
+        resolved_client_id = _resolve_authenticated_client_id(request)
+        clear_recommendation_outcomes(
+            client_id=resolved_client_id,
+            thread_id=thread_id,
+        )
+        return {
+            "success": True,
+            "message": "Recommendation outcomes cleared successfully",
+            "timestamp": datetime.utcnow().isoformat(),
+        }
+    except Exception as e:
+        logger.error(
+            "Recommendation outcomes clear failed",
+            error=str(e),
+            client_id=resolved_client_id,
+            thread_id=thread_id,
+        )
+        raise HTTPException(status_code=500, detail=f"Failed to clear recommendation outcomes: {str(e)}")
 
 
 # -----------------------------------------------------------------------------

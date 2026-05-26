@@ -588,3 +588,40 @@ export const upsertRecommendationOutcome = async (
     };
   }
 };
+
+export const clearRecommendationOutcomes = async (
+  clientId?: string,
+  threadId?: string,
+): Promise<{ success: boolean }> => {
+  const params = new URLSearchParams();
+  if (clientId) params.set('client_id', clientId);
+  if (threadId) params.set('thread_id', threadId);
+  const query = params.toString() ? `?${params.toString()}` : '';
+
+  const baseWithoutApiSuffix = API_BASE_URL.replace(/\/api\/?$/, '');
+  const paths = [
+    `${API_BASE_URL}/recommendations/outcomes${query}`,
+    `${API_ROOT_URL}/api/recommendations/outcomes${query}`,
+    `${API_ROOT_URL}/agents/recommendations/outcomes${query}`,
+    `${baseWithoutApiSuffix}/api/recommendations/outcomes${query}`,
+  ];
+
+  for (const path of paths) {
+    try {
+      const response = await fetch(
+        path,
+        withRequestInit({
+          method: 'DELETE',
+        })
+      );
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch {
+      // Continue to next fallback
+    }
+  }
+
+  return { success: false };
+};
+

@@ -5,6 +5,7 @@ import { Bot, History, X } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import ChatPanel from './components/ChatPanel';
+import ManageModelsModal from './components/ManageModelsModal';
 import ExistingFilesModal from './components/knowledge/ExistingFilesModal';
 import UploadFileModal from './components/knowledge/UploadFileModal';
 import DatasetSelectionModal from './components/knowledge/DatasetSelectionModal';
@@ -21,6 +22,7 @@ import ReportWorkspace from './components/report/ReportWorkspace';
 import SettingsWorkspace from './components/settings/SettingsWorkspace';
 import SupervisorWorkspace from './components/supervisor/SupervisorWorkspace';
 import {
+  clearRecommendationOutcomes,
   fetchRecommendationOutcomes,
   orchestrateAgents,
   upsertRecommendationOutcome,
@@ -205,6 +207,11 @@ export default function App({
   const [activeSection, setActiveSection] = useState(DEFAULT_SECTION);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatMode, setChatMode] = useState<'ask' | 'agent'>('ask');
+  const [isManageModelsOpen, setIsManageModelsOpen] = useState(false);
+
+  // AbortController ref for cancelling in-flight chat/orchestrate requests
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentAnalysis, setCurrentAnalysis] =
@@ -427,69 +434,78 @@ export default function App({
     localStorage.setItem(contextKey, JSON.stringify(suggestions));
   }, [clientId, currentThreadId, suggestions]);
 
-  const addSuggestionsFromResult = (
+  const addSuggestionsFromResult = async (
     source: string,
     result?: Partial<AgentOrchestrationResult> | null,
+    replace = false,
   ) => {
     if (!result) return;
     const recs = result.recommendations || [];
     if (!Array.isArray(recs) || recs.length === 0) return;
 
     const now = toIsoNow();
-    const usedTitles = new Set(
-      suggestions
-        .map((item) => item.title?.trim())
-        .filter((title): title is string => Boolean(title)),
-    );
 
-    const mapped: UISuggestionItem[] = recs.map((text, index) => {
-      const baseTitle = buildSuggestionBaseTitle(text, index + 1);
-      let uniqueTitle = baseTitle;
-      let suffix = 2;
-      while (usedTitles.has(uniqueTitle)) {
-        uniqueTitle = `${baseTitle} (${suffix})`;
-        suffix += 1;
-      }
-      usedTitles.add(uniqueTitle);
+    const mapped: UISuggestionItem[] = recs.map((itemObj: any, index) => {
+      const isObj = itemObj && typeof itemObj === 'object';
+      const text = isObj ? (itemObj.prompt || itemObj.title || '') : String(itemObj);
+      const title = isObj && itemObj.title ? itemObj.title : buildSuggestionBaseTitle(text, index + 1);
+      const description = isObj && itemObj.description ? itemObj.description : text;
+      const expectedImpact = isObj && itemObj.expected_impact ? itemObj.expected_impact : undefined;
 
       return {
         id: `${source}-${Date.now()}-${index}`,
-        title: uniqueTitle,
-        description: text,
+        title,
+        description,
         prompt: text,
         source,
         status: 'pending',
+        expectedImpact,
         lastUpdatedAt: now,
         clientId,
         threadId: currentThreadId || undefined,
       };
     });
 
-    setSuggestions((prev) => {
-      const existingByPrompt = new Map(prev.map((item) => [item.prompt.toLowerCase(), item]));
-      const nextItems = mapped.map((item) => {
-        const existing = existingByPrompt.get(item.prompt.toLowerCase());
-        if (!existing) return item;
-        return {
-          ...item,
-          id: existing.id,
-          title: existing.title || item.title,
-          status: existing.status,
-          acceptedAt: existing.acceptedAt,
-          submittedAt: existing.submittedAt,
-          owner: existing.owner,
-          dueDate: existing.dueDate,
-          expectedImpact: existing.expectedImpact,
-          actualImpact: existing.actualImpact,
-          outcomeNotes: existing.outcomeNotes,
-          lastUpdatedAt: existing.lastUpdatedAt || now,
-        };
+    let nextSuggestions: UISuggestionItem[] = [];
+
+    if (replace) {
+      nextSuggestions = mapped;
+      setSuggestions(mapped);
+
+      // Clear previous suggestions in database and persist newly generated ones
+      try {
+        await clearRecommendationOutcomes(clientId, currentThreadId || undefined);
+        for (const item of mapped) {
+          await persistSuggestionOutcome(item);
+        }
+      } catch (error) {
+        console.error('Failed to clear and update recommendations in database:', error);
+      }
+    } else {
+      // Specialist Agent: Add up/append to existing suggestions
+      setSuggestions((prev) => {
+        const existingPrompts = new Set(prev.map(item => item.prompt.toLowerCase()));
+        const uniqueNew = mapped.filter(item => !existingPrompts.has(item.prompt.toLowerCase()));
+        const combined = [...uniqueNew, ...prev].slice(0, 50);
+        nextSuggestions = combined;
+        return combined;
       });
 
-      const map = new Map<string, UISuggestionItem>();
-      [...nextItems, ...prev].forEach((item) => map.set(item.id, item));
-      return Array.from(map.values()).slice(0, 50);
-    });
+      // Persist the newly added specialist agent suggestions in database
+      try {
+        for (const item of mapped) {
+          await persistSuggestionOutcome(item);
+        }
+      } catch (error) {
+        console.error('Failed to append recommendations to database:', error);
+      }
+    }
+
+    // Save suggestions to localStorage
+    setTimeout(() => {
+      const contextKey = recommendationStorageKey(clientId, currentThreadId);
+      localStorage.setItem(contextKey, JSON.stringify(nextSuggestions));
+    }, 50);
   };
 
   const persistSuggestionOutcome = async (item: UISuggestionItem) => {
@@ -538,9 +554,17 @@ export default function App({
 
   const handleSendMessage = async (
     message: string,
+    mode: 'ask' | 'agent' = chatMode,
     executionContext?: { executedSuggestionId?: string },
   ): Promise<boolean> => {
     if (!message.trim()) return false;
+
+    // Cancel any existing in-flight request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
 
     const userMessage: Message = {
       id: `${Date.now()}-user`,
@@ -553,12 +577,50 @@ export default function App({
     setIsLoading(true);
 
     try {
-      const lower = message.toLowerCase().trim();
-
       // Clear previous analysis UI immediately so old cards do not persist
       setExecutionTimeline([]);
       setActivatedAgents([]);
       setCurrentAnalysis(null);
+
+      // ── Ask mode: pure Q&A via /api/chat ─────────────────────────────
+      if (mode === 'ask') {
+        const response = await axios.post(`${API_BASE}/chat`, {
+          message,
+          thread_id: currentThreadId,
+          mode: 'ask',
+        }, {
+          withCredentials: true,
+          signal: abortController.signal,
+        });
+
+        if (response.data.thread_id) {
+          setCurrentThreadId(response.data.thread_id);
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `${Date.now()}-assistant`,
+            role: 'assistant',
+            content:
+              response.data.message ||
+              'I am online and ready to help with analytics questions.',
+            timestamp: new Date(),
+          },
+        ]);
+
+        setExecutionTimeline([]);
+        setActivatedAgents([]);
+        setCurrentAnalysis(null);
+        if (clientId) {
+          loadChatThreads(clientId);
+        }
+
+        return true;
+      }
+
+      // ── Agent mode: heuristic routing ────────────────────────────────
+      const lower = message.toLowerCase().trim();
 
       const simpleChatPatterns = [
           /^hello\b/,
@@ -597,8 +659,10 @@ export default function App({
         const response = await axios.post(`${API_BASE}/chat`, {
           message,
           thread_id: currentThreadId,
+          mode: 'agent',
         }, {
           withCredentials: true,
+          signal: abortController.signal,
         });
 
         if (response.data.thread_id) {
@@ -617,7 +681,6 @@ export default function App({
           },
         ]);
 
-        // Clear analysis cards for conversational replies
         setExecutionTimeline([]);
         setActivatedAgents([]);
         setCurrentAnalysis(null);
@@ -633,6 +696,7 @@ export default function App({
         thread_id: currentThreadId,
       }, {
         withCredentials: true,
+        signal: abortController.signal,
       });
 
       const data = response.data;
@@ -658,7 +722,7 @@ export default function App({
       setExecutionTimeline(data.timeline || []);
 
       if (data.result) {
-        addSuggestionsFromResult('Supervisor', data.result);
+        addSuggestionsFromResult('Supervisor', data.result, true);
 
         if (executionContext?.executedSuggestionId) {
           const expected = deriveExpectedOutcomeFromResult(data.result);
@@ -688,6 +752,11 @@ export default function App({
 
       return true;
     } catch (error: any) {
+      // Ignore cancellation errors
+      if (axios.isCancel(error) || error?.name === 'AbortError' || error?.code === 'ERR_CANCELED') {
+        return false;
+      }
+
       setMessages((prev) => [
         ...prev,
         {
@@ -707,7 +776,25 @@ export default function App({
       return false;
     } finally {
       setIsLoading(false);
+      abortControllerRef.current = null;
     }
+  };
+
+  const handleCancelMessage = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `${Date.now()}-cancelled`,
+        role: 'assistant',
+        content: 'Generation stopped.',
+        timestamp: new Date(),
+      },
+    ]);
   };
 
   const handleRunSupervisorPipeline = async (): Promise<boolean> => {
@@ -776,7 +863,7 @@ export default function App({
         'Results combined for dashboard',
       ]);
 
-      addSuggestionsFromResult('Supervisor', data);
+      addSuggestionsFromResult('Supervisor', data, true);
 
       const run: AnalysisRun = {
         id: `${Date.now()}-analysis`,
@@ -816,11 +903,41 @@ export default function App({
       status: 'in_progress',
       acceptedAt: suggestion.acceptedAt || toIsoNow(),
     });
-    void handleSendMessage(suggestion.prompt, { executedSuggestionId: suggestion.id });
+    void handleSendMessage(suggestion.prompt, 'agent', { executedSuggestionId: suggestion.id });
   };
 
   const handleRemoveSuggestion = (suggestionId: string) => {
     setSuggestions((prev) => prev.filter((item) => item.id !== suggestionId));
+  };
+
+  const handleIgnoreSuggestion = (suggestionId: string) => {
+    // Move the item to the END of the queue — not removed
+    setSuggestions((prev) => {
+      const idx = prev.findIndex((s) => s.id === suggestionId);
+      if (idx === -1) return prev;
+      const copy = [...prev];
+      const [item] = copy.splice(idx, 1);
+      const updatedItem = {
+        ...item,
+        lastUpdatedAt: new Date(0).toISOString(), // Epoch to sort last when retrieved from Supabase/DB
+      };
+      persistSuggestionOutcome(updatedItem);
+      return [...copy, updatedItem];
+    });
+  };
+
+
+  const handleCancelSupervisorPipeline = () => {
+    setIsLoading(false);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `${Date.now()}-cancelled`,
+        role: 'assistant',
+        content: 'Analysis pipeline cancelled.',
+        timestamp: new Date(),
+      },
+    ]);
   };
 
   const handleWorkspaceRunResult = (source: string, result: AgentOrchestrationResult) => {
@@ -841,6 +958,7 @@ export default function App({
           <div className="workspace-section-shell flex h-full flex-col overflow-hidden bg-[#f6f7f9]">
             <SupervisorWorkspace
               onRunAnalysis={handleRunSupervisorPipeline}
+              onCancelAnalysis={handleCancelSupervisorPipeline}
               onOpenDashboard={() => setActiveSection('dashboard')}
               resetToken={supervisorResetToken}
               clientId={clientId}
@@ -937,11 +1055,15 @@ export default function App({
             onNewChat={handleNewChat}
             onCollapse={() => setIsChatPanelCollapsed(true)}
             handleSendMessage={handleSendMessage}
+            onCancelMessage={handleCancelMessage}
+            mode={chatMode}
+            onModeChange={setChatMode}
             suggestions={suggestions}
             onExecuteSuggestion={handleExecuteSuggestion}
+            onIgnoreSuggestion={handleIgnoreSuggestion}
             onRemoveSuggestion={handleRemoveSuggestion}
             onOpenHistory={() => setIsHistoryOpen(true)}
-            onManageModels={() => setActiveSection('settings')}
+            onManageModels={() => setIsManageModelsOpen(true)}
           />
         ) : null}
       </div>
@@ -954,8 +1076,10 @@ export default function App({
           title="Open chat panel"
           className="fixed right-6 top-1/2 z-40 hidden h-16 w-16 -translate-y-1/2 items-center justify-center rounded-full border-0 bg-transparent shadow-none transition duration-200 lg:flex"
         >
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black p-2 shadow-[0_10px_20px_rgba(0,0,0,0.24)]">
-            <Bot className="h-5 w-5 text-white" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-black p-1 shadow-[0_10px_20px_rgba(0,0,0,0.24)]">
+            <div className="h-8 w-8 overflow-hidden rounded-full bg-transparent">
+              <img src="/img.png" alt="Marko AI" className="h-full w-full object-cover" />
+            </div>
           </div>
         </button>
       ) : null}
@@ -1040,6 +1164,12 @@ export default function App({
       <ExistingFilesModal />
       <UploadFileModal />
       <DatasetSelectionModal />
+
+      {/* Manage Models Modal */}
+      <ManageModelsModal
+        isOpen={isManageModelsOpen}
+        onClose={() => setIsManageModelsOpen(false)}
+      />
     </div>
   );
 }

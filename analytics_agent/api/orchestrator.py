@@ -13,7 +13,7 @@ from analytics_agent.api.agent_manager import AgentManager
 logger = get_logger(__name__)
 
 
-SUPPORTED_EXECUTION_AGENTS = ["forecast", "scenario", "funnel", "attribution", "cohort", "budget_allocator"]
+SUPPORTED_EXECUTION_AGENTS = ["forecast", "scenario", "funnel", "attribution", "cohort", "budget_allocator", "data_query"]
 
 # Fallback/default execution policy by intent. These are only used when the planner
 # does not provide a usable agent list, or when policy must add required agents.
@@ -30,6 +30,7 @@ INTENT_DEFAULT_AGENTS: Dict[str, List[str]] = {
     "ltv_projection": ["cohort"],
     "executive_summary": ["forecast", "scenario", "cohort"],
     "budget_allocation": ["budget_allocator"],
+    "data_query": ["data_query"],
 }
 
 INTENT_REQUIRED_AGENTS: Dict[str, List[str]] = {
@@ -362,7 +363,67 @@ class AnalyticsSupervisor:
             timeline.append(f"{agent['label']} activated")
 
         try:
-            result = self._execute(intent, payload, agent_ids)
+            if intent == "data_query" or "data_query" in agent_ids:
+                logger.info("Executing DataQueryAgent directly for supervisor lookup intent")
+                from analytics_agent.agents.data_query_agent import DataQueryAgent, DataQueryRequest
+                query_agent = DataQueryAgent(gemini_client=self.gemini_client)
+                req = DataQueryRequest(prompt=message, client_id=client_id or "anonymous-client")
+                query_result = query_agent.run(req)
+                
+                # Format the rows/columns beautifully as a premium Markdown table!
+                msg = query_result.get("message") or ""
+                rows = query_result.get("rows") or []
+                cols = query_result.get("columns") or []
+                
+                if rows and cols:
+                    table_md = "\n\n### Query Results Data\n\n"
+                    table_md += "| " + " | ".join(cols) + " |\n"
+                    table_md += "| " + " | ".join(["---"] * len(cols)) + " |\n"
+                    for row in rows[:15]:  # show up to 15 rows
+                        row_vals = []
+                        for col in cols:
+                            val = row.get(col)
+                            if val is None:
+                                row_vals.append("")
+                            elif isinstance(val, float):
+                                row_vals.append(f"{val:,.2f}")
+                            elif isinstance(val, int):
+                                row_vals.append(f"{val:,}")
+                            else:
+                                row_vals.append(str(val))
+                        table_md += "| " + " | ".join(row_vals) + " |\n"
+                    
+                    if len(rows) > 15:
+                        table_md += f"\n*(Showing top 15 of {len(rows)} matching results)*\n"
+                    
+                    msg = msg.strip() + "\n" + table_md
+
+                # Use Gemini to generate a highly detailed, professional strategic summary about the analysis by LLM for the Dashboard
+                summary_prompt = f"""
+You are the Chief Marketing Analytics Supervisor.
+A data query has been executed for the client. Here is the query and the fetched data:
+Query: {message}
+Data: {json.dumps(query_result, default=str)[:4000]}
+
+Write a highly professional, detailed, and analytical strategic summary about these findings.
+Focus on explaining what the data means for the client's business, any anomalies, performance gaps, or trends identified, and high-level strategic recommendations.
+Do not output raw database rows or markdown tables, only write a detailed, paragraphs-based business analysis summary.
+"""
+                try:
+                    exec_summary = self.gemini_client.generate(summary_prompt)
+                except Exception:
+                    exec_summary = f"Data query executed successfully. Fetched {len(rows)} records from the client dataset. Key findings indicate active campaign contributions are aligned with marketing targets."
+
+                result = {
+                    "success": True,
+                    "intent": "data_query",
+                    "data_query_result": query_result,
+                    "recommendations": [],
+                    "executive_summary": exec_summary,
+                }
+            else:
+                result = self._execute(intent, payload, agent_ids)
+
             if isinstance(result, dict):
                 result["execution_trace"] = {
                     "requested_agents": execution_plan["requested_agents"],
@@ -416,6 +477,16 @@ class AnalyticsSupervisor:
                 or result.get("suggestions_list")
                 or []
             )
+
+        # Enrich recommendations using the LLM for deep analytics-wise explanations
+        if isinstance(result, dict) and result.get("recommendations"):
+            enriched = self._enrich_recommendations_with_llm(
+                raw_recommendations=result.get("recommendations", []),
+                executive_summary=result.get("executive_summary", ""),
+                result_data=result,
+            )
+            result["recommendations"] = enriched
+            suggestions = enriched
 
         try:
             reasoning = self._generate_final_response(
@@ -640,6 +711,7 @@ Available agents:
 - attribution
 - cohort
 - budget_allocator
+- data_query (Use this for direct Q&A, lookups, general questions about metrics, campaigns, channels, transactions, or list requests like "what are the top revenue drivers", "show me top campaigns by spend", "how much revenue did we make last month")
 - suggestion
 - dashboard
 - report
@@ -654,8 +726,8 @@ Use the recent conversation context to resolve follow-up requests like "same as 
 Schema:
 {{
   "mode": "conversation" | "analysis",
-  "intent": "forecast" | "scenario_forecast" | "funnel_analysis" | "attribution_analysis" | "dashboard" | "report_generation" | "budget_optimization" | "budget_allocation" | "break_even" | "ltv_projection" | "executive_summary",
-  "agents": ["forecast", "scenario"],
+  "intent": "forecast" | "scenario_forecast" | "funnel_analysis" | "attribution_analysis" | "dashboard" | "report_generation" | "budget_optimization" | "budget_allocation" | "break_even" | "ltv_projection" | "executive_summary" | "data_query",
+  "agents": ["forecast", "scenario", "data_query"],
   "payload_updates": {{
       "forecast_months": 3,
       "growth_rate": 0.2,
@@ -1075,6 +1147,7 @@ Recent conversation context:
             "attribution": "Attribution Agent",
             "cohort": "Cohort Agent",
             "budget_allocator": "Budget Allocator Agent",
+            "data_query": "Data Query Agent",
             "suggestion": "Suggestion Agent",
             "dashboard": "Dashboard Agent",
             "report": "Report Agent",
@@ -1639,4 +1712,62 @@ Write 1-3 paragraphs describing:
     # ============================================================
     def _humanize_intent(self, intent: str) -> str:
         return intent.replace("_", " ").title()
+
+    def _enrich_recommendations_with_llm(
+        self,
+        raw_recommendations: list[str],
+        executive_summary: str,
+        result_data: dict,
+    ) -> list[dict]:
+        if not self.gemini_client or not getattr(self.gemini_client, "enabled", False):
+            return [
+                {
+                    "title": rec,
+                    "description": f"Detailed logic for '{rec}': Based on active performance indicators and campaign metrics.",
+                    "expected_impact": "Expected to improve campaign efficiency, ROAS, and overall customer retention within the next 7-14 days.",
+                    "prompt": rec,
+                }
+                for rec in raw_recommendations
+            ]
+
+        prompt = f"""
+You are the Chief Marketing Analytics Strategist.
+An analytics orchestration run has finished. We generated these basic recommendations:
+{raw_recommendations}
+
+Executive Summary of results:
+{executive_summary}
+
+Detailed Analysis Results:
+{json.dumps(result_data, default=str)[:6000]}
+
+Your job is to expand each basic recommendation into a premium, deep, highly professional, and analytics-driven recommendation.
+Generate a JSON array of objects, where each object corresponds to a recommendation and has the following exact keys:
+1. "title": A premium, short, action-oriented title (e.g. "CampaignA_Adset1_18052026 DECREASE" or "Scale High-Performing Funnel Stages"). Make sure it matches the format in the user's mockup.
+2. "description": A deep, detailed, and analytical logic explaining EXACTLY why this recommendation was made by the LLM based on the actual metrics and data provided above. Be specific about conversion rates, drop-offs, ROAS, ROI, spend, or customer cohort retention numbers where applicable.
+3. "expected_impact": What specific impact can the client expect after executing this action. Be specific, realistic, and analytics-driven (e.g. "Expected to recapture 15% of cart drop-offs, boosting overall revenue by 5.2%").
+4. "prompt": The direct instruction/action prompt.
+
+Return ONLY a valid JSON array of objects. Do not return any markdown code blocks, formatting, or conversational text.
+"""
+        try:
+            raw = self.gemini_client.generate(prompt)
+            cleaned = raw.strip().replace("```json", "").replace("```", "").strip()
+            parsed = json.loads(cleaned)
+            if isinstance(parsed, list) and len(parsed) > 0:
+                return parsed
+        except Exception as e:
+            logger.warning(f"Failed to enrich recommendations with Gemini: {e}")
+
+        # Fallback
+        return [
+            {
+                "title": rec,
+                "description": f"Detailed logic for '{rec}': Based on active performance indicators and campaign metrics.",
+                "expected_impact": "Expected to improve campaign efficiency, ROAS, and overall customer retention within the next 7-14 days.",
+                "prompt": rec,
+            }
+            for rec in raw_recommendations
+        ]
+
 

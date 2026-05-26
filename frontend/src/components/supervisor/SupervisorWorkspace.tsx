@@ -11,6 +11,7 @@ import {
   PieChart,
   Play,
   Plus,
+  Square,
   TrendingUp,
   Users,
 } from 'lucide-react';
@@ -22,6 +23,7 @@ type StageStatus = 'idle' | 'running' | 'done' | 'error';
 
 interface SupervisorWorkspaceProps {
   onRunAnalysis: () => Promise<boolean>;
+  onCancelAnalysis: () => void;
   onOpenDashboard: () => void;
   resetToken: number;
   clientId?: string;
@@ -145,7 +147,7 @@ function StageCard({
   );
 }
 
-export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, resetToken, clientId }: SupervisorWorkspaceProps) {
+export default function SupervisorWorkspace({ onRunAnalysis, onCancelAnalysis, onOpenDashboard, resetToken, clientId }: SupervisorWorkspaceProps) {
   const { setCurrentAgentId } = useKnowledgeBase();
   const [isKnowledgeBaseModalOpen, setIsKnowledgeBaseModalOpen] = useState(false);
   const [isTrainModelModalOpen, setIsTrainModelModalOpen] = useState(false);
@@ -227,7 +229,14 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
     });
 
   const handleRun = async () => {
-    if (runState === 'running') return;
+    if (runState === 'running') {
+      // Cancel the running analysis
+      clearTimers();
+      onCancelAnalysis();
+      setRunState('idle');
+      resetPipeline();
+      return;
+    }
 
     setRunState('running');
 
@@ -292,14 +301,18 @@ export default function SupervisorWorkspace({ onRunAnalysis, onOpenDashboard, re
               <span>Train Model</span>
             </button>
             <button
+              id="run-analysis-btn"
               onClick={handleRun}
-              disabled={runState === 'running'}
-              className="inline-flex h-10 items-center gap-2 rounded-[999px] border border-black bg-black px-4 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-70"
+              className={`inline-flex h-10 items-center gap-2 rounded-[999px] border px-4 text-sm font-semibold transition ${
+                runState === 'running'
+                  ? 'border-red-300 bg-white text-red-600 hover:bg-red-50 shadow-sm'
+                  : 'border-black bg-black px-4 text-white hover:bg-zinc-800'
+              }`}
             >
               {runState === 'running' ? (
                 <>
-                  <LoaderCircle className="h-4 w-4 animate-spin" />
-                  Running Analysis...
+                  <Square className="h-3.5 w-3.5 fill-red-500 text-red-500" />
+                  Cancel
                 </>
               ) : (
                 <>

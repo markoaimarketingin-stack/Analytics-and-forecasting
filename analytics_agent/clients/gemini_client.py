@@ -1,4 +1,4 @@
-# analytics_agent/gemini_client.py
+# analytics_agent/clients/gemini_client.py
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ load_dotenv()
 
 logger = get_logger(__name__)
 
-MODEL_NAME = "gemini-3.1-flash-lite-preview"
+MODEL_NAME = "gemini-3-flash-preview"
 
 
 class GeminiClient:
@@ -64,8 +64,13 @@ class GeminiClient:
             self._client = None
 
     def generate(self, prompt: str) -> str:
+        """
+        Generate content. Returns a non-empty string on success.
+        Raises RuntimeError on empty response or API failure so that
+        LLMClient can trigger its fallback chain.
+        """
         if not self.enabled or self._client is None:
-            return ""
+            raise RuntimeError("Gemini client is not enabled")
 
         try:
             if self._mode == "google-genai":
@@ -83,13 +88,14 @@ class GeminiClient:
                 if text:
                     return text.strip()
 
-            logger.warning("Gemini returned empty response")
-            return ""
+            raise RuntimeError("Gemini returned an empty response")
 
+        except RuntimeError:
+            raise
         except Exception as e:
             logger.error(
                 "Error generating content with Gemini",
                 error=str(e),
                 model=MODEL_NAME,
             )
-            return ""
+            raise RuntimeError(f"Gemini API error: {e}") from e
