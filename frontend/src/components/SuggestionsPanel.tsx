@@ -1,9 +1,9 @@
-import { Suggestion } from '../types';
+import { UISuggestionItem } from '../types';
 import SuggestionCard from './SuggestionCard';
 
 interface SuggestionsPanelProps {
-  suggestions: Suggestion[];
-  onSuggestionClick: (suggestion: Suggestion) => void;
+  suggestions: UISuggestionItem[];
+  onSuggestionClick: (suggestion: UISuggestionItem) => void;
 }
 
 export default function SuggestionsPanel({ suggestions, onSuggestionClick }: SuggestionsPanelProps) {
@@ -19,8 +19,9 @@ export default function SuggestionsPanel({ suggestions, onSuggestionClick }: Sug
           {suggestions.map((suggestion, idx) => (
             <SuggestionCard
               key={idx}
-              suggestion={suggestion}
-              onClick={() => onSuggestionClick(suggestion)}
+              item={suggestion}
+              onExecute={onSuggestionClick}
+              onIgnore={() => {}}
             />
           ))}
         </div>

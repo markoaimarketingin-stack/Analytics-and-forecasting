@@ -621,10 +621,19 @@ html.dark-mode .workspace-header-glass-modern {
 html.dark-mode .workspace-panel,
 html.dark-mode .workspace-metric-card,
 html.dark-mode .surface-card,
-html.dark-mode .panel-card {
+html.dark-mode .panel-card,
+html.dark-mode .stat-card {
   border-color: #262626;
   background: #000;
   color: #fff;
+}
+
+html.dark-mode .stat-card {
+  background-image: none !important;
+}
+
+html.dark-mode .stat-card:hover {
+  border-color: #404040;
 }
 
 html.dark-mode .workspace-option-pill {
