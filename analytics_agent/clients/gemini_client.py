@@ -63,7 +63,7 @@ class GeminiClient:
             self.enabled = False
             self._client = None
 
-    def generate(self, prompt: str) -> str:
+    def generate(self, prompt: str, model: Optional[str] = None) -> str:
         """
         Generate content. Returns a non-empty string on success.
         Raises RuntimeError on empty response or API failure so that
@@ -72,10 +72,12 @@ class GeminiClient:
         if not self.enabled or self._client is None:
             raise RuntimeError("Gemini client is not enabled")
 
+        target_model = model or MODEL_NAME
+
         try:
             if self._mode == "google-genai":
                 response = self._client.models.generate_content(
-                    model=MODEL_NAME,
+                    model=target_model,
                     contents=prompt,
                 )
 
@@ -83,7 +85,11 @@ class GeminiClient:
                     return response.text.strip()
 
             elif self._mode == "google-generativeai":
-                response = self._client.generate_content(prompt)
+                if model and model != MODEL_NAME:
+                    temp_model = legacy_genai.GenerativeModel(target_model)
+                    response = temp_model.generate_content(prompt)
+                else:
+                    response = self._client.generate_content(prompt)
                 text = getattr(response, "text", None)
                 if text:
                     return text.strip()
@@ -96,6 +102,6 @@ class GeminiClient:
             logger.error(
                 "Error generating content with Gemini",
                 error=str(e),
-                model=MODEL_NAME,
+                model=target_model,
             )
             raise RuntimeError(f"Gemini API error: {e}") from e

@@ -515,27 +515,30 @@ async def lifespan(app: FastAPI):
         finally:
             db_session.close()
 
-        analytics_runner = AnalyticsRunner()
-
-        marko_brain = AnalyticsSupervisor(
-            analytics_runner=analytics_runner,
-            gemini_client=analytics_runner.gemini,
-        )
-        data_query_agent = DataQueryAgent(gemini_client=analytics_runner.gemini)
-
-        # Build unified LLM client: Gemini primary -> OpenRouter fallback
+        # Instantiate primary gemini and fallback openrouter clients
+        gemini = GeminiClient()
         openrouter = OpenRouterClient(
             api_key=getattr(settings, 'OPENROUTER_API_KEY', None) or "",
             base_url=getattr(settings, 'OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1'),
         )
+
+        # Build unified LLM client: Gemini primary -> OpenRouter fallback
         llm_client = LLMClient(
-            gemini_client=analytics_runner.gemini,
+            gemini_client=gemini,
             openrouter_client=openrouter,
         )
 
+        analytics_runner = AnalyticsRunner(gemini_client=llm_client)
+
+        marko_brain = AnalyticsSupervisor(
+            analytics_runner=analytics_runner,
+            gemini_client=llm_client,
+        )
+        data_query_agent = DataQueryAgent(gemini_client=llm_client)
+
         logger.info(
             "Analytics services initialized successfully",
-            gemini_enabled=getattr(analytics_runner.gemini, "enabled", False),
+            gemini_enabled=gemini.enabled,
             openrouter_enabled=openrouter.enabled,
         )
 
@@ -889,7 +892,7 @@ def _build_ask_prompt(message: str, history: list[dict]) -> str:
 
     conversation_context = "\n".join(context_lines) if context_lines else "No previous conversation context."
 
-    return f"""You are Marko, an expert growth analytics assistant in read-only Q&A mode.
+    return f"""You are Marko, an expert analytics assistant in read-only Q&A mode.
 
 Your role is strictly to ANSWER questions, EXPLAIN data, and FETCH context from what you know.
 You do NOT execute agents, make changes, or trigger workflows — that is handled by Agent mode.

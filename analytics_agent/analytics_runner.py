@@ -11,11 +11,11 @@ logger = get_logger(__name__)
 
 
 class AnalyticsRunner:
-    def __init__(self):
+    def __init__(self, gemini_client: Any = None):
         try:
             self.graph = build_graph()
             self.capabilities = CAPABILITIES
-            self.gemini = GeminiClient()
+            self.gemini = gemini_client or GeminiClient()
             logger.info("AnalyticsRunner initialized successfully")
         except Exception as e:
             logger.error(

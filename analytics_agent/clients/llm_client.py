@@ -17,10 +17,25 @@ from analytics_agent.clients.openrouter_client import OpenRouterClient
 logger = get_logger(__name__)
 
 
+# The fallback models list in priority order.
+FALLBACK_MODELS = [
+    # --- Google Gemini Tier (Primary direct access) ---
+    {"provider": "google", "model": "gemini-3.5-flash"},
+    {"provider": "google", "model": "gemini-2.5-flash"},
+    {"provider": "google", "model": "gemini-flash-latest"},
+
+    # --- OpenRouter Tier (Secondary fallback access) ---
+    {"provider": "openrouter", "model": "openrouter/auto"},
+    {"provider": "openrouter", "model": "openai/gpt-oss-120b:free"},
+    {"provider": "openrouter", "model": "openrouter/free"},
+    {"provider": "openrouter", "model": "deepseek/deepseek-chat-v3-0324"},
+]
+
+
 class LLMClient:
     """
-    Tries Gemini first. If Gemini returns empty or raises, falls back to
-    OpenRouter free models.  Accepts optional runtime overrides for the
+    Tries Gemini models first. If Gemini models return empty or raise, falls back to
+    OpenRouter models sequentially. Accepts optional runtime overrides for the
     custom-model-per-user feature (from the Manage Models modal).
     """
 
@@ -32,6 +47,16 @@ class LLMClient:
         # Re-use existing instances if passed in (e.g. from AnalyticsRunner).
         self._gemini = gemini_client or GeminiClient()
         self._openrouter = openrouter_client or OpenRouterClient()
+
+    @property
+    def enabled(self) -> bool:
+        """
+        Check if any backend LLM service is enabled.
+        """
+        return (
+            (self._gemini and getattr(self._gemini, "enabled", False)) or
+            (self._openrouter and getattr(self._openrouter, "enabled", False))
+        )
 
     # ------------------------------------------------------------------
     # Public API
@@ -64,25 +89,34 @@ class LLMClient:
                 custom_provider=custom_provider,
             )
 
-        # ── Primary: Gemini ─────────────────────────────────────────────
-        if self._gemini.enabled:
-            try:
-                result = self._gemini.generate(prompt)
-                if result:
-                    return result
-                logger.warning("Gemini returned empty response — trying OpenRouter fallback")
-            except Exception as exc:
-                logger.warning("Gemini raised an exception — trying OpenRouter fallback", error=str(exc))
+        # ── Fallback Chain Loop ──────────────────────────────────────────
+        for model_entry in FALLBACK_MODELS:
+            provider = model_entry["provider"]
+            model_name = model_entry["model"]
 
-        # ── Fallback: OpenRouter free models ────────────────────────────
-        try:
-            result = self._openrouter.generate(prompt)
-            if result:
-                return result
-        except Exception as exc:
-            logger.error("OpenRouter fallback also failed", error=str(exc))
+            if provider == "google":
+                if self._gemini.enabled:
+                    try:
+                        logger.info("Attempting primary direct access with Google Gemini model", model=model_name)
+                        result = self._gemini.generate(prompt, model=model_name)
+                        if result:
+                            return result
+                        logger.warning("Google Gemini model returned empty response — trying next fallback", model=model_name)
+                    except Exception as exc:
+                        logger.warning("Google Gemini model failed — trying next fallback", model=model_name, error=str(exc))
 
-        logger.error("All LLM providers exhausted — returning empty string")
+            elif provider == "openrouter":
+                if self._openrouter.enabled:
+                    try:
+                        logger.info("Attempting fallback access via OpenRouter with model", model=model_name)
+                        result = self._openrouter.generate(prompt, custom_model=model_name)
+                        if result:
+                            return result
+                        logger.warning("OpenRouter model returned empty response — trying next fallback", model=model_name)
+                    except Exception as exc:
+                        logger.warning("OpenRouter model failed — trying next fallback", model=model_name, error=str(exc))
+
+        logger.error("All LLM providers and fallback models exhausted — returning empty string")
         return ""
 
     # ------------------------------------------------------------------
