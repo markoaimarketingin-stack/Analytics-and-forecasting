@@ -14,6 +14,7 @@ import uuid
 from pathlib import Path
 from urllib import error as urllib_error
 from urllib import request as urllib_request
+from analytics_agent.clients.gemini_client import GeminiClient
 
 from fastapi import BackgroundTasks, FastAPI, Form, HTTPException, Query, Request, UploadFile, File as FastAPIFile
 from fastapi.middleware.cors import CORSMiddleware
