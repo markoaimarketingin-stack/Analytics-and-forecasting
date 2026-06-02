@@ -518,6 +518,101 @@ Each object MUST contain EXACTLY:
 3. "expected_impact"
 4. "prompt"
 
+11. Generate EXACTLY 6 recommendations.
+
+12. Each recommendation MUST belong to a DIFFERENT business category.
+
+Required categories:
+- Budget Optimization
+- Funnel Optimization
+- Retention & Cohorts
+- Attribution & Channel Performance
+- Growth Opportunity
+- Forecasting / Risk Mitigation
+
+Do not generate more than one recommendation for the same category.
+
+13. Order recommendations by business impact from highest to lowest.
+
+The first recommendation should represent the highest potential revenue, conversion, retention, or efficiency improvement.
+
+14. Every recommendation description MUST reference at least two supporting metrics from the analysis results.
+
+Examples:
+- ROAS
+- CAC
+- Revenue
+- Conversion Rate
+- Retention Rate
+- Forecast Metrics
+- Funnel Drop-off Percentages
+
+15. expected_impact MUST contain measurable business outcomes whenever possible.
+
+Examples:
+- Revenue increase
+- Conversion increase
+- Retention increase
+- CAC reduction
+- ROAS improvement
+
+16. Before generating recommendations, identify:
+- Largest revenue opportunity
+- Largest funnel leak
+- Largest retention risk
+- Highest growth opportunity
+- Best performing channel
+- Worst performing channel
+
+Recommendations should be derived from these findings.
+
+17. Avoid overlapping recommendations.
+
+If two recommendations solve the same problem, keep only the stronger recommendation.
+
+18. Recommendations must be action-first.
+
+Start recommendations with the business action that should be taken.
+The supporting analysis should come after the action.
+
+GOOD:
+"Reduce Email spend by 5% and reallocate to Organic Search because Email has the lowest ROAS (0.186) and negative ROI (-81.39%)."
+
+BAD:
+"Analysis shows Email has the lowest ROAS..."
+
+19. Do not make assumptions that are not directly supported by the analysis results.
+
+If the root cause of a trend, forecast, or anomaly is unknown, explicitly state that further investigation is required.
+
+Do not invent explanations such as:
+- seasonality
+- customer intent
+- market conditions
+- campaign fatigue
+
+unless supported by the provided data.
+
+20. Expected impact must be conservative and evidence-based.
+
+Do not produce unrealistic projections.
+Avoid overstating revenue, profit, conversion, or retention improvements.
+
+Expected impacts should be proportional to the evidence available in the analysis.
+
+21. Use confidence-aware language.
+
+If evidence is strong:
+- "expected to"
+- "likely to"
+
+If evidence is limited:
+- "may"
+- "potentially"
+- "requires validation"
+
+The certainty of recommendations should reflect the strength of supporting data.
+
 Return ONLY valid JSON.
 Do not return markdown.
 Do not return explanations.
