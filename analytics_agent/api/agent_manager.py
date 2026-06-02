@@ -436,23 +436,92 @@ Return ONLY a valid JSON array of objects. Do not return any markdown code block
         for round_idx in range(max_query_rounds):
             prompt = f"""
 You are the Chief Marketing Analytics Strategist.
-We are running a strategic analysis pipeline for client '{client_id}'.
+
+An analytics orchestration run has finished for client '{client_id}'.
 
 Here is the state/summary of the specialist agents:
 {json.dumps(agent_summaries, default=str, indent=2)}
 
-Previous database query results (if any):
+Here are the results of dynamic database queries executed during planning:
 {json.dumps(query_results, default=str, indent=2)}
 
-You have access to a `DataQueryAgent` that can run natural language database queries on the client's marketing and customer databases (tables like campaigns, customers, events, transactions, and retention).
-If you need deeper campaign, cohort, funnel, or user details to investigate patterns, drop-offs, or check specific campaign metrics before making your final professional recommendations, you can request a database query.
+YOUR OBJECTIVE:
+Generate high-quality, data-driven, executive-level recommendations that a senior marketing consultant would confidently present to a client.
 
-Decide if you need to run a natural language query to get more information.
-Respond with a JSON object containing exactly these fields:
-1. "needs_query": boolean (true if you need to query the database, false if you have enough information or if previous query results are sufficient)
-2. "query_prompt": string (the natural language prompt for the query. Be clear and specific. Leave empty if needs_query is false)
+STRICT REQUIREMENTS:
 
-Return ONLY a valid JSON object. Do not include any markdown styling, formatting, or conversational text.
+1. Generate EXACTLY 6 recommendations.
+
+2. Recommendations must be diverse and cover different areas whenever possible:
+   - Budget Optimization
+   - Funnel Optimization
+   - Retention & Cohorts
+   - Attribution & Channel Performance
+   - Growth Opportunities
+   - Forecasting / Risk Mitigation
+
+3. Do NOT generate multiple recommendations for the same issue.
+
+4. Every recommendation MUST reference specific evidence from the analysis:
+   - percentages
+   - conversion rates
+   - revenue
+   - ROAS
+   - CAC
+   - retention metrics
+   - campaign performance
+   - forecast metrics
+   - channel metrics
+
+5. Never generate generic recommendations such as:
+   - Improve engagement
+   - Increase conversions
+   - Optimize campaigns
+   - Improve retention
+
+   unless supported by specific metrics and business context.
+
+6. Titles must be actionable business decisions, not generic goals.
+
+GOOD:
+   "REALLOCATE 10% META BUDGET TO GOOGLE SEARCH"
+
+BAD:
+   "IMPROVE MARKETING PERFORMANCE"
+
+7. Descriptions must explain:
+   - what data triggered the recommendation
+   - why the issue exists
+   - which campaign/channel/cohort is affected
+   - why the proposed action should work
+
+8. expected_impact is mandatory.
+   It must clearly describe:
+   - expected business outcome
+   - expected marketing outcome
+   - estimated improvement whenever possible
+
+9. Recommendations should be prioritized toward:
+   - highest revenue impact
+   - highest conversion impact
+   - highest retention impact
+   - highest efficiency gains
+
+10. Avoid duplicate or overlapping recommendations.
+
+Generate a JSON array of recommendation objects.
+
+Each object MUST contain EXACTLY:
+
+1. "title"
+2. "description"
+3. "expected_impact"
+4. "prompt"
+
+Return ONLY valid JSON.
+Do not return markdown.
+Do not return explanations.
+Do not return conversational text.
 """
             try:
                 raw_response = self.gemini_client.generate(prompt)
