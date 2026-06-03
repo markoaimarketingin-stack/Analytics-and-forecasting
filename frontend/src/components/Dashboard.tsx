@@ -816,7 +816,7 @@ function formatConfidence(value: unknown): string {
   return `${normalized.toFixed(1)}%`;
 }
 
-function formatCurrency(value?: number): string {
+function formatCurrency(value?: number | null): string {
   const safe = toNumber(value);
   if (safe === null) return '-';
   return new Intl.NumberFormat('en-US', {

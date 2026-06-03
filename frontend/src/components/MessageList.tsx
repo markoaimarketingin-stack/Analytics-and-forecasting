@@ -1,3 +1,5 @@
+import { Bookmark } from 'lucide-react';
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -29,16 +31,30 @@ export default function MessageList({
               : message.content;
 
           return (
-        <div
-          key={message.id}
-          className={
-            message.role === 'user'
-              ? 'message-in message-user'
-              : 'message-in message-assistant'
-          }
-        >
-          {visibleContent}
-        </div>
+            <div key={message.id} className="group flex flex-col">
+              <div
+                className={
+                  message.role === 'user'
+                    ? 'message-in message-user'
+                    : 'message-in message-assistant'
+                }
+              >
+                {visibleContent}
+              </div>
+
+              {message.role === 'user' && (
+                <div className="mt-1 flex justify-end opacity-0 transition-opacity group-hover:opacity-100">
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 rounded px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700"
+                    onClick={() => console.log('Save Prompt:', message.content)}
+                  >
+                    <Bookmark className="h-3.5 w-3.5" />
+                    Save Prompt
+                  </button>
+                </div>
+              )}
+            </div>
           );
         })()
       ))}

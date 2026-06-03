@@ -29,6 +29,7 @@ MODEL_NAME = "gemini-3-flash-preview"
 class GeminiClient:
     def __init__(self, api_key: Optional[str] = None):
         api_key = api_key or os.getenv("GEMINI_API_KEY")
+        print("GEMINI KEY PREFIX:", api_key[:20] if api_key else "NO KEY")
         self._mode = None
 
         if not api_key:
