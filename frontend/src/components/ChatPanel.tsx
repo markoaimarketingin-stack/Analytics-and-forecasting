@@ -6,11 +6,47 @@ import {
   MessageSquare,
   Lightbulb,
   Bookmark,
+  Trash2,
 } from 'lucide-react';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
 import SuggestionCard from './SuggestionCard';
 import type { Message, AnalysisRun, UISuggestionItem } from '../types';
+
+const SAVED_PROMPTS_KEY = 'marko_saved_prompts';
+
+interface SavedPrompt {
+  id: string;
+  content: string;
+  savedAt: string; // ISO string
+}
+
+function loadSavedPrompts(): SavedPrompt[] {
+  try {
+    const raw = localStorage.getItem(SAVED_PROMPTS_KEY);
+    return raw ? (JSON.parse(raw) as SavedPrompt[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function persistSavedPrompts(prompts: SavedPrompt[]) {
+  localStorage.setItem(SAVED_PROMPTS_KEY, JSON.stringify(prompts));
+}
+
+function formatSavedAt(iso: string): string {
+  const date = new Date(iso);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDays === 0) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  } else if (diffDays === 1) {
+    return 'Yesterday';
+  } else {
+    return `${diffDays} days ago`;
+  }
+}
 
 interface ActivatedAgent {
   id: string;
@@ -57,12 +93,49 @@ export default function ChatPanel({
   onManageModels,
 }: ChatPanelProps) {
   const [activeTab, setActiveTab] = React.useState<
-  'chatbot' | 'suggestions' | 'saved-prompts'
+    'chatbot' | 'suggestions' | 'saved-prompts'
   >('chatbot');
   const [width, setWidth] = React.useState(390);
   const [isResizing, setIsResizing] = React.useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
+  // ── Saved Prompts state ───────────────────────────────────────
+  const [savedPrompts, setSavedPrompts] = React.useState<SavedPrompt[]>(() =>
+    loadSavedPrompts()
+  );
+
+  const handleSavePrompt = React.useCallback((content: string) => {
+    const newPrompt: SavedPrompt = {
+      id: `sp_${Date.now()}`,
+      content,
+      savedAt: new Date().toISOString(),
+    };
+    setSavedPrompts((prev) => {
+      // Avoid exact duplicates
+      if (prev.some((p) => p.content === content)) return prev;
+      const updated = [newPrompt, ...prev];
+      persistSavedPrompts(updated);
+      return updated;
+    });
+  }, []);
+
+  const handleDeleteSavedPrompt = React.useCallback((id: string) => {
+    setSavedPrompts((prev) => {
+      const updated = prev.filter((p) => p.id !== id);
+      persistSavedPrompts(updated);
+      return updated;
+    });
+  }, []);
+
+  const handleUseSavedPrompt = React.useCallback(
+    (content: string) => {
+      handleSendMessage(content, mode);
+      setActiveTab('chatbot');
+    },
+    [handleSendMessage, mode]
+  );
+
+  // ── Resize logic ──────────────────────────────────────────────
   const startResizing = React.useCallback((mouseDownEvent: React.MouseEvent) => {
     mouseDownEvent.preventDefault();
     setIsResizing(true);
@@ -98,18 +171,12 @@ export default function ChatPanel({
       behavior: 'smooth',
       block: 'end',
     });
-  }, [
-    messages,
-    isLoading,
-    currentAnalysis,
-    executionTimeline,
-    activatedAgents,
-  ]);
+  }, [messages, isLoading, currentAnalysis, executionTimeline, activatedAgents]);
 
-  const emptyStateText = mode === 'ask'
-    ? 'Ask anything about your analytics data — metrics, definitions, trends, or how agents work.'
-    : 'Agent mode lets the AI run specialist agents (funnel, cohort, attribution, forecast) and build full analysis pipelines.';
-
+  const emptyStateText =
+    mode === 'ask'
+      ? 'Ask anything about your analytics data — metrics, definitions, trends, or how agents work.'
+      : 'Agent mode lets the AI run specialist agents (funnel, cohort, attribution, forecast) and build full analysis pipelines.';
 
   return (
     <aside
@@ -181,106 +248,125 @@ export default function ChatPanel({
         >
           <Bookmark className="h-4 w-4" />
           Saved
+          {savedPrompts.length > 0 && (
+            <span className="ml-1 rounded-full bg-zinc-700 px-1.5 py-0.5 text-[10px] font-bold text-zinc-200">
+              {savedPrompts.length}
+            </span>
+          )}
         </button>
       </div>
 
       {/* Body Area */}
       <div className="flex flex-1 flex-col overflow-hidden bg-black">
-  {activeTab === 'chatbot' ? (
-    messages.length === 0 ? (
-      <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-        <p className="text-zinc-500 text-sm max-w-xs leading-relaxed font-medium">
-          {emptyStateText}
-        </p>
-      </div>
-    ) : (
-      <div className="chat-panel-body flex-1 overflow-y-auto px-5 py-5 lg:px-6">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-4">
-          <MessageList messages={messages} isLoading={isLoading} />
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
-    )
-  ) : activeTab === 'suggestions' ? (
-    <div className="chat-panel-body flex-1 overflow-y-auto px-4 py-5">
-      <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600 mb-4 px-1">
-        Suggested Actions
-      </h3>
+        {activeTab === 'chatbot' ? (
+          messages.length === 0 ? (
+            <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+              <p className="text-zinc-500 text-sm max-w-xs leading-relaxed font-medium">
+                {emptyStateText}
+              </p>
+            </div>
+          ) : (
+            <div className="chat-panel-body flex-1 overflow-y-auto px-5 py-5 lg:px-6">
+              <div className="mx-auto flex w-full max-w-5xl flex-col gap-4">
+                <MessageList
+                  messages={messages}
+                  isLoading={isLoading}
+                  onSavePrompt={handleSavePrompt}
+                />
+                <div ref={messagesEndRef} />
+              </div>
+            </div>
+          )
+        ) : activeTab === 'suggestions' ? (
+          <div className="chat-panel-body flex-1 overflow-y-auto px-4 py-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600 mb-4 px-1">
+              Suggested Actions
+            </h3>
 
-      <div className="space-y-3">
-        {suggestions.length > 0 ? (
-          suggestions.map((item) => (
-            <SuggestionCard
-              key={item.id}
-              item={item}
-              onExecute={onExecuteSuggestion}
-              onIgnore={onIgnoreSuggestion}
-            />
-          ))
+            <div className="space-y-3">
+              {suggestions.length > 0 ? (
+                suggestions.map((item) => (
+                  <SuggestionCard
+                    key={item.id}
+                    item={item}
+                    onExecute={onExecuteSuggestion}
+                    onIgnore={onIgnoreSuggestion}
+                  />
+                ))
+              ) : (
+                <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5 text-xs leading-5 text-zinc-500">
+                  No suggestions yet. Run any specialist agent to generate actionable
+                  recommendations here.
+                </div>
+              )}
+            </div>
+          </div>
         ) : (
-          <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5 text-xs leading-5 text-zinc-500">
-            No suggestions yet. Run any specialist agent to generate
-            actionable recommendations here.
+          /* ── Saved Prompts Tab ── */
+          <div className="chat-panel-body flex-1 overflow-y-auto px-4 py-5">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600 mb-4 px-1">
+              Saved Prompts
+            </h3>
+
+            <div className="space-y-3">
+              {savedPrompts.length > 0 ? (
+                savedPrompts.map((prompt) => (
+                  <div
+                    key={prompt.id}
+                    className="group rounded-2xl border border-zinc-900 bg-zinc-950/40 p-4"
+                  >
+                    <p className="text-sm text-white leading-relaxed">{prompt.content}</p>
+
+                    <div className="mt-3 flex items-center justify-between">
+                      <p className="text-xs text-zinc-500">{formatSavedAt(prompt.savedAt)}</p>
+
+                      <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                        <button
+                          type="button"
+                          onClick={() => handleUseSavedPrompt(prompt.content)}
+                          className="rounded px-2 py-1 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors"
+                          title="Send this prompt"
+                        >
+                          Use
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteSavedPrompt(prompt.id)}
+                          className="flex items-center justify-center rounded p-1 text-zinc-600 hover:bg-zinc-800 hover:text-red-400 transition-colors"
+                          title="Delete saved prompt"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5 text-xs leading-5 text-zinc-500">
+                  No saved prompts yet. Hover over any message you've sent and click{' '}
+                  <span className="text-zinc-400 font-medium">Save Prompt</span> to save it here.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Footer — only in chatbot tab */}
+        {activeTab === 'chatbot' && (
+          <div className="chat-panel-footer bg-black px-5 py-4 backdrop-blur lg:px-6">
+            <div className="mx-auto max-w-5xl">
+              <ChatInput
+                onSend={handleSendMessage}
+                onCancel={onCancelMessage}
+                isLoading={isLoading}
+                mode={mode}
+                onModeChange={onModeChange}
+                onManageModels={onManageModels}
+              />
+            </div>
           </div>
         )}
       </div>
-    </div>
-  ) : (
-    <div className="chat-panel-body flex-1 overflow-y-auto px-4 py-5">
-      <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600 mb-4 px-1">
-        Saved Prompts
-      </h3>
-
-      <div className="space-y-3">
-        <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5">
-          <p className="text-sm text-white">
-            Analyze campaign performance for the last 30 days
-          </p>
-
-          <p className="mt-2 text-right text-xs text-zinc-500">
-            10:42 AM
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5">
-          <p className="text-sm text-white">
-            Generate optimization suggestions
-          </p>
-
-          <p className="mt-2 text-right text-xs text-zinc-500">
-            Yesterday
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-zinc-900 bg-zinc-950/40 p-5">
-          <p className="text-sm text-white">
-            Forecast next month revenue
-          </p>
-
-          <p className="mt-2 text-right text-xs text-zinc-500">
-            2 days ago
-          </p>
-        </div>
-      </div>
-    </div>
-  )}
-
-  {/* Footer Area (only displayed in chatbot view) */}
-  {activeTab === 'chatbot' && (
-    <div className="chat-panel-footer bg-black px-5 py-4 backdrop-blur lg:px-6">
-      <div className="mx-auto max-w-5xl">
-        <ChatInput
-          onSend={handleSendMessage}
-          onCancel={onCancelMessage}
-          isLoading={isLoading}
-          mode={mode}
-          onModeChange={onModeChange}
-          onManageModels={onManageModels}
-        />
-      </div>
-    </div>
-  )}
-</div>
     </aside>
   );
 }
