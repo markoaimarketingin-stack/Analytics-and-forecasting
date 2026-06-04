@@ -20,14 +20,14 @@ def test_execute_endpoint_unauthorized():
         # No header
         response = client.post("/execute", json=payload)
         assert response.status_code == 401
-        assert response.json()["status"] == "error"
-        assert "Unauthorized" in response.json()["error"]
+        assert response.json()["status"] == "failed"
+        assert "Unauthorized" in response.json()["error"]["message"]
 
         # Invalid header
         response = client.post("/execute", json=payload, headers={"X-Supervisor-Token": "invalid_token"})
         assert response.status_code == 401
-        assert response.json()["status"] == "error"
-        assert "Unauthorized" in response.json()["error"]
+        assert response.json()["status"] == "failed"
+        assert "Unauthorized" in response.json()["error"]["message"]
 
 
 def test_execute_endpoint_authorized_success():

@@ -99,6 +99,9 @@ export default function ChatPanel({
   const [isResizing, setIsResizing] = React.useState(false);
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
+  // ── Lifted Input State ─────────────────────────────────────────
+  const [input, setInput] = React.useState('');
+
   // ── Saved Prompts state ───────────────────────────────────────
   const [savedPrompts, setSavedPrompts] = React.useState<SavedPrompt[]>(() =>
     loadSavedPrompts()
@@ -127,12 +130,23 @@ export default function ChatPanel({
     });
   }, []);
 
+  const handleEditPrompt = React.useCallback((content: string) => {
+    setInput(content);
+    setActiveTab('chatbot');
+    setTimeout(() => {
+      document.getElementById('chat-textarea')?.focus();
+    }, 50);
+  }, []);
+
   const handleUseSavedPrompt = React.useCallback(
     (content: string) => {
-      handleSendMessage(content, mode);
+      setInput(content);
       setActiveTab('chatbot');
+      setTimeout(() => {
+        document.getElementById('chat-textarea')?.focus();
+      }, 50);
     },
-    [handleSendMessage, mode]
+    []
   );
 
   // ── Resize logic ──────────────────────────────────────────────
@@ -272,6 +286,7 @@ export default function ChatPanel({
                   messages={messages}
                   isLoading={isLoading}
                   onSavePrompt={handleSavePrompt}
+                  onEditPrompt={handleEditPrompt}
                 />
                 <div ref={messagesEndRef} />
               </div>
@@ -362,6 +377,8 @@ export default function ChatPanel({
                 mode={mode}
                 onModeChange={onModeChange}
                 onManageModels={onManageModels}
+                input={input}
+                setInput={setInput}
               />
             </div>
           </div>

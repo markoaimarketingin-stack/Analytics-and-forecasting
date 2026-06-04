@@ -1,5 +1,5 @@
-import { Bookmark } from 'lucide-react';
-import { useState } from 'react';
+import { Bookmark, Edit, MoreVertical } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface Message {
   id: string;
@@ -11,14 +11,25 @@ interface MessageListProps {
   messages: Message[];
   isLoading?: boolean;
   onSavePrompt?: (content: string) => void;
+  onEditPrompt?: (content: string) => void;
 }
 
 export default function MessageList({
   messages,
   isLoading,
   onSavePrompt,
+  onEditPrompt,
 }: MessageListProps) {
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
+  const [activeDropdownId, setActiveDropdownId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      setActiveDropdownId(null);
+    };
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
 
   if (messages.length === 0 && !isLoading) {
     return null;
@@ -63,20 +74,50 @@ export default function MessageList({
               </div>
 
               {message.role === 'user' && (
-                <div className="mt-1 flex justify-end opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="mt-1 flex justify-end relative">
                   <button
                     type="button"
-                    className={`flex items-center gap-1 rounded px-2 py-1 text-xs transition-colors ${
-                      isSaved
-                        ? 'text-emerald-500'
-                        : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700'
-                    }`}
-                    onClick={() => handleSave(message.id, message.content)}
-                    disabled={isSaved}
+                    className="flex items-center justify-center rounded-lg p-1 text-zinc-500 hover:bg-zinc-900 hover:text-white transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveDropdownId(activeDropdownId === message.id ? null : message.id);
+                    }}
+                    aria-label="Prompt options"
                   >
-                    <Bookmark className={`h-3.5 w-3.5 ${isSaved ? 'fill-emerald-500' : ''}`} />
-                    {isSaved ? 'Saved!' : 'Save Prompt'}
+                    <MoreVertical className="h-4 w-4" />
                   </button>
+
+                  {activeDropdownId === message.id && (
+                    <div className="absolute right-0 top-7 z-20 w-36 rounded-xl border border-zinc-800 bg-zinc-950 p-1.5 shadow-xl">
+                      <button
+                        type="button"
+                        className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs text-zinc-300 hover:bg-zinc-900 hover:text-white transition-colors"
+                        onClick={() => {
+                          if (onEditPrompt) onEditPrompt(message.content);
+                          setActiveDropdownId(null);
+                        }}
+                      >
+                        <Edit className="h-3.5 w-3.5" />
+                        Edit Prompt
+                      </button>
+                      <button
+                        type="button"
+                        disabled={isSaved}
+                        className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors ${
+                          isSaved
+                            ? 'text-emerald-500 cursor-default'
+                            : 'text-zinc-300 hover:bg-zinc-900 hover:text-white'
+                        }`}
+                        onClick={() => {
+                          handleSave(message.id, message.content);
+                          setActiveDropdownId(null);
+                        }}
+                      >
+                        <Bookmark className={`h-3.5 w-3.5 ${isSaved ? 'fill-emerald-500' : ''}`} />
+                        {isSaved ? 'Saved!' : 'Save Prompt'}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

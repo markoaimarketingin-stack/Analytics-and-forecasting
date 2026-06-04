@@ -9,6 +9,7 @@ Usage:
 from __future__ import annotations
 
 from typing import Optional
+from contextvars import ContextVar
 
 from analytics_agent.logging_config import get_logger
 from analytics_agent.clients.gemini_client import GeminiClient
@@ -16,6 +17,8 @@ from analytics_agent.clients.openrouter_client import OpenRouterClient
 
 logger = get_logger(__name__)
 
+# Request-scoped current client_id context variable
+current_client_id: ContextVar[Optional[str]] = ContextVar("current_client_id", default=None)
 
 # The fallback models list in priority order.
 FALLBACK_MODELS = [
@@ -78,6 +81,28 @@ class LLMClient:
         config), they bypass the normal Gemini → OpenRouter chain and use the
         user-supplied config directly.
         """
+        # Resolve client-scoped overrides dynamically if not explicitly provided
+        if not custom_key or not custom_model:
+            client_id = current_client_id.get()
+            if client_id:
+                from analytics_agent.db.repo import get_session
+                from analytics_agent.db.models import ApiKeyStore
+                session = get_session()
+                try:
+                    cfg = (
+                        session.query(ApiKeyStore)
+                        .filter(ApiKeyStore.client_id == client_id)
+                        .first()
+                    )
+                    if cfg and cfg.api_key_encrypted and cfg.label:
+                        custom_key = cfg.api_key_encrypted
+                        custom_model = cfg.label
+                        custom_provider = cfg.provider or "openai"
+                        custom_base_url = None
+                except Exception as db_err:
+                    logger.warning("Failed to load client LLM overrides from database", client_id=client_id, error=str(db_err))
+                finally:
+                    session.close()
 
         # ── If user has a custom model configured, use it directly ──────
         if custom_key and custom_model:

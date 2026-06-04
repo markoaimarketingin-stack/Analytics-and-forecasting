@@ -26,6 +26,7 @@ import {
   fetchRecommendationOutcomes,
   orchestrateAgents,
   upsertRecommendationOutcome,
+  getAgentResults,
 } from './services/api';
 
 import type {
@@ -347,6 +348,43 @@ export default function App({
   useEffect(() => {
     if (!clientId) return;
     loadChatThreads(clientId);
+
+    const hydrateLastAnalysis = async () => {
+      try {
+        const res = (await getAgentResults(undefined, clientId)) as any;
+        if (res && res.success && res.results) {
+          const hasSnapshot = 
+            (res.recommendations && res.recommendations.length > 0) || 
+            res.executive_summary || 
+            Object.keys(res.results).length > 0;
+            
+          if (hasSnapshot) {
+            const data = {
+              success: true,
+              executive_summary: res.executive_summary || null,
+              recommendations: res.recommendations || [],
+              funnel: res.results?.funnel || null,
+              cohort: res.results?.cohort || null,
+              attribution: res.results?.attribution || null,
+              forecast: res.results?.forecast || null,
+              scenario: res.results?.scenario || null,
+            };
+            
+            const run: AnalysisRun = {
+              id: 'cached-analysis',
+              timestamp: new Date(res.timestamp || Date.now()),
+              status: 'completed',
+              payload: {} as any,
+              result: data as any,
+            };
+            setCurrentAnalysis(run);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to restore last analysis snapshot:', error);
+      }
+    };
+    hydrateLastAnalysis();
   }, [clientId]);
 
   const handleNewChat = () => {

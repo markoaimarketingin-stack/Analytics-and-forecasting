@@ -8,6 +8,8 @@ interface ChatInputProps {
   mode: 'ask' | 'agent';
   onModeChange: (mode: 'ask' | 'agent') => void;
   onManageModels?: () => void;
+  input: string;
+  setInput: (value: string) => void;
 }
 
 export default function ChatInput({
@@ -17,8 +19,9 @@ export default function ChatInput({
   mode,
   onModeChange,
   onManageModels,
+  input,
+  setInput,
 }: ChatInputProps) {
-  const [input, setInput] = useState('');
   const [model, setModel] = useState<string>('marko-2.0-mini');
 
   const handleSend = () => {
@@ -60,7 +63,7 @@ export default function ChatInput({
 
   return (
     <div className="chat-input-shell-dark">
-      {/* Top context helper row */}
+      {/* Context helper row */}
       <div className="chat-input-paperclip-row">
         <button type="button" className="chat-input-paperclip-btn" title="Add context">
           <Paperclip className="h-3.5 w-3.5" />
@@ -72,6 +75,7 @@ export default function ChatInput({
 
       {/* Text input area */}
       <textarea
+        id="chat-textarea"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}

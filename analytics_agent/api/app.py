@@ -147,6 +147,13 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class AllowedUserCreate(BaseModel):
+    email: str
+    password: str
+    client_id: str
+    role: Optional[str] = "user"
+
+
 class AuthenticatedUser(BaseModel):
     google_sub: str
     email: str
@@ -480,37 +487,37 @@ async def lifespan(app: FastAPI):
         init_db()
 
         # Seed default users if missing or invalid
-        import secrets
         db_session = get_session()
         try:
-            demo_user = db_session.query(User).filter(User.email == "demo@gmail.com").first()
+            demo_user = db_session.query(AllowedUser).filter(AllowedUser.email == "demo@gmail.com").first()
             
-            def _is_password_valid(password_plain: str, password_hashed: str) -> bool:
+            def _hash_bcrypt(password_plain: str) -> str:
+                return bcrypt.hashpw(password_plain.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+            def _is_password_valid_bcrypt(password_plain: str, password_hashed: str) -> bool:
                 try:
-                    salt_part, hash_part = password_hashed.split(":")
-                    test_hash = hashlib.sha256((password_plain + salt_part).encode('utf-8')).hexdigest()
-                    return hmac.compare_digest(test_hash, hash_part)
+                    return bcrypt.checkpw(password_plain.encode("utf-8"), password_hashed.encode("utf-8"))
                 except Exception:
                     return False
                     
             if not demo_user:
-                salt = secrets.token_hex(16)
-                demo_hash = f"{salt}:" + hashlib.sha256(("password123" + salt).encode('utf-8')).hexdigest()
-                demo_user = User(
+                demo_user = AllowedUser(
                     email="demo@gmail.com",
-                    password_hash=demo_hash,
-                    client_id="local-client"
+                    password_hash=_hash_bcrypt("password123"),
+                    client_id="local-client",
+                    role="admin",
+                    is_active=1
                 )
                 db_session.add(demo_user)
                 db_session.commit()
-                logger.info("Default user seeded: demo@gmail.com / password123")
-            elif not _is_password_valid("password123", demo_user.password_hash):
-                salt = secrets.token_hex(16)
-                demo_hash = f"{salt}:" + hashlib.sha256(("password123" + salt).encode('utf-8')).hexdigest()
-                demo_user.password_hash = demo_hash
+                logger.info("Default user seeded in allowed_users: demo@gmail.com / password123")
+            elif not _is_password_valid_bcrypt("password123", demo_user.password_hash):
+                demo_user.password_hash = _hash_bcrypt("password123")
                 demo_user.client_id = "local-client"
+                demo_user.role = "admin"
+                demo_user.is_active = 1
                 db_session.commit()
-                logger.info("Default user password updated/reset to password123")
+                logger.info("Default allowed user password updated/reset to password123")
         except Exception as seed_err:
             logger.error(f"Failed to seed default users: {seed_err}")
             db_session.rollback()
@@ -632,7 +639,7 @@ def _get_auth_secret() -> bytes:
 
 def _create_access_token(*, google_sub: str, email: str, client_id: str, name: str) -> tuple[str, int]:
     now = int(datetime.utcnow().timestamp())
-    ttl_seconds = max(300, int(os.getenv("ACCESS_TOKEN_TTL_SECONDS", "43200")))
+    ttl_seconds = max(300, int(os.getenv("ACCESS_TOKEN_TTL_SECONDS", "604800")))
     payload = {
         "sub": google_sub,
         "email": email,
@@ -964,7 +971,12 @@ async def _auth_middleware(request: Request, call_next):
 
     if requires_auth and _is_auth_bypass_enabled():
         request.state.token_payload = _get_bypass_identity()
-        return await call_next(request)
+        from analytics_agent.clients.llm_client import current_client_id
+        token_val = current_client_id.set(request.state.token_payload.get("client_id"))
+        try:
+            return await call_next(request)
+        finally:
+            current_client_id.reset(token_val)
 
     if requires_auth and path not in public_paths:
         auth_header = (request.headers.get("Authorization") or "").strip()
@@ -980,7 +992,16 @@ async def _auth_middleware(request: Request, call_next):
         except HTTPException as exc:
             return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
-    return await call_next(request)
+    client_id = None
+    if request.state.token_payload:
+        client_id = request.state.token_payload.get("client_id")
+        
+    from analytics_agent.clients.llm_client import current_client_id
+    token_val = current_client_id.set(client_id)
+    try:
+        return await call_next(request)
+    finally:
+        current_client_id.reset(token_val)
 
 
 # -----------------------------------------------------------------------------
@@ -988,9 +1009,10 @@ async def _auth_middleware(request: Request, call_next):
 # -----------------------------------------------------------------------------
 def _build_health_payload() -> dict[str, Any]:
     return {
-        "status": "healthy",
+        "status": "ok",
+        "service": "analytics_agent",
         "timestamp": datetime.utcnow().isoformat(),
-        "version": settings.APP_VERSION,
+        "version": "1.0.0",
         "analytics_ready": analytics_runner is not None,
     }
 
@@ -1276,6 +1298,91 @@ async def auth_logout():
     return response
 
 
+@app.get("/api/auth/allowed-users")
+async def list_allowed_users(request: Request):
+    _resolve_authenticated_client_id(request)
+    session = get_session()
+    try:
+        users = session.query(AllowedUser).order_by(AllowedUser.email.asc()).all()
+        return {
+            "success": True,
+            "users": [
+                {
+                    "id": u.id,
+                    "email": u.email,
+                    "client_id": u.client_id,
+                    "role": u.role,
+                    "is_active": u.is_active,
+                    "created_at": u.created_at.isoformat() if u.created_at else None,
+                }
+                for u in users
+            ]
+        }
+    finally:
+        session.close()
+
+
+@app.post("/api/auth/allowed-users")
+async def add_allowed_user(payload: AllowedUserCreate, request: Request):
+    _resolve_authenticated_client_id(request)
+    email = payload.email.strip().lower()
+    password = payload.password
+    client_id = payload.client_id.strip()
+    role = payload.role.strip() if payload.role else "user"
+    
+    if not email or not password or not client_id:
+        raise HTTPException(status_code=400, detail="Email, password, and client_id are required")
+        
+    session = get_session()
+    try:
+        existing = session.query(AllowedUser).filter(AllowedUser.email == email).first()
+        if existing:
+            raise HTTPException(status_code=400, detail=f"User with email '{email}' is already allowed")
+            
+        hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+        
+        new_user = AllowedUser(
+            email=email,
+            password_hash=hashed_password,
+            client_id=client_id,
+            role=role,
+            is_active=1,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        )
+        session.add(new_user)
+        session.commit()
+        
+        return {
+            "success": True,
+            "user": {
+                "id": new_user.id,
+                "email": new_user.email,
+                "client_id": new_user.client_id,
+                "role": new_user.role,
+                "is_active": new_user.is_active,
+            }
+        }
+    finally:
+        session.close()
+
+
+@app.delete("/api/auth/allowed-users/{user_id}")
+async def delete_allowed_user(user_id: int, request: Request):
+    _resolve_authenticated_client_id(request)
+    session = get_session()
+    try:
+        user = session.query(AllowedUser).filter(AllowedUser.id == user_id).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        session.delete(user)
+        session.commit()
+        return {"success": True, "message": "User deleted successfully"}
+    finally:
+        session.close()
+
+
 # -----------------------------------------------------------------------------
 # Simple Chat (Ask mode = Q&A, Agent mode routes to orchestrator in App.tsx)
 # -----------------------------------------------------------------------------
@@ -1342,33 +1449,62 @@ async def get_user_model_config(request: Request):
     """Return whether the user has a saved model config."""
     try:
         client_id = _resolve_authenticated_client_id(request)
-        config = _user_model_configs.get(client_id, {})
+
+        session = get_session()
+
+        try:
+            config = (
+                session.query(ApiKeyStore)
+                .filter(ApiKeyStore.client_id == client_id)
+                .first()
+            )
+
+        finally:
+            session.close()
+
         safe = {
-            "provider": config.get("provider", "openai"),
-            "model_name": config.get("model_name", ""),
-            "base_url": config.get("base_url") or "",
-            "has_key": bool(config.get("api_key")),
-            "enabled": config.get("enabled", False),
+            "provider": config.provider if config else "openai",
+            "model_name": config.label if config else "",
+            "base_url": "",
+            "has_key": bool(config.api_key_encrypted) if config else False,
+            "enabled": True if config else False,
         }
-        return {"success": True, "data": safe, "timestamp": datetime.utcnow().isoformat()}
+
+        return {
+            "success": True,
+            "data": safe,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 def _resolve_user_llm_overrides(client_id: str) -> dict:
     """Return custom key/model/provider for a client if they have one enabled."""
-    cfg = _user_model_configs.get(client_id, {})
-    if not cfg.get("enabled") or not cfg.get("api_key") or not cfg.get("model_name"):
-        return {}
-    return {
-        "custom_key": cfg["api_key"],
-        "custom_model": cfg["model_name"],
-        "custom_base_url": cfg.get("base_url") or None,
-        "custom_provider": cfg.get("provider") or "openai",
-    }
 
+    session = get_session()
+
+    try:
+        cfg = (
+            session.query(ApiKeyStore)
+            .filter(ApiKeyStore.client_id == client_id)
+            .first()
+        )
+
+    finally:
+        session.close()
+
+    if not cfg or not cfg.api_key_encrypted or not cfg.label:
+        return {}
+
+    return {
+        "custom_key": cfg.api_key_encrypted,
+        "custom_model": cfg.label,
+        "custom_base_url": None,
+        "custom_provider": cfg.provider or "openai",
+    }
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat_with_marko_brain(payload: ChatRequest, request: Request):
@@ -1520,16 +1656,28 @@ DO NOT return any markdown blocks or conversational text. Return ONLY the JSON o
 @app.post("/execute")
 @app.post("/api/execute")
 async def execute_task(payload: ExecuteRequest, request: Request):
+    from time import perf_counter
+    started = perf_counter()
     if not marko_brain:
         return JSONResponse(
             status_code=503,
             content={
                 "agent_name": payload.agent_name,
-                "status": "error",
+                "status": "failed",
                 "insights": [],
                 "opportunities": [],
+                "impact": 0.0,
+                "confidence": 0.0,
                 "sources": [],
-                "error": "Analytics Agent not ready"
+                "error": {
+                    "type": "service_error",
+                    "code": "AGENT_NOT_READY",
+                    "message": "Analytics Agent not ready",
+                    "details": {},
+                },
+                "timestamp": datetime.utcnow().isoformat(),
+                "execution_time_ms": 0,
+                "version": "1.0.0",
             }
         )
 
@@ -1541,22 +1689,34 @@ async def execute_task(payload: ExecuteRequest, request: Request):
             status_code=401,
             content={
                 "agent_name": payload.agent_name,
-                "status": "error",
+                "status": "failed",
                 "insights": [],
                 "opportunities": [],
+                "impact": 0.0,
+                "confidence": 0.0,
                 "sources": [],
-                "error": "Unauthorized: Invalid X-Supervisor-Token."
+                "error": {
+                    "type": "validation_error",
+                    "code": "UNAUTHORIZED",
+                    "message": "Unauthorized: Invalid X-Supervisor-Token.",
+                    "details": {},
+                },
+                "timestamp": datetime.utcnow().isoformat(),
+                "execution_time_ms": 0,
+                "version": "1.0.0",
             }
         )
 
+    client_id = payload.client_id.strip()
+    from analytics_agent.clients.llm_client import current_client_id
+    token_val = current_client_id.set(client_id)
+
     try:
-        client_id = payload.client_id.strip()
         platform = (payload.platform or "meta").strip().lower()
         campaign_id = (payload.campaign_id or "all").strip().lower()
         task_type = (payload.task.type or "optimize").strip().lower()
 
         # Map agent requested or platform to suitable specialized execution agents
-        # Default marketing agent: performance-marketer optimize
         if payload.agent_name == "performance-marketer" or platform in {"meta", "google"}:
             agents_to_run = ["attribution", "funnel", "budget_allocator"]
         elif payload.agent_name == "forecast":
@@ -1581,7 +1741,7 @@ async def execute_task(payload: ExecuteRequest, request: Request):
             payload=base_payload
         )
         
-        # If client-specific execution fails (e.g. due to missing client datasets), retry on global dataset context
+        # If client-specific execution fails, retry on global dataset context
         if not results.get("success", False):
             logger.warning(
                 f"Client execution failed/incomplete for {client_id}. Retrying on global dataset context."
@@ -1610,28 +1770,84 @@ async def execute_task(payload: ExecuteRequest, request: Request):
             recommendations=recommendations
         )
 
+        # Map to compliant outputs with deterministic IDs
+        def make_id(item_type: str, description: str) -> str:
+            raw = f"{item_type}|{description}".lower().encode("utf-8")
+            return hashlib.sha1(raw).hexdigest()[:12]
+
+        sources = list(structured_output.get("sources") or [platform, "database"])
+
+        insights = []
+        for item in structured_output.get("insights", []):
+            desc = item.get("summary") or item.get("description") or "No description provided."
+            itype = item.get("type") or "analytics_insight"
+            insights.append({
+                "id": make_id(itype, desc),
+                "type": itype,
+                "description": desc,
+                "impact": max(0.0, min(100.0, float(item.get("impact", 75.0)))),
+                "confidence": max(0.0, min(1.0, float(item.get("confidence", 80.0) if item.get("confidence", 80.0) <= 1.0 else item.get("confidence", 80.0) / 100.0))),
+                "sources": sources,
+                "details": item.get("details") or {}
+            })
+
+        opportunities = []
+        for item in structured_output.get("opportunities", []):
+            desc = item.get("title") or item.get("description") or "No description provided."
+            itype = item.get("type") or "analytics_opportunity"
+            opportunities.append({
+                "id": make_id(itype, desc),
+                "type": itype,
+                "description": desc,
+                "recommendation": item.get("title") or item.get("recommendation") or desc,
+                "impact": max(0.0, min(100.0, float(item.get("impact", 75.0)))),
+                "confidence": max(0.0, min(1.0, float(item.get("confidence", 80.0) if item.get("confidence", 80.0) <= 1.0 else item.get("confidence", 80.0) / 100.0))),
+                "sources": sources,
+                "effort": item.get("priority") or item.get("effort") or "medium",
+                "details": item.get("details") or {}
+            })
+
+        all_impacts = [i["impact"] for i in insights + opportunities]
+        all_confidences = [i["confidence"] for i in insights + opportunities]
+        avg_impact = sum(all_impacts) / len(all_impacts) if all_impacts else 0.0
+        avg_confidence = sum(all_confidences) / len(all_confidences) if all_confidences else 0.0
+
         return {
             "agent_name": payload.agent_name,
             "status": "ok",
-            "insights": structured_output.get("insights", []),
-            "opportunities": structured_output.get("opportunities", []),
-            "sources": structured_output.get("sources", [platform, "database"]),
-            "error": None
+            "insights": insights,
+            "opportunities": opportunities,
+            "impact": max(0.0, min(100.0, avg_impact)),
+            "confidence": max(0.0, min(1.0, avg_confidence)),
+            "sources": sources,
+            "error": None,
+            "timestamp": datetime.utcnow().isoformat(),
+            "execution_time_ms": int((perf_counter() - started) * 1000),
+            "version": "1.0.0",
         }
 
     except Exception as e:
         logger.error(f"POST /execute failed: {e}")
-        return JSONResponse(
-            status_code=500,
-            content={
-                "agent_name": payload.agent_name,
-                "status": "error",
-                "insights": [],
-                "opportunities": [],
-                "sources": [],
-                "error": str(e)
-            }
-        )
+        return {
+            "agent_name": payload.agent_name,
+            "status": "failed",
+            "insights": [],
+            "opportunities": [],
+            "impact": 0.0,
+            "confidence": 0.0,
+            "sources": [payload.agent_name],
+            "error": {
+                "type": "service_error",
+                "code": "INTERNAL_ERROR",
+                "message": str(e),
+                "details": {},
+            },
+            "timestamp": datetime.utcnow().isoformat(),
+            "execution_time_ms": int((perf_counter() - started) * 1000),
+            "version": "1.0.0",
+        }
+    finally:
+        current_client_id.reset(token_val)
 
 
 # -----------------------------------------------------------------------------

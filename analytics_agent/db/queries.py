@@ -49,9 +49,12 @@ def _safe_to_records(df: pd.DataFrame) -> list[dict[str, Any]]:
     return df.where(pd.notnull(df), None).to_dict(orient="records")
 
 
-def _read_remote_table(table_name: str, limit: int | None = None) -> pd.DataFrame:
+def _read_remote_table(table_name: str, limit: int | None = None, client_id: str | None = None) -> pd.DataFrame:
     try:
         query = _get_supabase().table(table_name).select("*")
+        normalized_client = _normalize_client_id(client_id)
+        if normalized_client:
+            query = query.eq("client_id", normalized_client)
         if limit is not None:
             query = query.limit(limit)
         response = query.execute()
@@ -119,7 +122,7 @@ def get_client_dataset_dataframe_with_source(
         if str(row.get("category") or "").strip().lower() == dataset_name
     ]
     if not records:
-        remote_df = _read_remote_table(dataset_name, limit)
+        remote_df = _read_remote_table(dataset_name, limit, client_id=normalized_client_id)
         if not remote_df.empty:
             return remote_df.head(limit) if limit is not None else remote_df, "supabase"
         return pd.DataFrame(), "missing_client_upload"

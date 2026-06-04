@@ -107,11 +107,15 @@ function MarkoAuthPage({
   isSigningIn,
   onSubmit,
   onMockLogin,
+  googleClientId,
+  onGoogleResponse,
 }: {
   error: string | null;
   isSigningIn: boolean;
   onSubmit: (email: string, password: string) => Promise<void>;
   onMockLogin: () => void;
+  googleClientId: string;
+  onGoogleResponse: (response: GoogleCredentialResponse) => void;
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -121,6 +125,42 @@ function MarkoAuthPage({
     if (!email || !password) return;
     void onSubmit(email, password);
   };
+
+  useEffect(() => {
+    if (!googleClientId) return;
+
+    const initializeGoogle = () => {
+      if (window.google?.accounts?.id) {
+        window.google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: onGoogleResponse,
+        });
+
+        const btnElement = document.getElementById('google-login-btn');
+        if (btnElement) {
+          window.google.accounts.id.renderButton(btnElement, {
+            theme: 'filled_black',
+            size: 'large',
+            width: btnElement.parentElement?.offsetWidth || 384,
+            text: 'signin_with',
+            shape: 'rectangular',
+          });
+        }
+      }
+    };
+
+    if (window.google?.accounts?.id) {
+      initializeGoogle();
+    } else {
+      const interval = setInterval(() => {
+        if (window.google?.accounts?.id) {
+          initializeGoogle();
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }
+  }, [googleClientId, onGoogleResponse]);
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#050607] px-4 py-10 text-slate-100">
@@ -170,6 +210,12 @@ function MarkoAuthPage({
             {isSigningIn ? 'Logging in...' : 'Log In'}
           </button>
 
+          {googleClientId && (
+            <div className="w-full flex justify-center mt-3">
+              <div id="google-login-btn" className="w-full min-h-[44px]"></div>
+            </div>
+          )}
+
           <div className="relative flex py-2 items-center">
             <div className="flex-grow border-t border-white/10"></div>
             <span className="flex-shrink mx-4 text-xs text-slate-500 uppercase tracking-widest font-semibold">or</span>
@@ -200,6 +246,27 @@ export default function AuthGateway() {
   const [error, setError] = useState<string | null>(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [isRestoringSession, setIsRestoringSession] = useState(true);
+
+  const handleGoogleResponse = useCallback(
+    async (response: GoogleCredentialResponse) => {
+      if (!response.credential) return;
+      setError(null);
+      setIsSigningIn(true);
+      try {
+        const authRes = await authenticateWithGoogle(response.credential);
+        setSession(toSession(authRes));
+      } catch (authError) {
+        setError(
+          authError instanceof Error
+            ? authError.message
+            : 'Google authentication failed.',
+        );
+      } finally {
+        setIsSigningIn(false);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     let active = true;
@@ -314,6 +381,8 @@ export default function AuthGateway() {
         isSigningIn={isSigningIn}
         onSubmit={handleCredentialsSubmit}
         onMockLogin={handleMockLogin}
+        googleClientId={GOOGLE_CLIENT_ID}
+        onGoogleResponse={handleGoogleResponse}
       />
     );
   }
