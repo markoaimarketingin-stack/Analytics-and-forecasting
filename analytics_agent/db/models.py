@@ -134,3 +134,31 @@ class AllowedUser(Base):
 
     created_at: Mapped[datetime | None] = mapped_column(DateTime)
     updated_at: Mapped[datetime | None] = mapped_column(DateTime)
+
+class ApiKeyStore(Base):
+    __tablename__ = "api_key_store"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+
+    client_id: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False
+    )
+
+    provider: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False
+    )
+
+    api_key_encrypted: Mapped[str] = mapped_column(
+        Text,
+        nullable=False
+    )
+
+    label: Mapped[str | None] = mapped_column(
+        String(255)
+    )
+
+    created_at: Mapped[datetime | None] = mapped_column(DateTime)
+
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime)

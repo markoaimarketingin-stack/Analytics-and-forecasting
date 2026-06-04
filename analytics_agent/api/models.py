@@ -342,3 +342,4 @@ class StrategicAnalyticsPayload(StrictBaseModel):
     campaign_spend_and_cac: List[StrategicCampaignSpendAndCacRow] = Field(default_factory=list)
     pricing_plan_mix: List[StrategicPricingPlanMixRow] = Field(default_factory=list)
     product_usage_and_activation_signals: StrategicProductUsageAndActivationSignals | Dict[str, Any] = Field(default_factory=dict)
+

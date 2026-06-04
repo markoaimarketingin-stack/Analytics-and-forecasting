@@ -34,7 +34,7 @@ from analytics_agent.api.strategic_summary import build_strategic_summary_payloa
 from analytics_agent.clients.llm_client import LLMClient
 from analytics_agent.clients.openrouter_client import OpenRouterClient
 from analytics_agent.db.repo import get_session, init_db
-from analytics_agent.db.models import File, Agent, User, AllowedUser
+from analytics_agent.db.models import File, Agent, User, AllowedUser,ApiKeyStore
 from analytics_agent.db.chat_history_repo import (
     append_chat_message,
     ensure_chat_thread,
@@ -1284,21 +1284,52 @@ async def auth_logout():
 # Format: {client_id: {provider, model_name, base_url, api_key, enabled}}
 _user_model_configs: dict[str, dict] = {}
 
-
 @app.post("/api/user-model-config")
 async def save_user_model_config(payload: UserModelConfigRequest, request: Request):
     """Save the user's custom LLM provider config from the Manage Models modal."""
     try:
         client_id = _resolve_authenticated_client_id(request)
-        _user_model_configs[client_id] = {
-            "provider": payload.provider,
-            "model_name": payload.model_name,
-            "base_url": payload.base_url,
-            "api_key": payload.api_key,
-            "enabled": payload.enabled,
+
+        session = get_session()
+
+        try:
+            existing = (
+                session.query(ApiKeyStore)
+                .filter(ApiKeyStore.client_id == client_id)
+                .first()
+            )
+
+            if existing:
+                existing.provider = payload.provider
+                existing.api_key_encrypted = payload.api_key
+                existing.label = payload.model_name
+            else:
+                row = ApiKeyStore(
+                    client_id=client_id,
+                    provider=payload.provider,
+                    api_key_encrypted=payload.api_key,
+                    label=payload.model_name,
+                )
+                session.add(row)
+
+            session.commit()
+
+        finally:
+            session.close()
+
+        logger.info(
+            "User model config saved",
+            client_id=client_id,
+            provider=payload.provider,
+            model=payload.model_name
+        )
+
+        return {
+            "success": True,
+            "message": "Model configuration saved.",
+            "timestamp": datetime.utcnow().isoformat()
         }
-        logger.info("User model config saved", client_id=client_id, provider=payload.provider, model=payload.model_name)
-        return {"success": True, "message": "Model configuration saved.", "timestamp": datetime.utcnow().isoformat()}
+
     except HTTPException:
         raise
     except Exception as e:
