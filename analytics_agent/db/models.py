@@ -2,6 +2,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 from sqlalchemy import String, Integer, Float, JSON, DateTime, Text, Table, Column, ForeignKey
+
 try:
     from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship
 except ImportError:
@@ -119,3 +120,17 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), primary_key=True)
     password_hash: Mapped[str] = mapped_column(String(512), nullable=False)
     client_id: Mapped[str] = mapped_column(String(255), nullable=False)
+
+class AllowedUser(Base):
+    __tablename__ = "allowed_users"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String(512), nullable=False)
+    client_id: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    role: Mapped[str | None] = mapped_column(String(100))
+    is_active: Mapped[int] = mapped_column(Integer, default=1)
+
+    created_at: Mapped[datetime | None] = mapped_column(DateTime)
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime)

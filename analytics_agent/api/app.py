@@ -11,6 +11,7 @@ import json
 import os
 import re
 import uuid
+import bcrypt
 from pathlib import Path
 from urllib import error as urllib_error
 from urllib import request as urllib_request
@@ -33,7 +34,7 @@ from analytics_agent.api.strategic_summary import build_strategic_summary_payloa
 from analytics_agent.clients.llm_client import LLMClient
 from analytics_agent.clients.openrouter_client import OpenRouterClient
 from analytics_agent.db.repo import get_session, init_db
-from analytics_agent.db.models import File, Agent, User
+from analytics_agent.db.models import File, Agent, User, AllowedUser
 from analytics_agent.db.chat_history_repo import (
     append_chat_message,
     ensure_chat_thread,
@@ -1038,7 +1039,11 @@ async def authenticate_credentials(payload: LoginRequest):
     db_session = get_session()
     user = None
     try:
-        user = db_session.query(User).filter(User.email == email).first()
+        user = (
+            db_session.query(AllowedUser)
+            .filter(AllowedUser.email == email)
+            .first()
+        )
     except Exception as db_err:
         logger.error(f"Failed to query user: {db_err}")
         raise HTTPException(status_code=500, detail="Database query failed")
@@ -1048,12 +1053,19 @@ async def authenticate_credentials(payload: LoginRequest):
     if not user:
         logger.warning(f"Login failed: User {email} not found in database.")
         raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    if user and int(user.is_active or 0) != 1:
+        raise HTTPException(
+            status_code=403,
+            detail="User account is disabled"
+        )
 
     def _verify_password(password_plain: str, password_hashed: str) -> bool:
         try:
-            salt_part, hash_part = password_hashed.split(":")
-            test_hash = hashlib.sha256((password_plain + salt_part).encode('utf-8')).hexdigest()
-            return hmac.compare_digest(test_hash, hash_part)
+            return bcrypt.checkpw(
+                password_plain.encode("utf-8"),
+                password_hashed.encode("utf-8")
+            )
         except Exception:
             return False
 
@@ -1146,15 +1158,37 @@ async def authenticate_google(payload: GoogleAuthRequest):
         raise HTTPException(status_code=401, detail="Invalid Google token issuer")
 
     google_sub = str(token_info.get("sub") or "").strip()
-    email = str(token_info.get("email") or "").strip()
+    email = str(token_info.get("email") or "").strip().lower()
     name = str(token_info.get("name") or email or "Marko AI User").strip()
     picture = str(token_info.get("picture") or "").strip() or None
     email_verified = bool(token_info.get("email_verified"))
 
     if not google_sub or not email:
         raise HTTPException(status_code=401, detail="Google token missing required identity fields")
+    
+    db_session = get_session()
+    try:
+        allowed_user = (
+            db_session.query(AllowedUser)
+            .filter(AllowedUser.email == email)
+            .first()
+        )
+    finally:
+        db_session.close()
 
-    client_id = _client_id_from_google_sub(google_sub)
+    if not allowed_user:
+        raise HTTPException(
+            status_code=403,
+            detail="Email is not authorized"
+        )
+
+    if int(allowed_user.is_active or 0) != 1:
+        raise HTTPException(
+            status_code=403,
+            detail="User account is disabled"
+        )
+
+    client_id = allowed_user.client_id
     access_token, expires_in = _create_access_token(
         google_sub=google_sub,
         email=email,
