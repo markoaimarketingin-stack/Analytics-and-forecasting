@@ -27,14 +27,11 @@ class AnalyticsPayloadRequest(StrictBaseModel):
 
 # --- API Output Models ---
 class HealthCheckResponse(StrictBaseModel):
-    """
-    Response model for the health check endpoint.
-    """
     status: str
+    service: str
     timestamp: str
     version: str
     analytics_ready: bool
-
 
 class ErrorResponse(StrictBaseModel):
     """
