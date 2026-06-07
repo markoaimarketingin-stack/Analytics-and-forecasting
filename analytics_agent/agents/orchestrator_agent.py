@@ -28,12 +28,50 @@ class OrchestratorAgent:
     DEFAULT_ORDER = ["attribution", "funnel", "cohort", "forecast", "scenario", "budget_allocator"]
 
     def __init__(self) -> None:
-        self.attribution_agent = AttributionAgent()
-        self.funnel_agent = FunnelAgent()
-        self.cohort_agent = CohortAgent()
-        self.forecast_agent = ForecastAgent()
-        self.scenario_agent = ScenarioAgent()
-        self.budget_allocator_agent = BudgetAllocatorAgent()
+        # Agents are created lazily on first use to avoid blocking startup
+        # with Supabase CSV downloads before the server is ready.
+        self._attribution_agent: AttributionAgent | None = None
+        self._funnel_agent: FunnelAgent | None = None
+        self._cohort_agent: CohortAgent | None = None
+        self._forecast_agent: ForecastAgent | None = None
+        self._scenario_agent: ScenarioAgent | None = None
+        self._budget_allocator_agent: BudgetAllocatorAgent | None = None
+
+    @property
+    def attribution_agent(self) -> AttributionAgent:
+        if self._attribution_agent is None:
+            self._attribution_agent = AttributionAgent()
+        return self._attribution_agent
+
+    @property
+    def funnel_agent(self) -> FunnelAgent:
+        if self._funnel_agent is None:
+            self._funnel_agent = FunnelAgent()
+        return self._funnel_agent
+
+    @property
+    def cohort_agent(self) -> CohortAgent:
+        if self._cohort_agent is None:
+            self._cohort_agent = CohortAgent()
+        return self._cohort_agent
+
+    @property
+    def forecast_agent(self) -> ForecastAgent:
+        if self._forecast_agent is None:
+            self._forecast_agent = ForecastAgent()
+        return self._forecast_agent
+
+    @property
+    def scenario_agent(self) -> ScenarioAgent:
+        if self._scenario_agent is None:
+            self._scenario_agent = ScenarioAgent()
+        return self._scenario_agent
+
+    @property
+    def budget_allocator_agent(self) -> BudgetAllocatorAgent:
+        if self._budget_allocator_agent is None:
+            self._budget_allocator_agent = BudgetAllocatorAgent()
+        return self._budget_allocator_agent
 
     def run(self, request: OrchestratorRequest | None = None, state: AnalyticsState | None = None) -> AnalyticsState:
         request = request or OrchestratorRequest()
@@ -248,4 +286,3 @@ class OrchestratorAgent:
             f"{segment} customers show the strongest retention and LTV. "
             f"Under the best-case scenario, revenue could rise to ${best_case_revenue:,.0f}."
         )
-
