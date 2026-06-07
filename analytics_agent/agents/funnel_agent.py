@@ -171,33 +171,29 @@ class FunnelAgent:
         state: AnalyticsState,
     ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
         client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
-        campaign_remote, campaign_source = queries.get_dataset_dataframe_with_source(
-            "campaigns",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        events_remote, events_source = queries.get_dataset_dataframe_with_source(
-            "events",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        customers_remote, customers_source = queries.get_dataset_dataframe_with_source(
-            "customers",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        transactions_remote, transactions_source = queries.get_dataset_dataframe_with_source(
-            "transactions",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
 
-        campaign_df = campaign_remote if not campaign_remote.empty else pd.DataFrame(state.campaign_data or [])
-        events_df = events_remote if not events_remote.empty else pd.DataFrame(state.events_data or [])
+        # Use data already loaded into state by OrchestratorAgent._load_data().
+        # Only fall back to a fresh Supabase download if state cache is empty.
+        if state.campaign_data is not None and not state.campaign_data.empty:
+            campaign_df, campaign_source = state.campaign_data, "state_cache"
+        else:
+            campaign_df, campaign_source = queries.get_dataset_dataframe_with_source("campaigns", prefer_remote=not client_id, client_id=client_id)
 
-        customer_records = state.customer_data or state.customers_data or []
-        customers_df = customers_remote if not customers_remote.empty else pd.DataFrame(customer_records)
-        transactions_df = transactions_remote if not transactions_remote.empty else pd.DataFrame(state.transactions_data or [])
+        if state.events_data is not None and not state.events_data.empty:
+            events_df, events_source = state.events_data, "state_cache"
+        else:
+            events_df, events_source = queries.get_dataset_dataframe_with_source("events", prefer_remote=not client_id, client_id=client_id)
+
+        customer_records = state.customer_data if state.customer_data is not None else state.customers_data
+        if customer_records is not None and not customer_records.empty:
+            customers_df, customers_source = customer_records, "state_cache"
+        else:
+            customers_df, customers_source = queries.get_dataset_dataframe_with_source("customers", prefer_remote=not client_id, client_id=client_id)
+
+        if state.transactions_data is not None and not state.transactions_data.empty:
+            transactions_df, transactions_source = state.transactions_data, "state_cache"
+        else:
+            transactions_df, transactions_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=not client_id, client_id=client_id)
 
         return campaign_df, events_df, customers_df, transactions_df, {
             "campaigns": campaign_source,
@@ -667,4 +663,3 @@ class FunnelAgent:
             if purchases > 0:
                 return 100.0
         return 100.0
-

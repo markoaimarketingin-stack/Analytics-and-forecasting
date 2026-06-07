@@ -172,24 +172,24 @@ class CohortAgent:
         state: AnalyticsState,
     ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
         client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
-        customers_remote, customers_source = queries.get_dataset_dataframe_with_source(
-            "customers",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        transactions_remote, transactions_source = queries.get_dataset_dataframe_with_source(
-            "transactions",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        retention_remote, retention_source = queries.get_dataset_dataframe_with_source(
-            "retention",
-            prefer_remote=not client_id,
-            client_id=client_id,
-        )
-        customers_df = customers_remote
-        transactions_df = transactions_remote
-        retention_df = retention_remote
+
+        # Use data already loaded into state by OrchestratorAgent._load_data().
+        # Only fall back to a fresh Supabase download if state cache is empty.
+        customer_records = state.customer_data if state.customer_data is not None else state.customers_data
+        if customer_records is not None and not customer_records.empty:
+            customers_df, customers_source = customer_records, "state_cache"
+        else:
+            customers_df, customers_source = queries.get_dataset_dataframe_with_source("customers", prefer_remote=not client_id, client_id=client_id)
+
+        if state.transactions_data is not None and not state.transactions_data.empty:
+            transactions_df, transactions_source = state.transactions_data, "state_cache"
+        else:
+            transactions_df, transactions_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=not client_id, client_id=client_id)
+
+        if state.retention_data is not None and not state.retention_data.empty:
+            retention_df, retention_source = state.retention_data, "state_cache"
+        else:
+            retention_df, retention_source = queries.get_dataset_dataframe_with_source("retention", prefer_remote=not client_id, client_id=client_id)
 
         return customers_df, transactions_df, retention_df, {
             "customers": customers_source,
@@ -553,4 +553,3 @@ class CohortAgent:
             "churn_probability_min": request.churn_probability_min,
             "top_n": request.top_n,
         }
-

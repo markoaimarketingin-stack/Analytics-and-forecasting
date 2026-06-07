@@ -134,9 +134,23 @@ class AttributionAgent:
 
     def _load_dataframes(self, state: AnalyticsState) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, str]]:
         client_id = str((state.user_request or {}).get("client_id") or "").strip() or None
-        events_df, events_source = queries.get_dataset_dataframe_with_source("events", prefer_remote=not client_id, client_id=client_id)
-        tx_df, tx_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=not client_id, client_id=client_id)
-        campaign_df, campaign_source = queries.get_dataset_dataframe_with_source("campaigns", prefer_remote=not client_id, client_id=client_id)
+
+        # Use data already loaded into state by OrchestratorAgent._load_data().
+        # Only fall back to a fresh Supabase download if state cache is empty.
+        if state.events_data is not None and not state.events_data.empty:
+            events_df, events_source = state.events_data, "state_cache"
+        else:
+            events_df, events_source = queries.get_dataset_dataframe_with_source("events", prefer_remote=not client_id, client_id=client_id)
+
+        if state.transactions_data is not None and not state.transactions_data.empty:
+            tx_df, tx_source = state.transactions_data, "state_cache"
+        else:
+            tx_df, tx_source = queries.get_dataset_dataframe_with_source("transactions", prefer_remote=not client_id, client_id=client_id)
+
+        if state.campaign_data is not None and not state.campaign_data.empty:
+            campaign_df, campaign_source = state.campaign_data, "state_cache"
+        else:
+            campaign_df, campaign_source = queries.get_dataset_dataframe_with_source("campaigns", prefer_remote=not client_id, client_id=client_id)
 
         return (
             events_df,
