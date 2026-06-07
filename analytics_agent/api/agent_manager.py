@@ -628,6 +628,11 @@ Do not return conversational text.
                     f"CLEANED RESPONSE:\n{cleaned}"
                 )
                 parsed = json.loads(cleaned)
+                if isinstance(parsed, list):
+                    logger.warning(
+                        "Gemini returned recommendation list instead of query-plan object"
+                    )
+                    break
                 if not parsed.get("needs_query") or not parsed.get("query_prompt"):
                     break
                 
