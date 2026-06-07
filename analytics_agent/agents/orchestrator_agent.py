@@ -172,31 +172,33 @@ class OrchestratorAgent:
         budget_only = ordered_agents == ["budget_allocator"]
         client_id = str(state.user_request.get("client_id") or "").strip() or None
 
+        # Store DataFrames (not lists) so agents can check .empty on state fields.
         if state.campaign_data is None:
             if client_id:
-                state.campaign_data = queries.get_campaign_data(client_id=client_id)
+                state.campaign_data = queries.get_campaign_dataframe(client_id=client_id)
             elif forecast_only or scenario_only or budget_only:
-                state.campaign_data = queries.get_campaign_data_remote_only()
+                state.campaign_data = queries.get_campaign_dataframe()
             else:
-                state.campaign_data = queries.get_campaign_data()
+                state.campaign_data = queries.get_campaign_dataframe()
 
         if forecast_only or scenario_only or budget_only:
             return
 
         if state.customer_data is None and state.customers_data is None:
-            state.customer_data = queries.get_customers_data(client_id=client_id)
-            state.customers_data = state.customer_data
+            df = queries.get_customers_dataframe(client_id=client_id)
+            state.customer_data = df
+            state.customers_data = df
         elif state.customer_data is None:
             state.customer_data = state.customers_data
         elif state.customers_data is None:
             state.customers_data = state.customer_data
 
         if state.events_data is None:
-            state.events_data = queries.get_events_data(client_id=client_id)
+            state.events_data = queries.get_events_dataframe(client_id=client_id)
         if state.transactions_data is None:
-            state.transactions_data = queries.get_transactions_data(client_id=client_id)
+            state.transactions_data = queries.get_transactions_dataframe(client_id=client_id)
         if state.retention_data is None:
-            state.retention_data = queries.get_retention_data(client_id=client_id)
+            state.retention_data = queries.get_retention_dataframe(client_id=client_id)
 
     def _resolve_agent_order(self, run_agents: list[str] | None) -> list[str]:
         if not run_agents:

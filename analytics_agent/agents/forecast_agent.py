@@ -58,7 +58,7 @@ class ForecastAgent:
     ) -> AnalyticsState:
         request = request or self._build_request_from_state(state)
 
-        campaign_df = pd.DataFrame(state.campaign_data or [])
+        campaign_df = state.campaign_data if isinstance(state.campaign_data, pd.DataFrame) else pd.DataFrame(state.campaign_data or [])
         if campaign_df.empty:
             state.forecast_analysis = ForecastAnalysis(
                 assumptions=["No campaign data available; forecast is zeroed."],
