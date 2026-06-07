@@ -442,219 +442,82 @@ An analytics orchestration run has finished for client '{client_id}'.
 Here is the state/summary of the specialist agents:
 {json.dumps(agent_summaries, default=str, indent=2)}
 
-Here are the results of dynamic database queries executed during planning:
+Here are the results of dynamic database queries executed so far during planning:
 {json.dumps(query_results, default=str, indent=2)}
 
-YOUR OBJECTIVE:
-Generate high-quality, data-driven, executive-level recommendations that a senior marketing consultant would confidently present to a client.
+YOUR OBJECTIVE (QUERY PLANNING PHASE ONLY):
+Decide whether you need to execute an additional database query to gather more data before generating recommendations.
 
-STRICT REQUIREMENTS:
+You MUST respond with ONLY a JSON object with exactly two keys:
+1. "needs_query" (boolean): true if you need another database query, false if you have enough data.
+2. "query_prompt" (string): the database query prompt to execute if needs_query is true; empty string if needs_query is false.
 
-1. Generate EXACTLY 6 recommendations.
+Do NOT generate recommendations.
+Do NOT generate recommendation arrays.
+Do NOT include any other keys in the response.
+Return ONLY a valid JSON object. Do not return markdown, explanations, or conversational text.
 
-2. Recommendations must be diverse and cover different areas whenever possible:
-   - Budget Optimization
-   - Funnel Optimization
-   - Retention & Cohorts
-   - Attribution & Channel Performance
-   - Growth Opportunities
-   - Forecasting / Risk Mitigation
+Example response when a query is needed:
+{{"needs_query": true, "query_prompt": "Get top 10 campaigns by spend and ROAS for the last 30 days"}}
 
-3. Do NOT generate multiple recommendations for the same issue.
-
-4. Every recommendation MUST reference specific evidence from the analysis:
-   - percentages
-   - conversion rates
-   - revenue
-   - ROAS
-   - CAC
-   - retention metrics
-   - campaign performance
-   - forecast metrics
-   - channel metrics
-
-5. Never generate generic recommendations such as:
-   - Improve engagement
-   - Increase conversions
-   - Optimize campaigns
-   - Improve retention
-
-   unless supported by specific metrics and business context.
-
-6. Titles must be actionable business decisions, not generic goals.
-
-GOOD:
-   "REALLOCATE 10% META BUDGET TO GOOGLE SEARCH"
-
-BAD:
-   "IMPROVE MARKETING PERFORMANCE"
-
-7. Descriptions must explain:
-   - what data triggered the recommendation
-   - why the issue exists
-   - which campaign/channel/cohort is affected
-   - why the proposed action should work
-
-8. expected_impact is mandatory.
-   It must clearly describe:
-   - expected business outcome
-   - expected marketing outcome
-   - estimated improvement whenever possible
-
-9. Recommendations should be prioritized toward:
-   - highest revenue impact
-   - highest conversion impact
-   - highest retention impact
-   - highest efficiency gains
-
-10. Avoid duplicate or overlapping recommendations.
-
-Generate a JSON array of recommendation objects.
-
-Each object MUST contain EXACTLY:
-
-1. "title"
-2. "description"
-3. "expected_impact"
-4. "prompt"
-
-11. Generate EXACTLY 6 recommendations.
-
-12. Each recommendation MUST belong to a DIFFERENT business category.
-
-Required categories:
-- Budget Optimization
-- Funnel Optimization
-- Retention & Cohorts
-- Attribution & Channel Performance
-- Growth Opportunity
-- Forecasting / Risk Mitigation
-
-Do not generate more than one recommendation for the same category.
-
-13. Order recommendations by business impact from highest to lowest.
-
-The first recommendation should represent the highest potential revenue, conversion, retention, or efficiency improvement.
-
-14. Every recommendation description MUST reference at least two supporting metrics from the analysis results.
-
-Examples:
-- ROAS
-- CAC
-- Revenue
-- Conversion Rate
-- Retention Rate
-- Forecast Metrics
-- Funnel Drop-off Percentages
-
-15. expected_impact MUST contain measurable business outcomes whenever possible.
-
-Examples:
-- Revenue increase
-- Conversion increase
-- Retention increase
-- CAC reduction
-- ROAS improvement
-
-16. Before generating recommendations, identify:
-- Largest revenue opportunity
-- Largest funnel leak
-- Largest retention risk
-- Highest growth opportunity
-- Best performing channel
-- Worst performing channel
-
-Recommendations should be derived from these findings.
-
-17. Avoid overlapping recommendations.
-
-If two recommendations solve the same problem, keep only the stronger recommendation.
-
-18. Recommendations must be action-first.
-
-Start recommendations with the business action that should be taken.
-The supporting analysis should come after the action.
-
-GOOD:
-"Reduce Email spend by 5% and reallocate to Organic Search because Email has the lowest ROAS (0.186) and negative ROI (-81.39%)."
-
-BAD:
-"Analysis shows Email has the lowest ROAS..."
-
-19. Do not make assumptions that are not directly supported by the analysis results.
-
-If the root cause of a trend, forecast, or anomaly is unknown, explicitly state that further investigation is required.
-
-Do not invent explanations such as:
-- seasonality
-- customer intent
-- market conditions
-- campaign fatigue
-
-unless supported by the provided data.
-
-20. Expected impact must be conservative and evidence-based.
-
-Do not produce unrealistic projections.
-Avoid overstating revenue, profit, conversion, or retention improvements.
-
-Expected impacts should be proportional to the evidence available in the analysis.
-
-21. Use confidence-aware language.
-
-If evidence is strong:
-- "expected to"
-- "likely to"
-
-If evidence is limited:
-- "may"
-- "potentially"
-- "requires validation"
-
-The certainty of recommendations should reflect the strength of supporting data.
-
-Return ONLY valid JSON.
-Do not return markdown.
-Do not return explanations.
-Do not return conversational text.
+Example response when no query is needed:
+{{"needs_query": false, "query_prompt": ""}}
 """
             try:
                 raw_response = self.gemini_client.generate(prompt)
                 logger.warning(
-                    f"QUERY PLANNING RAW RESPONSE:\n{raw_response}"
+                    f"QUERY PLANNING RAW RESPONSE (round {round_idx}):\n{raw_response}"
                 )
                 cleaned = raw_response.strip().replace("```json", "").replace("```", "").strip()
                 logger.warning(
-                    f"CLEANED RESPONSE:\n{cleaned}"
+                    f"QUERY PLANNING CLEANED RESPONSE (round {round_idx}):\n{cleaned}"
                 )
-                parsed = json.loads(cleaned)
-                if isinstance(parsed, list):
+                try:
+                    parsed = json.loads(cleaned)
+                except json.JSONDecodeError as json_err:
                     logger.warning(
-                        "Gemini returned recommendation list instead of query-plan object"
+                        f"JSONDecodeError in query planning round {round_idx}: {json_err} | "
+                        f"raw response: {raw_response!r}"
                     )
                     break
+
+                logger.warning(
+                    f"QUERY PLANNING PARSED TYPE (round {round_idx}): {type(parsed).__name__}"
+                )
+
+                if not isinstance(parsed, dict):
+                    logger.warning(
+                        f"Query planning round {round_idx} returned unexpected type "
+                        f"{type(parsed).__name__} instead of dict; aborting planning loop."
+                    )
+                    break
+
                 if not parsed.get("needs_query") or not parsed.get("query_prompt"):
                     break
-                
+
                 query_prompt = parsed["query_prompt"]
-                logger.info(f"LLM Strategist requested dynamic query in round {round_idx + 1}: {query_prompt}")
-                
+                logger.info(
+                    f"LLM Strategist requested dynamic query in round {round_idx + 1}: {query_prompt}"
+                )
+
                 # Execute the query using DataQueryAgent
                 from analytics_agent.agents.data_query_agent import DataQueryRequest
                 req = DataQueryRequest(prompt=query_prompt, client_id=client_id)
                 execution_result = self.query_agent.run(req)
-                
+
                 # Extract relevant fields to keep prompt size under control
                 simplified_res = {
                     "query": query_prompt,
                     "status": execution_result.get("status"),
                     "row_count": execution_result.get("row_count", 0),
                     "columns": execution_result.get("columns", []),
-                    "rows": execution_result.get("rows", [])[:20], # limit rows to avoid bloating prompt
+                    "rows": execution_result.get("rows", [])[:20],  # limit rows to avoid bloating prompt
                 }
                 query_results.append(simplified_res)
             except Exception as e:
-                logger.warning(f"Error in LLM suggestion query planning round {round_idx}: {e}")
+                logger.warning(
+                    f"Error in LLM suggestion query planning round {round_idx}: {e}"
+                )
                 break
 
         # 4. Prompt Gemini to do the final strategic suggestion generation
