@@ -60,7 +60,7 @@ class AnalyticsSupervisor:
     ):
         self.analytics_runner = analytics_runner
         self.gemini_client = gemini_client
-        self.agent_manager = AgentManager()
+        self.agent_manager = AgentManager(gemini_client=gemini_client)
 
         # Store clarification state per thread to keep multi-chat sessions isolated.
         self.clarification_states: Dict[str, Dict[str, Any]] = {}
@@ -1769,5 +1769,3 @@ Return ONLY a valid JSON array of objects. Do not return any markdown code block
             }
             for rec in raw_recommendations
         ]
-
-

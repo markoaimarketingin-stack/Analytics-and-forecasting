@@ -1,4 +1,3 @@
-
 import json
 from datetime import datetime
 from typing import Any, Dict, List
@@ -27,9 +26,11 @@ class AgentManager:
     while preserving the old response shape expected by the frontend.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, gemini_client=None) -> None:
         self.orchestrator = OrchestratorAgent()
-        self.gemini_client = GeminiClient()
+        # Accept an injected client so startup order doesn't matter.
+        # Fall back to creating one only if nothing is provided.
+        self.gemini_client = gemini_client or GeminiClient()
         from analytics_agent.agents.data_query_agent import DataQueryAgent
         self.query_agent = DataQueryAgent(gemini_client=self.gemini_client)
 
@@ -565,4 +566,3 @@ Return ONLY a valid JSON array of objects. Do not return any markdown code block
             logger.warning(f"Failed to generate LLM-assisted suggestions: {e}")
 
         return fallback_suggestions
-
