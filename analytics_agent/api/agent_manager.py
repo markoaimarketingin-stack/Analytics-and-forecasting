@@ -620,7 +620,13 @@ Do not return conversational text.
 """
             try:
                 raw_response = self.gemini_client.generate(prompt)
+                logger.warning(
+                    f"QUERY PLANNING RAW RESPONSE:\n{raw_response}"
+                )
                 cleaned = raw_response.strip().replace("```json", "").replace("```", "").strip()
+                logger.warning(
+                    f"CLEANED RESPONSE:\n{cleaned}"
+                )
                 parsed = json.loads(cleaned)
                 if not parsed.get("needs_query") or not parsed.get("query_prompt"):
                     break
