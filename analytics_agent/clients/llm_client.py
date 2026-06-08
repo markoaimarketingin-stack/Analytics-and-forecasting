@@ -20,18 +20,11 @@ logger = get_logger(__name__)
 # Request-scoped current client_id context variable
 current_client_id: ContextVar[Optional[str]] = ContextVar("current_client_id", default=None)
 
-# The fallback models list in priority order.
+# Single confirmed working model on free tier.
+# Multiple Google entries caused sequential 10-14s timeouts on failed attempts.
 FALLBACK_MODELS = [
-    # --- Google Gemini Tier (Primary direct access) ---
-    {"provider": "google", "model": "gemini-3.5-flash"},
-    {"provider": "google", "model": "gemini-2.5-flash"},
-    {"provider": "google", "model": "gemini-flash-latest"},
-
-    # --- OpenRouter Tier (Secondary fallback access) ---
+    {"provider": "google", "model": "gemini-2.0-flash"},
     {"provider": "openrouter", "model": "openrouter/auto"},
-    {"provider": "openrouter", "model": "openai/gpt-oss-120b:free"},
-    {"provider": "openrouter", "model": "openrouter/free"},
-    {"provider": "openrouter", "model": "deepseek/deepseek-chat-v3-0324"},
 ]
 
 
