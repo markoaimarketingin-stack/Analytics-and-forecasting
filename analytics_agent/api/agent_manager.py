@@ -433,7 +433,7 @@ Return ONLY a valid JSON array of objects. Do not return any markdown code block
 
         # 3. Ask Gemini if it needs database queries
         query_results = []
-        max_query_rounds = 2
+        max_query_rounds = 0
         for round_idx in range(max_query_rounds):
             prompt = f"""
 You are the Chief Marketing Analytics Strategist.
